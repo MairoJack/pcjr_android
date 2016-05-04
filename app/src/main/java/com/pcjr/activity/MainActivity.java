@@ -46,6 +46,7 @@ public class MainActivity extends FragmentActivity
 
         tabClick();
 
+		
         FragmentPagerAdapter mAdapter = new FragmentPagerAdapter(getSupportFragmentManager())
 		{
 			@Override
