@@ -42,16 +42,17 @@
             android:orientation="vertical"
             >
 
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="150dp"
-                android:layout_marginTop="0dp"
-                android:src="@drawable/bg" />
+
+            <com.daimajia.slider.library.SliderLayout
+                android:id="@+id/slider"
+                android:layout_width="match_parent"
+                android:layout_height="150dp"/>
 
 
             <LinearLayout
                 android:layout_width="fill_parent"
                 android:layout_height="75dp"
+                android:layout_marginTop="10dp"
                 android:orientation="horizontal">
 
                 <RelativeLayout

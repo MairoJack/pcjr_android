@@ -10,7 +10,13 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ListAdapter;
 import android.widget.ListView;
+import android.widget.Toast;
 
+import com.daimajia.slider.library.Animations.DescriptionAnimation;
+import com.daimajia.slider.library.SliderLayout;
+import com.daimajia.slider.library.SliderTypes.BaseSliderView;
+import com.daimajia.slider.library.SliderTypes.TextSliderView;
+import com.daimajia.slider.library.Tricks.ViewPagerEx;
 import com.pcjr.R;
 import com.pcjr.adapter.ProductListViewAdapter;
 import com.pcjr.model.Product;
@@ -19,6 +25,7 @@ import com.pcjr.service.ApiService;
 import com.pcjr.utils.ProgressDialogUtil;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import retrofit2.Call;
@@ -27,22 +34,24 @@ import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
-public class IndexFragment extends Fragment
+public class IndexFragment extends Fragment implements BaseSliderView.OnSliderClickListener,ViewPagerEx.OnPageChangeListener
 {
 
+    private SliderLayout sliderLayout;
     private ProgressDialog proDialog;
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
 	{
-       /* proDialog = ProgressDialogUtil.showSpinnerProgressDialog(
-                getContext(), "正在验证登录信息");*/
+        proDialog = ProgressDialogUtil.showSpinnerProgressDialog(
+                getContext(), "正在验证登录信息");
 
 		View view = inflater.inflate(R.layout.main_tab_index, container, false);
+        sliderLayout = (SliderLayout)view.findViewById(R.id.slider);
         Log.d("Error", "onCreateView: sds");
 
+        intiSlider();
 
-
-        /*List<Product> list = new ArrayList<Product>();
+        List<Product> list = new ArrayList<Product>();
 
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl("https://api.github.com/")
@@ -74,8 +83,69 @@ public class IndexFragment extends Fragment
         list.add(p);
         ListView listView = (ListView) view.findViewById(R.id.list);
 		ListAdapter adapter = new ProductListViewAdapter(list,inflater,getContext());
-		listView.setAdapter(adapter);*/
+		listView.setAdapter(adapter);
 		return view;
 	}
+
+
+    public void intiSlider(){
+
+
+        HashMap<String,String> url_maps = new HashMap<String, String>();
+        url_maps.put("1", "https://www.pcjr.com/images/focus_img2.jpg");
+        url_maps.put("2", "https://www.pcjr.com/images/focus_img3.jpg");
+        url_maps.put("3", "https://www.pcjr.com/images/focus_img4.jpg");
+        url_maps.put("4", "https://www.pcjr.com/images/focus_img5.jpg");
+
+
+        for(String name : url_maps.keySet()){
+            TextSliderView textSliderView = new TextSliderView(getContext());
+            // initialize a SliderLayout
+            textSliderView
+                    .image(url_maps.get(name))
+                    .setScaleType(BaseSliderView.ScaleType.Fit)
+                    .setOnSliderClickListener(this);
+
+            //add your extra information
+            textSliderView.bundle(new Bundle());
+            textSliderView.getBundle()
+                    .putString("extra",name);
+
+            sliderLayout.addSlider(textSliderView);
+        }
+        sliderLayout.setPresetTransformer(SliderLayout.Transformer.Default);
+        sliderLayout.setPresetIndicator(SliderLayout.PresetIndicators.Center_Bottom);
+        sliderLayout.setCustomAnimation(new DescriptionAnimation());
+        sliderLayout.setDuration(4000);
+        sliderLayout.addOnPageChangeListener(this);
+    }
+
+    @Override
+    public void onStop() {
+        // To prevent a memory leak on rotation, make sure to call stopAutoCycle() on the slider before activity or fragment is destroyed
+        sliderLayout.stopAutoCycle();
+        super.onStop();
+    }
+
+    @Override
+    public void onSliderClick(BaseSliderView slider) {
+        Toast.makeText(getContext(),slider.getBundle().get("extra") + "",Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+
+    }
+
+    @Override
+    public void onPageSelected(int position) {
+
+    }
+
+    @Override
+    public void onPageScrollStateChanged(int state) {
+
+    }
+
 
 }

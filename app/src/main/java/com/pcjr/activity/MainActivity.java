@@ -9,6 +9,7 @@ import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v4.view.ViewPager.OnPageChangeListener;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
@@ -19,6 +20,7 @@ import com.pcjr.fragment.IndexFragment;
 import com.pcjr.fragment.InvestFragment;
 import com.pcjr.fragment.MemberFragment;
 import com.pcjr.fragment.MoreFragment;
+import com.pcjr.utils.DecoratorViewPager;
 
 public class MainActivity extends FragmentActivity
 {
@@ -31,7 +33,7 @@ public class MainActivity extends FragmentActivity
 	private LinearLayout mTabBtnMore;
 
 
-    private ViewPager  mViewPager;
+    private DecoratorViewPager mViewPager;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState)
@@ -40,13 +42,13 @@ public class MainActivity extends FragmentActivity
 
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.main);
-        mViewPager = (ViewPager) findViewById(R.id.id_viewpager);
-
+        mViewPager = (DecoratorViewPager) findViewById(R.id.id_viewpager);
+        mViewPager.setNestedpParent((LinearLayout) mViewPager.getParent());
 		initView();
 
         tabClick();
 
-		
+
         FragmentPagerAdapter mAdapter = new FragmentPagerAdapter(getSupportFragmentManager())
 		{
 			@Override
@@ -60,7 +62,8 @@ public class MainActivity extends FragmentActivity
 				return mFragments.get(position);
 			}
 		};
-		
+
+		mViewPager.setOffscreenPageLimit(4);
 		mViewPager.setAdapter(mAdapter);
 
 
@@ -169,4 +172,6 @@ public class MainActivity extends FragmentActivity
             }
         });
     }
+
+
 }
