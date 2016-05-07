@@ -10,7 +10,8 @@
         android:id="@+id/title"
         android:layout_width="fill_parent"
         android:layout_height="50dp"
-        android:background="#FFFFFF">
+        android:background="#FFFFFF"
+        android:focusable="true">
 
         <ImageView
             android:id="@+id/imageView"
@@ -31,22 +32,33 @@
             android:src="@android:drawable/ic_menu_sort_by_size" />
     </RelativeLayout>
 
-    <ScrollView
+
+    <com.andview.refreshview.XRefreshView
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:xrefreshview="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:id="@+id/custom_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#fff"
+        android:orientation="vertical"
+        xrefreshview:isHeightMatchParent="true"
+        xrefreshview:isWidthMatchParent="true" >
+
+    <com.andview.refreshview.XScrollView
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:scrollbars="vertical">
+        android:layout_height="wrap_content">
 
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            >
+            android:orientation="vertical">
 
 
             <com.daimajia.slider.library.SliderLayout
                 android:id="@+id/slider"
                 android:layout_width="match_parent"
-                android:layout_height="150dp"/>
+                android:layout_height="150dp" />
 
 
             <LinearLayout
@@ -183,12 +195,15 @@
                     android:background="#D4D4D4" />
             </RelativeLayout>
 
-            <com.pcjr.utils.NoScrollListview
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:id="@+id/list"
-                >
-            </com.pcjr.utils.NoScrollListview>
+
+
+                <com.pcjr.utils.NoScrollListview
+                    android:id="@+id/list"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"></com.pcjr.utils.NoScrollListview>
+
         </LinearLayout>
-    </ScrollView>
+    </com.andview.refreshview.XScrollView>
+
+    </com.andview.refreshview.XRefreshView>
 </LinearLayout>

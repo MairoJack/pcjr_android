@@ -1,8 +1,11 @@
 package com.pcjr.fragment;
 
+import android.annotation.TargetApi;
 import android.app.ProgressDialog;
+import android.os.Build;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
+import android.os.Handler;
+import android.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,6 +15,7 @@ import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import com.andview.refreshview.XRefreshView;
 import com.daimajia.slider.library.Animations.DescriptionAnimation;
 import com.daimajia.slider.library.SliderLayout;
 import com.daimajia.slider.library.SliderTypes.BaseSliderView;
@@ -39,7 +43,10 @@ public class IndexFragment extends Fragment implements BaseSliderView.OnSliderCl
 
     private SliderLayout sliderLayout;
     private ProgressDialog proDialog;
-	@Override
+    private XRefreshView refreshView;
+    private long lastRefreshTime;
+    @TargetApi(Build.VERSION_CODES.M)
+    @Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
 	{
         proDialog = ProgressDialogUtil.showSpinnerProgressDialog(
@@ -47,6 +54,47 @@ public class IndexFragment extends Fragment implements BaseSliderView.OnSliderCl
 
 		View view = inflater.inflate(R.layout.main_tab_index, container, false);
         sliderLayout = (SliderLayout)view.findViewById(R.id.slider);
+        refreshView = (XRefreshView) view.findViewById(R.id.custom_view);
+        refreshView.setPullLoadEnable(true);
+        refreshView.restoreLastRefreshTime(lastRefreshTime);
+
+        refreshView.setXRefreshViewListener(new XRefreshView.XRefreshViewListener() {
+
+            @Override
+            public void onRefresh() {
+
+                new Handler().postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        refreshView.stopRefresh();
+                        lastRefreshTime = refreshView.getLastRefreshTime();
+                    }
+                }, 2000);
+            }
+
+            @Override
+            public void onLoadMore(boolean isSlience) {
+                new Handler().postDelayed(new Runnable() {
+
+                    @Override
+                    public void run() {
+                        refreshView.stopLoadMore();
+                    }
+                }, 2000);
+            }
+
+            @Override
+            public void onRelease(float direction) {
+
+            }
+
+            @Override
+            public void onHeaderMove(double offset, int offsetY) {
+
+            }
+
+        });
+        //swipeToLoadLayout.setOnRefreshListener(this);
         Log.d("Error", "onCreateView: sds");
 
         intiSlider();
@@ -84,10 +132,12 @@ public class IndexFragment extends Fragment implements BaseSliderView.OnSliderCl
         ListView listView = (ListView) view.findViewById(R.id.list);
 		ListAdapter adapter = new ProductListViewAdapter(list,inflater,getContext());
 		listView.setAdapter(adapter);
+        listView.setFocusable(false);
 		return view;
 	}
 
 
+    @TargetApi(Build.VERSION_CODES.M)
     public void intiSlider(){
 
 
@@ -146,6 +196,4 @@ public class IndexFragment extends Fragment implements BaseSliderView.OnSliderCl
     public void onPageScrollStateChanged(int state) {
 
     }
-
-
 }

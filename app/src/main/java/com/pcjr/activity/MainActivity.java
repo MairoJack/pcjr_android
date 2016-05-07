@@ -1,15 +1,10 @@
 package com.pcjr.activity;
 
-import java.util.ArrayList;
-import java.util.List;
-
+import android.app.Activity;
+import android.app.FragmentManager;
+import android.app.FragmentTransaction;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentActivity;
-import android.support.v4.app.FragmentPagerAdapter;
-import android.support.v4.view.ViewPager;
-import android.support.v4.view.ViewPager.OnPageChangeListener;
-import android.view.MotionEvent;
+
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
@@ -20,158 +15,157 @@ import com.pcjr.fragment.IndexFragment;
 import com.pcjr.fragment.InvestFragment;
 import com.pcjr.fragment.MemberFragment;
 import com.pcjr.fragment.MoreFragment;
-import com.pcjr.utils.DecoratorViewPager;
 
-public class MainActivity extends FragmentActivity
-{
+public class MainActivity extends Activity implements OnClickListener {
 
-    List<Fragment> mFragments = new ArrayList<Fragment>();
+    private IndexFragment indexFragment;
+    private InvestFragment investFragment;
+    private MemberFragment memberFragment;
+    private MoreFragment moreFragment;
 
-	private LinearLayout mTabBtnIndex;
-	private LinearLayout mTabBtnInvest;
-	private LinearLayout mTabBtnMember;
-	private LinearLayout mTabBtnMore;
-
-
-    private DecoratorViewPager mViewPager;
-
-	@Override
-	protected void onCreate(Bundle savedInstanceState)
-	{
+    private LinearLayout mTabBtnIndex;
+    private LinearLayout mTabBtnInvest;
+    private LinearLayout mTabBtnMember;
+    private LinearLayout mTabBtnMore;
 
 
-		super.onCreate(savedInstanceState);
-		setContentView(R.layout.main);
-        mViewPager = (DecoratorViewPager) findViewById(R.id.id_viewpager);
-        mViewPager.setNestedpParent((LinearLayout) mViewPager.getParent());
-		initView();
+    private FragmentManager fragmentManager;
 
-        tabClick();
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
 
 
-        FragmentPagerAdapter mAdapter = new FragmentPagerAdapter(getSupportFragmentManager())
-		{
-			@Override
-			public int getCount()
-			{
-				return mFragments.size();
-			}
-			@Override
-			public Fragment getItem(int position)
-			{
-				return mFragments.get(position);
-			}
-		};
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.main);
+        initView();
+        fragmentManager = getFragmentManager();
+        setTabSelection(0);
 
-		mViewPager.setOffscreenPageLimit(4);
-		mViewPager.setAdapter(mAdapter);
-
-
-		mViewPager.addOnPageChangeListener(new OnPageChangeListener()
-		{
-
-			@Override
-			public void onPageSelected(int position)
-			{
-
-				resetTabBtn();
-				switch (position)
-				{
-				case 0:
-					((ImageButton) mTabBtnIndex.findViewById(R.id.btn_tab_bottom_index))
-							.setImageResource(R.drawable.index_pressed);
-					break;
-				case 1:
-					((ImageButton) mTabBtnInvest.findViewById(R.id.btn_tab_bottom_invest))
-							.setImageResource(R.drawable.invest_pressed);
-					break;
-				case 2:
-					((ImageButton) mTabBtnMember.findViewById(R.id.btn_tab_bottom_member))
-							.setImageResource(R.drawable.member_pressed);
-					break;
-				case 3:
-					((ImageButton) mTabBtnMore.findViewById(R.id.btn_tab_bottom_more))
-							.setImageResource(R.drawable.more_pressed);
-					break;
-				}
-
-			}
-
-			@Override
-			public void onPageScrolled(int arg0, float arg1, int arg2)
-			{
-
-			}
-
-			@Override
-			public void onPageScrollStateChanged(int arg0)
-			{
-			}
-		});
-
-	}
-
-	protected void resetTabBtn()
-	{
-
-		((ImageButton) mTabBtnIndex.findViewById(R.id.btn_tab_bottom_index))
-				.setImageResource(R.drawable.index_normal);
-		((ImageButton) mTabBtnInvest.findViewById(R.id.btn_tab_bottom_invest))
-				.setImageResource(R.drawable.invest_normal);
-		((ImageButton) mTabBtnMember.findViewById(R.id.btn_tab_bottom_member))
-				.setImageResource(R.drawable.member_normal);
-		((ImageButton) mTabBtnMore.findViewById(R.id.btn_tab_bottom_more))
-				.setImageResource(R.drawable.more_normal);
-	}
-
-	private void initView()
-	{
-
-		mTabBtnIndex = (LinearLayout) findViewById(R.id.id_tab_bottom_index);
-		mTabBtnInvest = (LinearLayout) findViewById(R.id.id_tab_bottom_invest);
-		mTabBtnMember = (LinearLayout) findViewById(R.id.id_tab_bottom_member);
-		mTabBtnMore = (LinearLayout) findViewById(R.id.id_tab_bottom_more);
-
-		IndexFragment indexFragment = new IndexFragment();
-		InvestFragment investFragment = new InvestFragment();
-		MemberFragment memberFragment = new MemberFragment();
-		MoreFragment moreFragment = new MoreFragment();
-		mFragments.add(indexFragment);
-		mFragments.add(investFragment);
-		mFragments.add(memberFragment);
-		mFragments.add(moreFragment);
-	}
-
-
-    public void tabClick() {
-        mTabBtnIndex.setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                mViewPager.setCurrentItem(0);
-            }
-        });
-
-        mTabBtnInvest.setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                mViewPager.setCurrentItem(1);
-            }
-        });
-
-        mTabBtnMember.setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                mViewPager.setCurrentItem(2);
-            }
-        });
-
-        mTabBtnMore.setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                mViewPager.setCurrentItem(3);
-            }
-        });
     }
 
 
+    private void initView() {
+
+        mTabBtnIndex = (LinearLayout) findViewById(R.id.id_tab_bottom_index);
+        mTabBtnInvest = (LinearLayout) findViewById(R.id.id_tab_bottom_invest);
+        mTabBtnMember = (LinearLayout) findViewById(R.id.id_tab_bottom_member);
+        mTabBtnMore = (LinearLayout) findViewById(R.id.id_tab_bottom_more);
+
+        mTabBtnIndex.setOnClickListener(this);
+        mTabBtnInvest.setOnClickListener(this);
+        mTabBtnMember.setOnClickListener(this);
+        mTabBtnMore.setOnClickListener(this);
+
+    }
+
+    /**
+     * 根据传入的index参数来设置选中的tab页。
+     */
+    private void setTabSelection(int index) {
+        // 重置按钮
+        resetBtn();
+        // 开启一个Fragment事务
+        FragmentTransaction transaction = fragmentManager.beginTransaction();
+        // 先隐藏掉所有的Fragment，以防止有多个Fragment显示在界面上的情况
+        hideFragments(transaction);
+        switch (index) {
+            case 0:
+                ((ImageButton) mTabBtnIndex.findViewById(R.id.btn_tab_bottom_index))
+                        .setImageResource(R.drawable.index_pressed);
+                if (indexFragment == null) {
+                    indexFragment = new IndexFragment();
+                    transaction.add(R.id.id_content, indexFragment);
+                } else {
+                    transaction.show(indexFragment);
+                }
+                break;
+            case 1:
+                ((ImageButton) mTabBtnInvest.findViewById(R.id.btn_tab_bottom_invest))
+                        .setImageResource(R.drawable.invest_pressed);
+                if (investFragment == null) {
+                    investFragment = new InvestFragment();
+                    transaction.add(R.id.id_content, investFragment);
+                } else {
+                    transaction.show(investFragment);
+                }
+                break;
+            case 2:
+                ((ImageButton) mTabBtnMember.findViewById(R.id.btn_tab_bottom_member))
+                        .setImageResource(R.drawable.member_pressed);
+                if (memberFragment == null) {
+                    memberFragment = new MemberFragment();
+                    transaction.add(R.id.id_content, memberFragment);
+                } else {
+                    transaction.show(memberFragment);
+                }
+                break;
+            case 3:
+                ((ImageButton) mTabBtnMore.findViewById(R.id.btn_tab_bottom_more))
+                        .setImageResource(R.drawable.more_pressed);
+                if (moreFragment == null) {
+                    moreFragment = new MoreFragment();
+                    transaction.add(R.id.id_content, moreFragment);
+                } else {
+                    transaction.show(moreFragment);
+                }
+                break;
+        }
+        transaction.commit();
+    }
+
+    /**
+     * 清除掉所有的选中状态。
+     */
+    private void resetBtn() {
+        ((ImageButton) mTabBtnIndex.findViewById(R.id.btn_tab_bottom_index))
+                .setImageResource(R.drawable.index_normal);
+        ((ImageButton) mTabBtnInvest.findViewById(R.id.btn_tab_bottom_invest))
+                .setImageResource(R.drawable.invest_normal);
+        ((ImageButton) mTabBtnMember.findViewById(R.id.btn_tab_bottom_member))
+                .setImageResource(R.drawable.member_normal);
+        ((ImageButton) mTabBtnMore.findViewById(R.id.btn_tab_bottom_more))
+                .setImageResource(R.drawable.more_normal);
+    }
+
+    /**
+     * 将所有的Fragment都置为隐藏状态。
+     *
+     * @param transaction 用于对Fragment执行操作的事务
+     */
+    private void hideFragments(FragmentTransaction transaction) {
+        if (indexFragment != null) {
+            transaction.hide(indexFragment);
+        }
+        if (investFragment != null) {
+            transaction.hide(investFragment);
+        }
+        if (memberFragment != null) {
+            transaction.hide(memberFragment);
+        }
+        if (moreFragment != null) {
+            transaction.hide(moreFragment);
+        }
+
+    }
+
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()) {
+            case R.id.id_tab_bottom_index:
+                setTabSelection(0);
+                break;
+            case R.id.id_tab_bottom_invest:
+                setTabSelection(1);
+                break;
+            case R.id.id_tab_bottom_member:
+                setTabSelection(2);
+                break;
+            case R.id.id_tab_bottom_more:
+                setTabSelection(3);
+                break;
+
+            default:
+                break;
+        }
+    }
 }

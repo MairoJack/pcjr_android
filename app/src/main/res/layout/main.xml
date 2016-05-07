@@ -5,12 +5,12 @@
     android:background="#eee"
     android:orientation="vertical" >
 
-    <com.pcjr.utils.DecoratorViewPager
-        android:id="@+id/id_viewpager"
+    <FrameLayout
+        android:id="@+id/id_content"
         android:layout_width="fill_parent"
         android:layout_height="0dp"
         android:layout_weight="1" >
-    </com.pcjr.utils.DecoratorViewPager>
+    </FrameLayout>
 
     <include layout="@layout/bottom_bar" />
 
