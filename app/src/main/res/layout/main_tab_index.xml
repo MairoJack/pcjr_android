@@ -6,32 +6,7 @@
     android:background="#fcfcfc"
     android:orientation="vertical">
 
-    <RelativeLayout
-        android:id="@+id/title"
-        android:layout_width="fill_parent"
-        android:layout_height="50dp"
-        android:background="#FFFFFF"
-        android:focusable="true">
-
-        <ImageView
-            android:id="@+id/imageView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
-            android:layout_marginBottom="12dp"
-            android:layout_marginTop="12dp"
-            android:src="@drawable/logo" />
-
-        <ImageView
-            android:id="@+id/imageView1"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            android:layout_centerVertical="true"
-            android:layout_marginRight="8dp"
-            android:src="@android:drawable/ic_menu_sort_by_size" />
-    </RelativeLayout>
-
+    <include layout="@layout/title_bar"/>
 
     <com.andview.refreshview.XRefreshView
         xmlns:android="http://schemas.android.com/apk/res/android"
