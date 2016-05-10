@@ -4,19 +4,18 @@ import android.annotation.TargetApi;
 import android.app.ProgressDialog;
 import android.os.Build;
 import android.os.Bundle;
-import android.os.Handler;
 import android.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
 import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
 
-import com.andview.refreshview.XRefreshView;
-import com.daimajia.slider.library.Animations.DescriptionAnimation;
+import com.aspsine.swipetoloadlayout.OnLoadMoreListener;
+import com.aspsine.swipetoloadlayout.OnRefreshListener;
+import com.aspsine.swipetoloadlayout.SwipeToLoadLayout;
 import com.daimajia.slider.library.SliderLayout;
 import com.daimajia.slider.library.SliderTypes.BaseSliderView;
 import com.daimajia.slider.library.SliderTypes.TextSliderView;
@@ -26,7 +25,6 @@ import com.pcjr.adapter.ProductListViewAdapter;
 import com.pcjr.model.Product;
 import com.pcjr.model.Users;
 import com.pcjr.service.ApiService;
-import com.pcjr.utils.ProgressDialogUtil;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -38,63 +36,22 @@ import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
-public class IndexFragment extends Fragment implements BaseSliderView.OnSliderClickListener,ViewPagerEx.OnPageChangeListener
+public class IndexFragment extends Fragment implements OnRefreshListener,OnLoadMoreListener,BaseSliderView.OnSliderClickListener,ViewPagerEx.OnPageChangeListener
 {
 
+    private SwipeToLoadLayout swipeToLoadLayout;
     private SliderLayout sliderLayout;
     private ProgressDialog proDialog;
-    private XRefreshView refreshView;
     private long lastRefreshTime;
-    @TargetApi(Build.VERSION_CODES.M)
     @Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
 	{
-        proDialog = ProgressDialogUtil.showSpinnerProgressDialog(
-                getContext(), "正在验证登录信息");
 
 		View view = inflater.inflate(R.layout.main_tab_index, container, false);
         sliderLayout = (SliderLayout)view.findViewById(R.id.slider);
-        refreshView = (XRefreshView) view.findViewById(R.id.custom_view);
-        refreshView.setPullLoadEnable(true);
-        refreshView.restoreLastRefreshTime(lastRefreshTime);
-
-        refreshView.setXRefreshViewListener(new XRefreshView.XRefreshViewListener() {
-
-            @Override
-            public void onRefresh() {
-
-                new Handler().postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-                        refreshView.stopRefresh();
-                        lastRefreshTime = refreshView.getLastRefreshTime();
-                    }
-                }, 2000);
-            }
-
-            @Override
-            public void onLoadMore(boolean isSlience) {
-                new Handler().postDelayed(new Runnable() {
-
-                    @Override
-                    public void run() {
-                        refreshView.stopLoadMore();
-                    }
-                }, 2000);
-            }
-
-            @Override
-            public void onRelease(float direction) {
-
-            }
-
-            @Override
-            public void onHeaderMove(double offset, int offsetY) {
-
-            }
-
-        });
-        //swipeToLoadLayout.setOnRefreshListener(this);
+        swipeToLoadLayout = (SwipeToLoadLayout) view.findViewById(R.id.swipeToLoadLayout);
+        swipeToLoadLayout.setOnRefreshListener(this);
+        swipeToLoadLayout.setOnLoadMoreListener(this);
         Log.d("Error", "onCreateView: sds");
 
         intiSlider();
@@ -113,7 +70,7 @@ public class IndexFragment extends Fragment implements BaseSliderView.OnSliderCl
             public void onResponse(Call<Users> call, Response<Users> response) {
                 Users u = response.body();
                 Log.e("Error", "onResponse: " + u.getCompany());
-                proDialog.dismiss();
+
             }
 
             @Override
@@ -130,7 +87,7 @@ public class IndexFragment extends Fragment implements BaseSliderView.OnSliderCl
         list.add(p);
         list.add(p);
         ListView listView = (ListView) view.findViewById(R.id.list);
-		ListAdapter adapter = new ProductListViewAdapter(list,inflater,getContext());
+		ListAdapter adapter = new ProductListViewAdapter(list,inflater,getActivity());
 		listView.setAdapter(adapter);
         listView.setFocusable(false);
 		return view;
@@ -149,7 +106,7 @@ public class IndexFragment extends Fragment implements BaseSliderView.OnSliderCl
 
 
         for(String name : url_maps.keySet()){
-            TextSliderView textSliderView = new TextSliderView(getContext());
+            TextSliderView textSliderView = new TextSliderView(getActivity());
             // initialize a SliderLayout
             textSliderView
                     .image(url_maps.get(name))
@@ -165,9 +122,10 @@ public class IndexFragment extends Fragment implements BaseSliderView.OnSliderCl
         }
         sliderLayout.setPresetTransformer(SliderLayout.Transformer.Default);
         sliderLayout.setPresetIndicator(SliderLayout.PresetIndicators.Center_Bottom);
-        sliderLayout.setCustomAnimation(new DescriptionAnimation());
+        //sliderLayout.setCustomAnimation(new DescriptionAnimation());
         sliderLayout.setDuration(4000);
         sliderLayout.addOnPageChangeListener(this);
+
     }
 
     @Override
@@ -179,7 +137,7 @@ public class IndexFragment extends Fragment implements BaseSliderView.OnSliderCl
 
     @Override
     public void onSliderClick(BaseSliderView slider) {
-        Toast.makeText(getContext(),slider.getBundle().get("extra") + "",Toast.LENGTH_SHORT).show();
+        Toast.makeText(getActivity(),slider.getBundle().get("extra") + "",Toast.LENGTH_SHORT).show();
     }
 
     @Override
@@ -195,5 +153,25 @@ public class IndexFragment extends Fragment implements BaseSliderView.OnSliderCl
     @Override
     public void onPageScrollStateChanged(int state) {
 
+    }
+
+    @Override
+    public void onRefresh() {
+        swipeToLoadLayout.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                swipeToLoadLayout.setRefreshing(false);
+            }
+        }, 2000);
+    }
+
+    @Override
+    public void onLoadMore() {
+        swipeToLoadLayout.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                swipeToLoadLayout.setLoadingMore(false);
+            }
+        }, 2000);
     }
 }

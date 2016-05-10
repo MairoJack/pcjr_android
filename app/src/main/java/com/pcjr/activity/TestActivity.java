@@ -1,18 +1,23 @@
-/*
+
 package com.pcjr.activity;
 
 import android.app.Activity;
 import android.os.Bundle;
 
 
+import com.daimajia.slider.library.Animations.DescriptionAnimation;
+import com.daimajia.slider.library.SliderLayout;
+import com.daimajia.slider.library.SliderTypes.BaseSliderView;
+import com.daimajia.slider.library.SliderTypes.TextSliderView;
+import com.daimajia.slider.library.Tricks.ViewPagerEx;
 import com.pcjr.R;
 
 import java.util.HashMap;
 
-*/
+
 /**
  * Created by Mario on 2016/5/5.
- *//*
+ */
 
 public class TestActivity extends Activity implements BaseSliderView.OnSliderClickListener, ViewPagerEx.OnPageChangeListener {
 
@@ -45,8 +50,6 @@ public class TestActivity extends Activity implements BaseSliderView.OnSliderCli
 
             //add your extra information
             //textSliderView.bundle(new Bundle());
-            textSliderView.getBundle()
-                    .putString("extra", name);
 
             sliderLayout.addSlider(textSliderView);
         }
@@ -77,4 +80,4 @@ public class TestActivity extends Activity implements BaseSliderView.OnSliderCli
 
     }
 }
-*/
+
