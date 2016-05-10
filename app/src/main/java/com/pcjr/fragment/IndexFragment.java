@@ -49,9 +49,7 @@ public class IndexFragment extends Fragment implements OnRefreshListener,OnLoadM
 
 		View view = inflater.inflate(R.layout.main_tab_index, container, false);
         sliderLayout = (SliderLayout)view.findViewById(R.id.slider);
-        swipeToLoadLayout = (SwipeToLoadLayout) view.findViewById(R.id.swipeToLoadLayout);
-        swipeToLoadLayout.setOnRefreshListener(this);
-        swipeToLoadLayout.setOnLoadMoreListener(this);
+
         Log.d("Error", "onCreateView: sds");
 
         intiSlider();
@@ -93,6 +91,13 @@ public class IndexFragment extends Fragment implements OnRefreshListener,OnLoadM
 		return view;
 	}
 
+    @Override
+    public void onViewCreated(View view, Bundle savedInstanceState) {
+        swipeToLoadLayout = (SwipeToLoadLayout) view.findViewById(R.id.swipeToLoadLayout);
+        swipeToLoadLayout.setOnRefreshListener(this);
+        swipeToLoadLayout.setOnLoadMoreListener(this);
+        super.onViewCreated(view, savedInstanceState);
+    }
 
     @TargetApi(Build.VERSION_CODES.M)
     public void intiSlider(){
@@ -126,6 +131,7 @@ public class IndexFragment extends Fragment implements OnRefreshListener,OnLoadM
         sliderLayout.setDuration(4000);
         sliderLayout.addOnPageChangeListener(this);
 
+
     }
 
     @Override
@@ -157,20 +163,24 @@ public class IndexFragment extends Fragment implements OnRefreshListener,OnLoadM
 
     @Override
     public void onRefresh() {
+        sliderLayout.stopAutoCycle();
         swipeToLoadLayout.postDelayed(new Runnable() {
             @Override
             public void run() {
                 swipeToLoadLayout.setRefreshing(false);
+                sliderLayout.startAutoCycle();
             }
         }, 2000);
     }
 
     @Override
     public void onLoadMore() {
+        sliderLayout.stopAutoCycle();
         swipeToLoadLayout.postDelayed(new Runnable() {
             @Override
             public void run() {
                 swipeToLoadLayout.setLoadingMore(false);
+                sliderLayout.startAutoCycle();
             }
         }, 2000);
     }
