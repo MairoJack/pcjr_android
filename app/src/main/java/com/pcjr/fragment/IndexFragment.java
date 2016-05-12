@@ -4,7 +4,7 @@ import android.annotation.TargetApi;
 import android.app.ProgressDialog;
 import android.os.Build;
 import android.os.Bundle;
-import android.app.Fragment;
+import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -85,7 +85,7 @@ public class IndexFragment extends Fragment implements OnRefreshListener,OnLoadM
         list.add(p);
         list.add(p);
         ListView listView = (ListView) view.findViewById(R.id.list);
-		ListAdapter adapter = new ProductListViewAdapter(list,inflater,getActivity());
+		ListAdapter adapter = new ProductListViewAdapter(list,getActivity());
 		listView.setAdapter(adapter);
         listView.setFocusable(false);
 		return view;

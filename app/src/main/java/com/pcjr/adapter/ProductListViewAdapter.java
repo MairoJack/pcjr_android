@@ -32,7 +32,7 @@ public class ProductListViewAdapter extends BaseAdapter {
                 month1;
 
     }
-    public ProductListViewAdapter(List<Product> list, LayoutInflater layoutInflater, Context context) {
+    public ProductListViewAdapter(List<Product> list,Context context) {
         this.list = list;
         this.context = context;
         this.layoutInflater = LayoutInflater.from(context);
@@ -84,5 +84,9 @@ public class ProductListViewAdapter extends BaseAdapter {
         listItemView.month1.setText("天");
 
         return convertView;
+    }
+
+    public void setList(List<Product> list) {
+        this.list = list;
     }
 }

@@ -1,10 +1,10 @@
 package com.pcjr.activity;
 
-import android.app.Activity;
-import android.app.FragmentManager;
-import android.app.FragmentTransaction;
 import android.os.Bundle;
 
+import android.support.v4.app.FragmentActivity;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
@@ -16,7 +16,7 @@ import com.pcjr.fragment.InvestFragment;
 import com.pcjr.fragment.MemberFragment;
 import com.pcjr.fragment.MoreFragment;
 
-public class MainActivity extends Activity implements OnClickListener {
+public class MainActivity extends FragmentActivity implements OnClickListener {
 
     private IndexFragment indexFragment;
     private InvestFragment investFragment;
@@ -38,7 +38,7 @@ public class MainActivity extends Activity implements OnClickListener {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main);
         initView();
-        fragmentManager = getFragmentManager();
+        fragmentManager = getSupportFragmentManager();
         setTabSelection(0);
 
     }
