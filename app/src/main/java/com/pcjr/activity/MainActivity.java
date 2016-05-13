@@ -13,6 +13,7 @@ import android.view.View.OnClickListener;
 import com.pcjr.R;
 import com.pcjr.fragment.IndexFragment;
 import com.pcjr.fragment.InvestFragment;
+import com.pcjr.fragment.LoginFragment;
 import com.pcjr.fragment.MemberFragment;
 import com.pcjr.fragment.MoreFragment;
 
@@ -22,6 +23,7 @@ public class MainActivity extends FragmentActivity implements OnClickListener {
     private InvestFragment investFragment;
     private MemberFragment memberFragment;
     private MoreFragment moreFragment;
+    private LoginFragment loginFragment;
 
     private LinearLayout mTabBtnIndex;
     private LinearLayout mTabBtnInvest;
@@ -31,6 +33,7 @@ public class MainActivity extends FragmentActivity implements OnClickListener {
 
     private FragmentManager fragmentManager;
 
+    private static boolean isLogin = false;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
@@ -92,11 +95,21 @@ public class MainActivity extends FragmentActivity implements OnClickListener {
             case 2:
                 ((ImageButton) mTabBtnMember.findViewById(R.id.btn_tab_bottom_member))
                         .setImageResource(R.drawable.member_pressed);
-                if (memberFragment == null) {
-                    memberFragment = new MemberFragment();
-                    transaction.add(R.id.id_content, memberFragment);
-                } else {
-                    transaction.show(memberFragment);
+
+                if(isLogin) {
+                    if (memberFragment == null) {
+                        memberFragment = new MemberFragment();
+                        transaction.add(R.id.id_content, memberFragment);
+                    } else {
+                        transaction.show(memberFragment);
+                    }
+                }else{
+                    if (loginFragment == null) {
+                        loginFragment = new LoginFragment();
+                        transaction.add(R.id.id_content, loginFragment);
+                    } else {
+                        transaction.show(loginFragment);
+                    }
                 }
                 break;
             case 3:

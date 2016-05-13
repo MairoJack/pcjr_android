@@ -14,9 +14,8 @@
 		android:id="@+id/invest_tab_layout"
 		android:layout_width="match_parent"
 		android:layout_height="wrap_content"
-		android:background="@color/white"
-		app:tabIndicatorColor="#FBBBBB"
-		app:tabSelectedTextColor="#A5E763"
+		android:background="#03BCD4"
+
 		app:tabTextColor="#666"
 		/>
 
