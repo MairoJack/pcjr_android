@@ -20,6 +20,8 @@
             </intent-filter>
         </activity>
 
+        <activity android:name="com.pcjr.activity.InvestDetailActivity"/>
+
     </application>
 
 </manifest>

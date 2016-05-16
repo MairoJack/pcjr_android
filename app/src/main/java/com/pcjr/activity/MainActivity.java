@@ -2,6 +2,7 @@ package com.pcjr.activity;
 
 import android.os.Bundle;
 
+import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
@@ -11,12 +12,17 @@ import android.widget.LinearLayout;
 import android.view.View.OnClickListener;
 
 import com.pcjr.R;
+import com.pcjr.fragment.ForgetFragment;
 import com.pcjr.fragment.IndexFragment;
 import com.pcjr.fragment.InvestFragment;
 import com.pcjr.fragment.LoginFragment;
 import com.pcjr.fragment.MemberFragment;
 import com.pcjr.fragment.MoreFragment;
+import com.pcjr.fragment.RegistFragment;
 
+/**
+ * Created by Mario on 2016/5/16.
+ */
 public class MainActivity extends FragmentActivity implements OnClickListener {
 
     private IndexFragment indexFragment;
@@ -104,12 +110,8 @@ public class MainActivity extends FragmentActivity implements OnClickListener {
                         transaction.show(memberFragment);
                     }
                 }else{
-                    if (loginFragment == null) {
-                        loginFragment = new LoginFragment();
-                        transaction.add(R.id.id_content, loginFragment);
-                    } else {
-                        transaction.show(loginFragment);
-                    }
+                    loginFragment = new LoginFragment();
+                    transaction.add(R.id.id_content, loginFragment);
                 }
                 break;
             case 3:
@@ -146,14 +148,21 @@ public class MainActivity extends FragmentActivity implements OnClickListener {
      * @param transaction 用于对Fragment执行操作的事务
      */
     private void hideFragments(FragmentTransaction transaction) {
+        if(fragmentManager.getFragments()!=null){
+            for(Fragment f : fragmentManager.getFragments()){
+                if(f instanceof RegistFragment || f instanceof LoginFragment || f instanceof ForgetFragment){
+                    transaction.remove(f);
+                }
+            }
+        }
         if (indexFragment != null) {
             transaction.hide(indexFragment);
         }
         if (investFragment != null) {
             transaction.hide(investFragment);
         }
-        if (memberFragment != null) {
-            transaction.hide(memberFragment);
+        if (loginFragment != null) {
+            transaction.hide(loginFragment);
         }
         if (moreFragment != null) {
             transaction.hide(moreFragment);

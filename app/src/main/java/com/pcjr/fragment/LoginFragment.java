@@ -8,6 +8,7 @@ import android.support.v4.app.FragmentTransaction;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -27,11 +28,14 @@ public class LoginFragment extends Fragment implements View.OnClickListener,Vali
 	private TextView reg,forget;
 	private FragmentManager fragmentManager;
 	private FragmentTransaction transaction;
-    @NotEmpty
-    @Email
+    @NotEmpty(message="用户名不能为空")
     private EditText text_username;
+    @NotEmpty(message="密码不能为空")
     private EditText text_password;
+    @NotEmpty(message="验证码不能为空")
     private EditText text_checkcode;
+
+    private Button but_login;
 
     private Validator validator;
 	@Override
@@ -53,6 +57,13 @@ public class LoginFragment extends Fragment implements View.OnClickListener,Vali
         text_password = (EditText) view.findViewById(R.id.password);
         text_checkcode = (EditText) view.findViewById(R.id.checkcode);
 
+        but_login = (Button) view.findViewById(R.id.loginbtn);
+        but_login.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                validator.validate();
+            }
+        });
         reg.setOnClickListener(this);
         forget.setOnClickListener(this);
 	}

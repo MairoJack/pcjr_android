@@ -80,14 +80,14 @@
             android:src="@drawable/sj" />
 
         <EditText
-            android:id="@+id/pswd"
+            android:id="@+id/phone"
             android:layout_width="fill_parent"
             android:layout_height="fill_parent"
             android:layout_marginBottom="5dp"
             android:layout_marginLeft="20dp"
             android:layout_marginRight="10dp"
             android:layout_marginTop="5dp"
-            android:layout_toLeftOf="@+id/sjyz"
+            android:layout_toLeftOf="@+id/sendbtn"
             android:layout_toRightOf="@+id/sj_img"
             android:background="@null"
             android:hint="请输入手机号码"
@@ -96,7 +96,7 @@
             android:textSize="12dp" />
 
         <Button
-            android:id="@+id/sjyz"
+            android:id="@+id/sendbtn"
             android:layout_width="wrap_content"
             android:layout_height="fill_parent"
             android:layout_alignParentRight="true"
@@ -126,7 +126,7 @@
             android:src="@drawable/sjyzm" />
 
         <EditText
-            android:id="@+id/yzm"
+            android:id="@+id/checkcode"
             android:layout_width="fill_parent"
             android:layout_height="fill_parent"
             android:layout_marginBottom="5dp"
@@ -141,7 +141,7 @@
     </RelativeLayout>
 
     <Button
-        android:id="@+id/loginbtn"
+        android:id="@+id/findbtn"
         android:layout_width="fill_parent"
         android:layout_height="40dp"
         android:layout_marginLeft="15dp"

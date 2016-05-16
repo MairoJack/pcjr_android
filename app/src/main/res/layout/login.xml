@@ -58,7 +58,7 @@
             android:layout_marginTop="5dp"
             android:layout_toRightOf="@+id/username_img"
             android:background="@null"
-            android:hint="用户名、已绑定手机、以验证身份证号"
+            android:hint="用户名、已绑定手机、已验证身份证号"
             android:singleLine="true"
             android:textSize="12dp" />
     </RelativeLayout>

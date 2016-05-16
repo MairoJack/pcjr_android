@@ -107,7 +107,7 @@
             android:textColor="#000000" />
 
         <EditText
-            android:id="@+id/pswd"
+            android:id="@+id/password"
             android:layout_width="fill_parent"
             android:layout_height="fill_parent"
             android:layout_marginBottom="5dp"
@@ -152,7 +152,7 @@
             android:visibility="invisible" />
 
         <EditText
-            android:id="@+id/pswd2"
+            android:id="@+id/password2"
             android:layout_width="fill_parent"
             android:layout_height="fill_parent"
             android:layout_marginBottom="5dp"
@@ -197,7 +197,7 @@
             android:textColor="#000000" />
 
         <EditText
-            android:id="@+id/yzm"
+            android:id="@+id/checkcode"
             android:layout_width="fill_parent"
             android:layout_height="fill_parent"
             android:layout_marginBottom="5dp"
@@ -209,6 +209,7 @@
             android:background="@null"
             android:hint="请输入验证码"
             android:singleLine="true"
+            android:inputType="numberDecimal"
             android:textSize="12dp" />
 
         <ImageView
@@ -221,7 +222,7 @@
     </RelativeLayout>
 
     <Button
-        android:id="@+id/loginbtn"
+        android:id="@+id/registbtn"
         android:layout_width="fill_parent"
         android:layout_height="40dp"
         android:layout_marginLeft="15dp"

@@ -2,6 +2,7 @@ package com.pcjr.fragment;
 
 import android.annotation.TargetApi;
 import android.app.ProgressDialog;
+import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -9,6 +10,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
@@ -21,6 +23,7 @@ import com.daimajia.slider.library.SliderTypes.BaseSliderView;
 import com.daimajia.slider.library.SliderTypes.TextSliderView;
 import com.daimajia.slider.library.Tricks.ViewPagerEx;
 import com.pcjr.R;
+import com.pcjr.activity.InvestDetailActivity;
 import com.pcjr.adapter.ProductListViewAdapter;
 import com.pcjr.model.Product;
 import com.pcjr.model.Users;
@@ -88,6 +91,12 @@ public class IndexFragment extends Fragment implements OnRefreshListener,OnLoadM
 		ListAdapter adapter = new ProductListViewAdapter(list,getActivity());
 		listView.setAdapter(adapter);
         listView.setFocusable(false);
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                startActivity(new Intent(getActivity(), InvestDetailActivity.class));
+            }
+        });
 		return view;
 	}
 
