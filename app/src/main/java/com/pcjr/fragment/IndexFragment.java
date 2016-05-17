@@ -6,13 +6,19 @@ import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.ListAdapter;
 import android.widget.ListView;
+import android.widget.RelativeLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.aspsine.swipetoloadlayout.OnLoadMoreListener;
@@ -42,15 +48,23 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class IndexFragment extends Fragment implements OnRefreshListener,OnLoadMoreListener,BaseSliderView.OnSliderClickListener,ViewPagerEx.OnPageChangeListener
 {
 
+    private FragmentManager fragmentManager;
+    private FragmentTransaction transaction;
     private SwipeToLoadLayout swipeToLoadLayout;
     private SliderLayout sliderLayout;
     private ProgressDialog proDialog;
     private long lastRefreshTime;
+
+    private RelativeLayout login,reg,invest,call;
+    private ImageView img1;
+    private TextView login_but;
     @Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
 	{
 
 		View view = inflater.inflate(R.layout.main_tab_index, container, false);
+        fragmentManager = getActivity().getSupportFragmentManager();
+        transaction = fragmentManager.beginTransaction();
         sliderLayout = (SliderLayout)view.findViewById(R.id.slider);
 
         Log.d("Error", "onCreateView: sds");
@@ -95,13 +109,19 @@ public class IndexFragment extends Fragment implements OnRefreshListener,OnLoadM
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 startActivity(new Intent(getActivity(), InvestDetailActivity.class));
+                getActivity().overridePendingTransition(R.anim.push_left_in,R.anim.push_left_out);
             }
         });
+
 		return view;
 	}
 
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
+        login = (RelativeLayout) view.findViewById(R.id.login);
+        reg = (RelativeLayout) view.findViewById(R.id.reg);
+        invest = (RelativeLayout) view.findViewById(R.id.invest);
+        call = (RelativeLayout) view.findViewById(R.id.call);
         swipeToLoadLayout = (SwipeToLoadLayout) view.findViewById(R.id.swipeToLoadLayout);
         swipeToLoadLayout.setOnRefreshListener(this);
         swipeToLoadLayout.setOnLoadMoreListener(this);
@@ -193,4 +213,27 @@ public class IndexFragment extends Fragment implements OnRefreshListener,OnLoadM
             }
         }, 2000);
     }
+
+    /*@Override
+    public void onClick(View v) {
+        Log.d("mario", "onClick: vvv");
+        switch (v.getId()){
+            case R.id.login:
+                Log.d("mario", "onClick: vvv");
+                transaction.setCustomAnimations(R.anim.push_left_in,R.anim.push_left_out);
+                transaction.remove(this).add(R.id.id_content,new LoginFragment());
+                break;
+            case R.id.reg:
+                transaction.setCustomAnimations(R.anim.push_left_in,R.anim.push_left_out);
+                transaction.remove(this).add(R.id.id_content,new RegistFragment());
+                break;
+            case R.id.invest:
+                transaction.setCustomAnimations(R.anim.push_left_in,R.anim.push_left_out);
+                transaction.remove(this).add(R.id.id_content,new InvestFragment());
+                break;
+            case R.id.call:
+                break;
+        }
+        transaction.commit();
+    }*/
 }

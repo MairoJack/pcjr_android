@@ -65,9 +65,9 @@ public class InvestDetailRecordFragment extends Fragment implements OnRefreshLis
                 swipeToLoadLayout.setRefreshing(false);
                 Log.e("Error", "onResponse: " + u.getCompany());
 
-                SimpleAdapter simpleAdapter = new SimpleAdapter(getActivity(), getData(), R.layout.item_record, new String[]{"name", "time", "amount"},
+               /* SimpleAdapter simpleAdapter = new SimpleAdapter(getActivity(), getData(), R.layout.item_record, new String[]{"name", "time", "amount"},
                         new int[]{R.id.name, R.id.time, R.id.amount});
-                listView.setAdapter(simpleAdapter);
+                listView.setAdapter(simpleAdapter);*/
             }
 
             @Override

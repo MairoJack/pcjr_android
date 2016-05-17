@@ -60,6 +60,7 @@
                             android:layout_centerHorizontal="true"
                             android:layout_marginTop="8dp"
                             android:text="登录"
+                            android:id="@+id/login_but"
                             android:textColor="#333333" />
                     </RelativeLayout>
 

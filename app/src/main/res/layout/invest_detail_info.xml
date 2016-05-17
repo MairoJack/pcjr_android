@@ -2,6 +2,8 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:ProgressWheel="http://schemas.android.com/apk/res-auto"
+
     android:orientation="vertical">
 
     <ScrollView
@@ -15,16 +17,28 @@
 
             <RelativeLayout
                 android:layout_width="fill_parent"
-                android:layout_height="300dp">
-
-
+                android:layout_height="300dp"
+               >
+                <com.todddavies.components.progressbar.ProgressWheel
+                    android:id="@+id/pw_spinner"
+                    android:layout_width="270dp"
+                    android:layout_height="270dp"
+                    android:layout_centerInParent="true"
+                    ProgressWheel:pwTextColor="#222222"
+                    ProgressWheel:pwTextSize="14sp"
+                    ProgressWheel:pwRimColor="#D3D3D3"
+                    ProgressWheel:pwBarLength="60dp"
+                    ProgressWheel:pwBarColor="#FD5A4A"
+                    ProgressWheel:pwBarWidth="20dp"
+                    ProgressWheel:pwRimWidth="20dp"
+                    ProgressWheel:pwSpinSpeed="3dp"/>
                 <TextView
                     android:id="@+id/nhsy"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerHorizontal="true"
-                    android:layout_marginTop="70dp"
-                    android:text=""
+                    android:layout_marginTop="80dp"
+                    android:text="10.00%"
                     android:textColor="#333333"
                     android:textSize="50dp"
                     android:textStyle="bold" />
@@ -65,7 +79,7 @@
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center"
-                android:text=""
+                android:text="大城小爱NO.117-2016"
                 android:textColor="#333333"
                 android:textSize="20dp" />
 
