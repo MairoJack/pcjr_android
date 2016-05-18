@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v4.view.ViewPager;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -30,6 +31,7 @@ import com.daimajia.slider.library.SliderTypes.TextSliderView;
 import com.daimajia.slider.library.Tricks.ViewPagerEx;
 import com.pcjr.R;
 import com.pcjr.activity.InvestDetailActivity;
+import com.pcjr.adapter.LoopViewPagerAdapter;
 import com.pcjr.adapter.ProductListViewAdapter;
 import com.pcjr.model.Product;
 import com.pcjr.model.Users;
@@ -44,20 +46,25 @@ import retrofit2.Callback;
 import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
-
+import com.pcjr.model.Character;
 public class IndexFragment extends Fragment implements OnRefreshListener,OnLoadMoreListener,BaseSliderView.OnSliderClickListener,ViewPagerEx.OnPageChangeListener
 {
 
     private FragmentManager fragmentManager;
     private FragmentTransaction transaction;
     private SwipeToLoadLayout swipeToLoadLayout;
-    private SliderLayout sliderLayout;
+    private SliderLayout sliderLayout,sliderLayoutSmall;
     private ProgressDialog proDialog;
     private long lastRefreshTime;
 
     private RelativeLayout login,reg,invest,call;
     private ImageView img1;
     private TextView login_but;
+
+    private ViewPager viewPager;
+    private ViewGroup indicators;
+    private LoopViewPagerAdapter mPagerAdapter;
+
     @Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
 	{
@@ -65,11 +72,11 @@ public class IndexFragment extends Fragment implements OnRefreshListener,OnLoadM
 		View view = inflater.inflate(R.layout.main_tab_index, container, false);
         fragmentManager = getActivity().getSupportFragmentManager();
         transaction = fragmentManager.beginTransaction();
-        sliderLayout = (SliderLayout)view.findViewById(R.id.slider);
+
 
         Log.d("Error", "onCreateView: sds");
 
-        intiSlider();
+
 
         List<Product> list = new ArrayList<Product>();
 
@@ -122,21 +129,45 @@ public class IndexFragment extends Fragment implements OnRefreshListener,OnLoadM
         reg = (RelativeLayout) view.findViewById(R.id.reg);
         invest = (RelativeLayout) view.findViewById(R.id.invest);
         call = (RelativeLayout) view.findViewById(R.id.call);
-        swipeToLoadLayout = (SwipeToLoadLayout) view.findViewById(R.id.swipeToLoadLayout);
-        swipeToLoadLayout.setOnRefreshListener(this);
-        swipeToLoadLayout.setOnLoadMoreListener(this);
+        sliderLayout = (SliderLayout)view.findViewById(R.id.slider);
+        //sliderLayoutSmall = (SliderLayout)view.findViewById(R.id.slider_small);
+        //swipeToLoadLayout = (SwipeToLoadLayout) view.findViewById(R.id.swipeToLoadLayout);
+       // swipeToLoadLayout.setOnRefreshListener(this);
+       // swipeToLoadLayout.setOnLoadMoreListener(this);
+        List<Character> characters = new ArrayList<>();
+        Character c = new Character("mario","https://www.pcjr.com/images/focus_img3.jpg");
+        Character c2 = new Character("mario","https://www.pcjr.com/images/focus_img2.jpg");
+        characters.add(c);
+        characters.add(c2);
+        viewPager = (ViewPager) view.findViewById(R.id.viewPager);
+        indicators = (ViewGroup) view.findViewById(R.id.indicators);
+        mPagerAdapter = new LoopViewPagerAdapter(viewPager, indicators);
+        viewPager.setAdapter(mPagerAdapter);
+        viewPager.addOnPageChangeListener(mPagerAdapter);
+        mPagerAdapter.setList(characters);
+
+        intiSlider();
+
+        login.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                transaction.setCustomAnimations(R.anim.push_left_in,R.anim.push_left_out);
+                transaction.add(R.id.id_content,new LoginFragment());
+                transaction.commit();
+            }
+        });
         super.onViewCreated(view, savedInstanceState);
+
+
     }
 
-    @TargetApi(Build.VERSION_CODES.M)
     public void intiSlider(){
 
 
-        HashMap<String,String> url_maps = new HashMap<String, String>();
+        HashMap<String,String> url_maps = new HashMap<>();
         url_maps.put("1", "https://www.pcjr.com/images/focus_img2.jpg");
         url_maps.put("2", "https://www.pcjr.com/images/focus_img3.jpg");
-        url_maps.put("3", "https://www.pcjr.com/images/focus_img4.jpg");
-        url_maps.put("4", "https://www.pcjr.com/images/focus_img5.jpg");
+
 
 
         for(String name : url_maps.keySet()){
@@ -156,11 +187,37 @@ public class IndexFragment extends Fragment implements OnRefreshListener,OnLoadM
         }
         sliderLayout.setPresetTransformer(SliderLayout.Transformer.Default);
         sliderLayout.setPresetIndicator(SliderLayout.PresetIndicators.Center_Bottom);
-        //sliderLayout.setCustomAnimation(new DescriptionAnimation());
         sliderLayout.setDuration(4000);
-        sliderLayout.addOnPageChangeListener(this);
 
 
+        HashMap<String,String> url_maps_small = new HashMap<>();
+        url_maps_small.put("1", "https://www.pcjr.com/images/focus_img2.jpg");
+        url_maps_small.put("2", "https://www.pcjr.com/images/focus_img3.jpg");
+        url_maps_small.put("3", "https://www.pcjr.com/images/focus_img4.jpg");
+        url_maps_small.put("4", "https://www.pcjr.com/images/focus_img5.jpg");
+
+
+
+
+        /*for(String name : url_maps_small.keySet()){
+            TextSliderView textSliderView = new TextSliderView(getActivity());
+            // initialize a SliderLayout
+            textSliderView
+                    .image(url_maps.get(name))
+                    .setScaleType(BaseSliderView.ScaleType.Fit)
+                    .setOnSliderClickListener(this);
+
+            //add your extra information
+            textSliderView.bundle(new Bundle());
+            textSliderView.getBundle()
+                    .putString("extra",name);
+
+            sliderLayoutSmall.addSlider(textSliderView);
+        }
+        sliderLayoutSmall.setPresetTransformer(SliderLayout.Transformer.Default);
+        sliderLayoutSmall.setPresetIndicator(SliderLayout.PresetIndicators.Center_Bottom);
+        sliderLayoutSmall.setDuration(4000);
+        sliderLayoutSmall.addOnPageChangeListener(this);*/
     }
 
     @Override
@@ -192,7 +249,7 @@ public class IndexFragment extends Fragment implements OnRefreshListener,OnLoadM
 
     @Override
     public void onRefresh() {
-        sliderLayout.stopAutoCycle();
+        //sliderLayout.stopAutoCycle();
         swipeToLoadLayout.postDelayed(new Runnable() {
             @Override
             public void run() {
@@ -204,7 +261,7 @@ public class IndexFragment extends Fragment implements OnRefreshListener,OnLoadM
 
     @Override
     public void onLoadMore() {
-        sliderLayout.stopAutoCycle();
+       // sliderLayout.stopAutoCycle();
         swipeToLoadLayout.postDelayed(new Runnable() {
             @Override
             public void run() {

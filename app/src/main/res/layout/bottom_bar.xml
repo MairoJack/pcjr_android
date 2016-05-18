@@ -2,13 +2,14 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/ly_main_tab_bottom"
     android:layout_width="fill_parent"
-    android:layout_height="55dp"
+    android:layout_height="60dp"
     android:layout_alignParentBottom="true"
     android:background="#fff" >
 
     <LinearLayout
         android:layout_width="fill_parent"
-        android:layout_height="55dp" >
+        android:layout_height="match_parent"
+        android:layout_marginTop="3dp">
 
         <LinearLayout
             android:id="@+id/id_tab_bottom_index"
@@ -23,7 +24,7 @@
                 android:id="@+id/btn_tab_bottom_index"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:background="#0000"
+                android:background="#fff"
                 android:clickable="false"
                 android:src="@drawable/index_pressed" />
 
