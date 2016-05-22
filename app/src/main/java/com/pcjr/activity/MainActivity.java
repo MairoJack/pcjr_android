@@ -12,6 +12,7 @@ import android.widget.LinearLayout;
 import android.view.View.OnClickListener;
 
 import com.pcjr.R;
+import com.pcjr.common.Constant;
 import com.pcjr.fragment.ForgetFragment;
 import com.pcjr.fragment.IndexFragment;
 import com.pcjr.fragment.InvestFragment;
@@ -40,6 +41,7 @@ public class MainActivity extends FragmentActivity implements OnClickListener {
     private FragmentManager fragmentManager;
 
     private static boolean isLogin = false;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
@@ -102,14 +104,10 @@ public class MainActivity extends FragmentActivity implements OnClickListener {
                 ((ImageButton) mTabBtnMember.findViewById(R.id.btn_tab_bottom_member))
                         .setImageResource(R.drawable.member_pressed);
 
-                if(isLogin) {
-                    if (memberFragment == null) {
-                        memberFragment = new MemberFragment();
-                        transaction.add(R.id.id_content, memberFragment);
-                    } else {
-                        transaction.show(memberFragment);
-                    }
-                }else{
+                if (Constant.isLogin) {
+                    memberFragment = new MemberFragment();
+                    transaction.add(R.id.id_content, memberFragment);
+                } else {
                     loginFragment = new LoginFragment();
                     transaction.add(R.id.id_content, loginFragment);
                 }
@@ -148,9 +146,9 @@ public class MainActivity extends FragmentActivity implements OnClickListener {
      * @param transaction 用于对Fragment执行操作的事务
      */
     private void hideFragments(FragmentTransaction transaction) {
-        if(fragmentManager.getFragments()!=null){
-            for(Fragment f : fragmentManager.getFragments()){
-                if(f instanceof RegistFragment || f instanceof LoginFragment || f instanceof ForgetFragment){
+        if (fragmentManager.getFragments() != null) {
+            for (Fragment f : fragmentManager.getFragments()) {
+                if (f instanceof RegistFragment || f instanceof LoginFragment || f instanceof ForgetFragment || f instanceof MemberFragment) {
                     transaction.remove(f);
                 }
             }
@@ -189,5 +187,9 @@ public class MainActivity extends FragmentActivity implements OnClickListener {
             default:
                 break;
         }
+    }
+
+    public LinearLayout getmTabBtnInvest() {
+        return mTabBtnInvest;
     }
 }

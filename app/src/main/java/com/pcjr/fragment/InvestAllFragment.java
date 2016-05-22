@@ -60,7 +60,6 @@ public class InvestAllFragment extends Fragment implements OnRefreshListener, On
             public void onResponse(Call<Users> call, Response<Users> response) {
                 Users u = response.body();
                 swipeToLoadLayout.setRefreshing(false);
-                Log.e("Error", "onResponse: " + u.getCompany());
                 if (adapter == null) {
                     Product p = new Product();
                     p.setName("ddddd");

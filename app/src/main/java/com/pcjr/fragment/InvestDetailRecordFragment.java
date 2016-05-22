@@ -63,7 +63,7 @@ public class InvestDetailRecordFragment extends Fragment implements OnRefreshLis
             public void onResponse(Call<Users> call, Response<Users> response) {
                 Users u = response.body();
                 swipeToLoadLayout.setRefreshing(false);
-                Log.e("Error", "onResponse: " + u.getCompany());
+                Log.e("Error", "onResponse: ");
 
                /* SimpleAdapter simpleAdapter = new SimpleAdapter(getActivity(), getData(), R.layout.item_record, new String[]{"name", "time", "amount"},
                         new int[]{R.id.name, R.id.time, R.id.amount});

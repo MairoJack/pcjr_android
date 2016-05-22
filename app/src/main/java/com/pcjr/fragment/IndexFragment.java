@@ -1,20 +1,16 @@
 package com.pcjr.fragment;
 
-import android.annotation.TargetApi;
 import android.app.ProgressDialog;
 import android.content.Intent;
-import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
-import android.support.v4.view.ViewPager;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ListAdapter;
 import android.widget.ListView;
@@ -31,12 +27,11 @@ import com.daimajia.slider.library.SliderTypes.TextSliderView;
 import com.daimajia.slider.library.Tricks.ViewPagerEx;
 import com.pcjr.R;
 import com.pcjr.activity.InvestDetailActivity;
-import com.pcjr.adapter.LoopViewPagerAdapter;
+import com.pcjr.activity.MainActivity;
 import com.pcjr.adapter.ProductListViewAdapter;
 import com.pcjr.model.Product;
 import com.pcjr.model.Users;
 import com.pcjr.service.ApiService;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -46,37 +41,28 @@ import retrofit2.Callback;
 import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
-import com.pcjr.model.Character;
-public class IndexFragment extends Fragment implements OnRefreshListener,OnLoadMoreListener,BaseSliderView.OnSliderClickListener,ViewPagerEx.OnPageChangeListener
-{
+public class IndexFragment extends Fragment implements OnRefreshListener,OnLoadMoreListener,BaseSliderView.OnSliderClickListener,ViewPagerEx.OnPageChangeListener {
 
     private FragmentManager fragmentManager;
     private FragmentTransaction transaction;
     private SwipeToLoadLayout swipeToLoadLayout;
-    private SliderLayout sliderLayout,sliderLayoutSmall;
+    private SliderLayout sliderLayout, sliderLayoutSmall;
     private ProgressDialog proDialog;
     private long lastRefreshTime;
 
-    private RelativeLayout login,reg,invest,call;
+    private RelativeLayout login, reg, invest, call;
     private ImageView img1;
     private TextView login_but;
 
-    private ViewPager viewPager;
-    private ViewGroup indicators;
-    private LoopViewPagerAdapter mPagerAdapter;
 
     @Override
-	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
-	{
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
-		View view = inflater.inflate(R.layout.main_tab_index, container, false);
+        View view = inflater.inflate(R.layout.main_tab_index, container, false);
         fragmentManager = getActivity().getSupportFragmentManager();
         transaction = fragmentManager.beginTransaction();
 
-
         Log.d("Error", "onCreateView: sds");
-
-
 
         List<Product> list = new ArrayList<Product>();
 
@@ -91,7 +77,7 @@ public class IndexFragment extends Fragment implements OnRefreshListener,OnLoadM
             @Override
             public void onResponse(Call<Users> call, Response<Users> response) {
                 Users u = response.body();
-                Log.e("Error", "onResponse: " + u.getCompany());
+                Log.e("Error", "onResponse: " + u);
 
             }
 
@@ -109,19 +95,19 @@ public class IndexFragment extends Fragment implements OnRefreshListener,OnLoadM
         list.add(p);
         list.add(p);
         ListView listView = (ListView) view.findViewById(R.id.list);
-		ListAdapter adapter = new ProductListViewAdapter(list,getActivity());
-		listView.setAdapter(adapter);
+        ListAdapter adapter = new ProductListViewAdapter(list, getActivity());
+        listView.setAdapter(adapter);
         listView.setFocusable(false);
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 startActivity(new Intent(getActivity(), InvestDetailActivity.class));
-                getActivity().overridePendingTransition(R.anim.push_left_in,R.anim.push_left_out);
+                getActivity().overridePendingTransition(R.anim.push_left_in, R.anim.push_left_out);
             }
         });
 
-		return view;
-	}
+        return view;
+    }
 
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
@@ -129,31 +115,19 @@ public class IndexFragment extends Fragment implements OnRefreshListener,OnLoadM
         reg = (RelativeLayout) view.findViewById(R.id.reg);
         invest = (RelativeLayout) view.findViewById(R.id.invest);
         call = (RelativeLayout) view.findViewById(R.id.call);
-        sliderLayout = (SliderLayout)view.findViewById(R.id.slider);
-        //sliderLayoutSmall = (SliderLayout)view.findViewById(R.id.slider_small);
-        //swipeToLoadLayout = (SwipeToLoadLayout) view.findViewById(R.id.swipeToLoadLayout);
-       // swipeToLoadLayout.setOnRefreshListener(this);
-       // swipeToLoadLayout.setOnLoadMoreListener(this);
-        List<Character> characters = new ArrayList<>();
-        Character c = new Character("mario","https://www.pcjr.com/images/focus_img3.jpg");
-        Character c2 = new Character("mario","https://www.pcjr.com/images/focus_img2.jpg");
-        characters.add(c);
-        characters.add(c2);
-        viewPager = (ViewPager) view.findViewById(R.id.viewPager);
-        indicators = (ViewGroup) view.findViewById(R.id.indicators);
-        mPagerAdapter = new LoopViewPagerAdapter(viewPager, indicators);
-        viewPager.setAdapter(mPagerAdapter);
-        viewPager.addOnPageChangeListener(mPagerAdapter);
-        mPagerAdapter.setList(characters);
+        sliderLayout = (SliderLayout) view.findViewById(R.id.slider);
+        sliderLayoutSmall = (SliderLayout) view.findViewById(R.id.slider_small);
+        swipeToLoadLayout = (SwipeToLoadLayout) view.findViewById(R.id.swipeToLoadLayout);
+        swipeToLoadLayout.setOnRefreshListener(this);
+        swipeToLoadLayout.setOnLoadMoreListener(this);
+        swipeToLoadLayout.setHorizontalScrollBarEnabled(true);
 
         intiSlider();
-
         login.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                transaction.setCustomAnimations(R.anim.push_left_in,R.anim.push_left_out);
-                transaction.add(R.id.id_content,new LoginFragment());
-                transaction.commit();
+                MainActivity mainActivity  = (MainActivity) getContext();
+                mainActivity.getmTabBtnInvest().performClick();
             }
         });
         super.onViewCreated(view, savedInstanceState);
@@ -161,16 +135,15 @@ public class IndexFragment extends Fragment implements OnRefreshListener,OnLoadM
 
     }
 
-    public void intiSlider(){
+    public void intiSlider() {
 
 
-        HashMap<String,String> url_maps = new HashMap<>();
+        HashMap<String, String> url_maps = new HashMap<>();
         url_maps.put("1", "https://www.pcjr.com/images/focus_img2.jpg");
         url_maps.put("2", "https://www.pcjr.com/images/focus_img3.jpg");
 
 
-
-        for(String name : url_maps.keySet()){
+        for (String name : url_maps.keySet()) {
             TextSliderView textSliderView = new TextSliderView(getActivity());
             // initialize a SliderLayout
             textSliderView
@@ -181,7 +154,7 @@ public class IndexFragment extends Fragment implements OnRefreshListener,OnLoadM
             //add your extra information
             textSliderView.bundle(new Bundle());
             textSliderView.getBundle()
-                    .putString("extra",name);
+                    .putString("extra", name);
 
             sliderLayout.addSlider(textSliderView);
         }
@@ -190,16 +163,12 @@ public class IndexFragment extends Fragment implements OnRefreshListener,OnLoadM
         sliderLayout.setDuration(4000);
 
 
-        HashMap<String,String> url_maps_small = new HashMap<>();
+        HashMap<String, String> url_maps_small = new HashMap<>();
         url_maps_small.put("1", "https://www.pcjr.com/images/focus_img2.jpg");
         url_maps_small.put("2", "https://www.pcjr.com/images/focus_img3.jpg");
-        url_maps_small.put("3", "https://www.pcjr.com/images/focus_img4.jpg");
-        url_maps_small.put("4", "https://www.pcjr.com/images/focus_img5.jpg");
 
 
-
-
-        /*for(String name : url_maps_small.keySet()){
+        for (String name : url_maps_small.keySet()) {
             TextSliderView textSliderView = new TextSliderView(getActivity());
             // initialize a SliderLayout
             textSliderView
@@ -210,14 +179,14 @@ public class IndexFragment extends Fragment implements OnRefreshListener,OnLoadM
             //add your extra information
             textSliderView.bundle(new Bundle());
             textSliderView.getBundle()
-                    .putString("extra",name);
+                    .putString("extra", name);
 
             sliderLayoutSmall.addSlider(textSliderView);
         }
         sliderLayoutSmall.setPresetTransformer(SliderLayout.Transformer.Default);
         sliderLayoutSmall.setPresetIndicator(SliderLayout.PresetIndicators.Center_Bottom);
         sliderLayoutSmall.setDuration(4000);
-        sliderLayoutSmall.addOnPageChangeListener(this);*/
+        sliderLayoutSmall.addOnPageChangeListener(this);
     }
 
     @Override
@@ -229,7 +198,7 @@ public class IndexFragment extends Fragment implements OnRefreshListener,OnLoadM
 
     @Override
     public void onSliderClick(BaseSliderView slider) {
-        Toast.makeText(getActivity(),slider.getBundle().get("extra") + "",Toast.LENGTH_SHORT).show();
+        Toast.makeText(getActivity(), slider.getBundle().get("extra") + "", Toast.LENGTH_SHORT).show();
     }
 
     @Override
@@ -261,7 +230,7 @@ public class IndexFragment extends Fragment implements OnRefreshListener,OnLoadM
 
     @Override
     public void onLoadMore() {
-       // sliderLayout.stopAutoCycle();
+        // sliderLayout.stopAutoCycle();
         swipeToLoadLayout.postDelayed(new Runnable() {
             @Override
             public void run() {
@@ -270,27 +239,4 @@ public class IndexFragment extends Fragment implements OnRefreshListener,OnLoadM
             }
         }, 2000);
     }
-
-    /*@Override
-    public void onClick(View v) {
-        Log.d("mario", "onClick: vvv");
-        switch (v.getId()){
-            case R.id.login:
-                Log.d("mario", "onClick: vvv");
-                transaction.setCustomAnimations(R.anim.push_left_in,R.anim.push_left_out);
-                transaction.remove(this).add(R.id.id_content,new LoginFragment());
-                break;
-            case R.id.reg:
-                transaction.setCustomAnimations(R.anim.push_left_in,R.anim.push_left_out);
-                transaction.remove(this).add(R.id.id_content,new RegistFragment());
-                break;
-            case R.id.invest:
-                transaction.setCustomAnimations(R.anim.push_left_in,R.anim.push_left_out);
-                transaction.remove(this).add(R.id.id_content,new InvestFragment());
-                break;
-            case R.id.call:
-                break;
-        }
-        transaction.commit();
-    }*/
 }

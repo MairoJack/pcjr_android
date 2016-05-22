@@ -164,7 +164,10 @@
                     </LinearLayout>
                 </LinearLayout>
 
-                <include layout="@layout/layout_viewpager"/>
+                <com.daimajia.slider.library.SliderLayout
+                    android:id="@+id/slider_small"
+                    android:layout_width="match_parent"
+                    android:layout_height="80dp" />
 
                 <LinearLayout
                     android:layout_width="match_parent"
