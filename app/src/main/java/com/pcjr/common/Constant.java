@@ -9,6 +9,6 @@ import com.pcjr.model.Oauth;
  */
 public class Constant extends Application{
     public static String access_token;
-    public static boolean isLogin;
+    public static boolean isLogin = true;
 
 }

@@ -228,6 +228,7 @@
                     android:orientation="horizontal" >
 
                     <RelativeLayout
+                        android:id="@+id/payment_plan"
                         android:layout_width="fill_parent"
                         android:layout_height="fill_parent"
                         android:layout_margin="0.5dp"
@@ -342,7 +343,7 @@
                     </RelativeLayout>
 
                     <RelativeLayout
-                        android:id="@+id/tixian"
+                        android:id="@+id/withdraw_recharge"
                         android:layout_width="fill_parent"
                         android:layout_height="fill_parent"
                         android:layout_margin="0.5dp"
@@ -369,7 +370,7 @@
                     </RelativeLayout>
 
                     <RelativeLayout
-                        android:id="@+id/rewardmenu"
+                        android:id="@+id/coupon"
                         android:layout_width="fill_parent"
                         android:layout_height="fill_parent"
                         android:layout_margin="0.5dp"

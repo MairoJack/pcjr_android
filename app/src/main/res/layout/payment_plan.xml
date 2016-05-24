@@ -17,7 +17,7 @@
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
             android:layout_centerVertical="true"
-            android:text="交易记录"
+            android:text="回款计划"
             android:textColor="#FFFFFF"
             android:textSize="20dp" />
 
@@ -39,6 +39,19 @@
         </RelativeLayout>
     </RelativeLayout>
 
+    <DatePicker
+        android:id="@+id/datepicker"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        >
+
+    </DatePicker>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="#6a6a6a"/>
+
     <RelativeLayout
         android:layout_width="fill_parent"
         android:layout_height="30dp" >
@@ -49,7 +62,7 @@
             android:layout_alignParentLeft="true"
             android:layout_centerVertical="true"
             android:layout_marginLeft="20dp"
-            android:text="交易详情/金额"
+            android:text="交易详情/时间"
             android:textColor="#333333"
             android:textSize="10dp" />
 
@@ -59,7 +72,7 @@
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
             android:layout_marginRight="20dp"
-            android:text="时间/手续费/余额"
+            android:text="余额/状态"
             android:textColor="#333333"
             android:textSize="10dp" />
     </RelativeLayout>
@@ -86,4 +99,5 @@
             android:id="@id/swipe_load_more_footer"
             layout="@layout/layout_pull_footer" />
     </com.aspsine.swipetoloadlayout.SwipeToLoadLayout>
+
 </LinearLayout>

@@ -37,6 +37,9 @@
         <activity android:name="com.pcjr.activity.RealNameVerifiedActivity"/>
         <activity android:name="com.pcjr.activity.SafeSettingActivity"/>
         <activity android:name="com.pcjr.activity.TradeRecordsActivity"/>
+        <activity android:name="com.pcjr.activity.PaymentPlanActivity"/>
+        <activity android:name="com.pcjr.activity.WithdrawRechargeActivity"/>
+        <activity android:name="com.pcjr.activity.CouponActivity"/>
     </application>
 
 </manifest>

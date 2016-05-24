@@ -17,7 +17,7 @@
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
             android:layout_centerVertical="true"
-            android:text="交易记录"
+            android:text="提现/充值"
             android:textColor="#FFFFFF"
             android:textSize="20dp" />
 

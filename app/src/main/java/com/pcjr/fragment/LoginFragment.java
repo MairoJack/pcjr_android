@@ -1,5 +1,6 @@
 package com.pcjr.fragment;
 
+import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -13,24 +14,15 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import com.google.gson.JsonObject;
 import com.mobsandgeeks.saripaar.ValidationError;
 import com.mobsandgeeks.saripaar.Validator;
-import com.mobsandgeeks.saripaar.annotation.Email;
 import com.mobsandgeeks.saripaar.annotation.NotEmpty;
 import com.pcjr.R;
-import com.pcjr.adapter.ProductListViewAdapter;
 import com.pcjr.common.Constant;
-import com.pcjr.model.Oauth;
-import com.pcjr.model.Product;
-import com.pcjr.model.Users;
 import com.pcjr.service.ApiService;
 import com.pcjr.utils.RetrofitUtils;
-
-import java.util.ArrayList;
 import java.util.List;
-
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -52,12 +44,11 @@ public class LoginFragment extends Fragment implements View.OnClickListener, Val
 
     private Validator validator;
 
-    private Constant constant;
+    private ProgressDialog dialog;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         fragmentManager = getActivity().getSupportFragmentManager();
-        constant = (Constant) getActivity().getApplication();
         transaction = fragmentManager.beginTransaction();
         validator = new Validator(this);
         validator.setValidationListener(this);
@@ -67,6 +58,7 @@ public class LoginFragment extends Fragment implements View.OnClickListener, Val
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        dialog = new ProgressDialog(getActivity(), ProgressDialog.STYLE_SPINNER);
         reg = (TextView) view.findViewById(R.id.reg);
         forget = (TextView) view.findViewById(R.id.forget);
         text_username = (EditText) view.findViewById(R.id.username);
@@ -105,6 +97,8 @@ public class LoginFragment extends Fragment implements View.OnClickListener, Val
         String password = text_username.getText().toString().trim();
         ApiService service = RetrofitUtils.createApi(ApiService.class);
         Call<JsonObject> call = service.getAccessToken("password",username, password, "1", "123");
+        dialog.setMessage("正在登录...");
+        dialog.show();
         call.enqueue(new Callback<JsonObject>() {
             @Override
             public void onResponse(Call<JsonObject> call, Response<JsonObject> response) {
@@ -113,10 +107,12 @@ public class LoginFragment extends Fragment implements View.OnClickListener, Val
                     if (json.get("access_token") != null) {
                         Constant.access_token = json.get("access_token").getAsString();
                         Constant.isLogin = true;
+                        dialog.dismiss();
                         transaction.setCustomAnimations(R.anim.push_left_in, R.anim.push_left_out);
                         transaction.remove(LoginFragment.this).add(R.id.id_content, new MemberFragment());
                         transaction.commit();
                     } else {
+                        //Snackbar.make(getView(),"dsds",Snackbar.LENGTH_SHORT).show();
                         Toast.makeText(getActivity(), json.get("status_code").toString() + ":" + json.get("message").toString(), Toast.LENGTH_SHORT).show();
                     }
                 }
