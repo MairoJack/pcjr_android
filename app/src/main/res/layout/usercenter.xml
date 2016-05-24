@@ -140,7 +140,7 @@
                     android:orientation="horizontal" >
 
                     <RelativeLayout
-                        android:id="@+id/moneymenu"
+                        android:id="@+id/financial_records"
                         android:layout_width="fill_parent"
                         android:layout_height="fill_parent"
                         android:layout_margin="0.5dp"
@@ -167,7 +167,7 @@
                     </RelativeLayout>
 
                     <RelativeLayout
-                        android:id="@+id/investuser"
+                        android:id="@+id/invest_records"
                         android:layout_width="fill_parent"
                         android:layout_height="fill_parent"
                         android:layout_margin="0.5dp"
@@ -194,7 +194,7 @@
                     </RelativeLayout>
 
                     <RelativeLayout
-                        android:id="@+id/traderecord"
+                        android:id="@+id/trade_records"
                         android:layout_width="fill_parent"
                         android:layout_height="fill_parent"
                         android:layout_margin="0.5dp"
@@ -254,7 +254,7 @@
                     </RelativeLayout>
 
                     <RelativeLayout
-                        android:id="@+id/safesetting"
+                        android:id="@+id/safe_setting"
                         android:layout_width="fill_parent"
                         android:layout_height="fill_parent"
                         android:layout_margin="0.5dp"
@@ -281,7 +281,7 @@
                     </RelativeLayout>
 
                     <RelativeLayout
-                        android:id="@+id/bankcard"
+                        android:id="@+id/bank_card"
                         android:layout_width="fill_parent"
                         android:layout_height="fill_parent"
                         android:layout_margin="0.5dp"
@@ -315,7 +315,7 @@
                     android:orientation="horizontal" >
 
                     <RelativeLayout
-                        android:id="@+id/msgcenter"
+                        android:id="@+id/msg_center"
                         android:layout_width="fill_parent"
                         android:layout_height="fill_parent"
                         android:layout_margin="0.5dp"
@@ -339,33 +339,6 @@
                             android:layout_centerHorizontal="true"
                             android:layout_marginTop="15dp"
                             android:src="@drawable/chat" />
-                    </RelativeLayout>
-
-                    <RelativeLayout
-                        android:id="@+id/rewardmenu"
-                        android:layout_width="fill_parent"
-                        android:layout_height="fill_parent"
-                        android:layout_margin="0.5dp"
-                        android:layout_weight="1"
-                        android:background="#FFFFFF" >
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_alignParentBottom="true"
-                            android:layout_centerHorizontal="true"
-                            android:layout_marginBottom="15dp"
-                            android:text="奖励管理"
-                            android:textColor="#333333"
-                            android:textSize="12dp" />
-
-                        <ImageView
-                            android:layout_width="40dp"
-                            android:layout_height="40dp"
-                            android:layout_alignParentTop="true"
-                            android:layout_centerHorizontal="true"
-                            android:layout_marginTop="15dp"
-                            android:src="@drawable/reward" />
                     </RelativeLayout>
 
                     <RelativeLayout
@@ -394,6 +367,35 @@
                             android:layout_marginTop="15dp"
                             android:src="@drawable/recharge" />
                     </RelativeLayout>
+
+                    <RelativeLayout
+                        android:id="@+id/rewardmenu"
+                        android:layout_width="fill_parent"
+                        android:layout_height="fill_parent"
+                        android:layout_margin="0.5dp"
+                        android:layout_weight="1"
+                        android:background="#FFFFFF" >
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentBottom="true"
+                            android:layout_centerHorizontal="true"
+                            android:layout_marginBottom="15dp"
+                            android:text="优惠券"
+                            android:textColor="#333333"
+                            android:textSize="12dp" />
+
+                        <ImageView
+                            android:layout_width="40dp"
+                            android:layout_height="40dp"
+                            android:layout_alignParentTop="true"
+                            android:layout_centerHorizontal="true"
+                            android:layout_marginTop="15dp"
+                            android:src="@drawable/reward" />
+                    </RelativeLayout>
+
+
                 </LinearLayout>
             </LinearLayout>
         </LinearLayout>

@@ -38,5 +38,7 @@ dependencies {
     compile 'com.github.Aspsine:SwipeToLoadLayout:1.0.3'
     //表单验证
     compile 'com.mobsandgeeks:android-saripaar:2.0-SNAPSHOT'
+    //进度条
     compile project(':ProgressWheel')
+    compile 'me.zhanghai.android.materialprogressbar:library:1.1.6'
 }

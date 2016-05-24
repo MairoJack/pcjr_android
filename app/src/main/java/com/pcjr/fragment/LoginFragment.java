@@ -101,8 +101,10 @@ public class LoginFragment extends Fragment implements View.OnClickListener, Val
 
     @Override
     public void onValidationSucceeded() {
+        String username = text_username.getText().toString().trim();
+        String password = text_username.getText().toString().trim();
         ApiService service = RetrofitUtils.createApi(ApiService.class);
-        Call<JsonObject> call = service.getAccessToken("password", "test1", "123456", "1", "123");
+        Call<JsonObject> call = service.getAccessToken("password",username, password, "1", "123");
         call.enqueue(new Callback<JsonObject>() {
             @Override
             public void onResponse(Call<JsonObject> call, Response<JsonObject> response) {

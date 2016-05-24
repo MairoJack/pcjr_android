@@ -25,6 +25,18 @@
 
         <activity android:name="com.pcjr.activity.InvestDetailActivity"/>
         <activity android:name="com.pcjr.activity.NewsActivity"/>
+        <activity android:name="com.pcjr.activity.AboutusActivity"/>
+        <activity android:name="com.pcjr.activity.AddBankCardActivity"/>
+        <activity android:name="com.pcjr.activity.BindPhoneActivity"/>
+        <activity android:name="com.pcjr.activity.BankCardActivity"/>
+        <activity android:name="com.pcjr.activity.ChangePasswordActivity"/>
+        <activity android:name="com.pcjr.activity.FinancialRecordsActivity"/>
+        <activity android:name="com.pcjr.activity.InvestRecordsActivity"/>
+        <activity android:name="com.pcjr.activity.MsgCenterActivity"/>
+        <activity android:name="com.pcjr.activity.MsgDetailActivity"/>
+        <activity android:name="com.pcjr.activity.RealNameVerifiedActivity"/>
+        <activity android:name="com.pcjr.activity.SafeSettingActivity"/>
+        <activity android:name="com.pcjr.activity.TradeRecordsActivity"/>
     </application>
 
 </manifest>

@@ -25,7 +25,7 @@ public class NewsActivity extends Activity {
 
     public void initView(){
         listView = (ListView) findViewById(R.id.listview);
-        SimpleAdapter simpleAdapter = new SimpleAdapter(this, getData(), R.layout.itemnews, new String[]{"newstitle", "newstime"},
+        SimpleAdapter simpleAdapter = new SimpleAdapter(this, getData(), R.layout.item_news, new String[]{"newstitle", "newstime"},
                         new int[]{R.id.newstitle, R.id.newstime});
         listView.setAdapter(simpleAdapter);
     }

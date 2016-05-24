@@ -10,6 +10,7 @@ import android.view.ViewGroup;
 import android.widget.RelativeLayout;
 
 import com.pcjr.R;
+import com.pcjr.activity.AboutusActivity;
 import com.pcjr.activity.NewsActivity;
 
 
@@ -41,7 +42,7 @@ public class MoreFragment extends Fragment
 		aboutus.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				startActivity(new Intent(getActivity(), NewsActivity.class));
+				startActivity(new Intent(getActivity(), AboutusActivity.class));
 				getActivity().overridePendingTransition(R.anim.push_left_in, R.anim.push_left_out);
 			}
 		});
