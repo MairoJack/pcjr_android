@@ -15,7 +15,7 @@
         android:name=".common.Constant">
 
         <activity
-            android:name="com.pcjr.activity.MainActivity"
+            android:name="com.pcjr.activity.SplashActivity"
             android:label="@string/app_name" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -40,6 +40,8 @@
         <activity android:name="com.pcjr.activity.PaymentPlanActivity"/>
         <activity android:name="com.pcjr.activity.WithdrawRechargeActivity"/>
         <activity android:name="com.pcjr.activity.CouponActivity"/>
+        <activity android:name="com.pcjr.activity.WebViewActivity"/>
+        <activity android:name="com.pcjr.activity.MainActivity"/>
     </application>
 
 </manifest>

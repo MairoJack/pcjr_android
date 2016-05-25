@@ -24,11 +24,34 @@ public interface ApiService {
     @GET("/users/{user}")
     Call<Users> loadUsers(@Path("user") String user);
 
+    /**
+     * 获取访问token
+     * @param grant_type
+     * @param username
+     * @param password
+     * @param client_id
+     * @param client_secret
+     * @return
+     */
     @FormUrlEncoded
     @POST("/oauth/access_token")
     Call<JsonObject> getAccessToken(@Field("grant_type") String grant_type, @Field("username") String username, @Field("password") String password, @Field("client_id") String client_id, @Field("client_secret") String client_secret);
 
+    /**
+     * 获取用户信息
+     * @param access_token
+     * @return
+     */
     @GET("/user_info")
     Call<Users> getUserInfo(@Query("access_token") String access_token);
+
+
+    /**
+     * 获取首页焦点图和公告
+     * @return
+     */
+    @GET("/index_focus_info")
+    Call<JsonObject> getIndexFocusInfo();
+
 
 }

@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:htext="http://schemas.android.com/apk/res-auto"
     android:id="@+id/ly_main_weixin"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
@@ -39,26 +40,33 @@
                     android:orientation="vertical"
                     android:layout_marginTop="10dp"
                     android:background="#fff">
+
+
+
                     <LinearLayout
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:orientation="horizontal"
                         android:gravity="center_vertical"
                         android:layout_marginLeft="20dp"
-                        android:layout_marginTop="10dp">
+                        android:layout_marginTop="10dp"
+                        android:weightSum="1">
 
                         <ImageView
                             android:layout_width="20dp"
                             android:layout_height="20dp"
                             android:src="@drawable/laba"/>
 
-                        <TextView
+                        <TextSwitcher
+                            android:id="@+id/announce"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="关于明确皮城金融回款及提前导致"
-                            android:textColor="#8A8A8A"
                             android:layout_marginLeft="7dp"
-                            android:textSize="16dp"/>
+                            android:textColor="#8A8A8A"
+                            android:textSize="16dp"
+                            >
+                        </TextSwitcher>
+
                     </LinearLayout>
                     <LinearLayout
                         android:layout_width="fill_parent"
@@ -69,7 +77,7 @@
 
 
                         <RelativeLayout
-                            android:id="@+id/login"
+                            android:id="@+id/cpyg"
                             android:layout_width="fill_parent"
                             android:layout_height="fill_parent"
                             android:layout_weight="1.0">
@@ -93,7 +101,7 @@
                         </RelativeLayout>
 
                         <RelativeLayout
-                            android:id="@+id/reg"
+                            android:id="@+id/dcxa"
                             android:layout_width="fill_parent"
                             android:layout_height="fill_parent"
                             android:layout_weight="1.0">
@@ -116,7 +124,7 @@
                         </RelativeLayout>
 
                         <RelativeLayout
-                            android:id="@+id/invest"
+                            android:id="@+id/gtma"
                             android:layout_width="fill_parent"
                             android:layout_height="fill_parent"
                             android:layout_weight="1.0">
@@ -139,7 +147,7 @@
                         </RelativeLayout>
 
                         <RelativeLayout
-                            android:id="@+id/call"
+                            android:id="@+id/zlbh"
                             android:layout_width="fill_parent"
                             android:layout_height="fill_parent"
                             android:layout_weight="1.0">

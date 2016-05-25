@@ -3,57 +3,74 @@ package com.pcjr.fragment;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
-import android.util.Log;
+import android.support.v4.content.ContextCompat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.AnimationUtils;
 import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
+import android.widget.TextSwitcher;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.aspsine.swipetoloadlayout.OnLoadMoreListener;
 import com.aspsine.swipetoloadlayout.OnRefreshListener;
 import com.aspsine.swipetoloadlayout.SwipeToLoadLayout;
 import com.daimajia.slider.library.SliderLayout;
 import com.daimajia.slider.library.SliderTypes.BaseSliderView;
-import com.daimajia.slider.library.SliderTypes.TextSliderView;
 import com.daimajia.slider.library.Tricks.ViewPagerEx;
 import com.pcjr.R;
 import com.pcjr.activity.InvestDetailActivity;
 import com.pcjr.activity.MainActivity;
+import com.pcjr.activity.WebViewActivity;
 import com.pcjr.adapter.ProductListViewAdapter;
+import com.pcjr.common.Constant;
+import com.pcjr.model.Announce;
+import com.pcjr.model.FocusImg;
 import com.pcjr.model.Product;
-import com.pcjr.model.Users;
-import com.pcjr.service.ApiService;
+import com.pcjr.plugins.CustomTextSliderView;
+
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
-import retrofit2.Retrofit;
-import retrofit2.converter.gson.GsonConverterFactory;
 public class IndexFragment extends Fragment implements OnRefreshListener,OnLoadMoreListener,BaseSliderView.OnSliderClickListener,ViewPagerEx.OnPageChangeListener {
 
     private FragmentManager fragmentManager;
     private FragmentTransaction transaction;
     private SwipeToLoadLayout swipeToLoadLayout;
     private SliderLayout sliderLayout, sliderLayoutSmall;
-    private ProgressDialog proDialog;
+    private ProgressDialog dialog;
     private long lastRefreshTime;
 
-    private RelativeLayout login, reg, invest, call;
+    private RelativeLayout cpyg, dcxa, gtma, zlbh;
     private ImageView img1;
     private TextView login_but;
+    private ListView listView;
+    private TextSwitcher announce;
+    private List<Announce> announces;
+    private int mCounter;
+    private Handler handler = new Handler();
 
+    private Runnable announcesRunnable = new Runnable() {
+        public void run() {
+            if(announce !=null) {
+                handler.postDelayed(this, 3000);
+                announce.setInAnimation(AnimationUtils.loadAnimation(
+                        getContext(), R.anim.slide_up_in));
+                announce.setOutAnimation(AnimationUtils.loadAnimation(
+                        getContext(), R.anim.slide_up_out));
+                mCounter = mCounter >= announces.size() - 1 ? 0 : mCounter + 1;
+                announce.setText(announces.get(mCounter).getTitle());
+            }
+        }
+    };
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -61,31 +78,96 @@ public class IndexFragment extends Fragment implements OnRefreshListener,OnLoadM
         View view = inflater.inflate(R.layout.main_tab_index, container, false);
         fragmentManager = getActivity().getSupportFragmentManager();
         transaction = fragmentManager.beginTransaction();
+        dialog = new ProgressDialog(getActivity(), ProgressDialog.STYLE_SPINNER);
 
-        Log.d("Error", "onCreateView: sds");
+        return view;
+    }
 
-        List<Product> list = new ArrayList<Product>();
+    @Override
+    public void onViewCreated(View view, Bundle savedInstanceState) {
+        listView = (ListView) view.findViewById(R.id.list);
+        announce = (TextSwitcher) view.findViewById(R.id.announce);
+        cpyg = (RelativeLayout) view.findViewById(R.id.cpyg);
+        dcxa = (RelativeLayout) view.findViewById(R.id.dcxa);
+        gtma = (RelativeLayout) view.findViewById(R.id.gtma);
+        zlbh = (RelativeLayout) view.findViewById(R.id.zlbh);
+        sliderLayout = (SliderLayout) view.findViewById(R.id.slider);
+        sliderLayoutSmall = (SliderLayout) view.findViewById(R.id.slider_small);
+        swipeToLoadLayout = (SwipeToLoadLayout) view.findViewById(R.id.swipeToLoadLayout);
+        swipeToLoadLayout.setOnRefreshListener(this);
+        swipeToLoadLayout.setOnLoadMoreListener(this);
+        swipeToLoadLayout.setHorizontalScrollBarEnabled(true);
 
-        Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl("https://api.github.com/")
-                .addConverterFactory(GsonConverterFactory.create())
-                .build();
-
-        ApiService service = retrofit.create(ApiService.class);
-        Call<Users> call = service.loadUsers("basil2style");
-        call.enqueue(new Callback<Users>() {
+        initData();
+        announce.setFactory(new TextSwitcher.ViewFactory() {
             @Override
-            public void onResponse(Call<Users> call, Response<Users> response) {
-                Users u = response.body();
-                Log.e("Error", "onResponse: " + u);
-
+            public View makeView() {
+                TextView tv = new TextView(getContext());
+                tv.setTextColor(ContextCompat.getColor(getContext(), R.color.text));
+                tv.setTextSize(16);
+                return tv;
             }
+        });
 
+        cpyg.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onFailure(Call<Users> call, Throwable t) {
+            public void onClick(View v) {
+                MainActivity mainActivity  = (MainActivity) getContext();
+                mainActivity.getmTabBtnInvest().performClick();
+            }
+        });
+        dcxa.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                MainActivity mainActivity  = (MainActivity) getContext();
+                mainActivity.getmTabBtnInvest().performClick();
+            }
+        });
+        gtma.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                MainActivity mainActivity  = (MainActivity) getContext();
+                mainActivity.getmTabBtnInvest().performClick();
+            }
+        });
+        zlbh.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                MainActivity mainActivity  = (MainActivity) getContext();
+                mainActivity.getmTabBtnInvest().performClick();
+            }
+        });
+
+        announce.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getActivity(), WebViewActivity.class);
+                intent.putExtra("url",announces.get(mCounter).getUrl());
+                startActivity(intent);
+                getActivity().overridePendingTransition(R.anim.push_left_in, R.anim.push_left_out);
 
             }
         });
+
+
+
+        super.onViewCreated(view, savedInstanceState);
+
+
+    }
+
+
+    /**
+     * 初始化数据
+     */
+    private void initData(){
+        Constant constant = (Constant) getActivity().getApplication();
+        initSlider(constant.getFocusImgs(),constant.getMidFocusImgs());
+        announces = constant.getAnnounces();
+        mCounter = constant.getmCounter();
+        //handler.post(announcesRunnable);
+
+        List<Product> list = new ArrayList<Product>();
         Product p = new Product();
         p.setName("sss");
         p.setAmount("50000");
@@ -94,7 +176,6 @@ public class IndexFragment extends Fragment implements OnRefreshListener,OnLoadM
         p.setSeries(1);
         list.add(p);
         list.add(p);
-        ListView listView = (ListView) view.findViewById(R.id.list);
         ListAdapter adapter = new ProductListViewAdapter(list, getActivity());
         listView.setAdapter(adapter);
         listView.setFocusable(false);
@@ -105,84 +186,42 @@ public class IndexFragment extends Fragment implements OnRefreshListener,OnLoadM
                 getActivity().overridePendingTransition(R.anim.push_left_in, R.anim.push_left_out);
             }
         });
-
-        return view;
     }
 
-    @Override
-    public void onViewCreated(View view, Bundle savedInstanceState) {
-        login = (RelativeLayout) view.findViewById(R.id.login);
-        reg = (RelativeLayout) view.findViewById(R.id.reg);
-        invest = (RelativeLayout) view.findViewById(R.id.invest);
-        call = (RelativeLayout) view.findViewById(R.id.call);
-        sliderLayout = (SliderLayout) view.findViewById(R.id.slider);
-        sliderLayoutSmall = (SliderLayout) view.findViewById(R.id.slider_small);
-        swipeToLoadLayout = (SwipeToLoadLayout) view.findViewById(R.id.swipeToLoadLayout);
-        swipeToLoadLayout.setOnRefreshListener(this);
-        swipeToLoadLayout.setOnLoadMoreListener(this);
-        swipeToLoadLayout.setHorizontalScrollBarEnabled(true);
-
-        intiSlider();
-        login.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                MainActivity mainActivity  = (MainActivity) getContext();
-                mainActivity.getmTabBtnInvest().performClick();
-            }
-        });
-        super.onViewCreated(view, savedInstanceState);
+    /**
+     * 初始化图片轮播
+     * @param focusImgs
+     * @param midFocusImgs
+     */
+    public void initSlider(List<FocusImg> focusImgs,List<FocusImg> midFocusImgs) {
 
 
-    }
-
-    public void intiSlider() {
-
-
-        HashMap<String, String> url_maps = new HashMap<>();
-        url_maps.put("1", "https://www.pcjr.com/images/focus_img2.jpg");
-        url_maps.put("2", "https://www.pcjr.com/images/focus_img3.jpg");
-
-
-        for (String name : url_maps.keySet()) {
-            TextSliderView textSliderView = new TextSliderView(getActivity());
-            // initialize a SliderLayout
+        for (FocusImg focusImg:focusImgs) {
+            CustomTextSliderView textSliderView = new CustomTextSliderView(getActivity());
             textSliderView
-                    .image(url_maps.get(name))
+                    .image(focusImg.getImg_url())
                     .setScaleType(BaseSliderView.ScaleType.Fit)
                     .setOnSliderClickListener(this);
-
-            //add your extra information
             textSliderView.bundle(new Bundle());
-            textSliderView.getBundle()
-                    .putString("extra", name);
-
+            textSliderView.getBundle().putString("url", focusImg.getUrl());
             sliderLayout.addSlider(textSliderView);
         }
         sliderLayout.setPresetTransformer(SliderLayout.Transformer.Default);
-        sliderLayout.setPresetIndicator(SliderLayout.PresetIndicators.Center_Bottom);
+        sliderLayout.setPresetIndicator(SliderLayout.PresetIndicators.Right_Bottom);
         sliderLayout.setDuration(4000);
 
 
-        HashMap<String, String> url_maps_small = new HashMap<>();
-        url_maps_small.put("1", "https://www.pcjr.com/images/focus_img2.jpg");
-        url_maps_small.put("2", "https://www.pcjr.com/images/focus_img3.jpg");
-
-
-        for (String name : url_maps_small.keySet()) {
-            TextSliderView textSliderView = new TextSliderView(getActivity());
-            // initialize a SliderLayout
+        for (FocusImg focusImg:midFocusImgs) {
+            CustomTextSliderView textSliderView = new CustomTextSliderView(getActivity());
             textSliderView
-                    .image(url_maps.get(name))
+                    .image(focusImg.getImg_url())
                     .setScaleType(BaseSliderView.ScaleType.Fit)
                     .setOnSliderClickListener(this);
-
-            //add your extra information
             textSliderView.bundle(new Bundle());
-            textSliderView.getBundle()
-                    .putString("extra", name);
-
+            textSliderView.getBundle().putString("url", focusImg.getUrl());
             sliderLayoutSmall.addSlider(textSliderView);
         }
+
         sliderLayoutSmall.setPresetTransformer(SliderLayout.Transformer.Default);
         sliderLayoutSmall.setPresetIndicator(SliderLayout.PresetIndicators.Center_Bottom);
         sliderLayoutSmall.setDuration(4000);
@@ -198,7 +237,10 @@ public class IndexFragment extends Fragment implements OnRefreshListener,OnLoadM
 
     @Override
     public void onSliderClick(BaseSliderView slider) {
-        Toast.makeText(getActivity(), slider.getBundle().get("extra") + "", Toast.LENGTH_SHORT).show();
+        Intent intent = new Intent(getActivity(), WebViewActivity.class);
+        intent.putExtra("url",String.valueOf(slider.getBundle().get("url")));
+        startActivity(intent);
+        getActivity().overridePendingTransition(R.anim.push_left_in, R.anim.push_left_out);
     }
 
     @Override
@@ -238,5 +280,17 @@ public class IndexFragment extends Fragment implements OnRefreshListener,OnLoadM
                 sliderLayout.startAutoCycle();
             }
         }, 2000);
+    }
+
+    @Override
+    public void onPause() {
+        handler.removeCallbacks(announcesRunnable);
+        super.onPause();
+    }
+
+    @Override
+    public void onResume() {
+        handler.post(announcesRunnable);
+        super.onResume();
     }
 }
