@@ -20,7 +20,7 @@ public class ProductListViewAdapter extends BaseAdapter {
     private List<Product> list;
     private Context context;
     private LayoutInflater layoutInflater;
-    private final class ListItemView{
+    private static class ListItemView{
         public RotateTextView rtv;
         public TextView
                 product_name,

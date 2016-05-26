@@ -53,13 +53,13 @@
                 </LinearLayout>
 
                 <TextView
-                    android:id="@+id/keyongyue"
+                    android:id="@+id/available_balance"
                     android:layout_width="fill_parent"
                     android:layout_height="150dp"
                     android:gravity="center"
                     android:text="990000.00"
                     android:textColor="#FFFFFF"
-                    android:textSize="60dp" />
+                    android:textSize="50dp" />
 
                 <View
                     android:layout_width="fill_parent"
@@ -87,7 +87,7 @@
                             android:textColor="#FFFFFF" />
 
                         <TextView
-                            android:id="@+id/sum"
+                            android:id="@+id/sum_assets"
                             android:layout_width="wrap_content"
                             android:layout_height="fill_parent"
                             android:layout_gravity="center"
@@ -95,7 +95,7 @@
                             android:gravity="center"
                             android:text="99990000.00"
                             android:textColor="#FFFFFF"
-                            android:textSize="30dp" />
+                            android:textSize="20dp" />
                     </LinearLayout>
 
                     <LinearLayout
@@ -114,7 +114,7 @@
                             android:textColor="#FFFFFF" />
 
                         <TextView
-                            android:id="@+id/dssy"
+                            android:id="@+id/uncollected_interest_sum"
                             android:layout_width="wrap_content"
                             android:layout_height="fill_parent"
                             android:layout_gravity="center"
@@ -122,7 +122,7 @@
                             android:gravity="center"
                             android:text="9990000.00"
                             android:textColor="#FFFFFF"
-                            android:textSize="30dp" />
+                            android:textSize="20dp" />
                     </LinearLayout>
                 </LinearLayout>
             </LinearLayout>

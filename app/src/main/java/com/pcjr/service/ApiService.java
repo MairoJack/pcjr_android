@@ -1,6 +1,7 @@
 package com.pcjr.service;
 
 import com.google.gson.JsonObject;
+import com.pcjr.model.FinanceRecords;
 import com.pcjr.model.Oauth;
 import com.pcjr.model.Product;
 import com.pcjr.model.Users;
@@ -45,6 +46,13 @@ public interface ApiService {
     @GET("/user_info")
     Call<Users> getUserInfo(@Query("access_token") String access_token);
 
+    /**
+     * 获取用户中心首页数据
+     * @param access_token
+     * @return
+     */
+    @GET("/member_index_data")
+    Call<JsonObject> getMemberIndex(@Query("access_token") String access_token);
 
     /**
      * 获取首页焦点图和公告
@@ -53,5 +61,25 @@ public interface ApiService {
     @GET("/index_focus_info")
     Call<JsonObject> getIndexFocusInfo();
 
+    /**
+     * 获取用户交易记录
+     * @return
+     */
+    @GET("/member_log_data")
+    Call<JsonObject> getMemberLogData(@Query("access_token") String access_token);
+
+    /**
+     * 获取用户投资记录
+     * @return
+     */
+    @GET("/member_invest_data")
+    Call<JsonObject> getMemberInvestData(@Query("access_token") String access_token);
+
+    /**
+     * 获取用户资金记录
+     * @return
+     */
+    @GET("/member_finance_data")
+    Call<FinanceRecords> getMemberFinanceData(@Query("access_token") String access_token);
 
 }

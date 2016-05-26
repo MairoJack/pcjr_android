@@ -98,47 +98,6 @@
             android:text="123456"/>
     </RelativeLayout>
 
-    <RelativeLayout
-        android:layout_width="fill_parent"
-        android:layout_height="50dp"
-        android:layout_marginTop="1dp"
-        android:background="#FFFFFF" >
-
-        <ImageView
-            android:id="@+id/img"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true"
-            android:layout_centerVertical="true"
-            android:layout_marginLeft="15dp"
-            android:layout_marginTop="15dp"
-            android:src="@drawable/yzm" />
-
-        <EditText
-            android:id="@+id/checkcode"
-            android:layout_width="fill_parent"
-            android:layout_height="fill_parent"
-            android:layout_marginBottom="5dp"
-            android:layout_marginLeft="20dp"
-            android:layout_marginRight="10dp"
-            android:layout_marginTop="5dp"
-            android:layout_toLeftOf="@+id/yzmimg"
-            android:layout_toRightOf="@+id/img"
-            android:background="@null"
-            android:hint="请输入验证码"
-            android:singleLine="true"
-            android:textSize="12dp"
-            android:text="1234"/>
-
-        <ImageView
-            android:id="@+id/yzmimg"
-            android:layout_width="100dp"
-            android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            android:layout_centerVertical="true"
-            android:layout_marginRight="15dp" />
-    </RelativeLayout>
-
     <Button
         android:id="@+id/loginbtn"
         android:layout_width="fill_parent"

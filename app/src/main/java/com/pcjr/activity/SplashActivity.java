@@ -17,6 +17,7 @@ import com.pcjr.model.Announce;
 import com.pcjr.model.FocusImg;
 import com.pcjr.service.ApiService;
 import com.pcjr.utils.RetrofitUtils;
+import com.pcjr.utils.SharedPreferenceUtil;
 
 import java.util.List;
 
@@ -29,20 +30,23 @@ import retrofit2.Response;
  * Created by Mario on 2016/5/24.
  */
 public class SplashActivity extends Activity {
+
+    private Constant constant;
+
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.splash);
+        constant = (Constant) getApplication();
         init();
     }
 
-    private void init(){
-        final Constant constant = (Constant) getApplication();
+    private void init() {
         ApiService service = RetrofitUtils.createApi(ApiService.class);
         Call<JsonObject> call = service.getIndexFocusInfo();
         call.enqueue(new Callback<JsonObject>() {
             @Override
             public void onResponse(Call<JsonObject> call, Response<JsonObject> response) {
-                if (response.body() != null) {
+                if (response.isSuccessful()) {
                     JsonObject json = response.body();
                     Gson gson = new Gson();
                     List<FocusImg> focusImgs = null;
@@ -50,21 +54,24 @@ public class SplashActivity extends Activity {
                     List<Announce> announces = null;
                     int mCounter = 0;
                     if (json.get("top_focus_img") != null) {
-                        focusImgs = gson.fromJson(json.get("top_focus_img"), new TypeToken<List<FocusImg>>(){}.getType());
+                        focusImgs = gson.fromJson(json.get("top_focus_img"), new TypeToken<List<FocusImg>>() {
+                        }.getType());
                     }
                     if (json.get("middle_focus_img") != null) {
-                        midFocusImgs = gson.fromJson(json.get("middle_focus_img"), new TypeToken<List<FocusImg>>(){}.getType());
+                        midFocusImgs = gson.fromJson(json.get("middle_focus_img"), new TypeToken<List<FocusImg>>() {
+                        }.getType());
                     }
                     if (json.get("announce") != null) {
-                        announces = gson.fromJson(json.get("announce"), new TypeToken<List<Announce>>(){}.getType());
+                        announces = gson.fromJson(json.get("announce"), new TypeToken<List<Announce>>() {
+                        }.getType());
                         mCounter = announces.size();
                     }
                     constant.setFocusImgs(focusImgs);
                     constant.setMidFocusImgs(midFocusImgs);
                     constant.setAnnounces(announces);
                     constant.setmCounter(mCounter);
-                    Intent intent = new Intent(SplashActivity.this,MainActivity.class);
-                    overridePendingTransition(android.R.anim.fade_in,android.R.anim.fade_out);
+                    Intent intent = new Intent(SplashActivity.this, MainActivity.class);
+                    overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
                     startActivity(intent);
                     finish();
                 }
@@ -77,4 +84,6 @@ public class SplashActivity extends Activity {
             }
         });
     }
+
+
 }

@@ -5,6 +5,10 @@
     android:background="#f3f3f3"
     android:orientation="vertical" >
 
+    <View
+        android:layout_width="fill_parent"
+        android:layout_height="0.5dp"
+        android:background="#E7E7E7"/>
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -12,7 +16,7 @@
         android:padding="10dp" >
 
         <TextView
-            android:id="@+id/goodname"
+            android:id="@+id/product_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
@@ -22,11 +26,12 @@
             android:textSize="16dp" />
 
         <TextView
+            android:id="@+id/repayment"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignBottom="@+id/goodname"
+            android:layout_alignBottom="@+id/product_name"
             android:layout_marginLeft="5dp"
-            android:layout_toRightOf="@+id/goodname"
+            android:layout_toRightOf="@+id/product_name"
             android:background="@drawable/categoryblue"
             android:padding="3dp"
             android:text="一次性本息还付"
@@ -47,6 +52,7 @@
             android:layout_weight="1" >
 
             <TextView
+                android:id="@+id/amount"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentBottom="true"
@@ -73,6 +79,7 @@
             android:layout_weight="1" >
 
             <TextView
+                android:id="@+id/year_income"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentBottom="true"
@@ -99,6 +106,7 @@
             android:layout_weight="1" >
 
             <TextView
+                android:id="@+id/income"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentBottom="true"
@@ -121,6 +129,7 @@
     </LinearLayout>
 
     <TextView
+        android:id="@+id/date"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
@@ -131,6 +140,6 @@
     <View 
         android:layout_width="fill_parent"
         android:layout_height="0.5dp"
-        android:background="#333333"/>
+        android:background="#E7E7E7"/>
 
 </LinearLayout>

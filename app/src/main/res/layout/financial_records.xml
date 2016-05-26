@@ -63,6 +63,7 @@
                     android:textColor="#333333" />
 
                 <TextView
+                    android:id="@+id/total_amount"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentRight="true"
@@ -93,6 +94,7 @@
                     android:textColor="#333333" />
 
                 <TextView
+                    android:id="@+id/available_balance"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentRight="true"
@@ -123,6 +125,7 @@
                     android:textColor="#333333" />
 
                 <TextView
+                    android:id="@+id/capital"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentRight="true"
@@ -153,6 +156,7 @@
                     android:textColor="#333333" />
 
                 <TextView
+                    android:id="@+id/interest"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentRight="true"
@@ -184,6 +188,7 @@
                     android:textColor="#333333" />
 
                 <TextView
+                    android:id="@+id/earned_interest"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentRight="true"
@@ -214,6 +219,7 @@
                     android:textColor="#333333" />
 
                 <TextView
+                    android:id="@+id/invest_success_amount"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentRight="true"
@@ -244,6 +250,7 @@
                     android:textColor="#333333" />
 
                 <TextView
+                    android:id="@+id/recharge_success_amount"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentRight="true"
@@ -274,6 +281,7 @@
                     android:textColor="#333333" />
 
                 <TextView
+                    android:id="@+id/withdraw_success_amount"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentRight="true"
@@ -305,6 +313,7 @@
                     android:textColor="#333333" />
 
                 <TextView
+                    android:id="@+id/reward_amount"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentRight="true"
@@ -335,6 +344,7 @@
                     android:textColor="#333333" />
 
                 <TextView
+                    android:id="@+id/total_reward_amount"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentRight="true"

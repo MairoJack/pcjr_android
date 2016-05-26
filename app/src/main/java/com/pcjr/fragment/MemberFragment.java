@@ -9,7 +9,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 
+import com.google.gson.JsonObject;
 import com.pcjr.R;
 import com.pcjr.activity.BankCardActivity;
 import com.pcjr.activity.CouponActivity;
@@ -21,6 +23,7 @@ import com.pcjr.activity.SafeSettingActivity;
 import com.pcjr.activity.TradeRecordsActivity;
 import com.pcjr.activity.WithdrawRechargeActivity;
 import com.pcjr.common.Constant;
+import com.pcjr.model.Member;
 import com.pcjr.model.Users;
 import com.pcjr.service.ApiService;
 import com.pcjr.utils.RetrofitUtils;
@@ -36,8 +39,9 @@ import retrofit2.Response;
 public class MemberFragment extends Fragment
 {
 
-	RelativeLayout financial_records,invest_records,trade_records,safe_setting,bank_card,msg_center,payment_plan,withdraw_recharge,coupon;
-	@Override
+	private RelativeLayout financial_records,invest_records,trade_records,safe_setting,bank_card,msg_center,payment_plan,withdraw_recharge,coupon;
+	private TextView username,available_balance,sum_assets,uncollected_interest_sum;
+    @Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
 	{
 		return inflater.inflate(R.layout.usercenter, container, false);
@@ -46,6 +50,12 @@ public class MemberFragment extends Fragment
 	@Override
 	public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
 		super.onViewCreated(view, savedInstanceState);
+
+        username = (TextView) view.findViewById(R.id.username);
+        available_balance = (TextView) view.findViewById(R.id.available_balance);
+        sum_assets = (TextView) view.findViewById(R.id.sum_assets);
+        uncollected_interest_sum = (TextView) view.findViewById(R.id.uncollected_interest_sum);
+
 		financial_records = (RelativeLayout) view.findViewById(R.id.financial_records);
         invest_records = (RelativeLayout) view.findViewById(R.id.invest_records);
         trade_records = (RelativeLayout) view.findViewById(R.id.trade_records);
@@ -150,15 +160,21 @@ public class MemberFragment extends Fragment
 
 	private void initData(){
 		ApiService service = RetrofitUtils.createApi(ApiService.class);
-		Call<Users> callUsers = service.getUserInfo(Constant.access_token);
-		callUsers.enqueue(new Callback<Users>() {
+		Call<JsonObject> callUsers = service.getMemberIndex(Constant.access_token);
+		callUsers.enqueue(new Callback<JsonObject>() {
 			@Override
-			public void onResponse(Call<Users> call, Response<Users> response) {
-				Users u = response.body();
+			public void onResponse(Call<JsonObject> call, Response<JsonObject> response) {
+                if(response.isSuccessful()){
+                    JsonObject json = response.body();
+                    username.setText(json.get("user_name").getAsString());
+                    available_balance.setText(json.get("available_balance").getAsString());
+                    sum_assets.setText(json.get("total").getAsString());
+                    uncollected_interest_sum.setText(json.get("interest").getAsString());
+                }
 			}
 
 			@Override
-			public void onFailure(Call<Users> call, Throwable t) {
+			public void onFailure(Call<JsonObject> call, Throwable t) {
 				Log.d("Mario", "onResponse:Throwable " + t);
 			}
 		});

@@ -6,11 +6,13 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.view.View.OnClickListener;
 
+import com.google.gson.JsonObject;
 import com.pcjr.R;
 import com.pcjr.common.Constant;
 import com.pcjr.fragment.ForgetFragment;
@@ -20,6 +22,13 @@ import com.pcjr.fragment.LoginFragment;
 import com.pcjr.fragment.MemberFragment;
 import com.pcjr.fragment.MoreFragment;
 import com.pcjr.fragment.RegistFragment;
+import com.pcjr.service.ApiService;
+import com.pcjr.utils.RetrofitUtils;
+import com.pcjr.utils.SharedPreferenceUtil;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 /**
  * Created by Mario on 2016/5/16.
@@ -191,5 +200,40 @@ public class MainActivity extends FragmentActivity implements OnClickListener {
 
     public LinearLayout getmTabBtnInvest() {
         return mTabBtnInvest;
+    }
+
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        tryLogin();
+    }
+
+    private void tryLogin() {
+        final SharedPreferenceUtil spu = new SharedPreferenceUtil(this, Constant.FILE);
+        if(!spu.getisFirst()) {
+            ApiService service = RetrofitUtils.createApi(ApiService.class);
+            Call<JsonObject> call = service.getAccessToken("password", spu.getUsernam(), spu.getPassword(), Constant.CLIENTID, Constant.CLIENTSECRET);
+            call.enqueue(new Callback<JsonObject>() {
+                @Override
+                public void onResponse(Call<JsonObject> call, Response<JsonObject> response) {
+                    if (response.isSuccessful()) {
+                        JsonObject json = response.body();
+                        if (json.get("access_token") != null) {
+                            String accessToken = json.get("access_token").getAsString();
+                            String refreshToken = json.get("refresh_token").getAsString();
+                            spu.setAccessToken(accessToken);
+                            spu.setRefresToken(refreshToken);
+                            Constant.isLogin = true;
+                        }
+                    }
+                }
+
+                @Override
+                public void onFailure(Call<JsonObject> call, Throwable t) {
+                    Log.d("Mario", "onResponse:Throwable:" + t);
+                }
+            });
+        }
     }
 }

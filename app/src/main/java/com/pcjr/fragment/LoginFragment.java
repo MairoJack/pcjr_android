@@ -3,6 +3,7 @@ package com.pcjr.fragment;
 import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
@@ -20,8 +21,11 @@ import com.mobsandgeeks.saripaar.Validator;
 import com.mobsandgeeks.saripaar.annotation.NotEmpty;
 import com.pcjr.R;
 import com.pcjr.common.Constant;
+import com.pcjr.plugins.ColoredSnackbar;
 import com.pcjr.service.ApiService;
 import com.pcjr.utils.RetrofitUtils;
+import com.pcjr.utils.SharedPreferenceUtil;
+
 import java.util.List;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -37,8 +41,6 @@ public class LoginFragment extends Fragment implements View.OnClickListener, Val
     private EditText text_username;
     @NotEmpty(message = "密码不能为空")
     private EditText text_password;
-    @NotEmpty(message = "验证码不能为空")
-    private EditText text_checkcode;
 
     private Button but_login;
 
@@ -63,7 +65,6 @@ public class LoginFragment extends Fragment implements View.OnClickListener, Val
         forget = (TextView) view.findViewById(R.id.forget);
         text_username = (EditText) view.findViewById(R.id.username);
         text_password = (EditText) view.findViewById(R.id.password);
-        text_checkcode = (EditText) view.findViewById(R.id.checkcode);
 
         but_login = (Button) view.findViewById(R.id.loginbtn);
         but_login.setOnClickListener(new View.OnClickListener() {
@@ -93,20 +94,28 @@ public class LoginFragment extends Fragment implements View.OnClickListener, Val
 
     @Override
     public void onValidationSucceeded() {
-        String username = text_username.getText().toString().trim();
-        String password = text_password.getText().toString().trim();
+        final String username = text_username.getText().toString().trim();
+        final String password = text_password.getText().toString().trim();
         ApiService service = RetrofitUtils.createApi(ApiService.class);
-        Call<JsonObject> call = service.getAccessToken("password",username, "123", "1", "123");
+        Call<JsonObject> call = service.getAccessToken("password",username, password, "1", "123");
         dialog.setMessage("正在登录...");
         dialog.show();
         call.enqueue(new Callback<JsonObject>() {
             @Override
             public void onResponse(Call<JsonObject> call, Response<JsonObject> response) {
-                if (response.body() != null) {
+                if (response.isSuccessful()) {
                     JsonObject json = response.body();
                     if (json.get("access_token") != null) {
-                        Constant.access_token = json.get("access_token").getAsString();
+                        SharedPreferenceUtil spu = new SharedPreferenceUtil(getContext(),Constant.FILE);
+                        String accessToken = json.get("access_token").getAsString();
+                        String refreshToken = json.get("refresh_token").getAsString();
+                        Constant.access_token = accessToken;
                         Constant.isLogin = true;
+                        spu.setUsername(username);
+                        spu.setPassword(password);
+                        spu.setAccessToken(accessToken);
+                        spu.setRefresToken(refreshToken);
+                        spu.setIsFirst(false);
                         dialog.dismiss();
                         transaction.setCustomAnimations(R.anim.push_left_in, R.anim.push_left_out);
                         transaction.remove(LoginFragment.this).add(R.id.id_content, new MemberFragment());
@@ -115,6 +124,10 @@ public class LoginFragment extends Fragment implements View.OnClickListener, Val
                         //Snackbar.make(getView(),"dsds",Snackbar.LENGTH_SHORT).show();
                         Toast.makeText(getActivity(), json.get("status_code").toString() + ":" + json.get("message").toString(), Toast.LENGTH_SHORT).show();
                     }
+                }else{
+                    dialog.dismiss();
+                    Snackbar snackbar = Snackbar.make(getView(),"用户名或密码错误", Snackbar.LENGTH_SHORT);
+                    ColoredSnackbar.warning(snackbar).show();
                 }
 
             }

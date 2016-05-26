@@ -37,5 +37,26 @@
                 android:src="@drawable/arrow2" />
         </RelativeLayout>
     </RelativeLayout>
+    <com.aspsine.swipetoloadlayout.SwipeToLoadLayout
+        android:id="@+id/swipeToLoadLayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        >
 
+        <include
+            android:id="@id/swipe_refresh_header"
+            layout="@layout/layout_pull_header" />
+
+        <ListView
+            android:id="@+id/swipe_target"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:clipToPadding="false"
+            android:divider="#F7F7F7"
+            android:dividerHeight="5dp"/>
+
+        <include
+            android:id="@id/swipe_load_more_footer"
+            layout="@layout/layout_pull_footer" />
+    </com.aspsine.swipetoloadlayout.SwipeToLoadLayout>
 </LinearLayout>
