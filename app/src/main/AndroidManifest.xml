@@ -42,6 +42,7 @@
         <activity android:name="com.pcjr.activity.CouponActivity"/>
         <activity android:name="com.pcjr.activity.WebViewActivity"/>
         <activity android:name="com.pcjr.activity.MainActivity"/>
+        <activity android:name="com.pcjr.activity.InvestmentCertificatesActivity"/>
     </application>
 
 </manifest>

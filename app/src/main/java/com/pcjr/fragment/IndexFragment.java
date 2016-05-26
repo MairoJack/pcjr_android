@@ -60,7 +60,7 @@ public class IndexFragment extends Fragment implements OnRefreshListener,OnLoadM
 
     private Runnable announcesRunnable = new Runnable() {
         public void run() {
-            if(announce !=null) {
+            if(announces !=null && announces.size()>0) {
                 handler.postDelayed(this, 3000);
                 announce.setInAnimation(AnimationUtils.loadAnimation(
                         getContext(), R.anim.slide_up_in));
@@ -195,31 +195,34 @@ public class IndexFragment extends Fragment implements OnRefreshListener,OnLoadM
      */
     public void initSlider(List<FocusImg> focusImgs,List<FocusImg> midFocusImgs) {
 
+        if(focusImgs!=null && focusImgs.size()>0) {
+            for (FocusImg focusImg : focusImgs) {
+                CustomTextSliderView textSliderView = new CustomTextSliderView(getActivity());
+                textSliderView
+                        .image(focusImg.getImg_url())
+                        .setScaleType(BaseSliderView.ScaleType.Fit)
+                        .setOnSliderClickListener(this);
+                textSliderView.bundle(new Bundle());
+                textSliderView.getBundle().putString("url", focusImg.getUrl());
+                sliderLayout.addSlider(textSliderView);
+            }
+            sliderLayout.setPresetTransformer(SliderLayout.Transformer.Default);
+            sliderLayout.setPresetIndicator(SliderLayout.PresetIndicators.Right_Bottom);
+            sliderLayout.setDuration(4000);
 
-        for (FocusImg focusImg:focusImgs) {
-            CustomTextSliderView textSliderView = new CustomTextSliderView(getActivity());
-            textSliderView
-                    .image(focusImg.getImg_url())
-                    .setScaleType(BaseSliderView.ScaleType.Fit)
-                    .setOnSliderClickListener(this);
-            textSliderView.bundle(new Bundle());
-            textSliderView.getBundle().putString("url", focusImg.getUrl());
-            sliderLayout.addSlider(textSliderView);
         }
-        sliderLayout.setPresetTransformer(SliderLayout.Transformer.Default);
-        sliderLayout.setPresetIndicator(SliderLayout.PresetIndicators.Right_Bottom);
-        sliderLayout.setDuration(4000);
 
-
-        for (FocusImg focusImg:midFocusImgs) {
-            CustomTextSliderView textSliderView = new CustomTextSliderView(getActivity());
-            textSliderView
-                    .image(focusImg.getImg_url())
-                    .setScaleType(BaseSliderView.ScaleType.Fit)
-                    .setOnSliderClickListener(this);
-            textSliderView.bundle(new Bundle());
-            textSliderView.getBundle().putString("url", focusImg.getUrl());
-            sliderLayoutSmall.addSlider(textSliderView);
+        if(midFocusImgs!=null && midFocusImgs.size()>0) {
+            for (FocusImg focusImg : midFocusImgs) {
+                CustomTextSliderView textSliderView = new CustomTextSliderView(getActivity());
+                textSliderView
+                        .image(focusImg.getImg_url())
+                        .setScaleType(BaseSliderView.ScaleType.Fit)
+                        .setOnSliderClickListener(this);
+                textSliderView.bundle(new Bundle());
+                textSliderView.getBundle().putString("url", focusImg.getUrl());
+                sliderLayoutSmall.addSlider(textSliderView);
+            }
         }
 
         sliderLayoutSmall.setPresetTransformer(SliderLayout.Transformer.Default);

@@ -2,8 +2,9 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#f3f3f3"
-    android:orientation="vertical" >
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="#eee"
+    android:orientation="vertical">
 
     <RelativeLayout
         android:id="@+id/title"
@@ -16,7 +17,7 @@
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
             android:layout_centerVertical="true"
-            android:text="投资记录"
+            android:text="投资券"
             android:textColor="#FFFFFF"
             android:textSize="20dp" />
 
@@ -36,35 +37,44 @@
                 android:layout_centerVertical="true"
                 android:src="@drawable/arrow2" />
         </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/ask"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="15dp"
+             >
+
+            <ImageView
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:layout_alignParentLeft="true"
+                android:layout_centerVertical="true"
+                android:src="@drawable/ask" />
+        </RelativeLayout>
     </RelativeLayout>
 
-    <com.jayfang.dropdownmenu.DropDownMenu
-        android:orientation="horizontal"
+    <android.support.design.widget.TabLayout
+        android:id="@+id/tab_layout"
         android:layout_width="match_parent"
-        android:id="@+id/drop_down_menu"
+        android:layout_height="wrap_content"
+        android:background="#fff"
+        app:tabTextColor="#666"
+        app:tabIndicatorColor="#16b0f1"
+        app:tabSelectedTextColor="#16b0f1"
+
+        />
+
+    <android.support.v4.view.ViewPager
+        android:id="@+id/tab_viewpager"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_weight="1.0"
         android:background="@color/white"
-        android:layout_height="40dp"/>
+        android:flipInterval="30"
+        android:persistentDrawingCache="animation" />
 
-    <com.aspsine.swipetoloadlayout.SwipeToLoadLayout
-        android:id="@+id/swipeToLoadLayout"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        >
-
-        <include
-            android:id="@id/swipe_refresh_header"
-            layout="@layout/layout_pull_header" />
-
-        <ListView
-            android:id="@+id/swipe_target"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:clipToPadding="false"
-            android:divider="#F7F7F7"
-            android:dividerHeight="5dp"/>
-
-        <include
-            android:id="@id/swipe_load_more_footer"
-            layout="@layout/layout_pull_footer" />
-    </com.aspsine.swipetoloadlayout.SwipeToLoadLayout>
 </LinearLayout>

@@ -40,4 +40,6 @@ dependencies {
     compile 'com.mobsandgeeks:android-saripaar:2.0-SNAPSHOT'
     //进度条
     compile project(':ProgressWheel')
+    //DropDownMenu
+    compile 'com.github.JayFang1993:DropDownMenu:v0.9'
 }

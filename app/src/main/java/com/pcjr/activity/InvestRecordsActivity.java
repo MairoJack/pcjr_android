@@ -1,6 +1,7 @@
 package com.pcjr.activity;
 
 import android.app.Activity;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.view.KeyEvent;
 import android.view.View;
@@ -13,6 +14,7 @@ import com.aspsine.swipetoloadlayout.SwipeToLoadLayout;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import com.google.gson.reflect.TypeToken;
+import com.jayfang.dropdownmenu.DropDownMenu;
 import com.pcjr.R;
 import com.pcjr.adapter.InvestRecordsListViewAdapter;
 import com.pcjr.adapter.TradeRecordsListViewAdapter;
@@ -23,7 +25,8 @@ import com.pcjr.model.TradeRecords;
 import com.pcjr.service.ApiService;
 import com.pcjr.utils.RetrofitUtils;
 
-;import java.util.List;
+;import java.util.ArrayList;
+import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -38,18 +41,20 @@ public class InvestRecordsActivity extends Activity implements OnRefreshListener
     private ListView listView;
     private SwipeToLoadLayout swipeToLoadLayout;
     private InvestRecordsListViewAdapter adapter;
+    private DropDownMenu mMenu;
 
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.invest_records);
         initView();
+        initMenu();
     }
 
-    public void initView(){
-        swipeToLoadLayout = (SwipeToLoadLayout)findViewById(R.id.swipeToLoadLayout);
+    public void initView() {
+        swipeToLoadLayout = (SwipeToLoadLayout) findViewById(R.id.swipeToLoadLayout);
         listView = (ListView) findViewById(R.id.swipe_target);
         back = (RelativeLayout) findViewById(R.id.back);
-
+        mMenu = (DropDownMenu) findViewById(R.id.drop_down_menu);
         swipeToLoadLayout.setOnRefreshListener(this);
         swipeToLoadLayout.setOnLoadMoreListener(this);
         autoRefresh();
@@ -62,11 +67,37 @@ public class InvestRecordsActivity extends Activity implements OnRefreshListener
         });
     }
 
+    public void initMenu() {
+
+        String[] menuTitls = new String[]{"全部记录"};
+        String[] mnuItems = new String[]{"全部记录", "正在募集", "募集成功", "正在回款", "回款完毕"};
+
+        mMenu.setmMenuCount(1);
+        mMenu.setmShowCount(6);
+        mMenu.setShowCheck(true);
+        mMenu.setmMenuTitleTextSize(16);
+        mMenu.setmMenuTitleTextColor(Color.parseColor("#777777"));
+        mMenu.setmMenuListTextSize(16);
+        mMenu.setmMenuListTextColor(Color.BLACK);
+        mMenu.setmMenuBackColor(Color.parseColor("#eeeeee"));
+        mMenu.setmMenuPressedBackColor(Color.WHITE);
+        mMenu.setmMenuPressedTitleTextColor(Color.BLACK);
+        mMenu.setmCheckIcon(R.drawable.ico_make);
+        mMenu.setmUpArrow(R.drawable.arrow_up);
+        mMenu.setmDownArrow(R.drawable.arrow_down);
+        mMenu.setDefaultMenuTitle(menuTitls);
+        mMenu.setShowDivider(true);
+        mMenu.setmMenuListBackColor(Color.parseColor("#FFFFFF"));
+        mMenu.setmMenuListSelectorRes(R.color.white);
+        mMenu.setmArrowMarginTitle(20);
+        List<String[]> items = new ArrayList<>();
+        items.add(mnuItems);
+        mMenu.setmMenuItems(items);
+    }
+
     @Override
-    public boolean onKeyDown(int keyCode, KeyEvent event)
-    {
-        if (keyCode == KeyEvent.KEYCODE_BACK )
-        {
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if (keyCode == KeyEvent.KEYCODE_BACK) {
             finish();
             overridePendingTransition(R.anim.push_right_in, R.anim.push_right_out);
         }
@@ -95,7 +126,7 @@ public class InvestRecordsActivity extends Activity implements OnRefreshListener
                         }.getType());
                     }
 
-                    InvestRecordsListViewAdapter adapter = new InvestRecordsListViewAdapter(investRecordses,InvestRecordsActivity.this);
+                    InvestRecordsListViewAdapter adapter = new InvestRecordsListViewAdapter(investRecordses, InvestRecordsActivity.this);
                     listView.setAdapter(adapter);
                 }
             }
