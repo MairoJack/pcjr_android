@@ -225,6 +225,7 @@ public class MainActivity extends FragmentActivity implements OnClickListener {
                             spu.setAccessToken(accessToken);
                             spu.setRefresToken(refreshToken);
                             Constant.isLogin = true;
+                            Constant.access_token = accessToken;
                         }
                     }
                 }

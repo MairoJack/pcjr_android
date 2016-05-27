@@ -3,13 +3,13 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#f3f3f3"
-    android:orientation="vertical" >
+    android:orientation="vertical">
 
     <RelativeLayout
         android:id="@+id/title"
         android:layout_width="fill_parent"
         android:layout_height="50dp"
-        android:background="#0099CC" >
+        android:background="#0099CC">
 
         <TextView
             android:layout_width="wrap_content"
@@ -27,7 +27,7 @@
             android:layout_alignParentLeft="true"
             android:layout_centerVertical="true"
             android:layout_marginLeft="10dp"
-            android:padding="5dp" >
+            android:padding="5dp">
 
             <ImageView
                 android:layout_width="wrap_content"
@@ -39,29 +39,42 @@
     </RelativeLayout>
 
     <com.jayfang.dropdownmenu.DropDownMenu
-        android:orientation="horizontal"
-        android:layout_width="match_parent"
         android:id="@+id/drop_down_menu"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
         android:background="@color/white"
-        android:layout_height="40dp"/>
+        android:orientation="horizontal" />
 
     <com.aspsine.swipetoloadlayout.SwipeToLoadLayout
         android:id="@+id/swipeToLoadLayout"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        >
+        android:layout_height="match_parent">
 
         <include
             android:id="@id/swipe_refresh_header"
             layout="@layout/layout_pull_header" />
 
-        <ListView
+        <ScrollView
             android:id="@+id/swipe_target"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:clipToPadding="false"
-            android:divider="#F7F7F7"
-            android:dividerHeight="5dp"/>
+            android:layout_height="match_parent">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <com.pcjr.utils.NoScrollListview
+                    android:id="@+id/list_view"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:clipToPadding="false"
+                    android:divider="#F7F7F7"
+                    android:dividerHeight="5dp" />
+
+                <include layout="@layout/no_records" />
+
+            </RelativeLayout>
+        </ScrollView>
 
         <include
             android:id="@id/swipe_load_more_footer"

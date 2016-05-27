@@ -42,4 +42,6 @@ dependencies {
     compile project(':ProgressWheel')
     //DropDownMenu
     compile 'com.github.JayFang1993:DropDownMenu:v0.9'
+
+    compile 'in.srain.cube:ultra-ptr:1.0.11'
 }

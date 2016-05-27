@@ -43,6 +43,7 @@
         android:id="@+id/datepicker"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:calendarViewShown="false"
         >
 
     </DatePicker>
@@ -50,7 +51,7 @@
     <View
         android:layout_width="match_parent"
         android:layout_height="1dp"
-        android:background="#6a6a6a"/>
+        android:background="#c9c9c9"/>
 
     <RelativeLayout
         android:layout_width="fill_parent"
@@ -64,7 +65,7 @@
             android:layout_marginLeft="20dp"
             android:text="交易详情/时间"
             android:textColor="#333333"
-            android:textSize="10dp" />
+            android:textSize="12dp" />
 
         <TextView
             android:layout_width="wrap_content"
@@ -74,7 +75,7 @@
             android:layout_marginRight="20dp"
             android:text="余额/状态"
             android:textColor="#333333"
-            android:textSize="10dp" />
+            android:textSize="12dp" />
     </RelativeLayout>
 
     <com.aspsine.swipetoloadlayout.SwipeToLoadLayout
@@ -93,7 +94,8 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:clipToPadding="false"
-            android:divider="@null" />
+            android:divider="#F7F7F7"
+            android:dividerHeight="5dp" />
 
         <include
             android:id="@id/swipe_load_more_footer"

@@ -5,7 +5,8 @@
     android:background="#f3f3f3"
     android:gravity="center"
     android:orientation="vertical"
-    android:id="@+id/empty">
+    android:id="@+id/empty"
+    android:visibility="gone">
 
     <ImageView
         android:layout_width="wrap_content"

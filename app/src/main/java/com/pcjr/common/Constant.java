@@ -17,7 +17,7 @@ public class Constant extends Application{
     public final static String CLIENTID = "1";
     public final static String CLIENTSECRET = "123";
     public static String access_token;
-    public static boolean isLogin = true;
+    public static boolean isLogin = false;
 
     private List<FocusImg> focusImgs;
     private List<FocusImg> midFocusImgs;

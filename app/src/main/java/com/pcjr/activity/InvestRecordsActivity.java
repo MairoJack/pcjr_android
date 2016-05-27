@@ -5,6 +5,8 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.view.KeyEvent;
 import android.view.View;
+import android.view.ViewGroup;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 
@@ -42,6 +44,7 @@ public class InvestRecordsActivity extends Activity implements OnRefreshListener
     private SwipeToLoadLayout swipeToLoadLayout;
     private InvestRecordsListViewAdapter adapter;
     private DropDownMenu mMenu;
+    private LinearLayout empty;
 
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -52,7 +55,8 @@ public class InvestRecordsActivity extends Activity implements OnRefreshListener
 
     public void initView() {
         swipeToLoadLayout = (SwipeToLoadLayout) findViewById(R.id.swipeToLoadLayout);
-        listView = (ListView) findViewById(R.id.swipe_target);
+        empty = (LinearLayout) findViewById(R.id.empty);
+        listView = (ListView) findViewById(R.id.list_view);
         back = (RelativeLayout) findViewById(R.id.back);
         mMenu = (DropDownMenu) findViewById(R.id.drop_down_menu);
         swipeToLoadLayout.setOnRefreshListener(this);
@@ -113,7 +117,7 @@ public class InvestRecordsActivity extends Activity implements OnRefreshListener
             @Override
             public void onResponse(Call<JsonObject> call, Response<JsonObject> response) {
                 swipeToLoadLayout.setRefreshing(false);
-                if (response.body() != null) {
+                if (response.isSuccessful()) {
                     JsonObject json = response.body();
                     Gson gson = new Gson();
                     Pager pager = null;
@@ -126,8 +130,13 @@ public class InvestRecordsActivity extends Activity implements OnRefreshListener
                         }.getType());
                     }
 
+                    investRecordses.addAll(investRecordses);
+                    investRecordses.addAll(investRecordses);
+                    investRecordses.addAll(investRecordses);
                     InvestRecordsListViewAdapter adapter = new InvestRecordsListViewAdapter(investRecordses, InvestRecordsActivity.this);
                     listView.setAdapter(adapter);
+                    listView.setVisibility(View.VISIBLE);
+                    empty.setVisibility(View.GONE);
                 }
             }
 
@@ -144,6 +153,8 @@ public class InvestRecordsActivity extends Activity implements OnRefreshListener
             @Override
             public void run() {
                 swipeToLoadLayout.setLoadingMore(false);
+                listView.setVisibility(View.GONE);
+                empty.setVisibility(View.VISIBLE);
             }
         }, 2000);
     }
