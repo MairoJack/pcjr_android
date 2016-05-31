@@ -61,7 +61,7 @@ public interface ApiService {
      * @param access_token
      * @return
      */
-    @GET("/member_index_data")
+    @GET("/member/index_data")
     Call<JsonObject> getMemberIndex(@Query("access_token") String access_token);
 
     /**
@@ -75,21 +75,21 @@ public interface ApiService {
      * 获取用户交易记录
      * @return
      */
-    @GET("/member_log_data")
+    @GET("/member/log_data")
     Call<JsonObject> getMemberLogData(@Query("access_token") String access_token);
 
     /**
      * 获取用户投资记录
      * @return
      */
-    @GET("/member_invest_data")
+    @GET("/member/invest_data")
     Call<JsonObject> getMemberInvestData(@Query("access_token") String access_token);
 
     /**
      * 获取用户资金记录
      * @return
      */
-    @GET("/member_finance_data")
+    @GET("/member/finance_data")
     Call<FinanceRecords> getMemberFinanceData(@Query("access_token") String access_token);
 
     /**
@@ -100,7 +100,7 @@ public interface ApiService {
      * @param month 月
      * @return
      */
-    @GET("/member_current_month_repayment_data")
+    @GET("/member/current_month_repayment_data")
     Call<JsonObject> getMemberRepaymentData(@Query("access_token") String access_token, @Query("year") int year, @Query("month") int month);
 
     /**
@@ -108,15 +108,112 @@ public interface ApiService {
      * @param header
      * @return
      */
-    @POST("/member_verify_identity")
-    Call<JsonObject> verifyIdentity(@Header("Authorization") String header);
+    @POST("/member/verify_identity")
+    Call<JsonObject> verifyIdentity(@Header("Authorization") String header,@Header("realname") String realname,@Header("identity") String identity);
 
     /**
      * 获取实名认证信息
      * @param access_token
      * @return
      */
-    @POST("/member_identity_info")
+    @GET("/member/identity_info")
     Call<JsonObject> getMemberIdentityInfo(@Query("access_token") String access_token);
+
+    /**
+     * 获取用户银行卡信息
+     * @param access_token
+     * @return
+     */
+    @GET("/member/bank_card_info")
+    Call<JsonObject> getMemberBankCardInfo(@Query("access_token") String access_token);
+
+    /**
+     * 获取银行卡信息
+     * @return
+     */
+    @GET("/bank_card_list")
+    Call<JsonObject> getBankCardList();
+
+    /**
+     * 添加银行卡
+     * @param access_token
+     * @param bank_id    银行ID
+     * @param card_no    银行卡号
+     * @param real_name  真实姓名
+     * @return
+     */
+    @FormUrlEncoded
+    @POST("/member/add_bank_card")
+    Call<JsonObject> addBankCard(@Field("access_token") String access_token, @Field("bank_id") String bank_id, @Field("card_no") String card_no, @Field("real_name") String real_name);
+
+    /**
+     * 删除银行卡
+     * @param access_token
+     * @param id
+     * @return
+     */
+    @FormUrlEncoded
+    @POST("/member/del_bank_card")
+    Call<JsonObject> delBankCard(@Field("access_token") String access_token, @Field("id") String id);
+
+    /**
+     * 发送绑定验证码
+     * @param access_token
+     * @param mobile
+     * @return
+     */
+    @FormUrlEncoded
+    @POST("/api/bind_mobile_verify")
+    Call<JsonObject> bindMobileVerify(@Field("access_token") String access_token, @Field("mobile") String mobile);
+
+    /**
+     * 发送解绑验证码
+     * @param access_token
+     * @return
+     */
+    @FormUrlEncoded
+    @POST("/api/unbind_mobile_verify")
+    Call<JsonObject> unbindMobileVerify(@Field("access_token") String access_token);
+
+    /**
+     * 绑定手机
+     * @param access_token
+     * @param mobile
+     * @param verify
+     * @return
+     */
+    @FormUrlEncoded
+    @POST("/member/bind_mobile")
+    Call<JsonObject> bindMobile(@Field("access_token") String access_token,@Field("mobile") String mobile, @Field("verify") String verify);
+
+    /**
+     * 解绑手机
+     * @param access_token
+     * @param mobile
+     * @param verify
+     * @return
+     */
+    @FormUrlEncoded
+    @POST("/member/unbind_mobile")
+    Call<JsonObject> unbind_mobile(@Field("access_token") String access_token,@Field("mobile") String mobile, @Field("verify") String verify);
+
+    /**
+     * 获取用户手机信息
+     * @param access_token
+     * @return
+     */
+    @GET("/member/mobile_info")
+    Call<JsonObject> getMobileInfo(@Query("access_token") String access_token);
+
+    /**
+     * 修改密码
+     * @param access_token
+     * @param old_password
+     * @param new_password
+     * @return
+     */
+    @FormUrlEncoded
+    @POST("/member/change_password")
+    Call<JsonObject> changePassword(@Field("access_token") String access_token,@Field("old_password") String old_password, @Field("new_password") String new_password);
 
 }

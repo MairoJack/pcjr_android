@@ -27,7 +27,8 @@
         <activity android:name="com.pcjr.activity.NewsActivity"/>
         <activity android:name="com.pcjr.activity.AboutusActivity"/>
         <activity android:name="com.pcjr.activity.AddBankCardActivity"/>
-        <activity android:name="com.pcjr.activity.BindPhoneActivity"/>
+        <activity android:name=".activity.BindMobileActivity"/>
+        <activity android:name=".activity.UnbindMobileActivity"/>
         <activity android:name="com.pcjr.activity.BankCardActivity"/>
         <activity android:name="com.pcjr.activity.ChangePasswordActivity"/>
         <activity android:name="com.pcjr.activity.FinancialRecordsActivity"/>

@@ -13,12 +13,13 @@ import java.util.List;
  * Created by Mario on 2016/5/22.
  */
 public class Constant extends Application{
+    public final static String BEARER = "Bearer";
     public final static String FILE = "user_data";
     public final static String CLIENTID = "1";
     public final static String CLIENTSECRET = "123";
     public static String access_token;
     public static boolean isLogin = false;
-
+    public static String realname;
     private List<FocusImg> focusImgs;
     private List<FocusImg> midFocusImgs;
     private List<Announce> announces;
@@ -54,5 +55,10 @@ public class Constant extends Application{
 
     public void setmCounter(int mCounter) {
         this.mCounter = mCounter;
+    }
+
+    public static void clear(){
+        access_token = "";
+        isLogin = false;
     }
 }

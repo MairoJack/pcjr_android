@@ -68,7 +68,7 @@
             android:textSize="12dp" />
 
         <ImageView
-            android:id="@+id/image_info"
+            android:id="@+id/img_info"
             android:layout_width="24dp"
             android:layout_height="24dp"
             android:layout_alignParentRight="true"
@@ -120,8 +120,8 @@
             android:textColor="#000000"
             android:textSize="12dp" />
 
-        <TextView
-            android:id="@+id/editText1"
+        <EditText
+            android:id="@+id/txt_card_no"
             android:layout_width="fill_parent"
             android:layout_height="40dp"
             android:layout_centerVertical="true"
@@ -130,12 +130,13 @@
             android:layout_toLeftOf="@+id/imageView1"
             android:layout_toRightOf="@+id/cardno"
             android:gravity="center_vertical"
-            android:text="321321321321312321321"
+            android:hint="银行卡号"
+            android:text=""
             android:digits="0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLIMNOPQRSTUVWXYZ"
             android:textSize="12dp" />
 
         <ImageView
-            android:id="@+id/imageView1"
+            android:id="@+id/img_clear"
             android:layout_width="24dp"
             android:layout_height="24dp"
             android:layout_alignParentRight="true"
@@ -145,7 +146,7 @@
     </RelativeLayout>
 
     <Button
-        android:id="@+id/button1"
+        android:id="@+id/btn_save"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:layout_marginLeft="10dp"

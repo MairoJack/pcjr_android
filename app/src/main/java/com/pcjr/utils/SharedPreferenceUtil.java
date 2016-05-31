@@ -59,4 +59,12 @@ public class SharedPreferenceUtil {
     public boolean getisFirst() {
         return sp.getBoolean("isFirst", true);
     }
+
+    public void clear(){
+        this.setIsFirst(true);
+        this.setAccessToken("");
+        this.setAccessToken("");
+        this.setUsername("");
+        this.setPassword("");
+    }
 }
