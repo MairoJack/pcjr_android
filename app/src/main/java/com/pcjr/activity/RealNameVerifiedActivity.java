@@ -12,21 +12,15 @@ import android.widget.EditText;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
 
-import com.google.gson.Gson;
 import com.google.gson.JsonObject;
-import com.google.gson.reflect.TypeToken;
 import com.mobsandgeeks.saripaar.ValidationError;
 import com.mobsandgeeks.saripaar.Validator;
 import com.mobsandgeeks.saripaar.annotation.NotEmpty;
 import com.pcjr.R;
-import com.pcjr.adapter.PaymentPlanListViewAdapter;
 import com.pcjr.common.Constant;
-import com.pcjr.fragment.MemberFragment;
-import com.pcjr.model.PaymentPlan;
 import com.pcjr.plugins.ColoredSnackbar;
 import com.pcjr.service.ApiService;
 import com.pcjr.utils.RetrofitUtils;
-import com.pcjr.utils.SharedPreferenceUtil;
 
 import java.util.List;
 
@@ -150,8 +144,7 @@ public class RealNameVerifiedActivity extends Activity implements Validator.Vali
             @Override
             public void onFailure(Call<JsonObject> call, Throwable t) {
                 dialog.dismiss();
-                Snackbar snackbar = Snackbar.make(back,"网络错误", Snackbar.LENGTH_SHORT);
-                ColoredSnackbar.alert(snackbar).show();
+                Toast.makeText(RealNameVerifiedActivity.this,"网络异常",Toast.LENGTH_SHORT).show();
             }
         });
     }

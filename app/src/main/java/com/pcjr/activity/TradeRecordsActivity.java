@@ -88,7 +88,8 @@ public class TradeRecordsActivity extends Activity implements OnRefreshListener,
             @Override
             public void onResponse(Call<JsonObject> call, Response<JsonObject> response) {
                 swipeToLoadLayout.setRefreshing(false);
-                if (response.body() != null) {
+                swipeToLoadLayout.setLoadingMore(false);
+                if (response.isSuccessful()) {
                     JsonObject json = response.body();
                     Gson gson = new Gson();
                     Pager pager = null;
@@ -109,6 +110,7 @@ public class TradeRecordsActivity extends Activity implements OnRefreshListener,
             @Override
             public void onFailure(Call<JsonObject> call, Throwable t) {
                 swipeToLoadLayout.setRefreshing(false);
+                swipeToLoadLayout.setLoadingMore(false);
             }
         });
     }

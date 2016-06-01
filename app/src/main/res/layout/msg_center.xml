@@ -2,8 +2,9 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="#f3f3f3"
-    android:orientation="vertical" >
+    android:orientation="vertical">
 
     <RelativeLayout
         android:id="@+id/title"
@@ -37,5 +38,27 @@
                 android:src="@drawable/arrow2" />
         </RelativeLayout>
     </RelativeLayout>
+    <com.aspsine.swipetoloadlayout.SwipeToLoadLayout
+        android:id="@+id/swipeToLoadLayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:swipe_style="classic"
+        >
 
+        <include
+            android:id="@id/swipe_refresh_header"
+            layout="@layout/layout_pull_header" />
+
+        <ListView
+            android:id="@+id/swipe_target"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:clipToPadding="false"
+            android:divider="#EEEEEE"
+            android:dividerHeight="1dp"/>
+
+        <include
+            android:id="@id/swipe_load_more_footer"
+            layout="@layout/layout_pull_footer" />
+    </com.aspsine.swipetoloadlayout.SwipeToLoadLayout>
 </LinearLayout>

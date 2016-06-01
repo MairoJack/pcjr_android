@@ -47,23 +47,19 @@
             android:id="@id/swipe_refresh_header"
             layout="@layout/layout_pull_header" />
 
-        <FrameLayout
+        <LinearLayout
             android:id="@+id/swipe_target"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            >
+            android:layout_height="match_parent">
             <ListView
                 android:id="@+id/list_view"
-                android:layout_width="fill_parent"
-                android:layout_height="fill_parent"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
                 android:layout_marginTop="10dp"
                 android:divider="@null"
-                android:background="#FFFFFF" />
-
-            <include layout="@layout/no_records"/>
-        </FrameLayout>
-
-
+                android:background="#FFFFFF"
+                android:scrollbarStyle="outsideOverlay"/>
+        </LinearLayout>
         <include
             android:id="@id/swipe_load_more_footer"
             layout="@layout/layout_pull_footer" />

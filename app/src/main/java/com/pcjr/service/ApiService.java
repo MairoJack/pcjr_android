@@ -216,4 +216,23 @@ public interface ApiService {
     @POST("/member/change_password")
     Call<JsonObject> changePassword(@Field("access_token") String access_token,@Field("old_password") String old_password, @Field("new_password") String new_password);
 
+    /**
+     * 获取站内信列表
+     * @param access_token
+     * @param type
+     * @param page
+     * @return
+     */
+    @GET("/member/letter_list")
+    Call<JsonObject> getLetterList(@Query("access_token") String access_token,@Query("type") int type,@Query("page") int page);
+
+    /**
+     * 获取站内信详情
+     * @param access_token
+     * @param id
+     * @return
+     */
+    @GET("/member/letter_detail")
+    Call<JsonObject> getLetterDetail(@Query("access_token") String access_token,@Query("id") String id);
+
 }

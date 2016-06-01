@@ -134,10 +134,7 @@ public class LoginFragment extends Fragment implements View.OnClickListener, Val
 
             @Override
             public void onFailure(Call<JsonObject> call, Throwable t) {
-                Log.d("Mario", "onResponse:Throwable:" + t);
-                dialog.dismiss();
-                Snackbar snackbar = Snackbar.make(getView(),"网络错误", Snackbar.LENGTH_SHORT);
-                ColoredSnackbar.alert(snackbar).show();
+                Toast.makeText(getContext(),"网络异常",Toast.LENGTH_SHORT).show();
             }
         });
 

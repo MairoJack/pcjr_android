@@ -1,7 +1,9 @@
 package com.pcjr.fragment;
 
+import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
@@ -13,14 +15,27 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.gson.JsonObject;
 import com.mobsandgeeks.saripaar.ValidationError;
 import com.mobsandgeeks.saripaar.Validator;
 import com.mobsandgeeks.saripaar.annotation.NotEmpty;
 import com.pcjr.R;
+import com.pcjr.common.Constant;
+import com.pcjr.plugins.ColoredSnackbar;
+import com.pcjr.service.ApiService;
+import com.pcjr.utils.RetrofitUtils;
+import com.pcjr.utils.SharedPreferenceUtil;
 
 import java.util.List;
 
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
+/**
+ * 注册
+ * Created by Mario on 2016/6/1.
+ */
 public class RegistFragment extends Fragment implements View.OnClickListener,Validator.ValidationListener
 {
 
@@ -37,7 +52,7 @@ public class RegistFragment extends Fragment implements View.OnClickListener,Val
 
     private Button but_regist;
     private Validator validator;
-
+    private ProgressDialog dialog;
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
 	{
@@ -51,6 +66,7 @@ public class RegistFragment extends Fragment implements View.OnClickListener,Val
 	@Override
 	public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
 		super.onViewCreated(view, savedInstanceState);
+        dialog = new ProgressDialog(getActivity(), ProgressDialog.STYLE_SPINNER);
 		login = (TextView) view.findViewById(R.id.login);
 		syxy = (TextView) view.findViewById(R.id.syxy);
 		ystk = (TextView) view.findViewById(R.id.ystk);
@@ -91,7 +107,44 @@ public class RegistFragment extends Fragment implements View.OnClickListener,Val
 
     @Override
     public void onValidationSucceeded() {
-        Toast.makeText(getActivity(), "Yay! we got it right!", Toast.LENGTH_SHORT).show();
+        final String username = text_username.getText().toString().trim();
+        final String password = text_password.getText().toString().trim();
+        ApiService service = RetrofitUtils.createApi(ApiService.class);
+        Call<JsonObject> call = service.getAccessToken("password",username, password, "1", "123");
+        dialog.setMessage("正在提交...");
+        dialog.show();
+        call.enqueue(new Callback<JsonObject>() {
+            @Override
+            public void onResponse(Call<JsonObject> call, Response<JsonObject> response) {
+                if (response.isSuccessful()) {
+                    JsonObject json = response.body();
+                    if (json.get("access_token") != null) {
+                        SharedPreferenceUtil spu = new SharedPreferenceUtil(getContext(), Constant.FILE);
+                        Constant.isLogin = true;
+                        spu.setUsername(username);
+                        spu.setPassword(password);
+                        spu.setIsFirst(false);
+                        dialog.dismiss();
+                        transaction.setCustomAnimations(R.anim.push_left_in, R.anim.push_left_out);
+                        transaction.remove(RegistFragment.this).add(R.id.id_content, new MemberFragment());
+                        transaction.commit();
+                    } else {
+                        //Snackbar.make(getView(),"dsds",Snackbar.LENGTH_SHORT).show();
+                        Toast.makeText(getActivity(), json.get("status_code").toString() + ":" + json.get("message").toString(), Toast.LENGTH_SHORT).show();
+                    }
+                }else{
+                    dialog.dismiss();
+                    Snackbar snackbar = Snackbar.make(getView(),"用户名或密码错误", Snackbar.LENGTH_SHORT);
+                    ColoredSnackbar.warning(snackbar).show();
+                }
+
+            }
+
+            @Override
+            public void onFailure(Call<JsonObject> call, Throwable t) {
+                Toast.makeText(getContext(),"网络异常",Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 
     @Override

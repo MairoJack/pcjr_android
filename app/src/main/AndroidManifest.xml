@@ -24,7 +24,8 @@
         </activity>
 
         <activity android:name="com.pcjr.activity.InvestDetailActivity"/>
-        <activity android:name="com.pcjr.activity.NewsActivity"/>
+        <activity android:name=".activity.NewsActivity"/>
+        <activity android:name=".activity.News3Activity"/>
         <activity android:name="com.pcjr.activity.AboutusActivity"/>
         <activity android:name="com.pcjr.activity.AddBankCardActivity"/>
         <activity android:name=".activity.BindMobileActivity"/>
