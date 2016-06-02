@@ -42,6 +42,8 @@ import java.util.List;
 
 public class IndexFragment extends Fragment implements OnRefreshListener,OnLoadMoreListener,BaseSliderView.OnSliderClickListener,ViewPagerEx.OnPageChangeListener {
 
+    public static final String TAG = IndexFragment.class.getSimpleName();
+
     private FragmentManager fragmentManager;
     private FragmentTransaction transaction;
     private SwipeToLoadLayout swipeToLoadLayout;
@@ -113,28 +115,28 @@ public class IndexFragment extends Fragment implements OnRefreshListener,OnLoadM
             @Override
             public void onClick(View v) {
                 MainActivity mainActivity  = (MainActivity) getContext();
-                mainActivity.getmTabBtnInvest().performClick();
+                mainActivity.setCurrentTab(1);
             }
         });
         dcxa.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 MainActivity mainActivity  = (MainActivity) getContext();
-                mainActivity.getmTabBtnInvest().performClick();
+                mainActivity.setCurrentTab(1);
             }
         });
         gtma.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 MainActivity mainActivity  = (MainActivity) getContext();
-                mainActivity.getmTabBtnInvest().performClick();
+                mainActivity.setCurrentTab(1);
             }
         });
         zlbh.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 MainActivity mainActivity  = (MainActivity) getContext();
-                mainActivity.getmTabBtnInvest().performClick();
+                mainActivity.setCurrentTab(1);
             }
         });
 
@@ -295,5 +297,10 @@ public class IndexFragment extends Fragment implements OnRefreshListener,OnLoadM
     public void onResume() {
         handler.post(announcesRunnable);
         super.onResume();
+    }
+
+    public static Fragment newInstance(String text) {
+        IndexFragment fragment = new IndexFragment();
+        return fragment;
     }
 }

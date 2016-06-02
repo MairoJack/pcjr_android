@@ -1,13 +1,12 @@
-package com.pcjr.activity;
+package com.pcjr.fragment;
 
-import android.app.Activity;
-import android.content.Intent;
 import android.os.Bundle;
-import android.view.KeyEvent;
+import android.support.annotation.Nullable;
+import android.support.v4.app.Fragment;
+import android.view.LayoutInflater;
 import android.view.View;
-import android.widget.AdapterView;
+import android.view.ViewGroup;
 import android.widget.ListView;
-import android.widget.RelativeLayout;
 
 import com.aspsine.swipetoloadlayout.OnLoadMoreListener;
 import com.aspsine.swipetoloadlayout.OnRefreshListener;
@@ -16,12 +15,14 @@ import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import com.google.gson.reflect.TypeToken;
 import com.pcjr.R;
+import com.pcjr.adapter.InvestTicketListViewAdapter;
 import com.pcjr.adapter.LetterListViewAdapter;
-import com.pcjr.adapter.TradeRecordsListViewAdapter;
+import com.pcjr.adapter.ProductListViewAdapter;
 import com.pcjr.common.Constant;
+import com.pcjr.model.InvestTicket;
 import com.pcjr.model.Letter;
 import com.pcjr.model.Pager;
-import com.pcjr.model.TradeRecords;
+import com.pcjr.model.Users;
 import com.pcjr.service.ApiService;
 import com.pcjr.utils.RetrofitUtils;
 
@@ -33,79 +34,43 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 /**
- * 消息中心
- * Created by Mario on 2016/5/24.
+ * 投资券
+ * Created by Mario on 2016/5/12.
  */
-public class MsgCenterActivity extends Activity implements OnRefreshListener, OnLoadMoreListener {
+public class InvestTicketFragment extends Fragment implements OnRefreshListener, OnLoadMoreListener {
+
     private ListView listView;
     private SwipeToLoadLayout swipeToLoadLayout;
-    private LetterListViewAdapter adapter;
-    private RelativeLayout back;
+    private InvestTicketListViewAdapter adapter;
+    private int type;
     private int pageNow = 1;
-    private List<Letter> letters = new ArrayList<>();
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.msg_center);
-        initView();
-    }
-
-    public void initView(){
-        swipeToLoadLayout = (SwipeToLoadLayout)findViewById(R.id.swipeToLoadLayout);
-        listView = (ListView) findViewById(R.id.swipe_target);
-        back = (RelativeLayout) findViewById(R.id.back);
-
-        swipeToLoadLayout.setOnRefreshListener(this);
-        swipeToLoadLayout.setOnLoadMoreListener(this);
-        autoRefresh();
-
-        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Intent intent = new Intent(MsgCenterActivity.this,MsgDetailActivity.class);
-                intent.putExtra("id",letters.get(position).getId());
-                startActivity(intent);
-                overridePendingTransition(R.anim.push_left_in, R.anim.push_left_out);
-            }
-        });
-
-        back.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                finish();
-                overridePendingTransition(R.anim.push_right_in, R.anim.push_right_out);
-            }
-        });
+    private List<InvestTicket> investTickets = new ArrayList<>();
+    @Override
+    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
+        return inflater.inflate(R.layout.ic_list, container, false);
     }
 
     @Override
-    public boolean onKeyDown(int keyCode, KeyEvent event)
-    {
-        if (keyCode == KeyEvent.KEYCODE_BACK )
-        {
-            finish();
-            overridePendingTransition(R.anim.push_right_in, R.anim.push_right_out);
-        }
-        return false;
-
+    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        swipeToLoadLayout = (SwipeToLoadLayout) view.findViewById(R.id.swipeToLoadLayout);
+        swipeToLoadLayout.setOnRefreshListener(this);
+        swipeToLoadLayout.setOnLoadMoreListener(this);
+        listView = (ListView) view.findViewById(R.id.swipe_target);
+        type = getArguments().getInt("type");
+        autoRefresh();
     }
 
     @Override
     public void onRefresh() {
-        letters.clear();
+        investTickets.clear();
         pageNow = 1;
         loadData();
     }
 
-    @Override
-    public void onLoadMore() {
-        pageNow++;
-        loadData();
-    }
-
-
     public void loadData(){
         ApiService service = RetrofitUtils.createApi(ApiService.class);
-        Call<JsonObject> call = service.getLetterList(Constant.access_token,0,pageNow);
+        Call<JsonObject> call = service.getInvestTicketList(Constant.access_token,type,pageNow);
         call.enqueue(new Callback<JsonObject>() {
             @Override
             public void onResponse(Call<JsonObject> call, Response<JsonObject> response) {
@@ -115,18 +80,18 @@ public class MsgCenterActivity extends Activity implements OnRefreshListener, On
                     JsonObject json = response.body();
                     Gson gson = new Gson();
                     Pager pager = null;
-                    List<Letter> temps = new ArrayList<>();
+                    List<InvestTicket> temps = new ArrayList<>();
                     if (json.get("pager") != null) {
                         pager = gson.fromJson(json.get("pager"), Pager.class);
                     }
                     if (json.get("data") != null) {
-                        temps = gson.fromJson(json.get("data"), new TypeToken<List<Letter>>() {
+                        temps = gson.fromJson(json.get("data"), new TypeToken<List<InvestTicket>>() {
                         }.getType());
                     }
-                    letters.addAll(temps);
-                    if(letters.size()>0) {
+                    investTickets.addAll(temps);
+                    if(investTickets.size()>0) {
                         if (adapter == null) {
-                            adapter = new LetterListViewAdapter(letters, MsgCenterActivity.this);
+                            adapter = new InvestTicketListViewAdapter(investTickets, getContext());
                             listView.setAdapter(adapter);
                         }
                         adapter.notifyDataSetChanged();
@@ -141,6 +106,11 @@ public class MsgCenterActivity extends Activity implements OnRefreshListener, On
             }
         });
     }
+    @Override
+    public void onLoadMore() {
+        pageNow++;
+        loadData();
+    }
 
     private void autoRefresh() {
         swipeToLoadLayout.post(new Runnable() {
@@ -149,5 +119,13 @@ public class MsgCenterActivity extends Activity implements OnRefreshListener, On
                 swipeToLoadLayout.setRefreshing(true);
             }
         });
+    }
+
+    public static Fragment newInstance(int type) {
+        InvestTicketFragment fragment = new InvestTicketFragment();
+        Bundle bundle = new Bundle();
+        bundle.putInt("type", type);
+        fragment.setArguments(bundle);
+        return fragment;
     }
 }

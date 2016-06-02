@@ -4,9 +4,6 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.KeyEvent;
-import android.view.View;
-import android.widget.RelativeLayout;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
@@ -17,7 +14,6 @@ import com.pcjr.model.Announce;
 import com.pcjr.model.FocusImg;
 import com.pcjr.service.ApiService;
 import com.pcjr.utils.RetrofitUtils;
-import com.pcjr.utils.SharedPreferenceUtil;
 
 import java.util.List;
 

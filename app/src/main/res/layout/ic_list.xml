@@ -3,6 +3,7 @@
     android:id="@+id/swipeToLoadLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#EEEEEE"
     app:swipe_style="classic"
   >
 
@@ -14,6 +15,7 @@
         android:id="@+id/swipe_target"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_margin="5dp"
         android:clipToPadding="false"
         android:divider="@null" />
 

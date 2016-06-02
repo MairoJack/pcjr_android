@@ -47,6 +47,17 @@ public interface ApiService {
     @POST("/oauth/revoke_access_token")
     Call<JsonObject> revoke(@Field("access_token") String access_token);
 
+    /**
+     * 用户注册
+     * @param name
+     * @param password
+     * @param recommend_person
+     * @return
+     */
+    @FormUrlEncoded
+    @POST("/register")
+    Call<JsonObject> register(@Field("name") String name,@Field("password") String password,@Field("recommend_person") String recommend_person);
+
 
     /**
      * 获取用户信息
@@ -234,5 +245,42 @@ public interface ApiService {
      */
     @GET("/member/letter_detail")
     Call<JsonObject> getLetterDetail(@Query("access_token") String access_token,@Query("id") String id);
+
+    /**
+     * 获取用户未使用的优惠券数量
+     * @param access_token
+     * @return
+     */
+    @GET("/member/unused_coupons_num")
+    Call<JsonObject> getUnusedCouponsNum(@Query("access_token") String access_token);
+
+    /**
+     * 获取用户投资券列表
+     * @param access_token
+     * @param type 0 未使用; 1 已使用; 2 已过期;
+     * @param page
+     * @return
+     */
+    @GET("/member/invest_ticket_list")
+    Call<JsonObject> getInvestTicketList(@Query("access_token") String access_token,@Query("type") int type,@Query("page") int page);
+
+    /**
+     * 获取用户投资券详情
+     * @param access_token
+     * @param id
+     * @return
+     */
+    @GET("/member/invest_ticket_detail")
+    Call<JsonObject> getInvestTicketDetail(@Query("access_token") String access_token,@Query("id") String id);
+
+    /**
+     *
+     * @param access_token
+     * @param type 0 未领取; 1 已领取;
+     * @param page
+     * @return
+     */
+    @GET("/member/red_packet_list")
+    Call<JsonObject> getRedPacketList(@Query("access_token") String access_token,@Query("type") int type,@Query("page") int page);
 
 }

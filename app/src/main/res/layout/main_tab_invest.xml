@@ -7,9 +7,6 @@
 	android:background="#fcfcfc"
 	android:orientation="vertical">
     
-    <include layout="@layout/title_bar"/>
-
-
 	<android.support.design.widget.TabLayout
 		android:id="@+id/invest_tab_layout"
 		android:layout_width="match_parent"

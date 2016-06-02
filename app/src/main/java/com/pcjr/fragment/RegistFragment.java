@@ -1,6 +1,7 @@
 package com.pcjr.fragment;
 
 import android.app.ProgressDialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
@@ -18,10 +19,15 @@ import android.widget.Toast;
 import com.google.gson.JsonObject;
 import com.mobsandgeeks.saripaar.ValidationError;
 import com.mobsandgeeks.saripaar.Validator;
+import com.mobsandgeeks.saripaar.annotation.ConfirmPassword;
 import com.mobsandgeeks.saripaar.annotation.NotEmpty;
+import com.mobsandgeeks.saripaar.annotation.Password;
 import com.pcjr.R;
+import com.pcjr.activity.AgreementActivity;
+import com.pcjr.activity.PrivacyPolicyActivity;
 import com.pcjr.common.Constant;
 import com.pcjr.plugins.ColoredSnackbar;
+import com.pcjr.plugins.FragmentNavigator;
 import com.pcjr.service.ApiService;
 import com.pcjr.utils.RetrofitUtils;
 import com.pcjr.utils.SharedPreferenceUtil;
@@ -31,6 +37,7 @@ import java.util.List;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
+import retrofit2.http.Path;
 
 /**
  * 注册
@@ -39,6 +46,8 @@ import retrofit2.Response;
 public class RegistFragment extends Fragment implements View.OnClickListener,Validator.ValidationListener
 {
 
+    public static final String TAG = RegistFragment.class.getSimpleName();
+
 	private TextView login,syxy,ystk;
 	private FragmentManager fragmentManager;
 	private FragmentTransaction transaction;
@@ -46,13 +55,19 @@ public class RegistFragment extends Fragment implements View.OnClickListener,Val
     @NotEmpty(message="用户名不能为空")
     private EditText text_username;
     @NotEmpty(message="密码不能为空")
+    @Password
     private EditText text_password;
-    @NotEmpty(message="验证码不能为空")
-    private EditText text_checkcode;
+    @NotEmpty(message="确认密码不能为空")
+    @ConfirmPassword(message="两次密码不同")
+    private EditText text_confirm_password;
+    private EditText text_recommend;
 
     private Button but_regist;
     private Validator validator;
     private ProgressDialog dialog;
+
+    private PersonFragment personFragment;
+
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
 	{
@@ -66,6 +81,7 @@ public class RegistFragment extends Fragment implements View.OnClickListener,Val
 	@Override
 	public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
 		super.onViewCreated(view, savedInstanceState);
+        personFragment = (PersonFragment) getParentFragment();
         dialog = new ProgressDialog(getActivity(), ProgressDialog.STYLE_SPINNER);
 		login = (TextView) view.findViewById(R.id.login);
 		syxy = (TextView) view.findViewById(R.id.syxy);
@@ -73,7 +89,8 @@ public class RegistFragment extends Fragment implements View.OnClickListener,Val
 
         text_username = (EditText) view.findViewById(R.id.username);
         text_password = (EditText) view.findViewById(R.id.password);
-        text_checkcode = (EditText) view.findViewById(R.id.checkcode);
+        text_confirm_password = (EditText) view.findViewById(R.id.text_confirm_password);
+        text_recommend = (EditText) view.findViewById(R.id.txt_recommend);
 
 		login.setOnClickListener(this);
 		syxy.setOnClickListener(this);
@@ -92,25 +109,26 @@ public class RegistFragment extends Fragment implements View.OnClickListener,Val
 	public void onClick(View v) {
 		switch (v.getId()){
 			case R.id.login:
-                transaction.setCustomAnimations(R.anim.push_right_in,R.anim.push_right_out);
-				transaction.remove(this).add(R.id.id_content,new LoginFragment());
+                personFragment.getNavigator().showFragment(0,false,true);
 				break;
 			case R.id.syxy:
-				transaction.remove(this).add(R.id.id_content,new LoginFragment());
+				startActivity(new Intent(getActivity(), AgreementActivity.class));
+                getActivity().overridePendingTransition(R.anim.slide_up_in, R.anim.slide_up_out);
 				break;
 			case R.id.ystk:
-				transaction.remove(this).add(R.id.id_content,new LoginFragment());
+                startActivity(new Intent(getActivity(), PrivacyPolicyActivity.class));
+                getActivity().overridePendingTransition(R.anim.slide_up_in, R.anim.slide_up_out);
 				break;
 		}
-        transaction.commit();
 	}
 
     @Override
     public void onValidationSucceeded() {
-        final String username = text_username.getText().toString().trim();
-        final String password = text_password.getText().toString().trim();
+        String username = text_username.getText().toString().trim();
+        String password = text_password.getText().toString().trim();
+        String recommend = text_recommend.getText().toString().trim();
         ApiService service = RetrofitUtils.createApi(ApiService.class);
-        Call<JsonObject> call = service.getAccessToken("password",username, password, "1", "123");
+        Call<JsonObject> call = service.register(username,password,recommend);
         dialog.setMessage("正在提交...");
         dialog.show();
         call.enqueue(new Callback<JsonObject>() {
@@ -118,31 +136,22 @@ public class RegistFragment extends Fragment implements View.OnClickListener,Val
             public void onResponse(Call<JsonObject> call, Response<JsonObject> response) {
                 if (response.isSuccessful()) {
                     JsonObject json = response.body();
-                    if (json.get("access_token") != null) {
-                        SharedPreferenceUtil spu = new SharedPreferenceUtil(getContext(), Constant.FILE);
-                        Constant.isLogin = true;
-                        spu.setUsername(username);
-                        spu.setPassword(password);
-                        spu.setIsFirst(false);
-                        dialog.dismiss();
-                        transaction.setCustomAnimations(R.anim.push_left_in, R.anim.push_left_out);
-                        transaction.remove(RegistFragment.this).add(R.id.id_content, new MemberFragment());
-                        transaction.commit();
+                    if (json.get("success").getAsBoolean()) {
+                        Snackbar snackbar = Snackbar.make(getView(),json.get("message").getAsString(), Snackbar.LENGTH_SHORT);
+                        ColoredSnackbar.confirm(snackbar).show();
+                        personFragment.getNavigator().showFragment(0);
                     } else {
-                        //Snackbar.make(getView(),"dsds",Snackbar.LENGTH_SHORT).show();
-                        Toast.makeText(getActivity(), json.get("status_code").toString() + ":" + json.get("message").toString(), Toast.LENGTH_SHORT).show();
+                        Snackbar snackbar = Snackbar.make(getView(),json.get("message").getAsString(), Snackbar.LENGTH_SHORT);
+                        ColoredSnackbar.warning(snackbar).show();
                     }
-                }else{
-                    dialog.dismiss();
-                    Snackbar snackbar = Snackbar.make(getView(),"用户名或密码错误", Snackbar.LENGTH_SHORT);
-                    ColoredSnackbar.warning(snackbar).show();
                 }
-
+                dialog.dismiss();
             }
 
             @Override
             public void onFailure(Call<JsonObject> call, Throwable t) {
                 Toast.makeText(getContext(),"网络异常",Toast.LENGTH_SHORT).show();
+                dialog.dismiss();
             }
         });
     }
@@ -160,5 +169,9 @@ public class RegistFragment extends Fragment implements View.OnClickListener,Val
                 Toast.makeText(getActivity(), message, Toast.LENGTH_LONG).show();
             }
         }
+    }
+
+    public static Fragment newInstance(String text) {
+        return new RegistFragment();
     }
 }

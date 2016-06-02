@@ -17,6 +17,8 @@ import java.util.List;
 public class InvestFragment extends Fragment
 {
 
+	public static final String TAG = InvestFragment.class.getSimpleName();
+
 	private TabLayout tabLayout;
 	private ViewPager viewPager;
 	private FragmentPagerAdapter fragmentPagerAdapter;
@@ -66,5 +68,9 @@ public class InvestFragment extends Fragment
 		tabLayout.setupWithViewPager(viewPager);
 	}
 
+	public static Fragment newInstance(String text) {
+		InvestFragment fragment = new InvestFragment();
+		return fragment;
+	}
 
 }

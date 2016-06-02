@@ -43,8 +43,11 @@
         <activity android:name="com.pcjr.activity.WithdrawRechargeActivity"/>
         <activity android:name="com.pcjr.activity.CouponActivity"/>
         <activity android:name="com.pcjr.activity.WebViewActivity"/>
-        <activity android:name="com.pcjr.activity.MainActivity"/>
+        <activity android:name=".activity.MainActivity"/>
         <activity android:name="com.pcjr.activity.InvestmentCertificatesActivity"/>
+        <activity android:name="com.pcjr.activity.RedPacketActivity"/>
+        <activity android:name="com.pcjr.activity.AgreementActivity"/>
+        <activity android:name="com.pcjr.activity.PrivacyPolicyActivity"/>
     </application>
 
 </manifest>

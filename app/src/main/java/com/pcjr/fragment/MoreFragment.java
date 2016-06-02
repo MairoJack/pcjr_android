@@ -17,6 +17,8 @@ import com.pcjr.activity.NewsActivity;
 
 public class MoreFragment extends Fragment
 {
+    public static final String TAG = MoreFragment.class.getSimpleName();
+
 	private RelativeLayout news,aboutus,kefu;
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
@@ -55,5 +57,10 @@ public class MoreFragment extends Fragment
 				getActivity().overridePendingTransition(R.anim.push_left_in, R.anim.push_left_out);
 			}
 		});
+	}
+
+	public static Fragment newInstance(String text) {
+		MoreFragment fragment = new MoreFragment();
+		return fragment;
 	}
 }

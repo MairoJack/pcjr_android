@@ -1,14 +1,22 @@
 package com.pcjr.model;
 
+import com.google.gson.annotations.Expose;
+
 /**
  * 站内信
  * Created by Mario on 2016/6/1.
  */
 public class Letter {
+    @Expose
     private String id;
+    @Expose
     private String title;
+    @Expose
     private long send_date;
+    @Expose
     private int read_status;
+    @Expose
+    private String content;
     public String getId() {
         return id;
     }
@@ -39,5 +47,13 @@ public class Letter {
 
     public void setRead_status(int read_status) {
         this.read_status = read_status;
+    }
+
+    public String getContent() {
+        return content;
+    }
+
+    public void setContent(String content) {
+        this.content = content;
     }
 }

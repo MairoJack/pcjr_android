@@ -39,6 +39,8 @@ import retrofit2.Response;
 public class MemberFragment extends Fragment
 {
 
+    public static final String TAG = RegistFragment.class.getSimpleName();
+
 	private RelativeLayout financial_records,invest_records,trade_records,safe_setting,bank_card,msg_center,payment_plan,withdraw_recharge,coupon;
 	private TextView username,available_balance,sum_assets,uncollected_interest_sum;
     @Override
@@ -179,4 +181,8 @@ public class MemberFragment extends Fragment
 			}
 		});
 	}
+
+    public static Fragment newInstance(String text) {
+        return new MemberFragment();
+    }
 }

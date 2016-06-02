@@ -137,6 +137,7 @@ public class AddBankCardActivity extends Activity {
 
             @Override
             public void onFailure(Call<JsonObject> call, Throwable t) {
+                Toast.makeText(AddBankCardActivity.this,"网络异常",Toast.LENGTH_SHORT).show();
             }
         });
     }

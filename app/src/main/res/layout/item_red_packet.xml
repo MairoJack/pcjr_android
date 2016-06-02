@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="120dp"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="horizontal">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="120dp"
+        android:orientation="vertical"
+        android:background="@drawable/red_packet_bg_left"
+        android:gravity="center_vertical"
+        android:layout_weight="1">
+
+        <TextView
+            android:id="@+id/amount"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="15dp"
+            tools:text="￥3485.68"
+            android:textSize="40dp"
+            android:textStyle="bold"
+            android:textColor="#FF4A44" />
+        <TextView
+            android:id="@+id/title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:layout_marginLeft="5dp"
+            tools:text="来源：全民大战红包(个人)"
+            android:textSize="15dp"
+            android:textColor="#b7b7b7" />
+        <TextView
+            android:id="@+id/join_date"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="5dp"
+            android:layout_marginTop="8dp"
+            android:textSize="15dp"
+            tools:text="红包获得时间：2016-05-23"
+            android:textColor="#b7b7b7" />
+
+    </LinearLayout>
+    <View
+        android:layout_width="15dp"
+        android:layout_height="120dp"
+        android:background="@drawable/line"/>
+    <LinearLayout
+        android:background="@drawable/red_packet_bg_rigth"
+        android:layout_width="match_parent"
+        android:layout_height="120dp"
+        android:orientation="vertical"
+        android:layout_weight="2"
+        android:gravity="center_vertical|center_horizontal">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="立即"
+            android:textSize="25dp"
+            android:textColor="#6f6f6f" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:text="领取"
+            android:textSize="25dp"
+            android:textColor="#6f6f6f" />
+
+    </LinearLayout>
+
+</LinearLayout>

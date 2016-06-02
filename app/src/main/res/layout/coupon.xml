@@ -43,38 +43,55 @@
         android:layout_width="match_parent"
         android:layout_height="80dp"
         android:layout_marginTop="1dp"
-        android:background="#FFFFFF"
-        >
+        android:background="#FFFFFF">
 
         <ImageView
             android:id="@+id/img_invest"
             android:layout_width="50dp"
             android:layout_height="50dp"
-            android:layout_marginLeft="10dp"
             android:layout_centerVertical="true"
+            android:layout_marginLeft="10dp"
             android:src="@drawable/invest_certificate" />
 
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_toRightOf="@+id/img_invest"
-            android:layout_marginLeft="15dp"
             android:layout_centerVertical="true"
+            android:layout_marginLeft="15dp"
+            android:layout_toRightOf="@+id/img_invest"
             android:orientation="vertical">
 
-            <TextView
+            <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="投资券"
-                android:textColor="#666"
-                android:textSize="20dp" />
+                android:orientation="horizontal"
+                android:gravity="center_vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="投资券"
+                    android:textColor="#666"
+                    android:textSize="20dp" />
+
+                <TextView
+                    android:id="@+id/invest_ticket_num"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="8dp"
+                    android:padding="3dp"
+                    android:background="@drawable/categoryblue"
+                    android:text="50"
+                    android:textColor="#DF4430"
+                    android:textSize="14dp" />
+            </LinearLayout>
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="2dp"
                 android:text="投资券需再次投资才能转入账户余额"
                 android:textColor="#bababa"
-                android:layout_marginTop="2dp"
                 android:textSize="16dp" />
         </LinearLayout>
 
@@ -86,43 +103,61 @@
             android:layout_marginRight="10dp"
             android:src="@drawable/arrow" />
     </RelativeLayout>
+
     <RelativeLayout
         android:id="@+id/red_packet"
         android:layout_width="match_parent"
         android:layout_height="80dp"
         android:layout_marginTop="1dp"
-        android:background="#FFFFFF"
-        >
+        android:background="#FFFFFF">
 
         <ImageView
             android:id="@+id/img_red_packet"
             android:layout_width="50dp"
             android:layout_height="50dp"
-            android:layout_marginLeft="10dp"
             android:layout_centerVertical="true"
+            android:layout_marginLeft="10dp"
             android:src="@drawable/red_packet" />
 
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_toRightOf="@+id/img_red_packet"
-            android:layout_marginLeft="15dp"
             android:layout_centerVertical="true"
+            android:layout_marginLeft="15dp"
+            android:layout_toRightOf="@+id/img_red_packet"
             android:orientation="vertical">
 
-            <TextView
+            <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="红包"
-                android:textColor="#666"
-                android:textSize="20dp" />
+                android:orientation="horizontal"
+                android:gravity="center_vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="红包"
+                    android:textColor="#666"
+                    android:textSize="20dp" />
+
+                <TextView
+                    android:id="@+id/red_packet_num"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="8dp"
+                    android:padding="3dp"
+                    android:background="@drawable/categoryblue"
+                    android:text="50"
+                    android:textColor="#DF4430"
+                    android:textSize="14dp" />
+            </LinearLayout>
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="2dp"
                 android:text="红包领取后将即时转入账户余额"
                 android:textColor="#bababa"
-                android:layout_marginTop="2dp"
                 android:textSize="16dp" />
         </LinearLayout>
 

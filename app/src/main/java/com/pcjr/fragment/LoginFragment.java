@@ -22,6 +22,7 @@ import com.mobsandgeeks.saripaar.annotation.NotEmpty;
 import com.pcjr.R;
 import com.pcjr.common.Constant;
 import com.pcjr.plugins.ColoredSnackbar;
+import com.pcjr.plugins.FragmentNavigator;
 import com.pcjr.service.ApiService;
 import com.pcjr.utils.RetrofitUtils;
 import com.pcjr.utils.SharedPreferenceUtil;
@@ -33,6 +34,8 @@ import retrofit2.Response;
 
 
 public class LoginFragment extends Fragment implements View.OnClickListener, Validator.ValidationListener {
+
+    public static final String TAG = LoginFragment.class.getSimpleName();
 
     private TextView reg, forget;
     private FragmentManager fragmentManager;
@@ -48,18 +51,21 @@ public class LoginFragment extends Fragment implements View.OnClickListener, Val
 
     private ProgressDialog dialog;
 
+    private PersonFragment personFragment;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         fragmentManager = getActivity().getSupportFragmentManager();
         transaction = fragmentManager.beginTransaction();
         validator = new Validator(this);
         validator.setValidationListener(this);
+
         return inflater.inflate(R.layout.login, container, false);
     }
 
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        personFragment = (PersonFragment) getParentFragment();
         dialog = new ProgressDialog(getActivity(), ProgressDialog.STYLE_SPINNER);
         reg = (TextView) view.findViewById(R.id.reg);
         forget = (TextView) view.findViewById(R.id.forget);
@@ -81,15 +87,12 @@ public class LoginFragment extends Fragment implements View.OnClickListener, Val
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.reg:
-                transaction.setCustomAnimations(R.anim.push_left_in, R.anim.push_left_out);
-                transaction.remove(this).add(R.id.id_content, new RegistFragment());
+                personFragment.getNavigator().showFragment(1,true,true);
                 break;
             case R.id.forget:
-                transaction.setCustomAnimations(R.anim.slide_up_in, R.anim.slide_up_out);
-                transaction.remove(this).add(R.id.id_content, new ForgetFragment());
+                personFragment.getNavigator().showFragment(2,true,true);
                 break;
         }
-        transaction.commit();
     }
 
     @Override
@@ -117,9 +120,7 @@ public class LoginFragment extends Fragment implements View.OnClickListener, Val
                         spu.setRefresToken(refreshToken);
                         spu.setIsFirst(false);
                         dialog.dismiss();
-                        transaction.setCustomAnimations(R.anim.push_left_in, R.anim.push_left_out);
-                        transaction.remove(LoginFragment.this).add(R.id.id_content, new MemberFragment());
-                        transaction.commit();
+                        personFragment.getNavigator().showFragment(3,true,true);
                     } else {
                         //Snackbar.make(getView(),"dsds",Snackbar.LENGTH_SHORT).show();
                         Toast.makeText(getActivity(), json.get("status_code").toString() + ":" + json.get("message").toString(), Toast.LENGTH_SHORT).show();
@@ -153,5 +154,9 @@ public class LoginFragment extends Fragment implements View.OnClickListener, Val
                 Toast.makeText(getActivity(), message, Toast.LENGTH_LONG).show();
             }
         }
+    }
+
+    public static Fragment newInstance(String text) {
+        return new LoginFragment();
     }
 }

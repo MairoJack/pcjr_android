@@ -17,12 +17,15 @@ import com.mobsandgeeks.saripaar.ValidationError;
 import com.mobsandgeeks.saripaar.Validator;
 import com.mobsandgeeks.saripaar.annotation.NotEmpty;
 import com.pcjr.R;
+import com.pcjr.plugins.FragmentNavigator;
 
 import java.util.List;
 
 
 public class ForgetFragment extends Fragment implements View.OnClickListener,Validator.ValidationListener
 {
+
+	public static final String TAG = ForgetFragment.class.getSimpleName();
 
 	private TextView login,tel;
 	private FragmentManager fragmentManager;
@@ -39,6 +42,8 @@ public class ForgetFragment extends Fragment implements View.OnClickListener,Val
 	private Button but_find;
 
 	private Validator validator;
+	private PersonFragment personFragment;
+
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
 	{
@@ -52,6 +57,8 @@ public class ForgetFragment extends Fragment implements View.OnClickListener,Val
 	@Override
 	public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
 		super.onViewCreated(view, savedInstanceState);
+		personFragment = (PersonFragment) getParentFragment();
+
 		login = (TextView) view.findViewById(R.id.login);
 		tel = (TextView) view.findViewById(R.id.tel);
 
@@ -82,11 +89,9 @@ public class ForgetFragment extends Fragment implements View.OnClickListener,Val
 	public void onClick(View v) {
 		switch (v.getId()){
 			case R.id.login:
-                transaction.setCustomAnimations(R.anim.slide_down_in,R.anim.slide_down_out);
-                transaction.remove(this).add(R.id.id_content, new LoginFragment());
+				personFragment.getNavigator().showFragment(0,true);
 				break;
 		}
-        transaction.commit();
 	}
 
 	@Override
@@ -107,5 +112,9 @@ public class ForgetFragment extends Fragment implements View.OnClickListener,Val
 				Toast.makeText(getActivity(), message, Toast.LENGTH_LONG).show();
 			}
 		}
+	}
+
+	public static Fragment newInstance(String text) {
+		return new ForgetFragment();
 	}
 }

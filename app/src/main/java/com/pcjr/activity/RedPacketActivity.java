@@ -9,18 +9,20 @@ import android.support.v4.view.ViewPager;
 import android.view.KeyEvent;
 import android.view.View;
 import android.widget.RelativeLayout;
+
 import com.pcjr.R;
 import com.pcjr.adapter.TabFragmentAdapter;
 import com.pcjr.fragment.InvestTicketFragment;
+import com.pcjr.fragment.RedPacketFragment;
 
 import java.util.ArrayList;
 import java.util.List;
 
 /**
- * 投资券
+ * 红包
  * Created by Mario on 2016/5/24.
  */
-public class InvestmentCertificatesActivity extends FragmentActivity {
+public class RedPacketActivity extends FragmentActivity {
     private RelativeLayout back;
 
     private TabLayout tabLayout;
@@ -29,8 +31,6 @@ public class InvestmentCertificatesActivity extends FragmentActivity {
 
     private List<Fragment> fragmentList;
     private List<String> titleList;
-
-    private Fragment iCUnusedFragment,iCUsedFragment,iCExpiredFragment;
 
 
     public void onCreate(Bundle savedInstanceState) {
@@ -45,18 +45,15 @@ public class InvestmentCertificatesActivity extends FragmentActivity {
         viewPager = (ViewPager) findViewById(R.id.tab_viewpager);
 
         fragmentList = new ArrayList<>();
-        fragmentList.add(InvestTicketFragment.newInstance(0));
-        fragmentList.add(InvestTicketFragment.newInstance(1));
-        fragmentList.add(InvestTicketFragment.newInstance(2));
+        fragmentList.add(RedPacketFragment.newInstance(0));
+        fragmentList.add(RedPacketFragment.newInstance(1));
 
         titleList = new ArrayList<>();
-        titleList.add("未使用");
-        titleList.add("已使用");
-        titleList.add("已过期");
+        titleList.add("未领取");
+        titleList.add("已领取");
 
         tabLayout.addTab(tabLayout.newTab().setText(titleList.get(0)));
         tabLayout.addTab(tabLayout.newTab().setText(titleList.get(1)));
-        tabLayout.addTab(tabLayout.newTab().setText(titleList.get(2)));
 
         fragmentPagerAdapter = new TabFragmentAdapter(getSupportFragmentManager(),fragmentList,titleList);
 
