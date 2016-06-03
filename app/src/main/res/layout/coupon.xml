@@ -2,6 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:tools="http://schemas.android.com/tools"
     android:background="#f3f3f3"
     android:orientation="vertical">
 
@@ -75,13 +76,14 @@
                     android:textSize="20dp" />
 
                 <TextView
-                    android:id="@+id/invest_ticket_num"
+                    android:id="@+id/invest_ticket_number"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="8dp"
-                    android:padding="3dp"
-                    android:background="@drawable/categoryblue"
-                    android:text="50"
+                    android:paddingLeft="5dp"
+                    android:paddingRight="5dp"
+                    android:background="@drawable/border_bg"
+                    tools:text="50"
                     android:textColor="#DF4430"
                     android:textSize="14dp" />
             </LinearLayout>
@@ -141,12 +143,13 @@
                     android:textSize="20dp" />
 
                 <TextView
-                    android:id="@+id/red_packet_num"
+                    android:id="@+id/red_packet_number"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="8dp"
-                    android:padding="3dp"
-                    android:background="@drawable/categoryblue"
+                    android:paddingLeft="5dp"
+                    android:paddingRight="5dp"
+                    android:background="@drawable/border_bg"
                     android:text="50"
                     android:textColor="#DF4430"
                     android:textSize="14dp" />

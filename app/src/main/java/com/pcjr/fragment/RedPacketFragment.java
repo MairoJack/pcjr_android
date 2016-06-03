@@ -43,6 +43,7 @@ public class RedPacketFragment extends Fragment implements OnRefreshListener, On
     private int type;
     private int pageNow = 1;
     private List<RedPacket> redPackets = new ArrayList<>();
+
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
         return inflater.inflate(R.layout.ic_list, container, false);
@@ -66,9 +67,9 @@ public class RedPacketFragment extends Fragment implements OnRefreshListener, On
         loadData();
     }
 
-    public void loadData(){
+    public void loadData() {
         ApiService service = RetrofitUtils.createApi(ApiService.class);
-        Call<JsonObject> call = service.getRedPacketList(Constant.access_token,type,pageNow);
+        Call<JsonObject> call = service.getRedPacketList(Constant.access_token, type, pageNow,Constant.PAGESIZE);
         call.enqueue(new Callback<JsonObject>() {
             @Override
             public void onResponse(Call<JsonObject> call, Response<JsonObject> response) {
@@ -87,10 +88,15 @@ public class RedPacketFragment extends Fragment implements OnRefreshListener, On
                         }.getType());
                     }
                     redPackets.addAll(temps);
-                    if(redPackets.size()>0) {
-                        if (adapter == null) {
-                            adapter = new RedPacketListViewAdapter(redPackets, getContext());
+                    if (redPackets.size() > 0) {
+                        if (pageNow == 1) {
+                            adapter = new RedPacketListViewAdapter(redPackets, getContext(),type);
                             listView.setAdapter(adapter);
+                        } else {
+                            if (adapter == null) {
+                                adapter = new RedPacketListViewAdapter(redPackets, getContext(),type);
+                                listView.setAdapter(adapter);
+                            }
                         }
                         adapter.notifyDataSetChanged();
                     }
@@ -104,6 +110,7 @@ public class RedPacketFragment extends Fragment implements OnRefreshListener, On
             }
         });
     }
+
     @Override
     public void onLoadMore() {
         pageNow++;

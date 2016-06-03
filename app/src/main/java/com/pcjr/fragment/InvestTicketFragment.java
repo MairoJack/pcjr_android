@@ -1,11 +1,13 @@
 package com.pcjr.fragment;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ListView;
 
 import com.aspsine.swipetoloadlayout.OnLoadMoreListener;
@@ -15,6 +17,8 @@ import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import com.google.gson.reflect.TypeToken;
 import com.pcjr.R;
+import com.pcjr.activity.InvestTicketDetailActivity;
+import com.pcjr.activity.MsgDetailActivity;
 import com.pcjr.adapter.InvestTicketListViewAdapter;
 import com.pcjr.adapter.LetterListViewAdapter;
 import com.pcjr.adapter.ProductListViewAdapter;
@@ -58,6 +62,16 @@ public class InvestTicketFragment extends Fragment implements OnRefreshListener,
         swipeToLoadLayout.setOnLoadMoreListener(this);
         listView = (ListView) view.findViewById(R.id.swipe_target);
         type = getArguments().getInt("type");
+
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Intent intent = new Intent(getActivity(),InvestTicketDetailActivity.class);
+                intent.putExtra("id",investTickets.get(position).getId());
+                startActivity(intent);
+                getActivity().overridePendingTransition(R.anim.push_left_in, R.anim.push_left_out);
+            }
+        });
         autoRefresh();
     }
 
@@ -70,7 +84,7 @@ public class InvestTicketFragment extends Fragment implements OnRefreshListener,
 
     public void loadData(){
         ApiService service = RetrofitUtils.createApi(ApiService.class);
-        Call<JsonObject> call = service.getInvestTicketList(Constant.access_token,type,pageNow);
+        Call<JsonObject> call = service.getInvestTicketList(Constant.access_token,type,pageNow,5);
         call.enqueue(new Callback<JsonObject>() {
             @Override
             public void onResponse(Call<JsonObject> call, Response<JsonObject> response) {
@@ -90,9 +104,14 @@ public class InvestTicketFragment extends Fragment implements OnRefreshListener,
                     }
                     investTickets.addAll(temps);
                     if(investTickets.size()>0) {
-                        if (adapter == null) {
-                            adapter = new InvestTicketListViewAdapter(investTickets, getContext());
+                        if(pageNow == 1) {
+                            adapter = new InvestTicketListViewAdapter(investTickets, getContext(),type);
                             listView.setAdapter(adapter);
+                        }else{
+                            if (adapter == null) {
+                                adapter = new InvestTicketListViewAdapter(investTickets, getContext(),type);
+                                listView.setAdapter(adapter);
+                            }
                         }
                         adapter.notifyDataSetChanged();
                     }
@@ -127,5 +146,9 @@ public class InvestTicketFragment extends Fragment implements OnRefreshListener,
         bundle.putInt("type", type);
         fragment.setArguments(bundle);
         return fragment;
+    }
+
+    public void setType(int type){
+        this.type = type;
     }
 }

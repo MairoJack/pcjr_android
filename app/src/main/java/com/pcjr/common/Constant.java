@@ -13,6 +13,7 @@ import java.util.List;
  * Created by Mario on 2016/5/22.
  */
 public class Constant extends Application{
+    public final static int PAGESIZE = 15;
     public final static String BEARER = "Bearer";
     public final static String FILE = "user_data";
     public final static String CLIENTID = "1";

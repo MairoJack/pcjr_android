@@ -21,10 +21,8 @@ import com.pcjr.activity.MsgCenterActivity;
 import com.pcjr.activity.PaymentPlanActivity;
 import com.pcjr.activity.SafeSettingActivity;
 import com.pcjr.activity.TradeRecordsActivity;
-import com.pcjr.activity.WithdrawRechargeActivity;
+import com.pcjr.activity.WithdrawActivity;
 import com.pcjr.common.Constant;
-import com.pcjr.model.Member;
-import com.pcjr.model.Users;
 import com.pcjr.service.ApiService;
 import com.pcjr.utils.RetrofitUtils;
 
@@ -143,7 +141,7 @@ public class MemberFragment extends Fragment
         withdraw_recharge.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(getActivity(), WithdrawRechargeActivity.class));
+                startActivity(new Intent(getActivity(), WithdrawActivity.class));
                 getActivity().overridePendingTransition(R.anim.push_left_in, R.anim.push_left_out);
             }
         });

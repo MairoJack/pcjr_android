@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#f3f3f3"
+    android:orientation="vertical" >
+
+    <RelativeLayout
+        android:id="@+id/title"
+        android:layout_width="fill_parent"
+        android:layout_height="50dp"
+        android:background="#0099CC" >
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+            android:text="温馨提示"
+            android:textColor="#FFFFFF"
+            android:textSize="20dp" />
+
+        <RelativeLayout
+            android:id="@+id/back"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="10dp"
+            android:padding="5dp" >
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="20dp"
+                android:layout_alignParentLeft="true"
+                android:layout_centerVertical="true"
+                android:src="@drawable/arrow2" />
+        </RelativeLayout>
+    </RelativeLayout>
+
+    <ScrollView
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        android:scrollbars="none" >
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical" >
+
+            <TextView
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:lineSpacingExtra="4dp"
+                android:text="\t\t1.投资需满足投资券使用规则，将在投资时自动使用；"
+                android:textColor="#989898"
+                android:textSize="18dp" />
+
+            <TextView
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:lineSpacingExtra="4dp"
+                android:text="\t\t2.每次投资只能使用一张投资券；"
+                android:textColor="#989898"
+                android:textSize="18dp" />
+            <TextView
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:lineSpacingExtra="4dp"
+                android:text="\t\t3.您投资时平台将优先使用 符合要求、额度最大 的投资券，产品满标复审之后，投资券将自动转换成账户余额；"
+                android:textColor="#989898"
+                android:textSize="18dp" />
+            <TextView
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:lineSpacingExtra="4dp"
+                android:text="\t\t4.投资券具有有效期，请在有效期之前及时使用；"
+                android:textColor="#989898"
+                android:textSize="18dp" />
+            <TextView
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:lineSpacingExtra="4dp"
+                android:text="\t\t5.使用过程中遇到问题，请联系在线客服或拨打客服电话400-101-3339。"
+                android:textColor="#989898"
+                android:textSize="18dp" />
+            <TextView
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:lineSpacingExtra="4dp"
+                android:text="\t\t投资券如何使用："
+                android:textColor="#989898"
+                android:textSize="18dp" />
+
+            <TextView
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:lineSpacingExtra="4dp"
+                android:text="\t\t假如您获得的投资券面额为20元，使用要求为满1000元返20元且仅限购买31天以上产品时使用，有效期至1月 3日； 那么您只需再选择一个31天以上产品投资1000元，系统将自动使用该券，且在所投产品通过满标复审（ 产品介绍页所显示的起息日前一天）后，平台会在您的账户余额内返现20元，可用于继续投资或提现；"
+                android:textColor="#989898"
+                android:textSize="18dp" />
+            <TextView
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:lineSpacingExtra="4dp"
+                android:text="\t\t注意：如您的投资券的有效期至1月3日，您就必须购买起息日为1月4日（满标复审日为起息日前一天即1月3日）之前的产品。"
+                android:textColor="#ff8300"
+                android:textSize="18dp" />
+        </LinearLayout>
+    </ScrollView>
+
+</LinearLayout>

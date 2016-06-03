@@ -77,7 +77,7 @@ public class ProductListViewAdapter extends BaseAdapter {
 
         listItemView.seriesname.setText("大城小爱");
         listItemView.product_name.setText(list.get(position).getName());
-        listItemView.income.setText(String.valueOf(list.get(position).getYearIncome()));
+        listItemView.income.setText(String.valueOf(list.get(position).getYear_income()));
         listItemView.income1.setText("00%");
         listItemView.amount.setText(String.valueOf(list.get(position).getAmount()));
         listItemView.month.setText(list.get(position).getMonth());

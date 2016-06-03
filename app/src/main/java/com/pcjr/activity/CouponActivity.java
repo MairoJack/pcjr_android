@@ -5,21 +5,15 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.KeyEvent;
 import android.view.View;
-import android.widget.ArrayAdapter;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.google.gson.Gson;
 import com.google.gson.JsonObject;
-import com.google.gson.reflect.TypeToken;
 import com.pcjr.R;
 import com.pcjr.common.Constant;
-import com.pcjr.model.BankCard;
 import com.pcjr.service.ApiService;
 import com.pcjr.utils.RetrofitUtils;
-
-import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -31,7 +25,7 @@ import retrofit2.Response;
  */
 public class CouponActivity extends Activity {
     private RelativeLayout invest_certificate,red_packet,back;
-    private TextView invest_ticket_num,red_packet_num;
+    private TextView invest_ticket_number,red_packet_number;
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.coupon);
@@ -42,15 +36,15 @@ public class CouponActivity extends Activity {
     public void initView() {
         invest_certificate = (RelativeLayout) findViewById(R.id.invest_certificate);
         red_packet = (RelativeLayout) findViewById(R.id.red_packet);
-        invest_ticket_num = (TextView) findViewById(R.id.invest_ticket_num);
-        red_packet_num = (TextView) findViewById(R.id.red_packet_num);
+        invest_ticket_number = (TextView) findViewById(R.id.invest_ticket_number);
+        red_packet_number = (TextView) findViewById(R.id.red_packet_number);
 
         back = (RelativeLayout) findViewById(R.id.back);
 
         invest_certificate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(CouponActivity.this, InvestmentCertificatesActivity.class));
+                startActivity(new Intent(CouponActivity.this, InvesTicketActivity.class));
                 overridePendingTransition(R.anim.push_left_in, R.anim.push_left_out);
             }
         });
@@ -86,17 +80,17 @@ public class CouponActivity extends Activity {
                     if (json.get("invest_ticket_num") != null) {
                         int  investTicketNum = json.get("invest_ticket_num").getAsInt();
                         if(investTicketNum!=0){
-                            //invest_ticket_num.setText(investTicketNum);
+                            invest_ticket_number.setText(String.valueOf(investTicketNum));
                         }else{
-                            //invest_ticket_num.setVisibility(View.GONE);
+                            invest_ticket_number.setVisibility(View.GONE);
                         }
                     }
                     if (json.get("red_packet_num") != null) {
                         int  redPacketNum = json.get("red_packet_num").getAsInt();
                         if(redPacketNum!=0){
-                            //red_packet_num.setText(redPacketNum);
+                            red_packet_number.setText(String.valueOf(redPacketNum));
                         }else{
-                            //red_packet_num.setVisibility(View.GONE);
+                            red_packet_number.setVisibility(View.GONE);
                         }
                     }
                 }

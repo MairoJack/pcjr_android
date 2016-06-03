@@ -17,7 +17,8 @@
         android:layout_height="match_parent"
         android:layout_margin="5dp"
         android:clipToPadding="false"
-        android:divider="@null" />
+        android:divider="#EEEEEE"
+        android:dividerHeight="5dp"/>
 
     <include
         android:id="@id/swipe_load_more_footer"

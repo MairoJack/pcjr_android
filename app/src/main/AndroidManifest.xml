@@ -40,14 +40,17 @@
         <activity android:name="com.pcjr.activity.SafeSettingActivity"/>
         <activity android:name="com.pcjr.activity.TradeRecordsActivity"/>
         <activity android:name="com.pcjr.activity.PaymentPlanActivity"/>
-        <activity android:name="com.pcjr.activity.WithdrawRechargeActivity"/>
+        <activity android:name=".activity.WithdrawActivity"/>
         <activity android:name="com.pcjr.activity.CouponActivity"/>
         <activity android:name="com.pcjr.activity.WebViewActivity"/>
         <activity android:name=".activity.MainActivity"/>
-        <activity android:name="com.pcjr.activity.InvestmentCertificatesActivity"/>
+        <activity android:name=".activity.InvesTicketActivity"/>
         <activity android:name="com.pcjr.activity.RedPacketActivity"/>
         <activity android:name="com.pcjr.activity.AgreementActivity"/>
         <activity android:name="com.pcjr.activity.PrivacyPolicyActivity"/>
+        <activity android:name="com.pcjr.activity.InvestTicketDetailActivity"/>
+        <activity android:name="com.pcjr.activity.InvestTicketTipsActivity"/>
+        <activity android:name="com.pcjr.activity.RedPacketTipsActivity"/>
     </application>
 
 </manifest>

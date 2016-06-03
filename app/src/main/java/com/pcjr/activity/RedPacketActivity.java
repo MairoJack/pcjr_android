@@ -1,5 +1,6 @@
 package com.pcjr.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
@@ -23,7 +24,7 @@ import java.util.List;
  * Created by Mario on 2016/5/24.
  */
 public class RedPacketActivity extends FragmentActivity {
-    private RelativeLayout back;
+    private RelativeLayout back,tips;
 
     private TabLayout tabLayout;
     private ViewPager viewPager;
@@ -35,7 +36,7 @@ public class RedPacketActivity extends FragmentActivity {
 
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.investment_certificates);
+        setContentView(R.layout.red_packet);
         initView();
     }
 
@@ -61,11 +62,19 @@ public class RedPacketActivity extends FragmentActivity {
         tabLayout.setupWithViewPager(viewPager);
 
         back = (RelativeLayout) findViewById(R.id.back);
+        tips = (RelativeLayout) findViewById(R.id.tips);
         back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 finish();
                 overridePendingTransition(R.anim.push_right_in, R.anim.push_right_out);
+            }
+        });
+        tips.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(RedPacketActivity.this,RedPacketTipsActivity.class));
+                overridePendingTransition(R.anim.push_left_in, R.anim.push_left_out);
             }
         });
     }

@@ -20,7 +20,7 @@ public class InvestTicket {
     @Expose
     private long end_time;
     @Expose
-    private Activity activity;
+    private InvestTicketDetail activity;
 
     public String getId() {
         return id;
@@ -70,34 +70,11 @@ public class InvestTicket {
         this.end_time = end_time;
     }
 
-    public Activity getActivity() {
+    public InvestTicketDetail getActivity() {
         return activity;
     }
 
-    public void setActivity(Activity activity) {
+    public void setActivity(InvestTicketDetail activity) {
         this.activity = activity;
-    }
-
-    class Activity{
-        @Expose
-        private String id;
-        @Expose
-        private String introduction;
-
-        public String getId() {
-            return id;
-        }
-
-        public void setId(String id) {
-            this.id = id;
-        }
-
-        public String getIntroduction() {
-            return introduction;
-        }
-
-        public void setIntroduction(String introduction) {
-            this.introduction = introduction;
-        }
     }
 }

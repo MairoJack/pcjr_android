@@ -262,7 +262,7 @@ public interface ApiService {
      * @return
      */
     @GET("/member/invest_ticket_list")
-    Call<JsonObject> getInvestTicketList(@Query("access_token") String access_token,@Query("type") int type,@Query("page") int page);
+    Call<JsonObject> getInvestTicketList(@Query("access_token") String access_token,@Query("type") int type,@Query("page") int page,@Query("page_size") int pageSize);
 
     /**
      * 获取用户投资券详情
@@ -281,6 +281,35 @@ public interface ApiService {
      * @return
      */
     @GET("/member/red_packet_list")
-    Call<JsonObject> getRedPacketList(@Query("access_token") String access_token,@Query("type") int type,@Query("page") int page);
+    Call<JsonObject> getRedPacketList(@Query("access_token") String access_token,@Query("type") int type,@Query("page") int page,@Query("page_size") int pageSize);
+
+    /**
+     * 获取用户提现信息
+     * @param access_token
+     * @return
+     */
+    @GET("/member/withdraw_info")
+    Call<JsonObject> getWithdrawInfo(@Query("access_token") String access_token);
+
+    /**
+     * 用户提现
+     * @param access_token
+     * @param amount    提现金额
+     * @param bank_id   银行ID
+     * @param verify    验证码
+     * @return
+     */
+    @FormUrlEncoded
+    @POST("/member/withdraw")
+    Call<JsonObject> withdraw(@Field("access_token") String access_token,@Field("amount") String amount, @Field("bank_id") String bank_id,@Field("verify") String verify);
+
+    /**
+     * 发送提现验证码
+     * @param access_token
+     * @return
+     */
+    @FormUrlEncoded
+    @POST("/api/withdraw_verify")
+    Call<JsonObject> withdrawVerify(@Field("access_token") String access_token);
 
 }

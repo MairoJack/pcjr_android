@@ -17,7 +17,7 @@
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
             android:layout_centerVertical="true"
-            android:text="投资券"
+            android:text="红包"
             android:textColor="#FFFFFF"
             android:textSize="20dp" />
 
@@ -39,7 +39,7 @@
         </RelativeLayout>
 
         <RelativeLayout
-            android:id="@+id/ask"
+            android:id="@+id/tips"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"

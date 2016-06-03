@@ -22,15 +22,17 @@ public class RedPacketListViewAdapter extends BaseAdapter {
     private List<RedPacket> list;
     private Context context;
     private LayoutInflater layoutInflater;
+    private int type;
     private static class ViewHolder{
         public TextView
                 amount,
                 title,
                 join_date;
     }
-    public RedPacketListViewAdapter(List<RedPacket> list, Context context) {
+    public RedPacketListViewAdapter(List<RedPacket> list, Context context,int type) {
         this.list = list;
         this.context = context;
+        this.type = type;
         this.layoutInflater = LayoutInflater.from(context);
     }
 
@@ -54,8 +56,11 @@ public class RedPacketListViewAdapter extends BaseAdapter {
         ViewHolder  viewHolder = null;
         if(convertView == null){
             viewHolder = new ViewHolder();
-            convertView = layoutInflater.inflate(R.layout.item_red_packet,null);
-
+            if(type == 0) {
+                convertView = layoutInflater.inflate(R.layout.item_red_packet, null);
+            }else{
+                convertView = layoutInflater.inflate(R.layout.item_red_packet_gray, null);
+            }
             viewHolder.amount = (TextView)convertView.findViewById(R.id.amount);
             viewHolder.title = (TextView)convertView.findViewById(R.id.title);
             viewHolder.join_date = (TextView)convertView.findViewById(R.id.join_date);

@@ -9,14 +9,14 @@ import android.widget.RelativeLayout;
 import com.pcjr.R;
 
 /**
- * 提现/充值
+ * 红包-温馨提示
  * Created by Mario on 2016/5/24.
  */
-public class WithdrawRechargeActivity extends Activity {
+public class RedPacketTipsActivity extends Activity {
     private RelativeLayout back;
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.aboutus);
+        setContentView(R.layout.red_packet_tips);
         initView();
     }
 

@@ -34,6 +34,7 @@ public class InvestTicketListViewAdapter extends BaseAdapter {
     private List<InvestTicket> list;
     private Context context;
     private LayoutInflater layoutInflater;
+    private int type;
     private static class ViewHolder{
         public TextView
                 amount,
@@ -41,10 +42,11 @@ public class InvestTicketListViewAdapter extends BaseAdapter {
                 title,
                 end_time;
     }
-    public InvestTicketListViewAdapter(List<InvestTicket> list, Context context) {
+    public InvestTicketListViewAdapter(List<InvestTicket> list, Context context,int type) {
         this.list = list;
         this.context = context;
         this.layoutInflater = LayoutInflater.from(context);
+        this.type = type;
     }
 
     @Override
@@ -67,8 +69,11 @@ public class InvestTicketListViewAdapter extends BaseAdapter {
         ViewHolder  viewHolder = null;
         if(convertView == null){
             viewHolder = new ViewHolder();
-            convertView = layoutInflater.inflate(R.layout.item_invest_ticket,null);
-
+            if(type==0) {
+                convertView = layoutInflater.inflate(R.layout.item_invest_ticket, null);
+            }else{
+                convertView = layoutInflater.inflate(R.layout.item_invest_ticket_gray, null);
+            }
             viewHolder.amount = (TextView)convertView.findViewById(R.id.amount);
             viewHolder.msg = (TextView)convertView.findViewById(R.id.msg);
             viewHolder.title = (TextView)convertView.findViewById(R.id.title);
@@ -78,10 +83,10 @@ public class InvestTicketListViewAdapter extends BaseAdapter {
         }else{
             viewHolder = (ViewHolder)convertView.getTag();
         }
-        viewHolder.amount.setText(list.get(position).getAmount());
-        viewHolder.msg.setText("满 "+list.get(position).getReach_amount()+" 元返 "+list.get(position).getAmount()+" 元");
-        viewHolder.title.setText("来源："+list.get(position).getTitle());
-        viewHolder.end_time.setText("有效期至："+ DateUtil.transferLongToDate("yyyy-MM-dd",list.get(position).getEnd_time()*1000));
+        viewHolder.amount.setText(list.get(position).getAmount().replace(".00",""));
+        viewHolder.msg.setText("满 "+list.get(position).getReach_amount()+" 元返 "+list.get(position).getAmount().replace(".00","")+" 元");
+        viewHolder.title.setText("来源:"+list.get(position).getTitle());
+        viewHolder.end_time.setText("有效期至:"+ DateUtil.transferLongToDate("yyyy-MM-dd",list.get(position).getEnd_time()*1000));
 
         return convertView;
     }
