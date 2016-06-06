@@ -6,7 +6,7 @@
     android:padding="5dp" >
 
     <TextView
-        android:id="@+id/name"
+        android:id="@+id/member_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="J***g"
@@ -14,7 +14,7 @@
         android:textSize="12dp" />
 
     <TextView
-        android:id="@+id/time"
+        android:id="@+id/join_date"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"

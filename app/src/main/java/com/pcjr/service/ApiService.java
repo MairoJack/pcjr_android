@@ -19,11 +19,6 @@ import retrofit2.http.Query;
  * Created by Mario on 2016/5/4.
  */
 public interface ApiService {
-    @GET("/user")
-    Call<Product> loadPro();
-
-    @GET("/users/{user}")
-    Call<Users> loadUsers(@Path("user") String user);
 
     /**
      * 获取访问token(用户登录)
@@ -38,6 +33,7 @@ public interface ApiService {
     @POST("/oauth/access_token")
     Call<JsonObject> getAccessToken(@Field("grant_type") String grant_type, @Field("username") String username, @Field("password") String password, @Field("client_id") String client_id, @Field("client_secret") String client_secret);
 
+
     /**
      * 用户登出
      * @param access_token
@@ -46,6 +42,46 @@ public interface ApiService {
     @FormUrlEncoded
     @POST("/oauth/revoke_access_token")
     Call<JsonObject> revoke(@Field("access_token") String access_token);
+
+    /**
+     * 获取首页焦点图和公告
+     * @return
+     */
+    @GET("/index_focus_info")
+    Call<JsonObject> getIndexFocusInfo();
+
+    /**
+     * 获取首页产品信息
+     * @return
+     */
+    @GET("/index_product_list")
+    Call<JsonObject> getIndexProductList();
+
+    /**
+     * 获取产品列表
+     * @param type: 0 全部；1 销售中；2 销售结束；3 项目结束
+     * @param page
+     * @param page_size
+     * @return
+     */
+    @GET("/invest_product_list")
+    Call<JsonObject> getInvestProductList(@Query("type") int type,@Query("page") int page,@Query("page_size") int page_size);
+
+    /**
+     * 获取产品详情
+     * @param id
+     * @return
+     */
+    @GET("/product_detail")
+    Call<JsonObject> getProductDetail(@Query("id") String id);
+
+    /**
+     * 获取产品投资记录
+     * @param id
+     * @return
+     */
+    @GET("/product_trading_record_list")
+    Call<JsonObject> getProductTradingRecordList(@Query("id") String id,@Query("page") int page,@Query("page_size") int page_size);
 
     /**
      * 用户注册
@@ -75,12 +111,7 @@ public interface ApiService {
     @GET("/member/index_data")
     Call<JsonObject> getMemberIndex(@Query("access_token") String access_token);
 
-    /**
-     * 获取首页焦点图和公告
-     * @return
-     */
-    @GET("/index_focus_info")
-    Call<JsonObject> getIndexFocusInfo();
+
 
     /**
      * 获取用户交易记录

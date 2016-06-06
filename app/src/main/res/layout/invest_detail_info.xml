@@ -15,6 +15,26 @@
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
+            <LinearLayout
+                android:id="@+id/preview_repayment"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="#FDDDA4"
+                android:layout_margin="5dp"
+                android:visibility="gone">
+                <ImageView
+                    android:layout_width="14dp"
+                    android:layout_height="14dp"
+                    android:layout_marginTop="2dp"
+                    android:src="@drawable/info" />
+                <TextView
+                    android:id="@+id/txt_preview_repayment"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="#8e5c02"
+                    android:text=" 本产品具有 提前回款 可能，平台确保此产品最短借款时长为 1个月 ，如提前回款则补偿本产品 10天利息 于投资人,利息计算方法请 点击此处"/>
+
+            </LinearLayout>
             <RelativeLayout
                 android:layout_width="fill_parent"
                 android:layout_height="300dp"
@@ -33,7 +53,7 @@
                     ProgressWheel:pwRimWidth="20dp"
                     ProgressWheel:pwSpinSpeed="3dp"/>
                 <TextView
-                    android:id="@+id/nhsy"
+                    android:id="@+id/year_income"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerHorizontal="true"
@@ -47,7 +67,7 @@
                     android:id="@+id/txt"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_below="@+id/nhsy"
+                    android:layout_below="@+id/year_income"
                     android:layout_centerHorizontal="true"
                     android:layout_marginTop="6dp"
                     android:text="年化收益率"
@@ -75,7 +95,7 @@
             </RelativeLayout>
 
             <TextView
-                android:id="@+id/pname"
+                android:id="@+id/name"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center"
@@ -99,7 +119,7 @@
                     android:layout_weight="1">
 
                     <TextView
-                        android:id="@+id/qigou"
+                        android:id="@+id/threshold_amount"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_centerInParent="true"
@@ -122,7 +142,7 @@
                     android:layout_weight="1">
 
                     <TextView
-                        android:id="@+id/dizeng"
+                        android:id="@+id/increasing_amount"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_centerInParent="true"
@@ -145,7 +165,7 @@
                     android:layout_weight="1">
 
                     <TextView
-                        android:id="@+id/repayment"
+                        android:id="@+id/txt_repayment"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_centerInParent="true"
@@ -188,17 +208,10 @@
                             android:id="@+id/amount"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="100."
+                            android:text="100.00"
                             android:textColor="#333333"
                             android:textSize="22dp" />
 
-                        <TextView
-                            android:id="@+id/amount2"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="00"
-                            android:textColor="#333333"
-                            android:textSize="16dp" />
                     </LinearLayout>
 
                     <View
@@ -233,7 +246,7 @@
                         android:orientation="horizontal">
 
                         <TextView
-                            android:id="@+id/time"
+                            android:id="@+id/month"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="2"
@@ -241,7 +254,7 @@
                             android:textSize="22dp" />
 
                         <TextView
-                            android:id="@+id/time2"
+                            android:id="@+id/month2"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="天"
@@ -281,20 +294,13 @@
                         android:orientation="horizontal">
 
                         <TextView
-                            android:id="@+id/yuliang"
+                            android:id="@+id/invest_amount"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="0."
+                            android:text="0.00"
                             android:textColor="#EE0000"
                             android:textSize="22dp" />
 
-                        <TextView
-                            android:id="@+id/yuliang2"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="00"
-                            android:textColor="#EE0000"
-                            android:textSize="16dp" />
                     </LinearLayout>
                 </RelativeLayout>
             </LinearLayout>
@@ -321,7 +327,7 @@
                         android:textSize="18dp" />
 
                     <TextView
-                        android:id="@+id/pno"
+                        android:id="@+id/product_no"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="DCXA20160117"
@@ -343,7 +349,7 @@
                         android:textSize="18dp" />
 
                     <TextView
-                        android:id="@+id/huanxi"
+                        android:id="@+id/repayment_date"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="2016-05-19"
@@ -365,7 +371,7 @@
                         android:textSize="18dp" />
 
                     <TextView
-                        android:id="@+id/qixi"
+                        android:id="@+id/value_date"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="2016-05-17"
@@ -387,7 +393,7 @@
                         android:textSize="18dp" />
 
                     <TextView
-                        android:id="@+id/dbgs"
+                        android:id="@+id/guarantors_name"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="海宁皮革城担保有限公司"

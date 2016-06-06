@@ -26,8 +26,6 @@ public class InvestFragment extends Fragment
 	private List<Fragment> fragmentList;
 	private List<String> titleList;
 
-	private Fragment investAllFragment,investSellingFragment,investSellOverFragment,investItemOverFragment;
-
 
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
 	{
@@ -40,16 +38,12 @@ public class InvestFragment extends Fragment
 		tabLayout = (TabLayout) v.findViewById(R.id.invest_tab_layout);
 		viewPager = (ViewPager) v.findViewById(R.id.invest_tab_viewpager);
 
-        investAllFragment = new InvestAllFragment();
-        investSellingFragment = new InvestSellingFragment();
-        investSellOverFragment = new InvestSellOverFragment();
-        investItemOverFragment = new InvestItemOverFragment();
-
 		fragmentList = new ArrayList<>();
-		fragmentList.add(investAllFragment);
-		fragmentList.add(investSellingFragment);
-		fragmentList.add(investSellOverFragment);
-		fragmentList.add(investItemOverFragment);
+		fragmentList.add(InvestListFragment.newInstance(0));
+		fragmentList.add(InvestListFragment.newInstance(1));
+		fragmentList.add(InvestListFragment.newInstance(2));
+		fragmentList.add(InvestListFragment.newInstance(3));
+	;
 
 		titleList = new ArrayList<>();
 		titleList.add("全部");
@@ -65,6 +59,7 @@ public class InvestFragment extends Fragment
 		fragmentPagerAdapter = new TabFragmentAdapter(getActivity().getSupportFragmentManager(),fragmentList,titleList);
 
 		viewPager.setAdapter(fragmentPagerAdapter);
+		viewPager.setOffscreenPageLimit(4);
 		tabLayout.setupWithViewPager(viewPager);
 	}
 

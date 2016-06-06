@@ -1,16 +1,15 @@
 package com.pcjr.fragment;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
+import android.widget.AdapterView;
+import android.widget.ListAdapter;
 import android.widget.ListView;
-import android.widget.SimpleAdapter;
-import android.widget.TextView;
 
 import com.aspsine.swipetoloadlayout.OnLoadMoreListener;
 import com.aspsine.swipetoloadlayout.OnRefreshListener;
@@ -19,77 +18,70 @@ import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import com.google.gson.reflect.TypeToken;
 import com.pcjr.R;
-import com.pcjr.adapter.InvestRecordsListViewAdapter;
-import com.pcjr.adapter.LetterListViewAdapter;
+import com.pcjr.activity.InvestDetailActivity;
 import com.pcjr.adapter.ProductListViewAdapter;
-import com.pcjr.adapter.ProductTradingRecordListViewAdapter;
+import com.pcjr.adapter.RedPacketListViewAdapter;
 import com.pcjr.common.Constant;
-import com.pcjr.model.InvestRecords;
-import com.pcjr.model.Letter;
 import com.pcjr.model.Pager;
 import com.pcjr.model.Product;
-import com.pcjr.model.ProductTradingRecord;
-import com.pcjr.model.TradeRecords;
-import com.pcjr.model.Users;
+import com.pcjr.model.RedPacket;
 import com.pcjr.service.ApiService;
 import com.pcjr.utils.RetrofitUtils;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
 /**
- * 产品投资记录
  * Created by Mario on 2016/5/12.
  */
-public class InvestDetailRecordFragment extends Fragment implements OnRefreshListener, OnLoadMoreListener {
-
+public class InvestListFragment extends Fragment  implements OnRefreshListener, OnLoadMoreListener {
     private ListView listView;
     private SwipeToLoadLayout swipeToLoadLayout;
-    private TextView total;
-    private ProductTradingRecordListViewAdapter adapter;
+    private ProductListViewAdapter adapter;
+    private int type;
     private int pageNow = 1;
-    private List<ProductTradingRecord> records = new ArrayList<>();
+    private List<Product> products = new ArrayList<>();
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.invest_detail_record, container, false);
+        View view = inflater.inflate(R.layout.invest_list,container,false);
+        return view;
     }
 
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        total = (TextView) view.findViewById(R.id.total);
         swipeToLoadLayout = (SwipeToLoadLayout) view.findViewById(R.id.swipeToLoadLayout);
         swipeToLoadLayout.setOnRefreshListener(this);
         swipeToLoadLayout.setOnLoadMoreListener(this);
         listView = (ListView) view.findViewById(R.id.swipe_target);
+        type = getArguments().getInt("type");
+
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Intent intent = new Intent(getActivity(), InvestDetailActivity.class);
+                intent.putExtra("id",products.get(position).getId());
+                startActivity(intent);
+                getActivity().overridePendingTransition(R.anim.push_left_in, R.anim.push_left_out);
+            }
+        });
         autoRefresh();
     }
 
     @Override
     public void onRefresh() {
-        records.clear();
+        products.clear();
         pageNow = 1;
         loadData();
     }
 
-    @Override
-    public void onLoadMore() {
-        pageNow++;
-        loadData();
-    }
-
-
-    public void loadData(){
-        Bundle bundle = getArguments();
-        String id = bundle.getString("id");
+    public void loadData() {
         ApiService service = RetrofitUtils.createApi(ApiService.class);
-        Call<JsonObject> call = service.getProductTradingRecordList(id,pageNow,10);
+        Call<JsonObject> call = service.getInvestProductList(type,pageNow,8);
         call.enqueue(new Callback<JsonObject>() {
             @Override
             public void onResponse(Call<JsonObject> call, Response<JsonObject> response) {
@@ -99,20 +91,24 @@ public class InvestDetailRecordFragment extends Fragment implements OnRefreshLis
                     JsonObject json = response.body();
                     Gson gson = new Gson();
                     Pager pager = null;
-                    List<ProductTradingRecord> temps = new ArrayList<>();
+                    List<Product> temps = new ArrayList<>();
                     if (json.get("pager") != null) {
                         pager = gson.fromJson(json.get("pager"), Pager.class);
-                        total.setText(String.valueOf(pager.getTotal()));
                     }
                     if (json.get("data") != null) {
-                        temps = gson.fromJson(json.get("data"), new TypeToken<List<ProductTradingRecord>>() {
+                        temps = gson.fromJson(json.get("data"), new TypeToken<List<Product>>() {
                         }.getType());
                     }
-                    records.addAll(temps);
-                    if(records.size()>0) {
-                        if (adapter == null) {
-                            adapter = new ProductTradingRecordListViewAdapter(records, getContext());
+                    products.addAll(temps);
+                    if (products.size() > 0) {
+                        if (pageNow == 1) {
+                            adapter = new ProductListViewAdapter(products, getContext());
                             listView.setAdapter(adapter);
+                        } else {
+                            if (adapter == null) {
+                                adapter = new ProductListViewAdapter(products, getContext());
+                                listView.setAdapter(adapter);
+                            }
                         }
                         adapter.notifyDataSetChanged();
                     }
@@ -127,6 +123,12 @@ public class InvestDetailRecordFragment extends Fragment implements OnRefreshLis
         });
     }
 
+    @Override
+    public void onLoadMore() {
+        pageNow++;
+        loadData();
+    }
+
     private void autoRefresh() {
         swipeToLoadLayout.post(new Runnable() {
             @Override
@@ -135,11 +137,10 @@ public class InvestDetailRecordFragment extends Fragment implements OnRefreshLis
             }
         });
     }
-
-    public static Fragment newInstance(String id) {
-        InvestDetailRecordFragment fragment = new InvestDetailRecordFragment();
+    public static Fragment newInstance(int type) {
+        InvestListFragment fragment = new InvestListFragment();
         Bundle bundle = new Bundle();
-        bundle.putString("id", id);
+        bundle.putInt("type", type);
         fragment.setArguments(bundle);
         return fragment;
     }

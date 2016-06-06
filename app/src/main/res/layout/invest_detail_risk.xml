@@ -14,7 +14,7 @@
         android:textSize="16dp" />
 
     <TextView
-        android:id="@+id/fkcs"
+        android:id="@+id/risk_control"
         android:layout_marginLeft="10dp"
         android:layout_marginRight="10dp"
         android:layout_width="wrap_content"

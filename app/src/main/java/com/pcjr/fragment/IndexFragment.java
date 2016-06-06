@@ -4,6 +4,7 @@ import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
@@ -19,6 +20,7 @@ import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextSwitcher;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.aspsine.swipetoloadlayout.OnLoadMoreListener;
 import com.aspsine.swipetoloadlayout.OnRefreshListener;
@@ -26,19 +28,33 @@ import com.aspsine.swipetoloadlayout.SwipeToLoadLayout;
 import com.daimajia.slider.library.SliderLayout;
 import com.daimajia.slider.library.SliderTypes.BaseSliderView;
 import com.daimajia.slider.library.Tricks.ViewPagerEx;
+import com.google.gson.Gson;
+import com.google.gson.JsonObject;
+import com.google.gson.reflect.TypeToken;
 import com.pcjr.R;
 import com.pcjr.activity.InvestDetailActivity;
 import com.pcjr.activity.MainActivity;
+import com.pcjr.activity.MsgDetailActivity;
 import com.pcjr.activity.WebViewActivity;
 import com.pcjr.adapter.ProductListViewAdapter;
 import com.pcjr.common.Constant;
 import com.pcjr.model.Announce;
 import com.pcjr.model.FocusImg;
+import com.pcjr.model.Letter;
 import com.pcjr.model.Product;
+import com.pcjr.model.RedPacket;
+import com.pcjr.plugins.ColoredSnackbar;
 import com.pcjr.plugins.CustomTextSliderView;
+import com.pcjr.service.ApiService;
+import com.pcjr.utils.DateUtil;
+import com.pcjr.utils.RetrofitUtils;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class IndexFragment extends Fragment implements OnRefreshListener,OnLoadMoreListener,BaseSliderView.OnSliderClickListener,ViewPagerEx.OnPageChangeListener {
 
@@ -58,6 +74,7 @@ public class IndexFragment extends Fragment implements OnRefreshListener,OnLoadM
     private TextSwitcher announce;
     private List<Announce> announces;
     private int mCounter;
+    private  List<Product> products;
     private Handler handler = new Handler();
 
     private Runnable announcesRunnable = new Runnable() {
@@ -151,6 +168,15 @@ public class IndexFragment extends Fragment implements OnRefreshListener,OnLoadM
             }
         });
 
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Intent intent = new Intent(getActivity(), InvestDetailActivity.class);
+                intent.putExtra("id",products.get(position).getId());
+                startActivity(intent);
+                getActivity().overridePendingTransition(R.anim.push_left_in, R.anim.push_left_out);
+            }
+        });
 
 
         super.onViewCreated(view, savedInstanceState);
@@ -167,25 +193,26 @@ public class IndexFragment extends Fragment implements OnRefreshListener,OnLoadM
         initSlider(constant.getFocusImgs(),constant.getMidFocusImgs());
         announces = constant.getAnnounces();
         mCounter = constant.getmCounter();
-        //handler.post(announcesRunnable);
 
-        List<Product> list = new ArrayList<Product>();
-        Product p = new Product();
-        p.setName("sss");
-        p.setAmount("50000");
-        p.setMonth("3");
-        p.setYearIncome("7");
-        p.setSeries(1);
-        list.add(p);
-        list.add(p);
-        ListAdapter adapter = new ProductListViewAdapter(list, getActivity());
-        listView.setAdapter(adapter);
-        listView.setFocusable(false);
-        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        ApiService service = RetrofitUtils.createApi(ApiService.class);
+        Call<JsonObject> call = service.getIndexProductList();
+        call.enqueue(new Callback<JsonObject>() {
             @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                startActivity(new Intent(getActivity(), InvestDetailActivity.class));
-                getActivity().overridePendingTransition(R.anim.push_left_in, R.anim.push_left_out);
+            public void onResponse(Call<JsonObject> call, Response<JsonObject> response) {
+                if (response.isSuccessful()) {
+                    JsonObject json = response.body();
+                    Gson gson = new Gson();
+                    products = gson.fromJson(json.get("data"), new TypeToken<List<Product>>() {
+                    }.getType());
+                    ListAdapter adapter = new ProductListViewAdapter(products, getActivity());
+                    listView.setAdapter(adapter);
+                    listView.setFocusable(false);
+                }
+            }
+
+            @Override
+            public void onFailure(Call<JsonObject> call, Throwable t) {
+                Toast.makeText(getActivity(),"网络异常",Toast.LENGTH_SHORT).show();
             }
         });
     }

@@ -22,6 +22,7 @@ public class TradeRecords {
     @Expose
     private long join_date;
 
+
     public int getType() {
         return type;
     }
@@ -77,4 +78,5 @@ public class TradeRecords {
     public void setJoin_date(long join_date) {
         this.join_date = join_date;
     }
+
 }

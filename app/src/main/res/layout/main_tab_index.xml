@@ -203,8 +203,12 @@
                 <com.pcjr.utils.NoScrollListview
                     android:id="@+id/list"
                     android:layout_marginTop="8dp"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginRight="5dp"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"></com.pcjr.utils.NoScrollListview>
+                    android:layout_height="wrap_content"
+                    android:dividerHeight="8dp"/>
+
 
             </LinearLayout>
         </ScrollView>
