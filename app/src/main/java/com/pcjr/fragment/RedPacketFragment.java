@@ -6,6 +6,7 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ListView;
 
 import com.aspsine.swipetoloadlayout.OnLoadMoreListener;
@@ -57,6 +58,7 @@ public class RedPacketFragment extends Fragment implements OnRefreshListener, On
         swipeToLoadLayout.setOnLoadMoreListener(this);
         listView = (ListView) view.findViewById(R.id.swipe_target);
         type = getArguments().getInt("type");
+
         autoRefresh();
     }
 

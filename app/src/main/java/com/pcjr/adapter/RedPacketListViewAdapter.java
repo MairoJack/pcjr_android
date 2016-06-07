@@ -1,18 +1,31 @@
 package com.pcjr.adapter;
 
 import android.content.Context;
+import android.support.design.widget.Snackbar;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.google.gson.JsonObject;
 import com.pcjr.R;
+import com.pcjr.common.Constant;
 import com.pcjr.model.InvestTicket;
 import com.pcjr.model.RedPacket;
+import com.pcjr.plugins.ColoredSnackbar;
+import com.pcjr.service.ApiService;
 import com.pcjr.utils.DateUtil;
+import com.pcjr.utils.RetrofitUtils;
 
 import java.util.List;
+
+import cn.pedant.SweetAlert.SweetAlertDialog;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 /**
  * 红包适配器
@@ -24,6 +37,7 @@ public class RedPacketListViewAdapter extends BaseAdapter {
     private LayoutInflater layoutInflater;
     private int type;
     private static class ViewHolder{
+        public LinearLayout btn_get_red_packet;
         public TextView
                 amount,
                 title,
@@ -58,6 +72,13 @@ public class RedPacketListViewAdapter extends BaseAdapter {
             viewHolder = new ViewHolder();
             if(type == 0) {
                 convertView = layoutInflater.inflate(R.layout.item_red_packet, null);
+                viewHolder.btn_get_red_packet = (LinearLayout) convertView.findViewById(R.id.btn_get_red_packet);
+                viewHolder.btn_get_red_packet.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        getRedPacket(position);
+                    }
+                });
             }else{
                 convertView = layoutInflater.inflate(R.layout.item_red_packet_gray, null);
             }
@@ -76,6 +97,33 @@ public class RedPacketListViewAdapter extends BaseAdapter {
         return convertView;
     }
 
+    public void getRedPacket(final int position){
+        ApiService service = RetrofitUtils.createApi(ApiService.class);
+        Call<JsonObject> call = service.getRedPacketReward(Constant.access_token,list.get(position).getId());
+        call.enqueue(new Callback<JsonObject>() {
+            @Override
+            public void onResponse(Call<JsonObject> call, Response<JsonObject> response) {
+                if (response.isSuccessful()) {
+                    JsonObject json = response.body();
+                    if (json.get("success").getAsBoolean()) {
+                        list.remove(position);
+                        new SweetAlertDialog(context)
+                                .setTitleText("领取成功")
+                                .setContentText("红包金额已转入您的账户余额内")
+                                .show();
+                        notifyDataSetChanged();
+                    }else{
+                        Toast.makeText(context,json.get("message").getAsString(),Toast.LENGTH_SHORT).show();
+                    }
+                }
+            }
+
+            @Override
+            public void onFailure(Call<JsonObject> call, Throwable t) {
+                Toast.makeText(context,"网络异常",Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
     public void setList(List<RedPacket> list) {
         this.list = list;
     }

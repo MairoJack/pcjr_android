@@ -1,5 +1,6 @@
 package com.pcjr.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.PersistableBundle;
 import android.support.design.widget.TabLayout;
@@ -11,16 +12,20 @@ import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import com.pcjr.R;
 import com.pcjr.adapter.TabFragmentAdapter;
+import com.pcjr.common.Constant;
 import com.pcjr.fragment.InvestDetailInfoFragment;
 import com.pcjr.fragment.InvestDetailRecordFragment;
 import com.pcjr.fragment.InvestDetailRiskFragment;
+import com.pcjr.fragment.LoginFragment;
 import com.pcjr.model.Product;
 import com.pcjr.service.ApiService;
 import com.pcjr.utils.DateUtil;
@@ -40,6 +45,8 @@ public class InvestDetailActivity extends FragmentActivity
 {
 
     private RelativeLayout back;
+    private TextView title;
+    private Button btn_status;
 	private TabLayout tabLayout;
 	private ViewPager viewPager;
 	private FragmentPagerAdapter fragmentPagerAdapter;
@@ -59,7 +66,8 @@ public class InvestDetailActivity extends FragmentActivity
 		tabLayout = (TabLayout) findViewById(R.id.invest_tab_layout);
 		viewPager = (ViewPager) findViewById(R.id.invest_tab_viewpager);
         back = (RelativeLayout) findViewById(R.id.back);
-
+        title = (TextView) findViewById(R.id.product_name);
+        btn_status = (Button) findViewById(R.id.btn_status);
 
 
 
@@ -81,10 +89,39 @@ public class InvestDetailActivity extends FragmentActivity
                 if (response.isSuccessful()) {
                     JsonObject json = response.body();
                     Gson gson = new Gson();
-                    Product product = null;
+                    final Product product;
                     if (json.get("success").getAsBoolean()) {
                         product = gson.fromJson(json.get("data"), Product.class);
                         initTablayout(product);
+                        title.setText(product.getName());
+                        if(product.getStatus() == 1){
+                            btn_status.setBackgroundResource(R.drawable.redbtn);
+                            btn_status.setText("立即加入");
+                            btn_status.setOnClickListener(new View.OnClickListener() {
+                                @Override
+                                public void onClick(View v) {
+                                    Intent intent;
+                                    if(Constant.isLogin) {
+                                        intent = new Intent(InvestDetailActivity.this, InvestActivity.class);
+                                        Bundle bundle = new Bundle();
+                                        bundle.putSerializable("product", product);
+                                        intent.putExtras(bundle);
+                                        startActivity(intent);
+                                    }else{
+                                        intent = new Intent(InvestDetailActivity.this, LoginActivity.class);
+                                        intent.putExtra("tag","invest");
+                                        startActivity(intent);
+                                        overridePendingTransition(R.anim.slide_up_in, R.anim.slide_up_out);
+                                    }
+                                }
+                            });
+                        }else if(product.getStatus() == 2){
+                            btn_status.setBackgroundResource(R.drawable.bluebtn);
+                            btn_status.setText("募集成功");
+                        }else{
+                            btn_status.setBackgroundResource(R.drawable.graybtn);
+                            btn_status.setText("项目结束");
+                        }
                     }
                 }
             }

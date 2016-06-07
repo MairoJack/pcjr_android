@@ -7,215 +7,198 @@
     android:background="#F0EFF5"
     android:orientation="vertical">
 
-    <com.aspsine.swipetoloadlayout.SwipeToLoadLayout
-        android:id="@+id/swipeToLoadLayout"
+
+    <ScrollView
+        android:id="@id/swipe_target"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <include
-            android:id="@id/swipe_refresh_header"
-            layout="@layout/layout_pull_header" />
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
 
-        <ScrollView
-            android:id="@id/swipe_target"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
+
+            <com.daimajia.slider.library.SliderLayout
+                android:id="@+id/slider"
+                android:layout_width="match_parent"
+                android:layout_height="150dp" />
+
 
             <LinearLayout
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:background="#fff"
                 android:orientation="vertical">
 
 
-                <com.daimajia.slider.library.SliderLayout
-                    android:id="@+id/slider"
-                    android:layout_width="match_parent"
-                    android:layout_height="150dp" />
-
-
-
                 <LinearLayout
-                    android:layout_width="match_parent"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:orientation="vertical"
+                    android:layout_marginLeft="20dp"
                     android:layout_marginTop="10dp"
-                    android:background="#fff">
-
-
-
-                    <LinearLayout
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:orientation="horizontal"
-                        android:gravity="center_vertical"
-                        android:layout_marginLeft="20dp"
-                        android:layout_marginTop="10dp"
-                        android:weightSum="1">
-
-                        <ImageView
-                            android:layout_width="20dp"
-                            android:layout_height="20dp"
-                            android:src="@drawable/laba"/>
-
-                        <TextSwitcher
-                            android:id="@+id/announce"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginLeft="7dp"
-                            android:textColor="#8A8A8A"
-                            android:textSize="16dp"
-                            >
-                        </TextSwitcher>
-
-                    </LinearLayout>
-                    <LinearLayout
-                        android:layout_width="fill_parent"
-                        android:layout_height="85dp"
-                        android:layout_marginTop="18dp"
-                        android:background="#fff"
-                        android:orientation="horizontal">
-
-
-                        <RelativeLayout
-                            android:id="@+id/cpyg"
-                            android:layout_width="fill_parent"
-                            android:layout_height="fill_parent"
-                            android:layout_weight="1.0">
-
-                            <ImageView
-                                android:id="@+id/img1"
-                                android:layout_width="50dp"
-                                android:layout_height="50dp"
-                                android:layout_centerHorizontal="true"
-                                android:src="@drawable/cpyg" />
-
-                            <TextView
-                                android:id="@+id/login_but"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_below="@+id/img1"
-                                android:layout_centerHorizontal="true"
-                                android:layout_marginTop="8dp"
-                                android:text="产品预告"
-                                android:textColor="#333333" />
-                        </RelativeLayout>
-
-                        <RelativeLayout
-                            android:id="@+id/dcxa"
-                            android:layout_width="fill_parent"
-                            android:layout_height="fill_parent"
-                            android:layout_weight="1.0">
-
-                            <ImageView
-                                android:id="@+id/img2"
-                                android:layout_width="50dp"
-                                android:layout_height="50dp"
-                                android:layout_centerHorizontal="true"
-                                android:src="@drawable/dcxa" />
-
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_below="@+id/img2"
-                                android:layout_centerHorizontal="true"
-                                android:layout_marginTop="8dp"
-                                android:text="大城小爱"
-                                android:textColor="#333333" />
-                        </RelativeLayout>
-
-                        <RelativeLayout
-                            android:id="@+id/gtma"
-                            android:layout_width="fill_parent"
-                            android:layout_height="fill_parent"
-                            android:layout_weight="1.0">
-
-                            <ImageView
-                                android:id="@+id/img3"
-                                android:layout_width="50dp"
-                                android:layout_height="50dp"
-                                android:layout_centerHorizontal="true"
-                                android:src="@drawable/gtma" />
-
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_below="@+id/img3"
-                                android:layout_centerHorizontal="true"
-                                android:layout_marginTop="8dp"
-                                android:text="国泰民安"
-                                android:textColor="#333333" />
-                        </RelativeLayout>
-
-                        <RelativeLayout
-                            android:id="@+id/zlbh"
-                            android:layout_width="fill_parent"
-                            android:layout_height="fill_parent"
-                            android:layout_weight="1.0">
-
-                            <ImageView
-                                android:id="@+id/img"
-                                android:layout_width="50dp"
-                                android:layout_height="50dp"
-                                android:layout_centerHorizontal="true"
-                                android:src="@drawable/zlbh" />
-
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_below="@+id/img"
-                                android:layout_centerHorizontal="true"
-                                android:layout_marginTop="8dp"
-                                android:text="珠联璧合"
-                                android:textColor="#333333" />
-                        </RelativeLayout>
-
-                    </LinearLayout>
-                </LinearLayout>
-
-                <com.daimajia.slider.library.SliderLayout
-                    android:id="@+id/slider_small"
-                    android:layout_width="match_parent"
-                    android:layout_height="80dp" />
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="8dp"
                     android:gravity="center_vertical"
-                    android:layout_marginLeft="15dp"
-                    >
+                    android:orientation="horizontal"
+                    android:weightSum="1">
 
                     <ImageView
-                        android:layout_width="24dp"
-                        android:layout_height="24dp"
-                        android:src="@drawable/h_invest"/>
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
+                        android:src="@drawable/laba" />
 
-                    <TextView
+                    <TextSwitcher
+                        android:id="@+id/announce"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="投资精选"
-                        android:textColor="#5B5B5A"
                         android:layout_marginLeft="7dp"
-                        android:textSize="18dp"/>
+                        android:textColor="#8A8A8A"
+                        android:textSize="16dp"></TextSwitcher>
+
                 </LinearLayout>
 
-
-                <com.pcjr.utils.NoScrollListview
-                    android:id="@+id/list"
-                    android:layout_marginTop="8dp"
-                    android:layout_marginLeft="5dp"
-                    android:layout_marginRight="5dp"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:dividerHeight="8dp"/>
+                <LinearLayout
+                    android:layout_width="fill_parent"
+                    android:layout_height="85dp"
+                    android:layout_marginTop="18dp"
+                    android:background="#fff"
+                    android:orientation="horizontal">
 
 
+                    <RelativeLayout
+                        android:id="@+id/cpyg"
+                        android:layout_width="fill_parent"
+                        android:layout_height="fill_parent"
+                        android:layout_weight="1.0">
+
+                        <ImageView
+                            android:id="@+id/img1"
+                            android:layout_width="50dp"
+                            android:layout_height="50dp"
+                            android:layout_centerHorizontal="true"
+                            android:src="@drawable/cpyg" />
+
+                        <TextView
+                            android:id="@+id/login_but"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@+id/img1"
+                            android:layout_centerHorizontal="true"
+                            android:layout_marginTop="8dp"
+                            android:text="产品预告"
+                            android:textColor="#333333" />
+                    </RelativeLayout>
+
+                    <RelativeLayout
+                        android:id="@+id/dcxa"
+                        android:layout_width="fill_parent"
+                        android:layout_height="fill_parent"
+                        android:layout_weight="1.0">
+
+                        <ImageView
+                            android:id="@+id/img2"
+                            android:layout_width="50dp"
+                            android:layout_height="50dp"
+                            android:layout_centerHorizontal="true"
+                            android:src="@drawable/dcxa" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@+id/img2"
+                            android:layout_centerHorizontal="true"
+                            android:layout_marginTop="8dp"
+                            android:text="大城小爱"
+                            android:textColor="#333333" />
+                    </RelativeLayout>
+
+                    <RelativeLayout
+                        android:id="@+id/gtma"
+                        android:layout_width="fill_parent"
+                        android:layout_height="fill_parent"
+                        android:layout_weight="1.0">
+
+                        <ImageView
+                            android:id="@+id/img3"
+                            android:layout_width="50dp"
+                            android:layout_height="50dp"
+                            android:layout_centerHorizontal="true"
+                            android:src="@drawable/gtma" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@+id/img3"
+                            android:layout_centerHorizontal="true"
+                            android:layout_marginTop="8dp"
+                            android:text="国泰民安"
+                            android:textColor="#333333" />
+                    </RelativeLayout>
+
+                    <RelativeLayout
+                        android:id="@+id/zlbh"
+                        android:layout_width="fill_parent"
+                        android:layout_height="fill_parent"
+                        android:layout_weight="1.0">
+
+                        <ImageView
+                            android:id="@+id/img"
+                            android:layout_width="50dp"
+                            android:layout_height="50dp"
+                            android:layout_centerHorizontal="true"
+                            android:src="@drawable/zlbh" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@+id/img"
+                            android:layout_centerHorizontal="true"
+                            android:layout_marginTop="8dp"
+                            android:text="珠联璧合"
+                            android:textColor="#333333" />
+                    </RelativeLayout>
+
+                </LinearLayout>
             </LinearLayout>
-        </ScrollView>
 
-        <include
-            android:id="@id/swipe_load_more_footer"
-            layout="@layout/layout_pull_footer" />
+            <com.daimajia.slider.library.SliderLayout
+                android:id="@+id/slider_small"
+                android:layout_width="match_parent"
+                android:layout_height="80dp" />
 
-    </com.aspsine.swipetoloadlayout.SwipeToLoadLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="15dp"
+                android:layout_marginTop="8dp"
+                android:gravity="center_vertical">
+
+                <ImageView
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:src="@drawable/h_invest" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="7dp"
+                    android:text="投资精选"
+                    android:textColor="#5B5B5A"
+                    android:textSize="18dp" />
+            </LinearLayout>
+
+
+            <com.pcjr.utils.NoScrollListview
+                android:id="@+id/list"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="5dp"
+                android:layout_marginRight="5dp"
+                android:layout_marginTop="8dp"
+                android:dividerHeight="8dp" />
+
+
+        </LinearLayout>
+    </ScrollView>
+
 </LinearLayout>

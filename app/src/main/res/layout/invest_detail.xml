@@ -30,7 +30,7 @@
         </RelativeLayout>
 
         <TextView
-            android:id="@+id/titlepname"
+            android:id="@+id/product_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
@@ -67,7 +67,7 @@
         android:paddingBottom="5dp">
 
         <Button
-            android:id="@+id/btn"
+            android:id="@+id/btn_status"
             android:layout_width="fill_parent"
             android:layout_height="40dp"
             android:layout_marginLeft="10dp"

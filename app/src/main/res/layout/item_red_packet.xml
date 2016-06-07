@@ -47,6 +47,7 @@
         android:layout_height="120dp"
         android:background="@drawable/line"/>
     <LinearLayout
+        android:id="@+id/btn_get_red_packet"
         android:background="@drawable/red_packet_bg_rigth"
         android:layout_width="match_parent"
         android:layout_height="match_parent"

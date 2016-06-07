@@ -315,12 +315,12 @@ public interface ApiService {
     Call<JsonObject> getRedPacketList(@Query("access_token") String access_token,@Query("type") int type,@Query("page") int page,@Query("page_size") int pageSize);
 
     /**
-     * 获取用户提现信息
+     * 获取用户提现/投资信息
      * @param access_token
      * @return
      */
-    @GET("/member/withdraw_info")
-    Call<JsonObject> getWithdrawInfo(@Query("access_token") String access_token);
+    @GET("/member/withdraw_invest_info")
+    Call<JsonObject> getWithdrawInvestInfo(@Query("access_token") String access_token);
 
     /**
      * 用户提现
@@ -342,5 +342,27 @@ public interface ApiService {
     @FormUrlEncoded
     @POST("/api/withdraw_verify")
     Call<JsonObject> withdrawVerify(@Field("access_token") String access_token);
+
+    /**
+     * 投资
+     * @param access_token
+     * @param amount    投资金额
+     * @param id        产品ID
+     * @param password  密码
+     * @return
+     */
+    @FormUrlEncoded
+    @POST("/member/invest_product")
+    Call<JsonObject> investProduct(@Field("access_token") String access_token,@Field("amount") String amount, @Field("id") String id,@Field("password") String password);
+
+    /**
+     * 领取红包
+     * @param access_token
+     * @param id
+     * @return
+     */
+    @FormUrlEncoded
+    @POST("/member/get_red_packet_reward")
+    Call<JsonObject> getRedPacketReward(@Field("access_token") String access_token, @Field("id") String id);
 
 }

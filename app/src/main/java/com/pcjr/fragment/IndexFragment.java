@@ -56,7 +56,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class IndexFragment extends Fragment implements OnRefreshListener,OnLoadMoreListener,BaseSliderView.OnSliderClickListener,ViewPagerEx.OnPageChangeListener {
+public class IndexFragment extends Fragment implements BaseSliderView.OnSliderClickListener,ViewPagerEx.OnPageChangeListener {
 
     public static final String TAG = IndexFragment.class.getSimpleName();
 
@@ -112,10 +112,10 @@ public class IndexFragment extends Fragment implements OnRefreshListener,OnLoadM
         zlbh = (RelativeLayout) view.findViewById(R.id.zlbh);
         sliderLayout = (SliderLayout) view.findViewById(R.id.slider);
         sliderLayoutSmall = (SliderLayout) view.findViewById(R.id.slider_small);
-        swipeToLoadLayout = (SwipeToLoadLayout) view.findViewById(R.id.swipeToLoadLayout);
+        /*swipeToLoadLayout = (SwipeToLoadLayout) view.findViewById(R.id.swipeToLoadLayout);
         swipeToLoadLayout.setOnRefreshListener(this);
         swipeToLoadLayout.setOnLoadMoreListener(this);
-        swipeToLoadLayout.setHorizontalScrollBarEnabled(true);
+        swipeToLoadLayout.setHorizontalScrollBarEnabled(true);*/
 
         initData();
         announce.setFactory(new TextSwitcher.ViewFactory() {
@@ -290,29 +290,6 @@ public class IndexFragment extends Fragment implements OnRefreshListener,OnLoadM
 
     }
 
-    @Override
-    public void onRefresh() {
-        //sliderLayout.stopAutoCycle();
-        swipeToLoadLayout.postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                swipeToLoadLayout.setRefreshing(false);
-                sliderLayout.startAutoCycle();
-            }
-        }, 2000);
-    }
-
-    @Override
-    public void onLoadMore() {
-        // sliderLayout.stopAutoCycle();
-        swipeToLoadLayout.postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                swipeToLoadLayout.setLoadingMore(false);
-                sliderLayout.startAutoCycle();
-            }
-        }, 2000);
-    }
 
     @Override
     public void onPause() {

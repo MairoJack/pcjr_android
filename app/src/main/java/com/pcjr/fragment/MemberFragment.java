@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,6 +18,7 @@ import com.pcjr.activity.BankCardActivity;
 import com.pcjr.activity.CouponActivity;
 import com.pcjr.activity.FinancialRecordsActivity;
 import com.pcjr.activity.InvestRecordsActivity;
+import com.pcjr.activity.LoginActivity;
 import com.pcjr.activity.MsgCenterActivity;
 import com.pcjr.activity.PaymentPlanActivity;
 import com.pcjr.activity.SafeSettingActivity;
@@ -41,6 +43,15 @@ public class MemberFragment extends Fragment
 
 	private RelativeLayout financial_records,invest_records,trade_records,safe_setting,bank_card,msg_center,payment_plan,withdraw_recharge,coupon;
 	private TextView username,available_balance,sum_assets,uncollected_interest_sum;
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        if(!Constant.isLogin){
+            startActivity(new Intent(getActivity(), LoginActivity.class));
+        }
+    }
+
     @Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
 	{
@@ -179,6 +190,15 @@ public class MemberFragment extends Fragment
 			}
 		});
 	}
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        if(!Constant.isLogin){
+            startActivity(new Intent(getActivity(), LoginActivity.class));
+        }
+    }
+
 
     public static Fragment newInstance(String text) {
         return new MemberFragment();

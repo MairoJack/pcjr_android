@@ -25,7 +25,7 @@ public class FragmentAdapter implements FragmentNavigatorAdapter {
         }else if (position == 1){
             return InvestFragment.newInstance("InvestFragment");
         }else if (position == 2){
-           return PersonFragment.newInstance("PersonFragment");
+           return MemberFragment.newInstance("MemberFragment");
         }else{
             return MoreFragment.newInstance("MoreFragment");
         }
@@ -39,7 +39,7 @@ public class FragmentAdapter implements FragmentNavigatorAdapter {
         }else if (position == 1){
             return InvestFragment.TAG;
         }else if (position == 2){
-            return PersonFragment.TAG;
+            return MemberFragment.TAG;
         }else{
             return MoreFragment.TAG;
         }

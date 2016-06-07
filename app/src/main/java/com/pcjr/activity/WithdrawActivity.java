@@ -136,7 +136,7 @@ public class WithdrawActivity extends Activity {
      */
     public void initData(){
         Call<JsonObject> call = null;
-        call = service.getWithdrawInfo(Constant.access_token);
+        call = service.getWithdrawInvestInfo(Constant.access_token);
         call.enqueue(new Callback<JsonObject>() {
             @Override
             public void onResponse(Call<JsonObject> call, Response<JsonObject> response) {
