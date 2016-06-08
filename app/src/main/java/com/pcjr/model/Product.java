@@ -58,7 +58,8 @@ public class Product implements Serializable{
     private double product_amount;
     @Expose
     private String borrower_intro;
-
+    @Expose
+    private String estimate_interest;
     public String getId() {
         return id;
     }
@@ -257,5 +258,13 @@ public class Product implements Serializable{
 
     public void setBorrower_intro(String borrower_intro) {
         this.borrower_intro = borrower_intro;
+    }
+
+    public String getEstimate_interest() {
+        return estimate_interest;
+    }
+
+    public void setEstimate_interest(String estimate_interest) {
+        this.estimate_interest = estimate_interest;
     }
 }

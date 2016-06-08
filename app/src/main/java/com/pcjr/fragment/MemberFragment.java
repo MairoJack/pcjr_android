@@ -47,9 +47,7 @@ public class MemberFragment extends Fragment
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if(!Constant.isLogin){
-            startActivity(new Intent(getActivity(), LoginActivity.class));
-        }
+
     }
 
     @Override
@@ -196,6 +194,8 @@ public class MemberFragment extends Fragment
         super.onResume();
         if(!Constant.isLogin){
             startActivity(new Intent(getActivity(), LoginActivity.class));
+        }else{
+            initData();
         }
     }
 

@@ -3,6 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:ProgressWheel="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
 
     android:orientation="vertical">
 
@@ -21,18 +22,42 @@
                 android:layout_height="wrap_content"
                 android:background="#FDDDA4"
                 android:layout_margin="5dp"
-                android:visibility="gone">
+                android:visibility="gone"
+                >
                 <ImageView
-                    android:layout_width="14dp"
-                    android:layout_height="14dp"
+                    android:layout_width="13dp"
+                    android:layout_height="13dp"
                     android:layout_marginTop="2dp"
                     android:src="@drawable/info" />
                 <TextView
+                    android:layout_marginLeft="2dp"
                     android:id="@+id/txt_preview_repayment"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textColor="#8e5c02"
-                    android:text=" 本产品具有 提前回款 可能，平台确保此产品最短借款时长为 1个月 ，如提前回款则补偿本产品 10天利息 于投资人,利息计算方法请 点击此处"/>
+                    tools:text=" 本产品具有 提前回款 可能，平台确保此产品最短借款时长为 1个月 ，如提前回款则补偿本产品 10天利息 于投资人,利息计算方法请 点击此处"/>
+
+            </LinearLayout>
+            <LinearLayout
+                android:id="@+id/debx"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="#FDDDA4"
+                android:layout_margin="5dp"
+                android:visibility="gone"
+                >
+                <ImageView
+                    android:layout_width="13dp"
+                    android:layout_height="13dp"
+                    android:layout_marginTop="2dp"
+                    android:src="@drawable/info" />
+                <TextView
+                    android:layout_marginLeft="2dp"
+                    android:id="@+id/txt_debx"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="#8e5c02"
+                    tools:text=" 本产品为等额本息产品，每投资1000元预期收益为0.00元，按月还本付息，资金更灵活，理财更安心，具体收益计算公式请"/>
 
             </LinearLayout>
             <RelativeLayout

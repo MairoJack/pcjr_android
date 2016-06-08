@@ -19,9 +19,11 @@ import com.google.gson.reflect.TypeToken;
 import com.jayfang.dropdownmenu.DropDownMenu;
 import com.pcjr.R;
 import com.pcjr.adapter.InvestRecordsListViewAdapter;
+import com.pcjr.adapter.LetterListViewAdapter;
 import com.pcjr.adapter.TradeRecordsListViewAdapter;
 import com.pcjr.common.Constant;
 import com.pcjr.model.InvestRecords;
+import com.pcjr.model.Letter;
 import com.pcjr.model.Pager;
 import com.pcjr.model.TradeRecords;
 import com.pcjr.service.ApiService;
@@ -45,7 +47,8 @@ public class InvestRecordsActivity extends Activity implements OnRefreshListener
     private InvestRecordsListViewAdapter adapter;
     private DropDownMenu mMenu;
     private LinearLayout empty;
-
+    private int pageNow = 1;
+    private List<InvestRecords> investRecordses = new ArrayList<>();
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.invest_records);
@@ -55,8 +58,7 @@ public class InvestRecordsActivity extends Activity implements OnRefreshListener
 
     public void initView() {
         swipeToLoadLayout = (SwipeToLoadLayout) findViewById(R.id.swipeToLoadLayout);
-        empty = (LinearLayout) findViewById(R.id.empty);
-        listView = (ListView) findViewById(R.id.list_view);
+        listView = (ListView) findViewById(R.id.swipe_target);
         back = (RelativeLayout) findViewById(R.id.back);
         mMenu = (DropDownMenu) findViewById(R.id.drop_down_menu);
         swipeToLoadLayout.setOnRefreshListener(this);
@@ -111,52 +113,15 @@ public class InvestRecordsActivity extends Activity implements OnRefreshListener
 
     @Override
     public void onRefresh() {
-        ApiService service = RetrofitUtils.createApi(ApiService.class);
-        Call<JsonObject> call = service.getMemberInvestData(Constant.access_token);
-        call.enqueue(new Callback<JsonObject>() {
-            @Override
-            public void onResponse(Call<JsonObject> call, Response<JsonObject> response) {
-                swipeToLoadLayout.setRefreshing(false);
-                if (response.isSuccessful()) {
-                    JsonObject json = response.body();
-                    Gson gson = new Gson();
-                    Pager pager = null;
-                    List<InvestRecords> investRecordses = null;
-                    if (json.get("pager") != null) {
-                        pager = gson.fromJson(json.get("pager"), Pager.class);
-                    }
-                    if (json.get("data") != null) {
-                        investRecordses = gson.fromJson(json.get("data"), new TypeToken<List<InvestRecords>>() {
-                        }.getType());
-                    }
-
-                    investRecordses.addAll(investRecordses);
-                    investRecordses.addAll(investRecordses);
-                    investRecordses.addAll(investRecordses);
-                    InvestRecordsListViewAdapter adapter = new InvestRecordsListViewAdapter(investRecordses, InvestRecordsActivity.this);
-                    listView.setAdapter(adapter);
-                    listView.setVisibility(View.VISIBLE);
-                    empty.setVisibility(View.GONE);
-                }
-            }
-
-            @Override
-            public void onFailure(Call<JsonObject> call, Throwable t) {
-                swipeToLoadLayout.setRefreshing(false);
-            }
-        });
+        investRecordses.clear();
+        pageNow = 1;
+        loadData();
     }
 
     @Override
     public void onLoadMore() {
-        swipeToLoadLayout.postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                swipeToLoadLayout.setLoadingMore(false);
-                listView.setVisibility(View.GONE);
-                empty.setVisibility(View.VISIBLE);
-            }
-        }, 2000);
+        pageNow++;
+        loadData();
     }
 
     private void autoRefresh() {
@@ -164,6 +129,46 @@ public class InvestRecordsActivity extends Activity implements OnRefreshListener
             @Override
             public void run() {
                 swipeToLoadLayout.setRefreshing(true);
+            }
+        });
+    }
+
+    public void loadData(){
+        ApiService service = RetrofitUtils.createApi(ApiService.class);
+        Call<JsonObject> call = service.getMemberInvestData(Constant.access_token,pageNow,Constant.PAGESIZE);
+        call.enqueue(new Callback<JsonObject>() {
+            @Override
+            public void onResponse(Call<JsonObject> call, Response<JsonObject> response) {
+                swipeToLoadLayout.setRefreshing(false);
+                swipeToLoadLayout.setLoadingMore(false);
+                if (response.isSuccessful()) {
+                    JsonObject json = response.body();
+                    Gson gson = new Gson();
+                    Pager pager = null;
+                    List<InvestRecords> temps = null;
+                    if (json.get("pager") != null) {
+                        pager = gson.fromJson(json.get("pager"), Pager.class);
+                    }
+                    if (json.get("data") != null) {
+                        temps = gson.fromJson(json.get("data"), new TypeToken<List<InvestRecords>>() {
+                        }.getType());
+                    }
+
+                    investRecordses.addAll(temps);
+                    if(investRecordses.size()>0) {
+                        if (adapter == null) {
+                            adapter = new InvestRecordsListViewAdapter(investRecordses, InvestRecordsActivity.this);
+                            listView.setAdapter(adapter);
+                        }
+                        adapter.notifyDataSetChanged();
+                    }
+                }
+            }
+
+            @Override
+            public void onFailure(Call<JsonObject> call, Throwable t) {
+                swipeToLoadLayout.setRefreshing(false);
+                swipeToLoadLayout.setLoadingMore(false);
             }
         });
     }

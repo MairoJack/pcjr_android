@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
+import android.text.Html;
 import android.text.SpannableString;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -39,8 +40,8 @@ public class InvestDetailInfoFragment extends Fragment {
     private ProgressWheel progressWheel;
     private float progress;
     private ProgressDialog dialog;
-    private LinearLayout preview_repayment;
-    private TextView txt_preview_repayment, year_income, name, threshold_amount,
+    private LinearLayout preview_repayment,debx;
+    private TextView txt_preview_repayment,txt_debx, year_income, name, threshold_amount,
             increasing_amount, txt_repayment, amount, month, invest_amount,
             product_no, repayment_date, value_date, guarantors_name, intro, borrower_intro;
 
@@ -59,6 +60,8 @@ public class InvestDetailInfoFragment extends Fragment {
         progress = 0;
         progressWheel = (ProgressWheel) view.findViewById(R.id.pw_spinner);
         preview_repayment = (LinearLayout) view.findViewById(R.id.preview_repayment);
+        debx = (LinearLayout) view.findViewById(R.id.debx);
+        txt_debx = (TextView) view.findViewById(R.id.txt_debx);
         txt_preview_repayment = (TextView) view.findViewById(R.id.txt_preview_repayment);
         year_income = (TextView) view.findViewById(R.id.year_income);
         name = (TextView) view.findViewById(R.id.name);
@@ -81,7 +84,16 @@ public class InvestDetailInfoFragment extends Fragment {
     public void initData() {
         Bundle bundle = getArguments();
         Product product = (Product) bundle.getSerializable("product");
-
+        if(product.getIs_preview_repayment() == 1){
+            String html_preview_repayment = "本产品具有 <font color='#dc4d07'>提前回款</font> 可能，平台确保此产品最短借款时长为 <font color='#dc4d07'>"+product.getMin_repayment_date()+"</font> ，如提前回款则补偿本产品 <font color='#dc4d07'>"+product.getPay_interest_day()+"天利息</font> 于投资人";
+            preview_repayment.setVisibility(View.VISIBLE);
+            txt_preview_repayment.setText(Html.fromHtml(html_preview_repayment));
+        }
+        if(product.getRepayment() == 2){
+            String html_debx = "本产品为 <font color='#dc4d07'>等额本息</font> 产品，每投资1000元预期收益为 <font color='#dc4d07'>"+product.getEstimate_interest()+"</font> 元，按月还本付息，资金更灵活，理财更安心";
+            debx.setVisibility(View.VISIBLE);
+            txt_debx.setText(Html.fromHtml(html_debx));
+        }
         year_income.setText(product.getYear_income());
         name.setText(product.getName());
         threshold_amount.setText(product.getThreshold_amount() + "元起购");

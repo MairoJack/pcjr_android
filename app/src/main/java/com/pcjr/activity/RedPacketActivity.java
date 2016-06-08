@@ -59,6 +59,7 @@ public class RedPacketActivity extends FragmentActivity {
         fragmentPagerAdapter = new TabFragmentAdapter(getSupportFragmentManager(),fragmentList,titleList);
 
         viewPager.setAdapter(fragmentPagerAdapter);
+        viewPager.setOffscreenPageLimit(1);
         tabLayout.setupWithViewPager(viewPager);
 
         back = (RelativeLayout) findViewById(R.id.back);

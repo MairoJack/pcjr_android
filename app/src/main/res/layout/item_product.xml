@@ -2,7 +2,8 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
     android:layout_height="wrap_content"
-    android:background="#FFFFFF" >
+    xmlns:tools="http://schemas.android.com/tools"
+    android:background="#FFFFFF">
 
     <ImageView
         android:layout_width="60dp"
@@ -17,7 +18,7 @@
         android:layout_height="50dp"
         android:layout_alignParentRight="true"
         android:layout_alignParentTop="true"
-        android:text="一次还本付息"
+        tools:text="一次还本付息"
         android:textColor="#FFFFFF"
         android:textSize="8dp" />
 
@@ -37,7 +38,7 @@
         android:layout_height="wrap_content"
         android:layout_marginLeft="5dp"
         android:padding="3dp"
-        android:text="大城小爱NO.94-2016"
+        tools:text="大城小爱NO.94-2016"
         android:textColor="#6F6F6F"
         android:textSize="15dp"
         android:fontFamily="微软雅黑"
@@ -51,7 +52,7 @@
         android:layout_marginBottom="5dp"
         android:paddingLeft="3dp"
         android:paddingRight="3dp"
-        android:text="先息后本(月)"
+        tools:text="先息后本(月)"
         android:textColor="#FFFFFF"
         android:textSize="12dp"
         android:background="@drawable/purple_bg"
@@ -93,7 +94,7 @@
                     android:id="@+id/income"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="6.90"
+                    tools:text="6.90"
                     android:textColor="#FD7C21"
                     android:textSize="26dp" />
 
@@ -143,7 +144,7 @@
                     android:id="@+id/month"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="12"
+                    tools:text="12"
                     android:textColor="#FD7C21"
                     android:textSize="26dp" />
 
@@ -185,7 +186,7 @@
                 android:layout_alignParentTop="true"
                 android:layout_centerHorizontal="true"
                 android:layout_marginTop="15dp"
-                android:text="500"
+                tools:text="500"
                 android:textColor="#FD7C21"
                 android:textSize="26dp" />
 

@@ -13,6 +13,7 @@ import com.pcjr.R;
 import com.pcjr.activity.AboutusActivity;
 import com.pcjr.activity.News3Activity;
 import com.pcjr.activity.NewsActivity;
+import com.pcjr.activity.WebViewActivity;
 
 
 public class MoreFragment extends Fragment
@@ -37,7 +38,10 @@ public class MoreFragment extends Fragment
 		news.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				startActivity(new Intent(getActivity(), News3Activity.class));
+				Intent intent = new Intent(getActivity(), WebViewActivity.class);
+				intent.putExtra("title","平台公告");
+				intent.putExtra("url","https://m.pcjr.com/platformnews");
+				startActivity(intent);
 				getActivity().overridePendingTransition(R.anim.push_left_in, R.anim.push_left_out);
 			}
 		});

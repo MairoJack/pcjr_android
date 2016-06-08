@@ -11,6 +11,7 @@ import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 
 import com.pcjr.R;
 
@@ -22,6 +23,7 @@ public class WebViewActivity extends Activity {
     private RelativeLayout back;
     private WebView webView;
     private ProgressDialog dialog;
+    private TextView title;
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.web_view);
@@ -31,6 +33,7 @@ public class WebViewActivity extends Activity {
 
     public void initView(){
         back = (RelativeLayout) findViewById(R.id.back);
+        title = (TextView) findViewById(R.id.title);
         webView = (WebView) findViewById(R.id.web_view);
         dialog = new ProgressDialog(this, ProgressDialog.STYLE_SPINNER);
         dialog.setMessage("正在加载...");
@@ -63,6 +66,7 @@ public class WebViewActivity extends Activity {
 
             }
         });
+        title.setText(intent.getStringExtra("title"));
         webView.getSettings().setCacheMode(WebSettings.LOAD_CACHE_ELSE_NETWORK);
         webView.loadUrl(String.valueOf(intent.getStringExtra("url")));
     }

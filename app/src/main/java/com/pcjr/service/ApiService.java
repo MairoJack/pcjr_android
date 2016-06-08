@@ -118,14 +118,14 @@ public interface ApiService {
      * @return
      */
     @GET("/member/log_data")
-    Call<JsonObject> getMemberLogData(@Query("access_token") String access_token);
+    Call<JsonObject> getMemberLogData(@Query("access_token") String access_token,@Query("page") int page,@Query("page_size") int page_size);
 
     /**
      * 获取用户投资记录
      * @return
      */
     @GET("/member/invest_data")
-    Call<JsonObject> getMemberInvestData(@Query("access_token") String access_token);
+    Call<JsonObject> getMemberInvestData(@Query("access_token") String access_token,@Query("page") int page,@Query("page_size") int page_size);
 
     /**
      * 获取用户资金记录
@@ -143,7 +143,7 @@ public interface ApiService {
      * @return
      */
     @GET("/member/current_month_repayment_data")
-    Call<JsonObject> getMemberRepaymentData(@Query("access_token") String access_token, @Query("year") int year, @Query("month") int month);
+    Call<JsonObject> getMemberRepaymentData(@Query("access_token") String access_token, @Query("year") int year, @Query("month") int month,@Query("page") int page,@Query("page_size") int page_size);
 
     /**
      * 实名认证
@@ -266,7 +266,7 @@ public interface ApiService {
      * @return
      */
     @GET("/member/letter_list")
-    Call<JsonObject> getLetterList(@Query("access_token") String access_token,@Query("type") int type,@Query("page") int page);
+    Call<JsonObject> getLetterList(@Query("access_token") String access_token,@Query("type") int type,@Query("page") int page,@Query("page_size") int page_size);
 
     /**
      * 获取站内信详情

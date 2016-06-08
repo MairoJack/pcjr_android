@@ -14,11 +14,13 @@ import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import com.google.gson.reflect.TypeToken;
 import com.pcjr.R;
+import com.pcjr.adapter.InvestRecordsListViewAdapter;
 import com.pcjr.adapter.ProductListViewAdapter;
 import com.pcjr.adapter.TradeRecordsListViewAdapter;
 import com.pcjr.common.Constant;
 import com.pcjr.model.Announce;
 import com.pcjr.model.FocusImg;
+import com.pcjr.model.InvestRecords;
 import com.pcjr.model.Pager;
 import com.pcjr.model.Product;
 import com.pcjr.model.TradeRecords;
@@ -43,7 +45,8 @@ public class TradeRecordsActivity extends Activity implements OnRefreshListener,
     private ListView listView;
     private SwipeToLoadLayout swipeToLoadLayout;
     private TradeRecordsListViewAdapter adapter;
-
+    private int pageNow = 1;
+    private List<TradeRecords> tradeRecordses = new ArrayList<>();
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.trade_records);
@@ -82,47 +85,15 @@ public class TradeRecordsActivity extends Activity implements OnRefreshListener,
 
     @Override
     public void onRefresh() {
-        ApiService service = RetrofitUtils.createApi(ApiService.class);
-        Call<JsonObject> call = service.getMemberLogData(Constant.access_token);
-        call.enqueue(new Callback<JsonObject>() {
-            @Override
-            public void onResponse(Call<JsonObject> call, Response<JsonObject> response) {
-                swipeToLoadLayout.setRefreshing(false);
-                swipeToLoadLayout.setLoadingMore(false);
-                if (response.isSuccessful()) {
-                    JsonObject json = response.body();
-                    Gson gson = new Gson();
-                    Pager pager = null;
-                    List<TradeRecords> tradeRecordses = null;
-                    if (json.get("pager") != null) {
-                        pager = gson.fromJson(json.get("pager"), Pager.class);
-                    }
-                    if (json.get("data") != null) {
-                        tradeRecordses = gson.fromJson(json.get("data"), new TypeToken<List<TradeRecords>>() {
-                        }.getType());
-                    }
-
-                    TradeRecordsListViewAdapter adapter = new TradeRecordsListViewAdapter(tradeRecordses,TradeRecordsActivity.this);
-                    listView.setAdapter(adapter);
-                }
-            }
-
-            @Override
-            public void onFailure(Call<JsonObject> call, Throwable t) {
-                swipeToLoadLayout.setRefreshing(false);
-                swipeToLoadLayout.setLoadingMore(false);
-            }
-        });
+        tradeRecordses.clear();
+        pageNow = 1;
+        loadData();
     }
 
     @Override
     public void onLoadMore() {
-        swipeToLoadLayout.postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                swipeToLoadLayout.setLoadingMore(false);
-            }
-        }, 2000);
+        pageNow++;
+        loadData();
     }
 
     private void autoRefresh() {
@@ -134,4 +105,43 @@ public class TradeRecordsActivity extends Activity implements OnRefreshListener,
         });
     }
 
+    public void loadData(){
+        ApiService service = RetrofitUtils.createApi(ApiService.class);
+        Call<JsonObject> call = service.getMemberLogData(Constant.access_token,pageNow,Constant.PAGESIZE);
+        call.enqueue(new Callback<JsonObject>() {
+            @Override
+            public void onResponse(Call<JsonObject> call, Response<JsonObject> response) {
+                swipeToLoadLayout.setRefreshing(false);
+                swipeToLoadLayout.setLoadingMore(false);
+                if (response.isSuccessful()) {
+                    JsonObject json = response.body();
+                    Gson gson = new Gson();
+                    Pager pager = null;
+                    List<TradeRecords> temps = null;
+                    if (json.get("pager") != null) {
+                        pager = gson.fromJson(json.get("pager"), Pager.class);
+                    }
+                    if (json.get("data") != null) {
+                        temps = gson.fromJson(json.get("data"), new TypeToken<List<TradeRecords>>() {
+                        }.getType());
+                    }
+
+                    tradeRecordses.addAll(temps);
+                    if(tradeRecordses.size()>0) {
+                        if (adapter == null) {
+                            adapter = new TradeRecordsListViewAdapter(tradeRecordses, TradeRecordsActivity.this);
+                            listView.setAdapter(adapter);
+                        }
+                        adapter.notifyDataSetChanged();
+                    }
+                }
+            }
+
+            @Override
+            public void onFailure(Call<JsonObject> call, Throwable t) {
+                swipeToLoadLayout.setRefreshing(false);
+                swipeToLoadLayout.setLoadingMore(false);
+            }
+        });
+    }
 }

@@ -23,10 +23,12 @@ import com.pcjr.common.Constant;
 import com.pcjr.model.InvestRecords;
 import com.pcjr.model.Pager;
 import com.pcjr.model.PaymentPlan;
+import com.pcjr.model.TradeRecords;
 import com.pcjr.service.ApiService;
 import com.pcjr.utils.DateUtil;
 import com.pcjr.utils.RetrofitUtils;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -47,7 +49,8 @@ public class PaymentPlanActivity extends Activity implements OnRefreshListener, 
     private ListView listView;
 
     private int year, month;
-
+    private int pageNow = 1;
+    private List<PaymentPlan> paymentPlens = new ArrayList<>();
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.payment_plan);
@@ -101,44 +104,15 @@ public class PaymentPlanActivity extends Activity implements OnRefreshListener, 
 
     @Override
     public void onRefresh() {
-        ApiService service = RetrofitUtils.createApi(ApiService.class);
-        Call<JsonObject> call = service.getMemberRepaymentData(Constant.access_token, year, month);
-        call.enqueue(new Callback<JsonObject>() {
-            @Override
-            public void onResponse(Call<JsonObject> call, Response<JsonObject> response) {
-                swipeToLoadLayout.setRefreshing(false);
-                if (response.isSuccessful()) {
-                    JsonObject json = response.body();
-                    Gson gson = new Gson();
-                    List<PaymentPlan> paymentPlens = null;
-                    if (json.get("data") != null) {
-                        paymentPlens = gson.fromJson(json.get("data"), new TypeToken<List<PaymentPlan>>() {
-                        }.getType());
-                    }
-
-                    paymentPlens.addAll(paymentPlens);
-                    paymentPlens.addAll(paymentPlens);
-                    paymentPlens.addAll(paymentPlens);
-                    adapter = new PaymentPlanListViewAdapter(paymentPlens, PaymentPlanActivity.this);
-                    listView.setAdapter(adapter);
-                }
-            }
-
-            @Override
-            public void onFailure(Call call, Throwable t) {
-                swipeToLoadLayout.setRefreshing(false);
-            }
-        });
+        paymentPlens.clear();
+        pageNow = 1;
+        loadData();
     }
 
     @Override
     public void onLoadMore() {
-        swipeToLoadLayout.postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                swipeToLoadLayout.setLoadingMore(false);
-            }
-        }, 2000);
+        pageNow++;
+        loadData();
     }
 
     private void autoRefresh() {
@@ -146,6 +120,41 @@ public class PaymentPlanActivity extends Activity implements OnRefreshListener, 
             @Override
             public void run() {
                 swipeToLoadLayout.setRefreshing(true);
+            }
+        });
+    }
+
+    public void loadData(){
+        ApiService service = RetrofitUtils.createApi(ApiService.class);
+        Call<JsonObject> call = service.getMemberRepaymentData(Constant.access_token, year, month,pageNow,Constant.PAGESIZE);
+        call.enqueue(new Callback<JsonObject>() {
+            @Override
+            public void onResponse(Call<JsonObject> call, Response<JsonObject> response) {
+                swipeToLoadLayout.setRefreshing(false);
+                swipeToLoadLayout.setLoadingMore(false);
+                if (response.isSuccessful()) {
+                    JsonObject json = response.body();
+                    Gson gson = new Gson();
+                    List<PaymentPlan> temps = null;
+                    if (json.get("data") != null) {
+                        temps = gson.fromJson(json.get("data"), new TypeToken<List<PaymentPlan>>() {
+                        }.getType());
+                    }
+                    paymentPlens.addAll(temps);
+                    if(paymentPlens.size()>0) {
+                        if (adapter == null) {
+                            adapter = new PaymentPlanListViewAdapter(paymentPlens, PaymentPlanActivity.this);
+                            listView.setAdapter(adapter);
+                        }
+                        adapter.notifyDataSetChanged();
+                    }
+                }
+            }
+
+            @Override
+            public void onFailure(Call call, Throwable t) {
+                swipeToLoadLayout.setRefreshing(false);
+                swipeToLoadLayout.setLoadingMore(false);
             }
         });
     }

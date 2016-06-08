@@ -12,6 +12,8 @@ import com.pcjr.model.Product;
 import com.pcjr.utils.RotateTextView;
 
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * Created by Mario on 2016/5/4.
@@ -78,8 +80,8 @@ public class ProductListViewAdapter extends BaseAdapter {
         convertView.setTag(listItemView);
 
 
-        int repayment = list.get(position).getRepayment();
-        int preview_repayment = list.get(position).getIs_preview_repayment();
+        int repayment = product.getRepayment();
+        int preview_repayment = product.getIs_preview_repayment();
         if (repayment == 0) {
             listItemView.rtv.setText("一次还本付息");
         } else if (repayment == 1) {
@@ -94,13 +96,20 @@ public class ProductListViewAdapter extends BaseAdapter {
         } else if (preview_repayment == 1) {
             listItemView.repayment.setText("可能提前回款");
         }
-        listItemView.name.setText(list.get(position).getName());
+        listItemView.name.setText(product.getName());
 
-        listItemView.income.setText(String.valueOf(list.get(position).getYear_income()));
-        listItemView.amount.setText(String.valueOf(list.get(position).getAmount() / 10000));
-        listItemView.month.setText(list.get(position).getMonth());
-        //listItemView.month1.setText("天");
-
+        listItemView.income.setText(String.valueOf(product.getYear_income()));
+        listItemView.amount.setText(String.valueOf(product.getAmount() / 10000));
+        String month = product.getMonth();
+        if(month!=null) {
+            String regEx = "[^0-9]";
+            Pattern p = Pattern.compile(regEx);
+            Matcher number = p.matcher(month);
+            Pattern pattern = Pattern.compile("[0-9]");
+            Matcher str = pattern.matcher(month);
+            listItemView.month.setText(number.replaceAll("").trim());
+            listItemView.month1.setText(str.replaceAll("").trim());
+        }
         return convertView;
     }
 

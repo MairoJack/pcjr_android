@@ -131,8 +131,11 @@ public class IndexFragment extends Fragment implements BaseSliderView.OnSliderCl
         cpyg.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                MainActivity mainActivity  = (MainActivity) getContext();
-                mainActivity.setCurrentTab(1);
+                Intent intent = new Intent(getActivity(), WebViewActivity.class);
+                intent.putExtra("title","产品预告");
+                intent.putExtra("url","https://m.pcjr.com/notice");
+                startActivity(intent);
+                getActivity().overridePendingTransition(R.anim.push_left_in, R.anim.push_left_out);
             }
         });
         dcxa.setOnClickListener(new View.OnClickListener() {

@@ -53,6 +53,7 @@
         <activity android:name="com.pcjr.activity.RedPacketTipsActivity"/>
         <activity android:name="com.pcjr.activity.InvestActivity"/>
         <activity android:name="com.pcjr.activity.LoginActivity"/>
+        <activity android:name="com.pcjr.activity.RegistActivity"/>
     </application>
 
 </manifest>

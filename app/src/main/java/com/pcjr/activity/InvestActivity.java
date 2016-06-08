@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
+import android.text.Html;
 import android.text.InputType;
 import android.view.KeyEvent;
 import android.view.View;
@@ -13,6 +14,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -45,6 +47,7 @@ import retrofit2.Response;
  */
 public class InvestActivity extends Activity {
     private RelativeLayout back;
+    private LinearLayout preview_repayment;
     private TextView txt_preview_repayment, txt_balance,txt_repayment,txt_month,txt_year_income,txt_repayment_date;
     private EditText txt_invest_amount,txt_password;
     private Button btn_invest;
@@ -62,6 +65,7 @@ public class InvestActivity extends Activity {
     public void initView() {
         back = (RelativeLayout) findViewById(R.id.back);
         txt_balance = (TextView) findViewById(R.id.txt_balance);
+        preview_repayment = (LinearLayout) findViewById(R.id.preview_repayment);
         txt_preview_repayment = (TextView) findViewById(R.id.txt_preview_repayment);
         txt_repayment = (TextView) findViewById(R.id.txt_repayment);
         txt_month = (TextView) findViewById(R.id.txt_month);
@@ -120,6 +124,11 @@ public class InvestActivity extends Activity {
                     if (json.get("success").getAsBoolean()) {
                         JsonObject data = json.get("data").getAsJsonObject();
                         txt_balance.setText(data.get("available_balance").getAsString());
+                        if(product.getIs_preview_repayment() == 1){
+                            String html_preview_repayment = "本产品具有 <font color='#dc4d07'>提前回款</font> 可能，平台确保此产品最短借款时长为 <font color='#dc4d07'>"+product.getMin_repayment_date()+"</font> ，如提前回款则补偿本产品 <font color='#dc4d07'>"+product.getPay_interest_day()+"天利息</font> 于投资人";
+                            preview_repayment.setVisibility(View.VISIBLE);
+                            txt_preview_repayment.setText(Html.fromHtml(html_preview_repayment));
+                        }
                         int repayment = product.getRepayment();
                         if (repayment == 0) {
                             txt_repayment.setText("一次还本付息");

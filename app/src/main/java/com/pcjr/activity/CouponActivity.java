@@ -80,17 +80,15 @@ public class CouponActivity extends Activity {
                     if (json.get("invest_ticket_num") != null) {
                         int  investTicketNum = json.get("invest_ticket_num").getAsInt();
                         if(investTicketNum!=0){
+                            invest_ticket_number.setVisibility(View.VISIBLE);
                             invest_ticket_number.setText(String.valueOf(investTicketNum));
-                        }else{
-                            invest_ticket_number.setVisibility(View.GONE);
                         }
                     }
                     if (json.get("red_packet_num") != null) {
                         int  redPacketNum = json.get("red_packet_num").getAsInt();
                         if(redPacketNum!=0){
+                            red_packet_number.setVisibility(View.VISIBLE);
                             red_packet_number.setText(String.valueOf(redPacketNum));
-                        }else{
-                            red_packet_number.setVisibility(View.GONE);
                         }
                     }
                 }

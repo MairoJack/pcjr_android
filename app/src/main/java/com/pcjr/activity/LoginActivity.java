@@ -133,7 +133,7 @@ public class LoginActivity extends Activity implements View.OnClickListener, Val
                         if(tag!=null && tag.equals("invest")) {
                             overridePendingTransition(R.anim.slide_down_in, R.anim.slide_down_out);
                         }else{
-                            startActivity(new Intent(LoginActivity.this, MainActivity.class));
+                            //startActivity(new Intent(LoginActivity.this, MainActivity.class));
                             overridePendingTransition(R.anim.push_right_in, R.anim.push_right_out);
                         }
                     } else {
