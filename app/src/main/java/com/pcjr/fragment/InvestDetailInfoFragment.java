@@ -22,10 +22,10 @@ import com.pcjr.common.Constant;
 import com.pcjr.model.Letter;
 import com.pcjr.model.Product;
 import com.pcjr.plugins.ColoredSnackbar;
+import com.pcjr.plugins.ProgressWheel;
 import com.pcjr.service.ApiService;
 import com.pcjr.utils.DateUtil;
 import com.pcjr.utils.RetrofitUtils;
-import com.todddavies.components.progressbar.ProgressWheel;
 
 import retrofit2.Call;
 import retrofit2.Callback;

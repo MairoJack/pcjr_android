@@ -13,6 +13,7 @@ import com.pcjr.R;
 import com.pcjr.activity.AboutusActivity;
 import com.pcjr.activity.News3Activity;
 import com.pcjr.activity.NewsActivity;
+import com.pcjr.activity.TestActivity;
 import com.pcjr.activity.WebViewActivity;
 
 
@@ -57,7 +58,7 @@ public class MoreFragment extends Fragment
 		kefu.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				startActivity(new Intent(getActivity(), News3Activity.class));
+				startActivity(new Intent(getActivity(), TestActivity.class));
 				getActivity().overridePendingTransition(R.anim.push_left_in, R.anim.push_left_out);
 			}
 		});

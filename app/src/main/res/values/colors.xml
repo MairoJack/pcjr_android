@@ -9,4 +9,5 @@
     <color name="text">#8A8A8A</color>
     <color name="colorTabNormal">#666666</color>
     <color name="colorTabSelected">@color/colorPrimary</color>
+    <color name="divider">#0099CC</color>
 </resources>

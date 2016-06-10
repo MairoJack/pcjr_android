@@ -64,19 +64,20 @@
                 android:layout_width="fill_parent"
                 android:layout_height="300dp"
                >
-                <com.todddavies.components.progressbar.ProgressWheel
+                <com.pcjr.plugins.ProgressWheel
                     android:id="@+id/pw_spinner"
                     android:layout_width="270dp"
                     android:layout_height="270dp"
                     android:layout_centerInParent="true"
-                    ProgressWheel:pwTextColor="#222222"
+                    ProgressWheel:pwTextColor="#D3D3D3"
                     ProgressWheel:pwTextSize="14sp"
                     ProgressWheel:pwRimColor="#D3D3D3"
                     ProgressWheel:pwBarLength="60dp"
                     ProgressWheel:pwBarColor="#FD5A4A"
                     ProgressWheel:pwBarWidth="20dp"
                     ProgressWheel:pwRimWidth="20dp"
-                    ProgressWheel:pwSpinSpeed="3dp"/>
+                    ProgressWheel:pwSpinSpeed="3dp"
+                    ProgressWheel:pwContourColor="#D3D3D3"/>
                 <TextView
                     android:id="@+id/year_income"
                     android:layout_width="wrap_content"

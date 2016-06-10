@@ -54,6 +54,7 @@
         <activity android:name="com.pcjr.activity.InvestActivity"/>
         <activity android:name="com.pcjr.activity.LoginActivity"/>
         <activity android:name="com.pcjr.activity.RegistActivity"/>
+        <activity android:name="com.pcjr.activity.TestActivity"/>
     </application>
 
 </manifest>
