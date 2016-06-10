@@ -38,7 +38,7 @@ public class MoreFragment extends Fragment
 		news.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				Intent intent = new Intent(getActivity(), WebViewActivity.class);
+				Intent intent = new Intent(getActivity(), NewsActivity.class);
 				intent.putExtra("title","平台公告");
 				intent.putExtra("url","https://m.pcjr.com/platformnews");
 				startActivity(intent);
