@@ -5,33 +5,31 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.view.KeyEvent;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
-
-import com.aspsine.swipetoloadlayout.OnLoadMoreListener;
-import com.aspsine.swipetoloadlayout.OnRefreshListener;
-import com.aspsine.swipetoloadlayout.SwipeToLoadLayout;
+import android.widget.Toast;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import com.google.gson.reflect.TypeToken;
 import com.jayfang.dropdownmenu.DropDownMenu;
+import com.jayfang.dropdownmenu.OnMenuSelectedListener;
 import com.pcjr.R;
 import com.pcjr.adapter.InvestRecordsListViewAdapter;
-import com.pcjr.adapter.LetterListViewAdapter;
-import com.pcjr.adapter.TradeRecordsListViewAdapter;
 import com.pcjr.common.Constant;
 import com.pcjr.model.InvestRecords;
-import com.pcjr.model.Letter;
 import com.pcjr.model.Pager;
-import com.pcjr.model.TradeRecords;
 import com.pcjr.service.ApiService;
 import com.pcjr.utils.RetrofitUtils;
-
-;import java.util.ArrayList;
+import java.util.ArrayList;
 import java.util.List;
-
+import in.srain.cube.views.loadmore.LoadMoreContainer;
+import in.srain.cube.views.loadmore.LoadMoreHandler;
+import in.srain.cube.views.loadmore.LoadMoreListViewContainer;
+import in.srain.cube.views.ptr.PtrClassicFrameLayout;
+import in.srain.cube.views.ptr.PtrDefaultHandler;
+import in.srain.cube.views.ptr.PtrFrameLayout;
+import in.srain.cube.views.ptr.PtrHandler;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -40,15 +38,16 @@ import retrofit2.Response;
  * 投资记录
  * Created by Mario on 2016/5/24.
  */
-public class InvestRecordsActivity extends Activity implements OnRefreshListener, OnLoadMoreListener {
+public class InvestRecordsActivity extends Activity{
+    private PtrClassicFrameLayout mPtrFrame;
+    private LoadMoreListViewContainer loadMoreListViewContainer;
+    private LinearLayout empty;
+    private DropDownMenu mMenu;
     private RelativeLayout back;
     private ListView listView;
-    private SwipeToLoadLayout swipeToLoadLayout;
     private InvestRecordsListViewAdapter adapter;
-    private DropDownMenu mMenu;
-    private LinearLayout empty;
     private int pageNow = 1;
-    private List<InvestRecords> investRecordses = new ArrayList<>();
+    private List<InvestRecords> list = new ArrayList<>();
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.invest_records);
@@ -57,13 +56,52 @@ public class InvestRecordsActivity extends Activity implements OnRefreshListener
     }
 
     public void initView() {
-        swipeToLoadLayout = (SwipeToLoadLayout) findViewById(R.id.swipeToLoadLayout);
-        listView = (ListView) findViewById(R.id.swipe_target);
+        empty = (LinearLayout) findViewById(R.id.empty);
+        mPtrFrame = (PtrClassicFrameLayout) findViewById(R.id.ptr_frame);
+        loadMoreListViewContainer = (LoadMoreListViewContainer) findViewById(R.id.load_more);
+
+        listView = (ListView) findViewById(R.id.list_view);
         back = (RelativeLayout) findViewById(R.id.back);
-        mMenu = (DropDownMenu) findViewById(R.id.drop_down_menu);
-        swipeToLoadLayout.setOnRefreshListener(this);
-        swipeToLoadLayout.setOnLoadMoreListener(this);
-        autoRefresh();
+        mMenu = (DropDownMenu) findViewById(R.id.menu);
+
+        //下拉刷新
+        mPtrFrame.disableWhenHorizontalMove(true);
+        mPtrFrame.setLastUpdateTimeRelateObject(this);
+        mPtrFrame.setPtrHandler(new PtrHandler() {
+            @Override
+            public boolean checkCanDoRefresh(PtrFrameLayout frame, View content, View header) {
+                return PtrDefaultHandler.checkContentCanBePulledDown(frame, listView, header);
+            }
+
+            @Override
+            public void onRefreshBegin(PtrFrameLayout frame) {
+                pageNow = 1;
+                loadData();
+            }
+        });
+        //自动刷新
+        mPtrFrame.post(new Runnable() {
+            @Override
+            public void run() {
+                mPtrFrame.autoRefresh();
+            }
+        });
+
+
+        //上拉加载
+        //loadMoreListViewContainer.useDefaultFooter();
+        loadMoreListViewContainer.setLoadMoreHandler(new LoadMoreHandler() {
+            @Override
+            public void onLoadMore(final LoadMoreContainer loadMoreContainer) {
+                pageNow++;
+                loadData();
+            }
+        });
+
+
+        adapter = new InvestRecordsListViewAdapter(list, InvestRecordsActivity.this);
+        listView.setAdapter(adapter);
+
         back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -75,29 +113,35 @@ public class InvestRecordsActivity extends Activity implements OnRefreshListener
 
     public void initMenu() {
 
-        String[] menuTitls = new String[]{"全部记录"};
-        String[] mnuItems = new String[]{"全部记录", "正在募集", "募集成功", "正在回款", "回款完毕"};
+        final String[] arr=new String[]{"全部记录", "正在募集", "募集成功", "正在回款", "回款完毕"};
 
-        mMenu.setmMenuCount(1);
-        mMenu.setmShowCount(6);
-        mMenu.setShowCheck(true);
-        mMenu.setmMenuTitleTextSize(16);
-        mMenu.setmMenuTitleTextColor(Color.parseColor("#777777"));
-        mMenu.setmMenuListTextSize(16);
-        mMenu.setmMenuListTextColor(Color.BLACK);
-        mMenu.setmMenuBackColor(Color.parseColor("#eeeeee"));
-        mMenu.setmMenuPressedBackColor(Color.WHITE);
-        mMenu.setmMenuPressedTitleTextColor(Color.BLACK);
-        mMenu.setmCheckIcon(R.drawable.ico_make);
-        mMenu.setmUpArrow(R.drawable.arrow_up);
-        mMenu.setmDownArrow(R.drawable.arrow_down);
-        mMenu.setDefaultMenuTitle(menuTitls);
-        mMenu.setShowDivider(true);
-        mMenu.setmMenuListBackColor(Color.parseColor("#FFFFFF"));
-        mMenu.setmMenuListSelectorRes(R.color.white);
-        mMenu.setmArrowMarginTitle(20);
+        final String[] strings=new String[]{"全部记录"};
+
+        mMenu=(DropDownMenu)findViewById(R.id.menu);
+        mMenu.setmMenuCount(1);//Menu的个数
+        mMenu.setmShowCount(6);//Menu展开list数量太多是只显示的个数
+        mMenu.setShowCheck(true);//是否显示展开list的选中项
+        mMenu.setmMenuTitleTextSize(16);//Menu的文字大小
+        mMenu.setmMenuTitleTextColor(Color.WHITE);//Menu的文字颜色
+        mMenu.setmMenuListTextSize(16);//Menu展开list的文字大小
+        mMenu.setmMenuListTextColor(Color.BLACK);//Menu展开list的文字颜色
+        mMenu.setmMenuBackColor(Color.parseColor("#0099CC"));//Menu的背景颜色
+        mMenu.setmMenuPressedBackColor(Color.parseColor("#0099CC"));//Menu按下的背景颜色
+        mMenu.setmCheckIcon(R.drawable.ico_make);//Menu展开list的勾选图片
+        mMenu.setmUpArrow(R.drawable.arrow_up);//Menu默认状态的箭头
+        mMenu.setmDownArrow(R.drawable.arrow_down);//Menu按下状态的箭头
+        mMenu.setDefaultMenuTitle(strings);//默认未选择任何过滤的Menu title
+        mMenu.setMenuSelectedListener(new OnMenuSelectedListener() {
+            @Override
+            //Menu展开的list点击事件  RowIndex：list的索引  ColumnIndex：menu的索引
+            public void onSelected(View listview, int RowIndex, int ColumnIndex) {
+
+
+            }
+        });
+
         List<String[]> items = new ArrayList<>();
-        items.add(mnuItems);
+        items.add(arr);
         mMenu.setmMenuItems(items);
     }
 
@@ -111,27 +155,9 @@ public class InvestRecordsActivity extends Activity implements OnRefreshListener
 
     }
 
-    @Override
-    public void onRefresh() {
-        investRecordses.clear();
-        pageNow = 1;
-        loadData();
-    }
 
-    @Override
-    public void onLoadMore() {
-        pageNow++;
-        loadData();
-    }
 
-    private void autoRefresh() {
-        swipeToLoadLayout.post(new Runnable() {
-            @Override
-            public void run() {
-                swipeToLoadLayout.setRefreshing(true);
-            }
-        });
-    }
+
 
     public void loadData(){
         ApiService service = RetrofitUtils.createApi(ApiService.class);
@@ -139,36 +165,45 @@ public class InvestRecordsActivity extends Activity implements OnRefreshListener
         call.enqueue(new Callback<JsonObject>() {
             @Override
             public void onResponse(Call<JsonObject> call, Response<JsonObject> response) {
-                swipeToLoadLayout.setRefreshing(false);
-                swipeToLoadLayout.setLoadingMore(false);
+                if(pageNow == 1)
+                    list.clear();
+                mPtrFrame.refreshComplete();
                 if (response.isSuccessful()) {
                     JsonObject json = response.body();
                     Gson gson = new Gson();
                     Pager pager = null;
-                    List<InvestRecords> temps = null;
+                    List<InvestRecords> temps;
                     if (json.get("pager") != null) {
                         pager = gson.fromJson(json.get("pager"), Pager.class);
                     }
                     if (json.get("data") != null) {
                         temps = gson.fromJson(json.get("data"), new TypeToken<List<InvestRecords>>() {
                         }.getType());
+                        list.addAll(temps);
                     }
 
-                    investRecordses.addAll(temps);
-                    if(investRecordses.size()>0) {
-                        if (adapter == null) {
-                            adapter = new InvestRecordsListViewAdapter(investRecordses, InvestRecordsActivity.this);
-                            listView.setAdapter(adapter);
-                        }
-                        adapter.notifyDataSetChanged();
+                    int totalPage = (pager.getTotal() + pager.getPageSize() -1) / pager.getPageSize();
+                    if(pageNow>=totalPage){
+                        loadMoreListViewContainer.loadMoreFinish(false,false);
+                    }else{
+                        loadMoreListViewContainer.loadMoreFinish(false,true);
                     }
+                    if(list.isEmpty()){
+                        empty.setVisibility(View.VISIBLE);
+                        loadMoreListViewContainer.setVisibility(View.INVISIBLE);
+                    }else{
+                        empty.setVisibility(View.INVISIBLE);
+                        loadMoreListViewContainer.setVisibility(View.VISIBLE);
+                    }
+                    adapter.notifyDataSetChanged();
                 }
             }
 
             @Override
             public void onFailure(Call<JsonObject> call, Throwable t) {
-                swipeToLoadLayout.setRefreshing(false);
-                swipeToLoadLayout.setLoadingMore(false);
+                loadMoreListViewContainer.loadMoreError(1,"加载失败.");
+                mPtrFrame.refreshComplete();
+                Toast.makeText(InvestRecordsActivity.this,"网络异常",Toast.LENGTH_SHORT).show();
             }
         });
     }

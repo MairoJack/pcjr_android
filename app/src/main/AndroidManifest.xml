@@ -5,6 +5,7 @@
 
     <uses-permission android:name="android.permission.INTERNET"/>
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.CALL_PHONE"/>
     <application
         tools:replace="android:icon, android:theme"
         android:allowBackup="true"
@@ -25,7 +26,6 @@
 
         <activity android:name="com.pcjr.activity.InvestDetailActivity"/>
         <activity android:name=".activity.NewsActivity"/>
-        <activity android:name=".activity.News3Activity"/>
         <activity android:name="com.pcjr.activity.AboutusActivity"/>
         <activity android:name="com.pcjr.activity.AddBankCardActivity"/>
         <activity android:name=".activity.BindMobileActivity"/>

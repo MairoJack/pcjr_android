@@ -14,7 +14,8 @@ public class RetrofitUtils {
             synchronized (RetrofitUtils.class) {
                 if (retrofit == null) {
                     retrofit = new Retrofit.Builder()
-                            .baseUrl("http://api.pcjr.test/")
+                            //.baseUrl("http://api.pcjr.test/")
+                            .baseUrl("http://192.168.1.104:8080/api/")
                             .addConverterFactory(GsonConverterFactory.create())
                             .build();
                 }

@@ -6,6 +6,8 @@ import android.app.ProgressDialog;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.ListView;
+import android.widget.ScrollView;
 
 
 import com.daimajia.slider.library.Animations.DescriptionAnimation;
@@ -22,6 +24,11 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+import in.srain.cube.views.ptr.PtrClassicFrameLayout;
+import in.srain.cube.views.ptr.PtrDefaultHandler;
+import in.srain.cube.views.ptr.PtrFrameLayout;
+import in.srain.cube.views.ptr.PtrHandler;
+
 
 /**
  * Created by Mario on 2016/5/5.
@@ -30,8 +37,10 @@ import java.util.List;
 public class TestActivity extends Activity implements BaseSliderView.OnSliderClickListener, ViewPagerEx.OnPageChangeListener {
 
     private SliderLayout sliderLayout;
+    private PtrClassicFrameLayout mPtrFrame;
     private ProgressWheel progressWheel;
     private DropDownMenu mMenu;
+    private ScrollView scrollView;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         setContentView(R.layout.test);
@@ -74,6 +83,29 @@ public class TestActivity extends Activity implements BaseSliderView.OnSliderCli
         //items.add(arr2);
         //items.add(arr3);
         mMenu.setmMenuItems(items);
+
+        scrollView = (ScrollView) findViewById(R.id.scroll_view);
+        mPtrFrame = (PtrClassicFrameLayout) findViewById(R.id.list_view_with_empty_view_fragment_ptr_frame);
+
+        mPtrFrame.disableWhenHorizontalMove(true);
+        mPtrFrame.setLastUpdateTimeRelateObject(this);
+
+        //sliderLayout = (SliderLayout) findViewById(R.id.slider);
+
+        //initSlider();
+        mPtrFrame.setPtrHandler(new PtrHandler() {
+            @Override
+            public boolean checkCanDoRefresh(PtrFrameLayout frame, View content, View header) {
+
+                // here check $mListView instead of $content
+                return PtrDefaultHandler.checkContentCanBePulledDown(frame, scrollView, header);
+            }
+
+            @Override
+            public void onRefreshBegin(PtrFrameLayout frame) {
+
+            }
+        });
 
         super.onCreate(savedInstanceState);
     }

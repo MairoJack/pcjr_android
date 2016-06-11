@@ -6,28 +6,28 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
+import android.widget.LinearLayout;
 import android.widget.ListView;
-
-import com.aspsine.swipetoloadlayout.OnLoadMoreListener;
-import com.aspsine.swipetoloadlayout.OnRefreshListener;
-import com.aspsine.swipetoloadlayout.SwipeToLoadLayout;
+import android.widget.Toast;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import com.google.gson.reflect.TypeToken;
 import com.pcjr.R;
-import com.pcjr.adapter.InvestTicketListViewAdapter;
 import com.pcjr.adapter.RedPacketListViewAdapter;
 import com.pcjr.common.Constant;
-import com.pcjr.model.InvestTicket;
 import com.pcjr.model.Pager;
 import com.pcjr.model.RedPacket;
 import com.pcjr.service.ApiService;
 import com.pcjr.utils.RetrofitUtils;
-
 import java.util.ArrayList;
 import java.util.List;
-
+import in.srain.cube.views.loadmore.LoadMoreContainer;
+import in.srain.cube.views.loadmore.LoadMoreHandler;
+import in.srain.cube.views.loadmore.LoadMoreListViewContainer;
+import in.srain.cube.views.ptr.PtrClassicFrameLayout;
+import in.srain.cube.views.ptr.PtrDefaultHandler;
+import in.srain.cube.views.ptr.PtrFrameLayout;
+import in.srain.cube.views.ptr.PtrHandler;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -36,14 +36,16 @@ import retrofit2.Response;
  * 红包
  * Created by Mario on 2016/5/12.
  */
-public class RedPacketFragment extends Fragment implements OnRefreshListener, OnLoadMoreListener {
+public class RedPacketFragment extends Fragment{
+    private PtrClassicFrameLayout mPtrFrame;
+    private LoadMoreListViewContainer loadMoreListViewContainer;
+    private LinearLayout empty;
 
     private ListView listView;
-    private SwipeToLoadLayout swipeToLoadLayout;
     private RedPacketListViewAdapter adapter;
     private int type;
     private int pageNow = 1;
-    private List<RedPacket> redPackets = new ArrayList<>();
+    private List<RedPacket> list = new ArrayList<>();
 
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
@@ -53,21 +55,49 @@ public class RedPacketFragment extends Fragment implements OnRefreshListener, On
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        swipeToLoadLayout = (SwipeToLoadLayout) view.findViewById(R.id.swipeToLoadLayout);
-        swipeToLoadLayout.setOnRefreshListener(this);
-        swipeToLoadLayout.setOnLoadMoreListener(this);
-        listView = (ListView) view.findViewById(R.id.swipe_target);
+        empty = (LinearLayout) view.findViewById(R.id.empty);
+        mPtrFrame = (PtrClassicFrameLayout) view.findViewById(R.id.ptr_frame);
+        loadMoreListViewContainer = (LoadMoreListViewContainer) view.findViewById(R.id.load_more);
+
+
+        listView = (ListView) view.findViewById(R.id.list_view);
         type = getArguments().getInt("type");
 
-        autoRefresh();
+        //下拉刷新
+        mPtrFrame.disableWhenHorizontalMove(true);
+        mPtrFrame.setLastUpdateTimeRelateObject(this);
+        mPtrFrame.setPtrHandler(new PtrHandler() {
+            @Override
+            public boolean checkCanDoRefresh(PtrFrameLayout frame, View content, View header) {
+                return PtrDefaultHandler.checkContentCanBePulledDown(frame, listView, header);
+            }
+
+            @Override
+            public void onRefreshBegin(PtrFrameLayout frame) {
+                pageNow = 1;
+                loadData();
+            }
+        });
+
+
+
+        //上拉加载
+        //loadMoreListViewContainer.useDefaultFooter();
+        loadMoreListViewContainer.setLoadMoreHandler(new LoadMoreHandler() {
+            @Override
+            public void onLoadMore(final LoadMoreContainer loadMoreContainer) {
+                pageNow++;
+                loadData();
+            }
+        });
+
+
+        adapter = new RedPacketListViewAdapter(list, getContext(),type);
+        listView.setAdapter(adapter);
+
     }
 
-    @Override
-    public void onRefresh() {
-        redPackets.clear();
-        pageNow = 1;
-        loadData();
-    }
+
 
     public void loadData() {
         ApiService service = RetrofitUtils.createApi(ApiService.class);
@@ -75,8 +105,9 @@ public class RedPacketFragment extends Fragment implements OnRefreshListener, On
         call.enqueue(new Callback<JsonObject>() {
             @Override
             public void onResponse(Call<JsonObject> call, Response<JsonObject> response) {
-                swipeToLoadLayout.setRefreshing(false);
-                swipeToLoadLayout.setLoadingMore(false);
+                if (pageNow == 1)
+                    list.clear();
+                mPtrFrame.refreshComplete();
                 if (response.isSuccessful()) {
                     JsonObject json = response.body();
                     Gson gson = new Gson();
@@ -88,42 +119,42 @@ public class RedPacketFragment extends Fragment implements OnRefreshListener, On
                     if (json.get("data") != null) {
                         temps = gson.fromJson(json.get("data"), new TypeToken<List<RedPacket>>() {
                         }.getType());
+                        list.addAll(temps);
                     }
-                    redPackets.addAll(temps);
-                    if (redPackets.size() > 0) {
-                        if (pageNow == 1) {
-                            adapter = new RedPacketListViewAdapter(redPackets, getContext(),type);
-                            listView.setAdapter(adapter);
-                        } else {
-                            if (adapter == null) {
-                                adapter = new RedPacketListViewAdapter(redPackets, getContext(),type);
-                                listView.setAdapter(adapter);
-                            }
-                        }
-                        adapter.notifyDataSetChanged();
+                    int totalPage = (pager.getTotal() + pager.getPageSize() - 1) / pager.getPageSize();
+                    if (pageNow >= totalPage) {
+                        loadMoreListViewContainer.loadMoreFinish(false, false);
+                    } else {
+                        loadMoreListViewContainer.loadMoreFinish(false, true);
                     }
+                    if (list.isEmpty()) {
+                        empty.setVisibility(View.VISIBLE);
+                        loadMoreListViewContainer.setVisibility(View.INVISIBLE);
+                    } else {
+                        empty.setVisibility(View.INVISIBLE);
+                        loadMoreListViewContainer.setVisibility(View.VISIBLE);
+                    }
+                    adapter.notifyDataSetChanged();
                 }
             }
 
             @Override
             public void onFailure(Call<JsonObject> call, Throwable t) {
-                swipeToLoadLayout.setRefreshing(false);
-                swipeToLoadLayout.setLoadingMore(false);
+                loadMoreListViewContainer.loadMoreError(1, "加载失败.");
+                mPtrFrame.refreshComplete();
+                Toast.makeText(getContext(), "网络异常", Toast.LENGTH_SHORT).show();
             }
         });
     }
 
     @Override
-    public void onLoadMore() {
-        pageNow++;
-        loadData();
-    }
-
-    private void autoRefresh() {
-        swipeToLoadLayout.post(new Runnable() {
+    public void onResume() {
+        super.onResume();
+        //自动刷新
+        mPtrFrame.post(new Runnable() {
             @Override
             public void run() {
-                swipeToLoadLayout.setRefreshing(true);
+                mPtrFrame.autoRefresh();
             }
         });
     }

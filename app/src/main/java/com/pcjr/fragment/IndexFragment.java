@@ -4,7 +4,6 @@ import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
-import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
@@ -22,9 +21,7 @@ import android.widget.TextSwitcher;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.aspsine.swipetoloadlayout.OnLoadMoreListener;
-import com.aspsine.swipetoloadlayout.OnRefreshListener;
-import com.aspsine.swipetoloadlayout.SwipeToLoadLayout;
+
 import com.daimajia.slider.library.SliderLayout;
 import com.daimajia.slider.library.SliderTypes.BaseSliderView;
 import com.daimajia.slider.library.Tricks.ViewPagerEx;
@@ -34,22 +31,15 @@ import com.google.gson.reflect.TypeToken;
 import com.pcjr.R;
 import com.pcjr.activity.InvestDetailActivity;
 import com.pcjr.activity.MainActivity;
-import com.pcjr.activity.MsgDetailActivity;
 import com.pcjr.activity.WebViewActivity;
 import com.pcjr.adapter.ProductListViewAdapter;
 import com.pcjr.common.Constant;
 import com.pcjr.model.Announce;
 import com.pcjr.model.FocusImg;
-import com.pcjr.model.Letter;
 import com.pcjr.model.Product;
-import com.pcjr.model.RedPacket;
-import com.pcjr.plugins.ColoredSnackbar;
 import com.pcjr.plugins.CustomTextSliderView;
 import com.pcjr.service.ApiService;
-import com.pcjr.utils.DateUtil;
 import com.pcjr.utils.RetrofitUtils;
-
-import java.util.ArrayList;
 import java.util.List;
 
 import retrofit2.Call;
@@ -62,7 +52,6 @@ public class IndexFragment extends Fragment implements BaseSliderView.OnSliderCl
 
     private FragmentManager fragmentManager;
     private FragmentTransaction transaction;
-    private SwipeToLoadLayout swipeToLoadLayout;
     private SliderLayout sliderLayout, sliderLayoutSmall;
     private ProgressDialog dialog;
     private long lastRefreshTime;

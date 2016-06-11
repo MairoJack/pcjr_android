@@ -1,26 +1,41 @@
-<com.aspsine.swipetoloadlayout.SwipeToLoadLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:cube_ptr="http://schemas.android.com/tools"
     android:id="@+id/swipeToLoadLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#EEEEEE"
-    app:swipe_style="classic"
-  >
+    android:background="#EEEEEE">
 
-    <include
-        android:id="@id/swipe_refresh_header"
-        layout="@layout/layout_pull_header" />
+    <include layout="@layout/no_records" />
 
-    <ListView
-        android:id="@+id/swipe_target"
+    <in.srain.cube.views.ptr.PtrClassicFrameLayout
+        android:id="@+id/ptr_frame"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_margin="5dp"
-        android:clipToPadding="false"
-        android:divider="#EEEEEE"
-        android:dividerHeight="5dp"/>
+        cube_ptr:ptr_duration_to_close="200"
+        cube_ptr:ptr_duration_to_close_header="1000"
+        cube_ptr:ptr_keep_header_when_refresh="true"
+        cube_ptr:ptr_pull_to_fresh="false"
+        cube_ptr:ptr_ratio_of_header_height_to_refresh="1.2"
+        cube_ptr:ptr_resistance="1.7">
 
-    <include
-        android:id="@id/swipe_load_more_footer"
-        layout="@layout/layout_pull_footer" />
-</com.aspsine.swipetoloadlayout.SwipeToLoadLayout>
+        <in.srain.cube.views.loadmore.LoadMoreListViewContainer
+            android:id="@+id/load_more"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/cube_mints_white">
+
+            <ListView
+                android:id="@+id/list_view"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_margin="5dp"
+                android:clipToPadding="false"
+                android:divider="#EEEEEE"
+                android:dividerHeight="5dp" />
+
+        </in.srain.cube.views.loadmore.LoadMoreListViewContainer>
+
+    </in.srain.cube.views.ptr.PtrClassicFrameLayout>
+
+
+</RelativeLayout>

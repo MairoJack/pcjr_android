@@ -6,28 +6,32 @@ import android.os.Bundle;
 import android.view.KeyEvent;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
+import android.widget.Toast;
 
-import com.aspsine.swipetoloadlayout.OnLoadMoreListener;
-import com.aspsine.swipetoloadlayout.OnRefreshListener;
-import com.aspsine.swipetoloadlayout.SwipeToLoadLayout;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import com.google.gson.reflect.TypeToken;
 import com.pcjr.R;
 import com.pcjr.adapter.LetterListViewAdapter;
-import com.pcjr.adapter.TradeRecordsListViewAdapter;
 import com.pcjr.common.Constant;
 import com.pcjr.model.Letter;
 import com.pcjr.model.Pager;
-import com.pcjr.model.TradeRecords;
 import com.pcjr.service.ApiService;
 import com.pcjr.utils.RetrofitUtils;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import in.srain.cube.views.loadmore.LoadMoreContainer;
+import in.srain.cube.views.loadmore.LoadMoreHandler;
+import in.srain.cube.views.loadmore.LoadMoreListViewContainer;
+import in.srain.cube.views.ptr.PtrClassicFrameLayout;
+import in.srain.cube.views.ptr.PtrDefaultHandler;
+import in.srain.cube.views.ptr.PtrFrameLayout;
+import in.srain.cube.views.ptr.PtrHandler;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -36,9 +40,13 @@ import retrofit2.Response;
  * 消息中心
  * Created by Mario on 2016/5/24.
  */
-public class MsgCenterActivity extends Activity implements OnRefreshListener, OnLoadMoreListener {
+public class MsgCenterActivity extends Activity{
+
+    private PtrClassicFrameLayout mPtrFrame;
+    private LoadMoreListViewContainer loadMoreListViewContainer;
+    private LinearLayout empty;
+
     private ListView listView;
-    private SwipeToLoadLayout swipeToLoadLayout;
     private LetterListViewAdapter adapter;
     private RelativeLayout back;
     private int pageNow = 1;
@@ -50,13 +58,51 @@ public class MsgCenterActivity extends Activity implements OnRefreshListener, On
     }
 
     public void initView(){
-        swipeToLoadLayout = (SwipeToLoadLayout)findViewById(R.id.swipeToLoadLayout);
-        listView = (ListView) findViewById(R.id.swipe_target);
+        empty = (LinearLayout) findViewById(R.id.empty);
+        mPtrFrame = (PtrClassicFrameLayout) findViewById(R.id.ptr_frame);
+        loadMoreListViewContainer = (LoadMoreListViewContainer) findViewById(R.id.load_more);
+
+        listView = (ListView) findViewById(R.id.list_view);
         back = (RelativeLayout) findViewById(R.id.back);
 
-        swipeToLoadLayout.setOnRefreshListener(this);
-        swipeToLoadLayout.setOnLoadMoreListener(this);
-        autoRefresh();
+
+        //下拉刷新
+        mPtrFrame.disableWhenHorizontalMove(true);
+        mPtrFrame.setLastUpdateTimeRelateObject(this);
+        mPtrFrame.setPtrHandler(new PtrHandler() {
+            @Override
+            public boolean checkCanDoRefresh(PtrFrameLayout frame, View content, View header) {
+                return PtrDefaultHandler.checkContentCanBePulledDown(frame, listView, header);
+            }
+
+            @Override
+            public void onRefreshBegin(PtrFrameLayout frame) {
+                pageNow = 1;
+                loadData();
+            }
+        });
+        //自动刷新
+        mPtrFrame.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                mPtrFrame.autoRefresh();
+            }
+        }, 1000);
+
+
+        //上拉加载
+        //loadMoreListViewContainer.useDefaultFooter();
+        loadMoreListViewContainer.setLoadMoreHandler(new LoadMoreHandler() {
+            @Override
+            public void onLoadMore(final LoadMoreContainer loadMoreContainer) {
+                pageNow++;
+                loadData();
+            }
+        });
+
+
+        adapter = new LetterListViewAdapter(letters, MsgCenterActivity.this);
+        listView.setAdapter(adapter);
 
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -67,6 +113,8 @@ public class MsgCenterActivity extends Activity implements OnRefreshListener, On
                 overridePendingTransition(R.anim.push_left_in, R.anim.push_left_out);
             }
         });
+
+
 
         back.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -89,28 +137,19 @@ public class MsgCenterActivity extends Activity implements OnRefreshListener, On
 
     }
 
-    @Override
-    public void onRefresh() {
-        letters.clear();
-        pageNow = 1;
-        loadData();
-    }
 
-    @Override
-    public void onLoadMore() {
-        pageNow++;
-        loadData();
-    }
 
 
     public void loadData(){
         ApiService service = RetrofitUtils.createApi(ApiService.class);
-        Call<JsonObject> call = service.getLetterList(Constant.access_token,0,pageNow,Constant.PAGESIZE);
+        //Call<JsonObject> call = service.getLetterList(Constant.access_token,0,pageNow,Constant.PAGESIZE);
+        Call<JsonObject> call = service.getLetterList(pageNow,Constant.PAGESIZE);
         call.enqueue(new Callback<JsonObject>() {
             @Override
             public void onResponse(Call<JsonObject> call, Response<JsonObject> response) {
-                swipeToLoadLayout.setRefreshing(false);
-                swipeToLoadLayout.setLoadingMore(false);
+                if(pageNow == 1)
+                    letters.clear();
+                mPtrFrame.refreshComplete();
                 if (response.isSuccessful()) {
                     JsonObject json = response.body();
                     Gson gson = new Gson();
@@ -119,35 +158,36 @@ public class MsgCenterActivity extends Activity implements OnRefreshListener, On
                     if (json.get("pager") != null) {
                         pager = gson.fromJson(json.get("pager"), Pager.class);
                     }
-                    if (json.get("data") != null) {
+                    if (!json.get("data").isJsonNull()) {
                         temps = gson.fromJson(json.get("data"), new TypeToken<List<Letter>>() {
                         }.getType());
+                        letters.addAll(temps);
                     }
-                    letters.addAll(temps);
-                    if(letters.size()>0) {
-                        if (adapter == null) {
-                            adapter = new LetterListViewAdapter(letters, MsgCenterActivity.this);
-                            listView.setAdapter(adapter);
-                        }
-                        adapter.notifyDataSetChanged();
+                    int totalPage = (pager.getTotal() + pager.getPageSize() -1) / pager.getPageSize();
+                    if(pageNow>=totalPage){
+                        loadMoreListViewContainer.loadMoreFinish(false,false);
+                    }else{
+                        loadMoreListViewContainer.loadMoreFinish(false,true);
                     }
+                    if(letters.isEmpty()){
+                        empty.setVisibility(View.VISIBLE);
+                        loadMoreListViewContainer.setVisibility(View.INVISIBLE);
+                    }else{
+                        empty.setVisibility(View.INVISIBLE);
+                        loadMoreListViewContainer.setVisibility(View.VISIBLE);
+                    }
+                    adapter.notifyDataSetChanged();
                 }
             }
 
             @Override
-            public void onFailure(Call<JsonObject> call, Throwable t) {
-                swipeToLoadLayout.setRefreshing(false);
-                swipeToLoadLayout.setLoadingMore(false);
+            public void onFailure(Call call, Throwable t) {
+                loadMoreListViewContainer.loadMoreError(1,"加载失败.");
+                mPtrFrame.refreshComplete();
+                Toast.makeText(MsgCenterActivity.this,"网络异常",Toast.LENGTH_SHORT).show();
             }
         });
     }
 
-    private void autoRefresh() {
-        swipeToLoadLayout.post(new Runnable() {
-            @Override
-            public void run() {
-                swipeToLoadLayout.setRefreshing(true);
-            }
-        });
-    }
+
 }

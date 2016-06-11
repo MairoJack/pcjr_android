@@ -8,30 +8,27 @@ import android.widget.DatePicker;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
-
-import com.aspsine.swipetoloadlayout.OnLoadMoreListener;
-import com.aspsine.swipetoloadlayout.OnRefreshListener;
-import com.aspsine.swipetoloadlayout.SwipeToLoadLayout;
+import android.widget.Toast;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import com.google.gson.reflect.TypeToken;
-import com.jayfang.dropdownmenu.DropDownMenu;
 import com.pcjr.R;
-import com.pcjr.adapter.InvestRecordsListViewAdapter;
 import com.pcjr.adapter.PaymentPlanListViewAdapter;
 import com.pcjr.common.Constant;
-import com.pcjr.model.InvestRecords;
-import com.pcjr.model.Pager;
 import com.pcjr.model.PaymentPlan;
-import com.pcjr.model.TradeRecords;
 import com.pcjr.service.ApiService;
 import com.pcjr.utils.DateUtil;
 import com.pcjr.utils.RetrofitUtils;
-
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-
+import in.srain.cube.views.loadmore.LoadMoreContainer;
+import in.srain.cube.views.loadmore.LoadMoreHandler;
+import in.srain.cube.views.loadmore.LoadMoreListViewContainer;
+import in.srain.cube.views.ptr.PtrClassicFrameLayout;
+import in.srain.cube.views.ptr.PtrDefaultHandler;
+import in.srain.cube.views.ptr.PtrFrameLayout;
+import in.srain.cube.views.ptr.PtrHandler;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -40,9 +37,11 @@ import retrofit2.Response;
  * 回款计划
  * Created by Mario on 2016/5/24.
  */
-public class PaymentPlanActivity extends Activity implements OnRefreshListener, OnLoadMoreListener {
+public class PaymentPlanActivity extends Activity {
+    private PtrClassicFrameLayout mPtrFrame;
+    private LoadMoreListViewContainer loadMoreListViewContainer;
+    private LinearLayout empty;
 
-    private SwipeToLoadLayout swipeToLoadLayout;
     private PaymentPlanListViewAdapter adapter;
     private DatePicker datePicker;
     private RelativeLayout back;
@@ -50,7 +49,7 @@ public class PaymentPlanActivity extends Activity implements OnRefreshListener, 
 
     private int year, month;
     private int pageNow = 1;
-    private List<PaymentPlan> paymentPlens = new ArrayList<>();
+    private List<PaymentPlan> list = new ArrayList<>();
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.payment_plan);
@@ -59,20 +58,58 @@ public class PaymentPlanActivity extends Activity implements OnRefreshListener, 
     }
 
     public void initView() {
-        swipeToLoadLayout = (SwipeToLoadLayout) findViewById(R.id.swipeToLoadLayout);
-        listView = (ListView) findViewById(R.id.swipe_target);
+        empty = (LinearLayout) findViewById(R.id.empty);
+        mPtrFrame = (PtrClassicFrameLayout) findViewById(R.id.ptr_frame);
+        loadMoreListViewContainer = (LoadMoreListViewContainer) findViewById(R.id.load_more);
+
+
+        listView = (ListView) findViewById(R.id.list_view);
         datePicker = (DatePicker) findViewById(R.id.datepicker);
         back = (RelativeLayout) findViewById(R.id.back);
 
-        swipeToLoadLayout.setOnRefreshListener(this);
-        swipeToLoadLayout.setOnLoadMoreListener(this);
+        //下拉刷新
+        mPtrFrame.disableWhenHorizontalMove(true);
+        mPtrFrame.setLastUpdateTimeRelateObject(this);
+        mPtrFrame.setPtrHandler(new PtrHandler() {
+            @Override
+            public boolean checkCanDoRefresh(PtrFrameLayout frame, View content, View header) {
+                return PtrDefaultHandler.checkContentCanBePulledDown(frame, listView, header);
+            }
+
+            @Override
+            public void onRefreshBegin(PtrFrameLayout frame) {
+                pageNow = 1;
+                loadData();
+            }
+        });
+
+
+
+        //上拉加载
+        //loadMoreListViewContainer.useDefaultFooter();
+        loadMoreListViewContainer.loadMoreFinish(false,false);
+        loadMoreListViewContainer.setLoadMoreHandler(new LoadMoreHandler() {
+            @Override
+            public void onLoadMore(final LoadMoreContainer loadMoreContainer) {
+                pageNow++;
+                loadData();
+            }
+        });
+
+
+
 
         datePicker.init(datePicker.getYear(), datePicker.getMonth(), datePicker.getDayOfMonth(), new DatePicker.OnDateChangedListener() {
             @Override
             public void onDateChanged(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
                 year = datePicker.getYear();
                 month = datePicker.getMonth() + 1;
-                autoRefresh();
+                mPtrFrame.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        mPtrFrame.autoRefresh();
+                    }
+                });
             }
         });
 
@@ -89,7 +126,16 @@ public class PaymentPlanActivity extends Activity implements OnRefreshListener, 
         Date date = new Date();
         year = DateUtil.getYearOfDate(date);
         month = DateUtil.getMonthOfDate(date);
-        autoRefresh();
+        adapter = new PaymentPlanListViewAdapter(list, PaymentPlanActivity.this);
+        listView.setAdapter(adapter);
+
+        //自动刷新
+        mPtrFrame.post(new Runnable() {
+            @Override
+            public void run() {
+                mPtrFrame.autoRefresh();
+            }
+        });
     }
 
     @Override
@@ -102,27 +148,7 @@ public class PaymentPlanActivity extends Activity implements OnRefreshListener, 
 
     }
 
-    @Override
-    public void onRefresh() {
-        paymentPlens.clear();
-        pageNow = 1;
-        loadData();
-    }
 
-    @Override
-    public void onLoadMore() {
-        pageNow++;
-        loadData();
-    }
-
-    private void autoRefresh() {
-        swipeToLoadLayout.post(new Runnable() {
-            @Override
-            public void run() {
-                swipeToLoadLayout.setRefreshing(true);
-            }
-        });
-    }
 
     public void loadData(){
         ApiService service = RetrofitUtils.createApi(ApiService.class);
@@ -130,8 +156,9 @@ public class PaymentPlanActivity extends Activity implements OnRefreshListener, 
         call.enqueue(new Callback<JsonObject>() {
             @Override
             public void onResponse(Call<JsonObject> call, Response<JsonObject> response) {
-                swipeToLoadLayout.setRefreshing(false);
-                swipeToLoadLayout.setLoadingMore(false);
+                if (pageNow == 1)
+                    list.clear();
+                mPtrFrame.refreshComplete();
                 if (response.isSuccessful()) {
                     JsonObject json = response.body();
                     Gson gson = new Gson();
@@ -139,22 +166,24 @@ public class PaymentPlanActivity extends Activity implements OnRefreshListener, 
                     if (json.get("data") != null) {
                         temps = gson.fromJson(json.get("data"), new TypeToken<List<PaymentPlan>>() {
                         }.getType());
+                        list.addAll(temps);
                     }
-                    paymentPlens.addAll(temps);
-                    if(paymentPlens.size()>0) {
-                        if (adapter == null) {
-                            adapter = new PaymentPlanListViewAdapter(paymentPlens, PaymentPlanActivity.this);
-                            listView.setAdapter(adapter);
-                        }
-                        adapter.notifyDataSetChanged();
+                    if (list.isEmpty()) {
+                        empty.setVisibility(View.VISIBLE);
+                        loadMoreListViewContainer.setVisibility(View.INVISIBLE);
+                    } else {
+                        empty.setVisibility(View.INVISIBLE);
+                        loadMoreListViewContainer.setVisibility(View.VISIBLE);
                     }
+                    adapter.notifyDataSetChanged();
                 }
             }
 
             @Override
             public void onFailure(Call call, Throwable t) {
-                swipeToLoadLayout.setRefreshing(false);
-                swipeToLoadLayout.setLoadingMore(false);
+                loadMoreListViewContainer.loadMoreError(1, "加载失败.");
+                mPtrFrame.refreshComplete();
+                Toast.makeText(PaymentPlanActivity.this, "网络异常", Toast.LENGTH_SHORT).show();
             }
         });
     }

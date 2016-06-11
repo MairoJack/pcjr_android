@@ -61,7 +61,7 @@ public class NewsActivity extends Activity {
 
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.news2);
+        setContentView(R.layout.news);
         initView();
     }
 
@@ -203,11 +203,11 @@ public class NewsActivity extends Activity {
             public void run() {
                 if (page % 2 == 0) {
                     list.addAll(getData());
-                    listView.setVisibility(View.VISIBLE);
+                    loadMoreListViewContainer.setVisibility(View.VISIBLE);
                     empty.setVisibility(View.INVISIBLE);
                     mPtrFrame.refreshComplete();
                 } else {
-                    listView.setVisibility(View.INVISIBLE);
+                    loadMoreListViewContainer.setVisibility(View.INVISIBLE);
                     empty.setVisibility(View.VISIBLE);
                     mPtrFrame.refreshComplete();
                 }

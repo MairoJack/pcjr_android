@@ -365,4 +365,6 @@ public interface ApiService {
     @POST("/member/get_red_packet_reward")
     Call<JsonObject> getRedPacketReward(@Field("access_token") String access_token, @Field("id") String id);
 
+    @GET("letter")
+    Call<JsonObject> getLetterList(@Query("page") int page,@Query("page_size") int page_size);
 }
