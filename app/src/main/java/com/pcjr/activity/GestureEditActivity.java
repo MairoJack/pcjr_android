@@ -13,9 +13,11 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.pcjr.R;
+import com.pcjr.common.Constant;
 import com.pcjr.plugins.GestureContentView;
 import com.pcjr.plugins.GestureDrawline;
 import com.pcjr.plugins.LockIndicator;
+import com.pcjr.utils.SharedPreferenceUtil;
 
 
 /**
@@ -23,11 +25,7 @@ import com.pcjr.plugins.LockIndicator;
  * 手势密码设置界面
  *
  */
-public class GestureEditActivity extends Activity implements OnClickListener {
-	/** 手机号码*/
-	public static final String PARAM_PHONE_NUMBER = "PARAM_PHONE_NUMBER";
-	/** 意图 */
-	public static final String PARAM_INTENT_CODE = "PARAM_INTENT_CODE";
+public class GestureEditActivity extends Activity{
 	/** 首次提示绘制手势密码，可以选择跳过 */
 	public static final String PARAM_IS_FIRST_ADVICE = "PARAM_IS_FIRST_ADVICE";
 	private TextView mTextTitle;
@@ -49,12 +47,10 @@ public class GestureEditActivity extends Activity implements OnClickListener {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_gesture_edit);
 		setUpViews();
-		setUpListeners();
 	}
 	
 	private void setUpViews() {
-		mTextTitle = (TextView) findViewById(R.id.text_title);
-		mTextCancel = (TextView) findViewById(R.id.text_cancel);
+
 		mTextReset = (TextView) findViewById(R.id.text_reset);
 		mTextReset.setClickable(false);
 		mLockIndicator = (LockIndicator) findViewById(R.id.lock_indicator);
@@ -77,7 +73,9 @@ public class GestureEditActivity extends Activity implements OnClickListener {
 					mTextReset.setText(getString(R.string.reset_gesture_code));
 				} else {
 					if (inputCode.equals(mFirstPassword)) {
-						Toast.makeText(GestureEditActivity.this, "设置成功", Toast.LENGTH_SHORT).show();
+                        SharedPreferenceUtil spu = new SharedPreferenceUtil(GestureEditActivity.this, Constant.FILE);
+                        spu.setGesture(inputCode);
+                        Toast.makeText(GestureEditActivity.this, "设置成功", Toast.LENGTH_SHORT).show();
 						mGestureContentView.clearDrawlineState(0L);
 						GestureEditActivity.this.finish();
 					} else {
@@ -105,33 +103,25 @@ public class GestureEditActivity extends Activity implements OnClickListener {
 		// 设置手势解锁显示到哪个布局里面
 		mGestureContentView.setParentView(mGestureContainer);
 		updateCodeList("");
+
+		mTextReset.setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				mIsFirstInput = true;
+				updateCodeList("");
+				mTextTip.setText(getString(R.string.set_gesture_pattern));
+			}
+		});
 	}
 	
-	private void setUpListeners() {
-		mTextCancel.setOnClickListener(this);
-		mTextReset.setOnClickListener(this);
-	}
+
 	
 	private void updateCodeList(String inputCode) {
 		// 更新选择的图案
 		mLockIndicator.setPath(inputCode);
 	}
 
-	@Override
-	public void onClick(View v) {
-		switch (v.getId()) {
-		case R.id.text_cancel:
-			this.finish();
-			break;
-		case R.id.text_reset:
-			mIsFirstInput = true;
-			updateCodeList("");
-			mTextTip.setText(getString(R.string.set_gesture_pattern));
-			break;
-		default:
-			break;
-		}
-	}
+
 	
 	private boolean isInputPassValidate(String inputPassword) {
 		if (TextUtils.isEmpty(inputPassword) || inputPassword.length() < 4) {

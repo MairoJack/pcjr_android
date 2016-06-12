@@ -42,6 +42,15 @@ public class SharedPreferenceUtil {
         return this.sp.getString("refresToken", "");
     }
 
+    public void setGesture(String gesture) {
+        this.editor.putString("gesture", gesture);
+        this.editor.commit();
+    }
+
+    public String getGesture() {
+        return this.sp.getString("gesture", "");
+    }
+
     public void setPassword(String password) {
         this.editor.putString("password", password);
         this.editor.commit();
@@ -49,6 +58,16 @@ public class SharedPreferenceUtil {
 
     public String getPassword() {
         return this.sp.getString("password", "");
+    }
+
+
+    public void setOpenGesture(boolean isOpen) {
+        editor.putBoolean("isOpen", isOpen);
+        editor.commit();
+    }
+
+    public boolean getOpenGesture() {
+        return sp.getBoolean("isOpen", false);
     }
 
     public void setIsFirst(boolean isFirst) {

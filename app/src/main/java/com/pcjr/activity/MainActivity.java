@@ -1,6 +1,7 @@
 package com.pcjr.activity;
 
 
+import android.content.Intent;
 import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -10,6 +11,7 @@ import com.google.gson.JsonObject;
 import com.pcjr.R;
 import com.pcjr.adapter.FragmentAdapter;
 import com.pcjr.common.Constant;
+import com.pcjr.model.PaymentPlan;
 import com.pcjr.plugins.BottomNavigatorView;
 import com.pcjr.plugins.FragmentNavigator;
 import com.pcjr.service.ApiService;
@@ -23,12 +25,12 @@ import retrofit2.Response;
 public class MainActivity extends FragmentActivity implements BottomNavigatorView.OnBottomNavigatorViewItemClickListener {
 
     private static final int DEFAULT_POSITION = 0;
-
+    public static final int REQUSET = 1;
     private FragmentNavigator mNavigator;
 
     // a simple custom bottom navigation view
     private BottomNavigatorView bottomNavigatorView;
-
+    private int last_position = 0;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -54,7 +56,12 @@ public class MainActivity extends FragmentActivity implements BottomNavigatorVie
 
     @Override
     public void onBottomNavigatorViewItemClick(int position, View view) {
-        setCurrentTab(position);
+        if(last_position !=position && position == 2){
+            startActivityForResult(new Intent(MainActivity.this,GestureVerifyActivity.class),REQUSET);
+        }else {
+            setCurrentTab(position);
+        }
+        last_position = position;
     }
 
     public void setCurrentTab(int position) {
@@ -62,7 +69,14 @@ public class MainActivity extends FragmentActivity implements BottomNavigatorVie
         bottomNavigatorView.select(position);
     }
 
-
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if(requestCode == REQUSET && resultCode ==RESULT_OK) {
+            setCurrentTab(2);
+            Log.d("Mario", "onActivityResult: "+data.getStringExtra("abc"));
+        }
+    }
 
     private void tryLogin() {
         final SharedPreferenceUtil spu = new SharedPreferenceUtil(this, Constant.FILE);

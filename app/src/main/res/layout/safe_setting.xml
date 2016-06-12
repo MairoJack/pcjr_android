@@ -112,7 +112,32 @@
             android:layout_marginRight="20dp"
             android:src="@drawable/arrow1" />
     </RelativeLayout>
+    <RelativeLayout
+        android:layout_width="fill_parent"
+        android:layout_height="50dp"
+        android:layout_marginTop="1dp"
+        android:background="#FFFFFF" >
 
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="20dp"
+            android:text="开启手势密码"
+            android:textColor="#000000"
+            android:textSize="16dp" />
+
+        <Switch
+            android:id="@+id/btn_switch"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="20dp"
+            android:checked="false"
+            android:textOn="开启"
+            android:textOff="关闭"/>
+    </RelativeLayout>
     <RelativeLayout
         android:id="@+id/gesture"
         android:layout_width="fill_parent"

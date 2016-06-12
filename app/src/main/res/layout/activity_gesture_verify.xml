@@ -1,20 +1,21 @@
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#f3f3f3" >
+    android:background="#0099CC"
+    android:orientation="vertical">
 
     <RelativeLayout
         android:id="@+id/title"
         android:layout_width="fill_parent"
         android:layout_height="50dp"
-        android:background="#0099CC" >
+        android:background="#0099CC">
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
             android:layout_centerVertical="true"
-            android:text="@string/setup_gesture_code"
+            android:text="校验手势密码"
             android:textColor="#FFFFFF"
             android:textSize="20dp" />
 
@@ -25,7 +26,7 @@
             android:layout_alignParentLeft="true"
             android:layout_centerVertical="true"
             android:layout_marginLeft="10dp"
-            android:padding="5dp" >
+            android:padding="5dp">
 
             <ImageView
                 android:layout_width="wrap_content"
@@ -36,12 +37,37 @@
         </RelativeLayout>
     </RelativeLayout>
 
+    <TextView
+        android:id="@+id/text_tip"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="50dp"
+        android:gravity="center_horizontal"
+        android:text="@string/set_gesture_pattern"
+        android:textColor="#FFA500" />
+
     <FrameLayout
         android:id="@+id/gesture_container"
         android:layout_width="wrap_content"
+        android:layout_height="wrap_content"></FrameLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/gesture_tip_layout" >
-    </FrameLayout>
+        android:orientation="horizontal"
+        android:layout_marginTop="10dp">
+
+        <TextView
+            android:id="@+id/forget"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center_horizontal"
+            android:text="忘记手势密码?"
+            android:textColor="#FFA500"
+            android:textSize="15dp" />
 
 
-</RelativeLayout>
+    </LinearLayout>
+
+</LinearLayout>

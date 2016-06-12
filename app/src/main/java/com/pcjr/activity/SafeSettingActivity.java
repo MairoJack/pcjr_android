@@ -8,7 +8,9 @@ import android.support.design.widget.Snackbar;
 import android.view.KeyEvent;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CompoundButton;
 import android.widget.RelativeLayout;
+import android.widget.Switch;
 
 import com.google.gson.JsonObject;
 import com.pcjr.R;
@@ -30,7 +32,7 @@ import retrofit2.Response;
 public class SafeSettingActivity extends Activity {
     private RelativeLayout back,realname,bindphone,changepswd,gesture,verify_gesture;
     private Button btn_logout;
-
+    private Switch btn_switch;
     private ProgressDialog dialog;
 
     public void onCreate(Bundle savedInstanceState) {
@@ -47,6 +49,7 @@ public class SafeSettingActivity extends Activity {
         bindphone = (RelativeLayout) findViewById(R.id.bindphone);
         changepswd = (RelativeLayout) findViewById(R.id.changepswd);
         gesture = (RelativeLayout) findViewById(R.id.gesture);
+        btn_switch = (Switch) findViewById(R.id.btn_switch);
         verify_gesture = (RelativeLayout) findViewById(R.id.verify_gesture);
         btn_logout = (Button) findViewById(R.id.btn_logout);
         back.setOnClickListener(new View.OnClickListener() {
@@ -82,6 +85,23 @@ public class SafeSettingActivity extends Activity {
             public void onClick(View v) {
                 startActivity(new Intent(SafeSettingActivity.this, GestureVerifyActivity.class));
                 overridePendingTransition(R.anim.push_left_in, R.anim.push_left_out);
+            }
+        });
+
+        SharedPreferenceUtil spu = new SharedPreferenceUtil(SafeSettingActivity.this, Constant.FILE);
+        if(spu.getOpenGesture()){
+            btn_switch.setChecked(true);
+        }else{
+            btn_switch.setChecked(false);
+        }
+        btn_switch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if(isChecked){
+                    gesture.setVisibility(View.VISIBLE);
+                }else{
+                    gesture.setVisibility(View.GONE);
+                }
             }
         });
         gesture.setOnClickListener(new View.OnClickListener() {
