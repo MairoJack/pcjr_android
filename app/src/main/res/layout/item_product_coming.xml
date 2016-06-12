@@ -195,30 +195,29 @@
             android:layout_height="fill_parent"
             android:layout_weight="1" >
 
-            <com.pcjr.plugins.ProgressWheel
-                android:id="@+id/pw_spinner"
-                android:layout_width="65dp"
-                android:layout_height="65dp"
-                android:layout_centerInParent="true"
-                ProgressWheel:pwTextColor="#D3D3D3"
-                ProgressWheel:pwTextSize="14sp"
-                ProgressWheel:pwRimColor="#D3D3D3"
-                ProgressWheel:pwBarLength="60dp"
-                ProgressWheel:pwBarColor="#FD5A4A"
-                ProgressWheel:pwBarWidth="4dp"
-                ProgressWheel:pwRimWidth="4dp"
-                ProgressWheel:pwSpinSpeed="3dp"
-                ProgressWheel:pwContourColor="#D3D3D3"/>
             <TextView
-                android:id="@+id/rate"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
                 android:layout_centerHorizontal="true"
-                android:layout_centerVertical="true"
-                android:text="15%"
-                android:textColor="#FD7C21"
-                android:textSize="12dp"
-                />
+                android:layout_marginBottom="10dp"
+                android:text="开售时间"
+                android:textColor="#8F8F8F" />
+
+            <TextView
+                android:id="@+id/time"
+                android:layout_width="90dp"
+                android:layout_height="20dp"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="25dp"
+                android:gravity="center"
+                android:paddingLeft="13dp"
+                tools:text="06-15 10:00"
+                android:background="@drawable/clock"
+                android:textColor="#FFBF00"
+                android:textSize="11.5dp" />
+
+
         </RelativeLayout>
     </LinearLayout>
 

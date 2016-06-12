@@ -91,7 +91,7 @@ public class UnbindMobileActivity extends Activity {
             ColoredSnackbar.warning(snackbar).show();
             return;
         }
-        Call<JsonObject> call = service.unbind_mobile(Constant.access_token, mobile, checkcode);
+        Call<JsonObject> call = service.unbind_mobile(Constant.BEARER+" "+Constant.access_token, mobile, checkcode);
         call.enqueue(new Callback<JsonObject>() {
             @Override
             public void onResponse(Call<JsonObject> call, Response<JsonObject> response) {
@@ -116,7 +116,7 @@ public class UnbindMobileActivity extends Activity {
     }
 
     public void sendCheckCode() {
-        Call<JsonObject> call = service.unbindMobileVerify(Constant.access_token);
+        Call<JsonObject> call = service.unbindMobileVerify(Constant.BEARER+" "+Constant.access_token);
         call.enqueue(new Callback<JsonObject>() {
             @Override
             public void onResponse(Call<JsonObject> call, Response<JsonObject> response) {

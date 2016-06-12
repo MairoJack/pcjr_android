@@ -36,12 +36,12 @@ public interface ApiService {
 
     /**
      * 用户登出
-     * @param access_token
+     * @param header
      * @return
      */
     @FormUrlEncoded
     @POST("/oauth/revoke_access_token")
-    Call<JsonObject> revoke(@Field("access_token") String access_token);
+    Call<JsonObject> revoke(@Header("Authorization") String header);
 
     /**
      * 获取首页焦点图和公告
@@ -178,7 +178,7 @@ public interface ApiService {
 
     /**
      * 添加银行卡
-     * @param access_token
+     * @param header
      * @param bank_id    银行ID
      * @param card_no    银行卡号
      * @param real_name  真实姓名
@@ -186,58 +186,58 @@ public interface ApiService {
      */
     @FormUrlEncoded
     @POST("/member/add_bank_card")
-    Call<JsonObject> addBankCard(@Field("access_token") String access_token, @Field("bank_id") String bank_id, @Field("card_no") String card_no, @Field("real_name") String real_name);
+    Call<JsonObject> addBankCard(@Header("Authorization") String header, @Field("bank_id") String bank_id, @Field("card_no") String card_no, @Field("real_name") String real_name);
 
     /**
      * 删除银行卡
-     * @param access_token
+     * @param header
      * @param id
      * @return
      */
     @FormUrlEncoded
     @POST("/member/del_bank_card")
-    Call<JsonObject> delBankCard(@Field("access_token") String access_token, @Field("id") String id);
+    Call<JsonObject> delBankCard(@Header("Authorization") String header, @Field("id") String id);
 
     /**
      * 发送绑定验证码
-     * @param access_token
+     * @param header
      * @param mobile
      * @return
      */
     @FormUrlEncoded
     @POST("/api/bind_mobile_verify")
-    Call<JsonObject> bindMobileVerify(@Field("access_token") String access_token, @Field("mobile") String mobile);
+    Call<JsonObject> bindMobileVerify(@Header("Authorization") String header, @Field("mobile") String mobile);
 
     /**
      * 发送解绑验证码
-     * @param access_token
+     * @param header
      * @return
      */
     @FormUrlEncoded
     @POST("/api/unbind_mobile_verify")
-    Call<JsonObject> unbindMobileVerify(@Field("access_token") String access_token);
+    Call<JsonObject> unbindMobileVerify(@Header("Authorization") String header);
 
     /**
      * 绑定手机
-     * @param access_token
+     * @param header
      * @param mobile
      * @param verify
      * @return
      */
     @FormUrlEncoded
     @POST("/member/bind_mobile")
-    Call<JsonObject> bindMobile(@Field("access_token") String access_token,@Field("mobile") String mobile, @Field("verify") String verify);
+    Call<JsonObject> bindMobile(@Header("Authorization") String header,@Field("mobile") String mobile, @Field("verify") String verify);
 
     /**
      * 解绑手机
-     * @param access_token
+     * @param header
      * @param mobile
      * @param verify
      * @return
      */
     @FormUrlEncoded
     @POST("/member/unbind_mobile")
-    Call<JsonObject> unbind_mobile(@Field("access_token") String access_token,@Field("mobile") String mobile, @Field("verify") String verify);
+    Call<JsonObject> unbind_mobile(@Header("Authorization") String header,@Field("mobile") String mobile, @Field("verify") String verify);
 
     /**
      * 获取用户手机信息
@@ -256,7 +256,7 @@ public interface ApiService {
      */
     @FormUrlEncoded
     @POST("/member/change_password")
-    Call<JsonObject> changePassword(@Field("access_token") String access_token,@Field("old_password") String old_password, @Field("new_password") String new_password);
+    Call<JsonObject> changePassword(@Header("Authorization") String header,@Field("old_password") String old_password, @Field("new_password") String new_password);
 
     /**
      * 获取站内信列表
@@ -324,7 +324,7 @@ public interface ApiService {
 
     /**
      * 用户提现
-     * @param access_token
+     * @param header
      * @param amount    提现金额
      * @param bank_id   银行ID
      * @param verify    验证码
@@ -332,16 +332,16 @@ public interface ApiService {
      */
     @FormUrlEncoded
     @POST("/member/withdraw")
-    Call<JsonObject> withdraw(@Field("access_token") String access_token,@Field("amount") String amount, @Field("bank_id") String bank_id,@Field("verify") String verify);
+    Call<JsonObject> withdraw(@Header("Authorization") String header,@Field("amount") String amount, @Field("bank_id") String bank_id,@Field("verify") String verify);
 
     /**
      * 发送提现验证码
-     * @param access_token
+     * @param header
      * @return
      */
     @FormUrlEncoded
     @POST("/api/withdraw_verify")
-    Call<JsonObject> withdrawVerify(@Field("access_token") String access_token);
+    Call<JsonObject> withdrawVerify(@Header("Authorization") String header);
 
     /**
      * 投资
@@ -353,16 +353,16 @@ public interface ApiService {
      */
     @FormUrlEncoded
     @POST("/member/invest_product")
-    Call<JsonObject> investProduct(@Field("access_token") String access_token,@Field("amount") String amount, @Field("id") String id,@Field("password") String password);
+    Call<JsonObject> investProduct(@Header("Authorization") String header,@Field("access_token") String access_token,@Field("amount") String amount, @Field("id") String id,@Field("password") String password);
 
     /**
      * 领取红包
-     * @param access_token
+     * @param header
      * @param id
      * @return
      */
     @FormUrlEncoded
     @POST("/member/get_red_packet_reward")
-    Call<JsonObject> getRedPacketReward(@Field("access_token") String access_token, @Field("id") String id);
+    Call<JsonObject> getRedPacketReward(@Header("Authorization") String header, @Field("id") String id);
 
 }

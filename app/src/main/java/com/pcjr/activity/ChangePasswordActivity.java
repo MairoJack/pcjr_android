@@ -96,7 +96,7 @@ public class ChangePasswordActivity extends Activity  implements  Validator.Vali
         final String oldPassword = txt_old_password.getText().toString().trim();
         final String newPassword = txt_password.getText().toString().trim();
         ApiService service = RetrofitUtils.createApi(ApiService.class);
-        Call<JsonObject> call = service.changePassword(Constant.access_token,oldPassword,newPassword);
+        Call<JsonObject> call = service.changePassword(Constant.BEARER+" "+Constant.access_token,oldPassword,newPassword);
         dialog.setMessage("正在提交...");
         dialog.show();
         call.enqueue(new Callback<JsonObject>() {

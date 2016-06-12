@@ -83,7 +83,7 @@ public class BindMobileActivity extends Activity {
             ColoredSnackbar.warning(snackbar).show();
             return;
         }
-        Call<JsonObject> call = service.bindMobile(Constant.access_token, mobile, checkcode);
+        Call<JsonObject> call = service.bindMobile(Constant.BEARER+" "+Constant.access_token, mobile, checkcode);
         call.enqueue(new Callback<JsonObject>() {
             @Override
             public void onResponse(Call<JsonObject> call, Response<JsonObject> response) {
@@ -115,7 +115,7 @@ public class BindMobileActivity extends Activity {
             ColoredSnackbar.warning(snackbar).show();
             return;
         }
-        Call<JsonObject> call = service.bindMobileVerify(Constant.access_token,mobile);
+        Call<JsonObject> call = service.bindMobileVerify(Constant.BEARER+" "+Constant.access_token,mobile);
         call.enqueue(new Callback<JsonObject>() {
             @Override
             public void onResponse(Call<JsonObject> call, Response<JsonObject> response) {

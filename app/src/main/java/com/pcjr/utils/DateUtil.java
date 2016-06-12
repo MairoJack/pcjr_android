@@ -427,6 +427,39 @@ public class DateUtil {
 	}
 
 	/**
+	 * 获取2个字符日期的小时差
+	 *
+	 * @param p_startDate
+	 * @param p_endDate
+	 * @return 小时差
+	 * @author zhuqx
+	 * @Date: 2006-10-31
+	 */
+	public final static long getHoursOfTowDiffDate(Date p_startDate,
+												   Date p_endDate) throws ParseException {
+
+		long l_startTime = getMillisOfDate(p_startDate);
+		long l_endTime = getMillisOfDate(p_endDate);
+		long betweenHours = (long) ((l_endTime - l_startTime) / (1000 * 60 * 60));
+		return betweenHours;
+	}
+
+
+	/**
+	 * 获取时间差 毫秒数
+	 * @param p_startDate
+	 * @param p_endDate
+     * @return
+     */
+	public final static long getMinusMillisOfDate(Date p_startDate,
+												   Date p_endDate){
+
+		long l_startTime = getMillisOfDate(p_startDate);
+		long l_endTime = getMillisOfDate(p_endDate);
+		long between = (long) ((l_endTime - l_startTime));
+		return between;
+	}
+	/**
 	 * 获取2个字符日期的周数差
 	 * 
 	 * @param p_startDate

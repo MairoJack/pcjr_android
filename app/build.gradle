@@ -48,4 +48,6 @@ dependencies {
     compile 'com.github.JayFang1993:DropDownMenu:v0.9'
     //AlertView
     compile 'com.bigkoo:alertview:1.0.2'
+    //CountdownView
+    compile 'com.github.iwgang:countdownview:1.2'
 }

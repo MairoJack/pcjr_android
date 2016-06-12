@@ -142,8 +142,7 @@ public class MsgCenterActivity extends Activity{
 
     public void loadData(){
         ApiService service = RetrofitUtils.createApi(ApiService.class);
-        //Call<JsonObject> call = service.getLetterList(Constant.access_token,0,pageNow,Constant.PAGESIZE);
-        Call<JsonObject> call = service.getLetterList(pageNow,Constant.PAGESIZE);
+        Call<JsonObject> call = service.getLetterList(Constant.access_token,0,pageNow,Constant.PAGESIZE);
         call.enqueue(new Callback<JsonObject>() {
             @Override
             public void onResponse(Call<JsonObject> call, Response<JsonObject> response) {

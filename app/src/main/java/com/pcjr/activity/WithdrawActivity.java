@@ -194,7 +194,7 @@ public class WithdrawActivity extends Activity {
      */
     public void send_verify(){
 
-        Call<JsonObject> call = service.withdrawVerify(Constant.access_token);
+        Call<JsonObject> call = service.withdrawVerify(Constant.BEARER+" "+Constant.access_token);
         call.enqueue(new Callback<JsonObject>() {
             @Override
             public void onResponse(Call<JsonObject> call, Response<JsonObject> response) {

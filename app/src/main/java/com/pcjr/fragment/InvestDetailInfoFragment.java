@@ -100,10 +100,11 @@ public class InvestDetailInfoFragment extends Fragment {
         increasing_amount.setText(product.getIncreasing_amount() + "元递增");
         amount.setText(String.valueOf(product.getAmount() / 10000));
         month.setText(product.getMonth());
-        invest_amount.setText(String.valueOf(product.getAmount() / 10000 - product.getProduct_amount() / 10000));
+        double can_invest_amount = (product.getAmount() - product.getProduct_amount()) / 10000;
+        invest_amount.setText(String.valueOf(can_invest_amount));
         product_no.setText(product.getProduct_no());
-        repayment_date.setText(DateUtil.transferLongToDate("yyyy-MM-dd", product.getValue_date()));
-        value_date.setText(DateUtil.transferLongToDate("yyyy-MM-dd", product.getValue_date()));
+        repayment_date.setText(DateUtil.transferLongToDate("yyyy-MM-dd", product.getValue_date()*1000));
+        value_date.setText(DateUtil.transferLongToDate("yyyy-MM-dd", product.getValue_date()*1000));
         if (product.getGuarantors_name().equals("null")) {
             guarantors_name.setVisibility(View.GONE);
         } else {
@@ -111,7 +112,7 @@ public class InvestDetailInfoFragment extends Fragment {
         }
         intro.setText(product.getIntro());
         borrower_intro.setText(product.getBorrower_intro());
-        progressWheel.setProgress(product.getRate());
+        progressWheel.setProgress(product.getRate()*18/5);
 
 
     }

@@ -59,6 +59,12 @@ public class MoreFragment extends Fragment {
         kefu.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                startActivity(new Intent(getActivity(),TestActivity.class));
+            }
+        });
+        kefu.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
                 new AlertView("皮城金融竭诚为您服务", "服务时间：9:00-20:00", "取消", null,
                         new String[]{"拨打电话 400-101-3339"},
                         getContext(), AlertView.Style.ActionSheet, new OnItemClickListener() {

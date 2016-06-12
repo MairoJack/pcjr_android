@@ -55,6 +55,8 @@
         <activity android:name="com.pcjr.activity.LoginActivity"/>
         <activity android:name="com.pcjr.activity.RegistActivity"/>
         <activity android:name="com.pcjr.activity.TestActivity"/>
+        <activity android:name="com.pcjr.activity.GestureEditActivity"/>
+        <activity android:name="com.pcjr.activity.GestureVerifyActivity"/>
     </application>
 
 </manifest>

@@ -2,22 +2,20 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
     android:layout_height="wrap_content"
-    android:background="#FFFFFF" >
-
-    <ImageView
-        android:layout_width="60dp"
-        android:layout_height="60dp"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentTop="true"
-        android:src="@drawable/graytypebg" />
+    xmlns:ProgressWheel="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:background="#FFFFFF">
 
     <com.pcjr.utils.RotateTextView
+        android:paddingLeft="4dp"
+        android:paddingBottom="10dp"
         android:id="@+id/rtv"
         android:layout_width="50dp"
         android:layout_height="50dp"
         android:layout_alignParentRight="true"
         android:layout_alignParentTop="true"
-        android:text="一次还本付息"
+        android:background="@drawable/graytypebg"
+        tools:text="一次还本付息"
         android:textColor="#FFFFFF"
         android:textSize="8dp" />
 
@@ -175,7 +173,7 @@
                 android:layout_alignParentBottom="true"
                 android:layout_centerHorizontal="true"
                 android:layout_marginBottom="10dp"
-                android:text="金额（万元）"
+                android:text="金额(万元)"
                 android:textColor="#8F8F8F" />
 
             <TextView
@@ -190,6 +188,37 @@
                 android:textSize="26dp" />
 
 
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:layout_weight="1" >
+
+            <com.pcjr.plugins.ProgressWheel
+                android:id="@+id/pw_spinner"
+                android:layout_width="65dp"
+                android:layout_height="65dp"
+                android:layout_centerInParent="true"
+                ProgressWheel:pwTextColor="#D3D3D3"
+                ProgressWheel:pwTextSize="14sp"
+                ProgressWheel:pwRimColor="#D3D3D3"
+                ProgressWheel:pwBarLength="60dp"
+                ProgressWheel:pwBarColor="#FD5A4A"
+                ProgressWheel:pwBarWidth="4dp"
+                ProgressWheel:pwRimWidth="4dp"
+                ProgressWheel:pwSpinSpeed="3dp"
+                ProgressWheel:pwContourColor="#D3D3D3"/>
+            <TextView
+                android:id="@+id/rate"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:layout_centerVertical="true"
+                android:text="项目结束"
+                android:textColor="#8F8F8F"
+                android:textSize="11dp"
+                />
         </RelativeLayout>
     </LinearLayout>
 

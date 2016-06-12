@@ -99,7 +99,7 @@ public class RedPacketListViewAdapter extends BaseAdapter {
 
     public void getRedPacket(final int position){
         ApiService service = RetrofitUtils.createApi(ApiService.class);
-        Call<JsonObject> call = service.getRedPacketReward(Constant.access_token,list.get(position).getId());
+        Call<JsonObject> call = service.getRedPacketReward(Constant.BEARER+" "+Constant.access_token,list.get(position).getId());
         call.enqueue(new Callback<JsonObject>() {
             @Override
             public void onResponse(Call<JsonObject> call, Response<JsonObject> response) {

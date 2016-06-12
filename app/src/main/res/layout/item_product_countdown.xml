@@ -3,7 +3,7 @@
     android:layout_width="fill_parent"
     android:layout_height="wrap_content"
     xmlns:tools="http://schemas.android.com/tools"
-    xmlns:ProgressWheel="http://schemas.android.com/apk/res-auto"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="#FFFFFF">
 
 
@@ -195,31 +195,29 @@
             android:layout_height="fill_parent"
             android:layout_weight="1" >
 
-            <com.pcjr.plugins.ProgressWheel
-                android:id="@+id/pw_spinner"
-                android:layout_width="65dp"
-                android:layout_height="65dp"
-                android:layout_centerInParent="true"
-                ProgressWheel:pwTextColor="#D3D3D3"
-                ProgressWheel:pwTextSize="14sp"
-                ProgressWheel:pwRimColor="#D3D3D3"
-                ProgressWheel:pwBarLength="60dp"
-                ProgressWheel:pwBarColor="#FD5A4A"
-                ProgressWheel:pwBarWidth="4dp"
-                ProgressWheel:pwRimWidth="4dp"
-                ProgressWheel:pwSpinSpeed="3dp"
-                ProgressWheel:pwContourColor="#D3D3D3"/>
-            <TextView
-                android:id="@+id/rate"
+            <cn.iwgang.countdownview.CountdownView
+                android:id="@+id/cv_countdown"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_centerHorizontal="true"
                 android:layout_centerVertical="true"
-                android:text="15%"
-                android:textColor="#FD7C21"
-                android:textSize="12dp"
-                />
+                app:isShowDay="false"
+                app:isShowHour="true"
+                app:isShowMinute="true"
+                app:isShowSecond="true"
+                app:isShowMillisecond="false"
+                app:suffixGravity="center"
+                app:suffixTextColor="#FFBF00"
+                app:suffixTextSize="14dp"
+                app:timeTextColor="#FFFFFF"
+                app:timeTextSize="14dp"
+                app:isHideTimeBackground="false"
+                app:timeBgColor="#FFBF00"
+                app:isShowTimeBgDivisionLine="false"
+                app:timeBgRadius="3dp"/>
+
+
         </RelativeLayout>
+
     </LinearLayout>
 
 </RelativeLayout>

@@ -28,7 +28,7 @@ import retrofit2.Response;
  * Created by Mario on 2016/5/24.
  */
 public class SafeSettingActivity extends Activity {
-    private RelativeLayout back,realname,bindphone,changepswd;
+    private RelativeLayout back,realname,bindphone,changepswd,gesture,verify_gesture;
     private Button btn_logout;
 
     private ProgressDialog dialog;
@@ -46,6 +46,8 @@ public class SafeSettingActivity extends Activity {
         realname = (RelativeLayout) findViewById(R.id.realname);
         bindphone = (RelativeLayout) findViewById(R.id.bindphone);
         changepswd = (RelativeLayout) findViewById(R.id.changepswd);
+        gesture = (RelativeLayout) findViewById(R.id.gesture);
+        verify_gesture = (RelativeLayout) findViewById(R.id.verify_gesture);
         btn_logout = (Button) findViewById(R.id.btn_logout);
         back.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -72,6 +74,20 @@ public class SafeSettingActivity extends Activity {
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(SafeSettingActivity.this, ChangePasswordActivity.class));
+                overridePendingTransition(R.anim.push_left_in, R.anim.push_left_out);
+            }
+        });
+        verify_gesture.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(SafeSettingActivity.this, GestureVerifyActivity.class));
+                overridePendingTransition(R.anim.push_left_in, R.anim.push_left_out);
+            }
+        });
+        gesture.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(SafeSettingActivity.this, GestureEditActivity.class));
                 overridePendingTransition(R.anim.push_left_in, R.anim.push_left_out);
             }
         });
@@ -139,7 +155,7 @@ public class SafeSettingActivity extends Activity {
     }
     public void logout(){
         ApiService service = RetrofitUtils.createApi(ApiService.class);
-                Call<JsonObject> call = service.revoke(Constant.access_token);
+                Call<JsonObject> call = service.revoke(Constant.BEARER+" "+Constant.access_token);
                 dialog.setMessage("正在注销...");
                 dialog.show();
                 call.enqueue(new Callback<JsonObject>() {

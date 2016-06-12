@@ -145,7 +145,7 @@ public class AddBankCardActivity extends Activity {
     public void save(){
         String card_no = txt_card_no.getText().toString().trim();
         service = RetrofitUtils.createApi(ApiService.class);
-        Call<JsonObject> call = service.addBankCard(Constant.access_token,bank_id,card_no,Constant.realname);
+        Call<JsonObject> call = service.addBankCard(Constant.BEARER+" "+Constant.access_token,bank_id,card_no,Constant.realname);
         call.enqueue(new Callback<JsonObject>() {
             @Override
             public void onResponse(Call<JsonObject> call, Response<JsonObject> response) {

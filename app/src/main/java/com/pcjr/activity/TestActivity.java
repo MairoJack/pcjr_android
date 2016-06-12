@@ -24,6 +24,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+import cn.iwgang.countdownview.CountdownView;
 import in.srain.cube.views.ptr.PtrClassicFrameLayout;
 import in.srain.cube.views.ptr.PtrDefaultHandler;
 import in.srain.cube.views.ptr.PtrFrameLayout;
@@ -44,9 +45,9 @@ public class TestActivity extends Activity implements BaseSliderView.OnSliderCli
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         setContentView(R.layout.test);
-        sliderLayout = (SliderLayout)findViewById(R.id.slider3);
+        //sliderLayout = (SliderLayout)findViewById(R.id.slider3);
         progressWheel = (ProgressWheel) findViewById(R.id.pw_spinner);
-        intiSlider();
+        //intiSlider();
         progressWheel.setProgress(90);
 
         final String[] arr1=new String[]{"全部城市","北京","上海","广州","深圳"};
@@ -84,16 +85,16 @@ public class TestActivity extends Activity implements BaseSliderView.OnSliderCli
         //items.add(arr3);
         mMenu.setmMenuItems(items);
 
-        scrollView = (ScrollView) findViewById(R.id.scroll_view);
-        mPtrFrame = (PtrClassicFrameLayout) findViewById(R.id.list_view_with_empty_view_fragment_ptr_frame);
+        //scrollView = (ScrollView) findViewById(R.id.scroll_view);
+        //mPtrFrame = (PtrClassicFrameLayout) findViewById(R.id.list_view_with_empty_view_fragment_ptr_frame);
 
-        mPtrFrame.disableWhenHorizontalMove(true);
-        mPtrFrame.setLastUpdateTimeRelateObject(this);
+        //mPtrFrame.disableWhenHorizontalMove(true);
+        //mPtrFrame.setLastUpdateTimeRelateObject(this);
 
         //sliderLayout = (SliderLayout) findViewById(R.id.slider);
 
         //initSlider();
-        mPtrFrame.setPtrHandler(new PtrHandler() {
+       /* mPtrFrame.setPtrHandler(new PtrHandler() {
             @Override
             public boolean checkCanDoRefresh(PtrFrameLayout frame, View content, View header) {
 
@@ -105,7 +106,10 @@ public class TestActivity extends Activity implements BaseSliderView.OnSliderCli
             public void onRefreshBegin(PtrFrameLayout frame) {
 
             }
-        });
+        });*/
+
+        CountdownView mCvCountdownView = (CountdownView)findViewById(R.id.cv_countdown);
+        mCvCountdownView.start(995550000); // Millisecond
 
         super.onCreate(savedInstanceState);
     }

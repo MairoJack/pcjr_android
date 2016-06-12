@@ -13,14 +13,21 @@ import java.util.List;
  * Created by Mario on 2016/5/22.
  */
 public class Constant extends Application{
-    public final static int PAGESIZE = 15;
-    public final static String BEARER = "Bearer";
-    public final static String FILE = "user_data";
+
+    public final static int PAGESIZE = 15;              //分页大小
+    public final static String BEARER = "Bearer";       //BEARER
+    public final static String FILE = "user_data";      //存储文件名
     public final static String CLIENTID = "1";
     public final static String CLIENTSECRET = "123";
     public static String access_token;
     public static boolean isLogin = false;
     public static String realname;
+
+    //手势密码点的状态
+    public static final int POINT_STATE_NORMAL = 0;     // 正常状态
+    public static final int POINT_STATE_SELECTED = 1;   // 按下状态
+    public static final int POINT_STATE_WRONG = 2;      // 错误状态
+
     private List<FocusImg> focusImgs;
     private List<FocusImg> midFocusImgs;
     private List<Announce> announces;
