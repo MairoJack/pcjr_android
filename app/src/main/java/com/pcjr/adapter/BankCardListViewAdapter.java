@@ -12,6 +12,7 @@ import android.widget.BaseAdapter;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.androidadvance.topsnackbar.TSnackbar;
 import com.google.gson.JsonObject;
 import com.pcjr.R;
 import com.pcjr.activity.BankCardActivity;
@@ -131,12 +132,10 @@ public class BankCardListViewAdapter extends BaseAdapter {
                     JsonObject json = response.body();
                     if (json.get("success").getAsBoolean()) {
                         list.remove(position);
-                        Snackbar snackbar = Snackbar.make(v,json.get("message").getAsString(), Snackbar.LENGTH_SHORT);
-                        ColoredSnackbar.confirm(snackbar).show();
+                        Toast.makeText(context,json.get("message").getAsString(),Toast.LENGTH_SHORT).show();
                         notifyDataSetChanged();
                     }else{
-                        Snackbar snackbar = Snackbar.make(v,json.get("message").getAsString(), Snackbar.LENGTH_SHORT);
-                        ColoredSnackbar.warning(snackbar).show();
+                        Toast.makeText(context,json.get("message").getAsString(),Toast.LENGTH_SHORT).show();
                     }
                 }
             }

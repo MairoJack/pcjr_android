@@ -9,7 +9,7 @@
         android:id="@+id/title"
         android:layout_width="fill_parent"
         android:layout_height="50dp"
-        android:background="#0099CC" >
+        android:background="#FF6602" >
 
         <TextView
             android:layout_width="wrap_content"
@@ -34,6 +34,7 @@
                 android:layout_height="20dp"
                 android:layout_alignParentLeft="true"
                 android:layout_centerVertical="true"
+                android:scaleType="centerInside"
                 android:src="@drawable/arrow2" />
         </RelativeLayout>
     </RelativeLayout>
@@ -52,7 +53,7 @@
             android:layout_marginLeft="20dp"
             android:text="真实姓名"
             android:textColor="#000000"
-            android:textSize="12dp" />
+            android:textSize="14dp" />
 
         <EditText
             android:id="@+id/txt_realname"
@@ -64,7 +65,7 @@
             android:layout_toRightOf="@+id/realname"
             android:background="@null"
             android:gravity="center_vertical"
-            android:textSize="12dp" />
+            android:textSize="14dp" />
     </RelativeLayout>
 
     <RelativeLayout
@@ -81,9 +82,7 @@
             android:layout_marginLeft="20dp"
             android:text="身份证号"
             android:textColor="#000000"
-            android:inputType="number"
-            android:digits="0123456789xyzXYZ"
-            android:textSize="12dp" />
+            android:textSize="14dp" />
 
         <EditText
             android:id="@+id/txt_idcard"
@@ -96,7 +95,7 @@
             android:background="@null"
             android:digits="0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLIMNOPQRSTUVWXYZ"
             android:gravity="center_vertical"
-            android:textSize="12dp" />
+            android:textSize="14dp" />
     </RelativeLayout>
 
     <TextView
@@ -108,7 +107,7 @@
         android:layout_marginTop="10dp"
         android:text="温馨提示："
         android:textColor="#000000"
-        android:textSize="12dp" />
+        android:textSize="14dp" />
 
     <TextView
         android:id="@+id/textView2"
@@ -120,7 +119,7 @@
         android:lineSpacingExtra="3dp"
         android:text="一个身份信息（一张身份证）只能绑定一个账号；\n每个账户最多提交三次身份信息验证申请,如果超过三次您的账户将被锁定,请联系在线客服或拨打400-101-3339解绑；"
         android:textColor="#000000"
-        android:textSize="12dp" />
+        android:textSize="14dp" />
 
     <Button
         android:id="@+id/btn_save"

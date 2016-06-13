@@ -50,4 +50,5 @@ dependencies {
     compile 'com.bigkoo:alertview:1.0.2'
     //CountdownView
     compile 'com.github.iwgang:countdownview:1.2'
+    compile 'com.androidadvance:topsnackbar:0.0.9'
 }

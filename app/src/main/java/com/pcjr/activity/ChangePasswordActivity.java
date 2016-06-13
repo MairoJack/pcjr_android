@@ -10,6 +10,8 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
+
+import com.androidadvance.topsnackbar.TSnackbar;
 import com.google.gson.JsonObject;
 import com.mobsandgeeks.saripaar.ValidationError;
 import com.mobsandgeeks.saripaar.Validator;
@@ -107,12 +109,12 @@ public class ChangePasswordActivity extends Activity  implements  Validator.Vali
                     if (json.get("success").getAsBoolean()) {
                         SharedPreferenceUtil spu = new SharedPreferenceUtil(ChangePasswordActivity.this,Constant.FILE);
                         spu.setPassword(newPassword);
-                        Snackbar snackbar = Snackbar.make(back,json.get("message").getAsString(), Snackbar.LENGTH_SHORT);
+                        TSnackbar snackbar = TSnackbar.make(findViewById(android.R.id.content),json.get("message").getAsString(), TSnackbar.LENGTH_SHORT);
                         ColoredSnackbar.confirm(snackbar).show();
                         finish();
                         overridePendingTransition(R.anim.push_right_in, R.anim.push_right_out);
                     } else {
-                        Snackbar snackbar = Snackbar.make(back,json.get("message").getAsString(), Snackbar.LENGTH_SHORT);
+                        TSnackbar snackbar = TSnackbar.make(findViewById(android.R.id.content),json.get("message").getAsString(), TSnackbar.LENGTH_SHORT);
                         ColoredSnackbar.warning(snackbar).show();                    }
                 }
             }

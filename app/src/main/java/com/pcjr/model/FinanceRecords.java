@@ -22,6 +22,8 @@ public class FinanceRecords {
     @Expose
     private String recharge_success_amount;
     @Expose
+    private String total_amount;
+    @Expose
     private String invest_success_amount;
     @Expose
     private String withdraw_success_amount;
@@ -96,5 +98,13 @@ public class FinanceRecords {
 
     public void setWithdraw_success_amount(String withdraw_success_amount) {
         this.withdraw_success_amount = withdraw_success_amount;
+    }
+
+    public String getTotal_amount() {
+        return total_amount;
+    }
+
+    public void setTotal_amount(String total_amount) {
+        this.total_amount = total_amount;
     }
 }

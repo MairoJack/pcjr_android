@@ -11,6 +11,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.androidadvance.topsnackbar.TSnackbar;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import com.google.gson.reflect.TypeToken;
@@ -82,7 +83,7 @@ public class MsgDetailActivity extends Activity {
                         msg_time.setText(DateUtil.transferLongToDate("yyyy-MM-dd HH:mm:ss",letter.getSend_date()*1000));
                         msg_content.setText(letter.getContent());
                     }else{
-                        Snackbar snackbar = Snackbar.make(back,"获取站内信详情失败", Snackbar.LENGTH_SHORT);
+                        TSnackbar snackbar = TSnackbar.make(findViewById(android.R.id.content),"获取站内信详情失败", TSnackbar.LENGTH_SHORT);
                         ColoredSnackbar.warning(snackbar).show();
                     }
                 }

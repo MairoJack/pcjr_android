@@ -39,7 +39,6 @@ public interface ApiService {
      * @param header
      * @return
      */
-    @FormUrlEncoded
     @POST("/oauth/revoke_access_token")
     Call<JsonObject> revoke(@Header("Authorization") String header);
 
@@ -118,14 +117,14 @@ public interface ApiService {
      * @return
      */
     @GET("/member/log_data")
-    Call<JsonObject> getMemberLogData(@Query("access_token") String access_token,@Query("page") int page,@Query("page_size") int page_size);
+    Call<JsonObject> getMemberLogData(@Query("access_token") String access_token,@Query("type") int type,@Query("page") int page,@Query("page_size") int page_size);
 
     /**
      * 获取用户投资记录
      * @return
      */
     @GET("/member/invest_data")
-    Call<JsonObject> getMemberInvestData(@Query("access_token") String access_token,@Query("page") int page,@Query("page_size") int page_size);
+    Call<JsonObject> getMemberInvestData(@Query("access_token") String access_token,@Query("type") int type,@Query("page") int page,@Query("page_size") int page_size);
 
     /**
      * 获取用户资金记录
@@ -213,7 +212,6 @@ public interface ApiService {
      * @param header
      * @return
      */
-    @FormUrlEncoded
     @POST("/api/unbind_mobile_verify")
     Call<JsonObject> unbindMobileVerify(@Header("Authorization") String header);
 
@@ -231,13 +229,12 @@ public interface ApiService {
     /**
      * 解绑手机
      * @param header
-     * @param mobile
      * @param verify
      * @return
      */
     @FormUrlEncoded
     @POST("/member/unbind_mobile")
-    Call<JsonObject> unbind_mobile(@Header("Authorization") String header,@Field("mobile") String mobile, @Field("verify") String verify);
+    Call<JsonObject> unbind_mobile(@Header("Authorization") String header, @Field("verify") String verify);
 
     /**
      * 获取用户手机信息
@@ -249,7 +246,7 @@ public interface ApiService {
 
     /**
      * 修改密码
-     * @param access_token
+     * @param header
      * @param old_password
      * @param new_password
      * @return
@@ -261,12 +258,11 @@ public interface ApiService {
     /**
      * 获取站内信列表
      * @param access_token
-     * @param type
      * @param page
      * @return
      */
     @GET("/member/letter_list")
-    Call<JsonObject> getLetterList(@Query("access_token") String access_token,@Query("type") int type,@Query("page") int page,@Query("page_size") int page_size);
+    Call<JsonObject> getLetterList(@Query("access_token") String access_token,@Query("page") int page,@Query("page_size") int page_size);
 
     /**
      * 获取站内信详情
@@ -339,7 +335,6 @@ public interface ApiService {
      * @param header
      * @return
      */
-    @FormUrlEncoded
     @POST("/api/withdraw_verify")
     Call<JsonObject> withdrawVerify(@Header("Authorization") String header);
 

@@ -18,6 +18,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.androidadvance.topsnackbar.TSnackbar;
 import com.google.gson.JsonObject;
 import com.mobsandgeeks.saripaar.ValidationError;
 import com.mobsandgeeks.saripaar.Validator;
@@ -104,6 +105,7 @@ public class RegistActivity extends Activity implements View.OnClickListener,Val
         Intent intent;
 		switch (v.getId()){
 			case R.id.login:
+                finish();
                 intent = new Intent(RegistActivity.this, LoginActivity.class);
                 startActivity(intent);
                 overridePendingTransition(R.anim.slide_up_in, R.anim.slide_up_out);
@@ -136,13 +138,13 @@ public class RegistActivity extends Activity implements View.OnClickListener,Val
                 if (response.isSuccessful()) {
                     JsonObject json = response.body();
                     if (json.get("success").getAsBoolean()) {
-                        Snackbar snackbar = Snackbar.make(login,json.get("message").getAsString(), Snackbar.LENGTH_SHORT);
+                        TSnackbar snackbar = TSnackbar.make(login,json.get("message").getAsString(), TSnackbar.LENGTH_SHORT);
                         ColoredSnackbar.confirm(snackbar).show();
                         finish();
                         startActivity(new Intent(RegistActivity.this, LoginFragment.class));
                         overridePendingTransition(R.anim.push_right_in, R.anim.push_right_out);
                     } else {
-                        Snackbar snackbar = Snackbar.make(login,json.get("message").getAsString(), Snackbar.LENGTH_SHORT);
+                        TSnackbar snackbar = TSnackbar.make(login,json.get("message").getAsString(), TSnackbar.LENGTH_SHORT);
                         ColoredSnackbar.warning(snackbar).show();
                     }
                 }

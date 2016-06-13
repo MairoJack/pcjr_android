@@ -47,6 +47,7 @@ public class InvestRecordsActivity extends Activity{
     private ListView listView;
     private InvestRecordsListViewAdapter adapter;
     private int pageNow = 1;
+    private int type = 0;
     private List<InvestRecords> list = new ArrayList<>();
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -115,7 +116,7 @@ public class InvestRecordsActivity extends Activity{
 
         final String[] arr=new String[]{"全部记录", "正在募集", "募集成功", "正在回款", "回款完毕"};
 
-        final String[] strings=new String[]{"全部记录"};
+        final String[] strings=new String[]{"投资记录"};
 
         mMenu=(DropDownMenu)findViewById(R.id.menu);
         mMenu.setmMenuCount(1);//Menu的个数
@@ -125,8 +126,8 @@ public class InvestRecordsActivity extends Activity{
         mMenu.setmMenuTitleTextColor(Color.WHITE);//Menu的文字颜色
         mMenu.setmMenuListTextSize(16);//Menu展开list的文字大小
         mMenu.setmMenuListTextColor(Color.BLACK);//Menu展开list的文字颜色
-        mMenu.setmMenuBackColor(Color.parseColor("#0099CC"));//Menu的背景颜色
-        mMenu.setmMenuPressedBackColor(Color.parseColor("#0099CC"));//Menu按下的背景颜色
+        mMenu.setmMenuBackColor(Color.parseColor("#FF6602"));//Menu的背景颜色
+        mMenu.setmMenuPressedBackColor(Color.parseColor("#FF6602"));//Menu按下的背景颜色
         mMenu.setmCheckIcon(R.drawable.ico_make);//Menu展开list的勾选图片
         mMenu.setmUpArrow(R.drawable.arrow_up);//Menu默认状态的箭头
         mMenu.setmDownArrow(R.drawable.arrow_down);//Menu按下状态的箭头
@@ -135,8 +136,13 @@ public class InvestRecordsActivity extends Activity{
             @Override
             //Menu展开的list点击事件  RowIndex：list的索引  ColumnIndex：menu的索引
             public void onSelected(View listview, int RowIndex, int ColumnIndex) {
-
-
+                type = RowIndex;
+                mPtrFrame.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        mPtrFrame.autoRefresh();
+                    }
+                });
             }
         });
 
@@ -161,7 +167,7 @@ public class InvestRecordsActivity extends Activity{
 
     public void loadData(){
         ApiService service = RetrofitUtils.createApi(ApiService.class);
-        Call<JsonObject> call = service.getMemberInvestData(Constant.access_token,pageNow,Constant.PAGESIZE);
+        Call<JsonObject> call = service.getMemberInvestData(Constant.access_token,type,pageNow,Constant.PAGESIZE);
         call.enqueue(new Callback<JsonObject>() {
             @Override
             public void onResponse(Call<JsonObject> call, Response<JsonObject> response) {

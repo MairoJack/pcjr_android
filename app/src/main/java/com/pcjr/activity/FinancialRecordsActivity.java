@@ -7,6 +7,7 @@ import android.view.KeyEvent;
 import android.view.View;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.gson.JsonObject;
 import com.pcjr.R;
@@ -41,6 +42,7 @@ public class FinancialRecordsActivity extends Activity {
         interest = (TextView) findViewById(R.id.interest);
         earned_interest = (TextView) findViewById(R.id.earned_interest);
         reward_amount = (TextView) findViewById(R.id.reward_amount);
+        total_amount = (TextView) findViewById(R.id.total_amount);
         total_reward_amount = (TextView) findViewById(R.id.total_reward_amount);
         recharge_success_amount = (TextView) findViewById(R.id.recharge_success_amount);
         invest_success_amount = (TextView) findViewById(R.id.invest_success_amount);
@@ -78,21 +80,22 @@ public class FinancialRecordsActivity extends Activity {
             public void onResponse(Call<FinanceRecords> call, Response<FinanceRecords> response) {
                 if(response.isSuccessful()){
                     FinanceRecords finance = response.body();
-                    available_balance.setText(finance.getAvailable_balance());
-                    capital.setText(finance.getCapital());
-                    interest.setText(finance.getInterest());
-                    earned_interest.setText(finance.getEarned_interest());
-                    reward_amount.setText(finance.getReward_amount());
-                    total_reward_amount.setText(finance.getTotal_reward_amount());
-                    recharge_success_amount.setText(finance.getRecharge_success_amount());
-                    invest_success_amount.setText(finance.getInvest_success_amount());
-                    withdraw_success_amount.setText(finance.getWithdraw_success_amount());
+                    total_amount.setText(finance.getTotal_amount()+"元");
+                    available_balance.setText(finance.getAvailable_balance()+"元");
+                    capital.setText(finance.getCapital()+"元");
+                    interest.setText(finance.getInterest()+"元");
+                    earned_interest.setText(finance.getEarned_interest()+"元");
+                    reward_amount.setText(finance.getReward_amount()+"元");
+                    total_reward_amount.setText(finance.getTotal_reward_amount()+"元");
+                    recharge_success_amount.setText(finance.getRecharge_success_amount()+"元");
+                    invest_success_amount.setText(finance.getInvest_success_amount()+"元");
+                    withdraw_success_amount.setText(finance.getWithdraw_success_amount()+"元");
                 }
             }
 
             @Override
             public void onFailure(Call<FinanceRecords> call, Throwable t) {
-                Log.d("Mario", "onResponse:Throwable " + t);
+                Toast.makeText(FinancialRecordsActivity.this,"网络异常",Toast.LENGTH_SHORT).show();
             }
         });
     }

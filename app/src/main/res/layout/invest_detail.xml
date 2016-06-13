@@ -10,7 +10,7 @@
         android:id="@+id/title"
         android:layout_width="fill_parent"
         android:layout_height="50dp"
-        android:background="#FFFFFF">
+        android:background="#FF6602">
 
         <RelativeLayout
             android:id="@+id/back"
@@ -26,7 +26,7 @@
                 android:layout_height="20dp"
                 android:layout_alignParentLeft="true"
                 android:layout_centerVertical="true"
-                android:src="@drawable/arrow3" />
+                android:src="@drawable/arrow2" />
         </RelativeLayout>
 
         <TextView
@@ -34,7 +34,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
-            android:textColor="#333333"
+            android:textColor="#FFFFFF"
             android:textSize="16dp"
             tools:text="ss" />
     </RelativeLayout>
@@ -45,8 +45,10 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/title"
-        android:background="#03BCD4"
-        app:tabTextColor="#666" />
+        android:background="#fff"
+        app:tabTextColor="#666"
+        app:tabIndicatorColor="#F7822A"
+        app:tabSelectedTextColor="#F7822A" />
 
     <android.support.v4.view.ViewPager
         android:id="@+id/invest_tab_viewpager"

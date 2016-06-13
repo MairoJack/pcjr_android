@@ -15,6 +15,8 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.androidadvance.topsnackbar.TSnackbar;
 import com.google.gson.JsonObject;
 import com.mobsandgeeks.saripaar.ValidationError;
 import com.mobsandgeeks.saripaar.Validator;
@@ -127,7 +129,7 @@ public class LoginFragment extends Fragment implements View.OnClickListener, Val
                     }
                 }else{
                     dialog.dismiss();
-                    Snackbar snackbar = Snackbar.make(getView(),"用户名或密码错误", Snackbar.LENGTH_SHORT);
+                    TSnackbar snackbar = TSnackbar.make(getView(),"用户名或密码错误", TSnackbar.LENGTH_SHORT);
                     ColoredSnackbar.warning(snackbar).show();
                 }
 

@@ -10,7 +10,7 @@
         android:id="@+id/title"
         android:layout_width="fill_parent"
         android:layout_height="50dp"
-        android:background="#0099CC">
+        android:background="#FF6602">
 
         <TextView
             android:id="@+id/product_name"
@@ -96,15 +96,14 @@
 
                     <EditText
                         android:id="@+id/txt_invest_amount"
-                        android:layout_width="150dp"
+                        android:layout_width="165dp"
                         android:layout_height="wrap_content"
                         android:layout_centerVertical="true"
-                        android:layout_marginLeft="20dp"
+                        android:layout_marginLeft="5dp"
                         android:layout_toRightOf="@+id/invest_amount"
-                        android:textColor="#c6c6c6"
                         android:maxLines="1"
                         android:inputType="numberDecimal"
-                        android:textSize="20dp" />
+                        android:textSize="15dp" />
 
                     <Button
                         android:id="@+id/btn_invest"
@@ -115,7 +114,7 @@
                         android:background="@drawable/corners_bg_red"
                         android:paddingLeft="5dp"
                         android:paddingRight="5dp"
-                        android:layout_marginRight="10dp"
+                        android:layout_marginRight="5dp"
                         android:text="确认投资"
                         android:textColor="#FFFFFF"
                         android:textSize="18dp" />

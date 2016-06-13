@@ -110,12 +110,12 @@
                     android:background="#333333" />
 
                 <TextView
-                    android:id="@+id/textView1"
+                    android:id="@+id/txt_repayment"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/view1"
                     android:layout_centerHorizontal="true"
-                    android:text="100%本息保障"
+                    tools:text="一次还本付息"
                     android:textColor="#333333"
                     android:textSize="20dp" />
             </RelativeLayout>
@@ -149,9 +149,9 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_centerInParent="true"
-                        android:text="1000元起购"
+                        tools:text="1000元起购"
                         android:textColor="#FFFFFF"
-                        android:textSize="10dp" />
+                        android:textSize="12dp" />
 
                     <View
                         android:layout_width="1dp"
@@ -172,9 +172,9 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_centerInParent="true"
-                        android:text="1000元递增"
+                        tools:text="1000元递增"
                         android:textColor="#FFFFFF"
-                        android:textSize="10dp" />
+                        android:textSize="12dp" />
 
                     <View
                         android:layout_width="1dp"
@@ -185,20 +185,6 @@
                         android:background="#FFFFFF" />
                 </RelativeLayout>
 
-                <RelativeLayout
-                    android:layout_width="fill_parent"
-                    android:layout_height="fill_parent"
-                    android:layout_weight="1">
-
-                    <TextView
-                        android:id="@+id/txt_repayment"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_centerInParent="true"
-                        android:text="一次还本付息"
-                        android:textColor="#FFFFFF"
-                        android:textSize="10dp" />
-                </RelativeLayout>
             </LinearLayout>
 
             <LinearLayout
@@ -240,13 +226,7 @@
 
                     </LinearLayout>
 
-                    <View
-                        android:layout_width="1dp"
-                        android:layout_height="fill_parent"
-                        android:layout_alignParentRight="true"
-                        android:layout_marginBottom="10dp"
-                        android:layout_marginTop="15dp"
-                        android:background="#8F8F8F" />
+
                 </RelativeLayout>
 
                 <RelativeLayout
@@ -275,26 +255,13 @@
                             android:id="@+id/month"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="2"
+                            tools:text="2个月"
                             android:textColor="#333333"
                             android:textSize="22dp" />
 
-                        <TextView
-                            android:id="@+id/month2"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="天"
-                            android:textColor="#333333"
-                            android:textSize="16dp" />
                     </LinearLayout>
 
-                    <View
-                        android:layout_width="1dp"
-                        android:layout_height="fill_parent"
-                        android:layout_alignParentRight="true"
-                        android:layout_marginBottom="10dp"
-                        android:layout_marginTop="15dp"
-                        android:background="#8F8F8F" />
+
                 </RelativeLayout>
 
                 <RelativeLayout

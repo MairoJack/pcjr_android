@@ -104,13 +104,7 @@
                     android:textSize="16dp" />
             </LinearLayout>
 
-            <View
-                android:layout_width="1dp"
-                android:layout_height="fill_parent"
-                android:layout_alignParentRight="true"
-                android:layout_marginBottom="10dp"
-                android:layout_marginTop="15dp"
-                android:background="#8F8F8F" />
+
         </RelativeLayout>
 
 
@@ -152,13 +146,7 @@
                     android:textColor="#47aef0"
                     android:textSize="16dp" />
             </LinearLayout>
-            <View
-                android:layout_width="1dp"
-                android:layout_height="fill_parent"
-                android:layout_alignParentRight="true"
-                android:layout_marginBottom="10dp"
-                android:layout_marginTop="15dp"
-                android:background="#8F8F8F" />
+
         </RelativeLayout>
 
         <RelativeLayout

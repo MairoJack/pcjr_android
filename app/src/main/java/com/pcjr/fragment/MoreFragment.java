@@ -17,6 +17,7 @@ import com.pcjr.R;
 import com.pcjr.activity.AboutusActivity;
 import com.pcjr.activity.NewsActivity;
 import com.pcjr.activity.TestActivity;
+import com.pcjr.activity.WebViewActivity;
 
 
 public class MoreFragment extends Fragment {
@@ -40,7 +41,7 @@ public class MoreFragment extends Fragment {
         news.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getActivity(), NewsActivity.class);
+                Intent intent = new Intent(getActivity(), WebViewActivity.class);
                 intent.putExtra("title", "平台公告");
                 intent.putExtra("url", "https://m.pcjr.com/platformnews");
                 startActivity(intent);
@@ -69,8 +70,10 @@ public class MoreFragment extends Fragment {
                         new String[]{"拨打电话 400-101-3339"},
                         getContext(), AlertView.Style.ActionSheet, new OnItemClickListener() {
                     public void onItemClick(Object o, int position) {
-                        Intent intent = new Intent(Intent.ACTION_CALL, Uri.parse("tel:18768105742"));
-                        startActivity(intent);
+                        if(position == 0) {
+                            Intent intent = new Intent(Intent.ACTION_CALL, Uri.parse("tel:400-101-3339"));
+                            startActivity(intent);
+                        }
                     }
                 }).show();
             }

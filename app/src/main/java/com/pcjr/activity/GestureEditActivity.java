@@ -4,11 +4,13 @@ import android.app.Activity;
 import android.os.Bundle;
 import android.text.Html;
 import android.text.TextUtils;
+import android.view.KeyEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.FrameLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -41,7 +43,7 @@ public class GestureEditActivity extends Activity{
 	private String mFirstPassword = null;
 	private String mConfirmPassword = null;
 	private int mParamIntentCode;
-
+    private RelativeLayout back;
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -56,6 +58,15 @@ public class GestureEditActivity extends Activity{
 		mLockIndicator = (LockIndicator) findViewById(R.id.lock_indicator);
 		mTextTip = (TextView) findViewById(R.id.text_tip);
 		mGestureContainer = (FrameLayout) findViewById(R.id.gesture_container);
+        back = (RelativeLayout) findViewById(R.id.back);
+        back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                setResult(RESULT_CANCELED);
+                finish();
+                overridePendingTransition(R.anim.push_right_in, R.anim.push_right_out);
+            }
+        });
 		// 初始化一个显示各个点的viewGroup
 		mGestureContentView = new GestureContentView(this, false, "", new GestureDrawline.GestureCallBack() {
 			@Override
@@ -77,6 +88,7 @@ public class GestureEditActivity extends Activity{
                         spu.setGesture(inputCode);
                         Toast.makeText(GestureEditActivity.this, "设置成功", Toast.LENGTH_SHORT).show();
 						mGestureContentView.clearDrawlineState(0L);
+						setResult(RESULT_OK);
 						GestureEditActivity.this.finish();
 					} else {
 						mTextTip.setText(Html.fromHtml("<font color='#c70c1e'>与上一次绘制不一致，请重新绘制</font>"));
@@ -129,5 +141,18 @@ public class GestureEditActivity extends Activity{
 		}
 		return true;
 	}
+
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event)
+    {
+        if (keyCode == KeyEvent.KEYCODE_BACK )
+        {
+            setResult(RESULT_CANCELED);
+            finish();
+            overridePendingTransition(R.anim.push_right_in, R.anim.push_right_out);
+        }
+        return false;
+
+    }
 	
 }

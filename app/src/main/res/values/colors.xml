@@ -8,6 +8,6 @@
     <color name="gray">#b7b7b7</color>
     <color name="text">#8A8A8A</color>
     <color name="colorTabNormal">#666666</color>
-    <color name="colorTabSelected">@color/colorPrimary</color>
-    <color name="divider">#0099CC</color>
+    <color name="colorTabSelected">#FF6602</color>
+    <color name="divider">#FF6602</color>
 </resources>

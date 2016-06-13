@@ -16,6 +16,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.androidadvance.topsnackbar.TSnackbar;
 import com.google.gson.JsonObject;
 import com.mobsandgeeks.saripaar.ValidationError;
 import com.mobsandgeeks.saripaar.Validator;
@@ -137,11 +138,11 @@ public class RegistFragment extends Fragment implements View.OnClickListener,Val
                 if (response.isSuccessful()) {
                     JsonObject json = response.body();
                     if (json.get("success").getAsBoolean()) {
-                        Snackbar snackbar = Snackbar.make(getView(),json.get("message").getAsString(), Snackbar.LENGTH_SHORT);
+                        TSnackbar snackbar = TSnackbar.make(getView(),json.get("message").getAsString(), TSnackbar.LENGTH_SHORT);
                         ColoredSnackbar.confirm(snackbar).show();
                         personFragment.getNavigator().showFragment(0);
                     } else {
-                        Snackbar snackbar = Snackbar.make(getView(),json.get("message").getAsString(), Snackbar.LENGTH_SHORT);
+                        TSnackbar snackbar = TSnackbar.make(getView(),json.get("message").getAsString(), TSnackbar.LENGTH_SHORT);
                         ColoredSnackbar.warning(snackbar).show();
                     }
                 }

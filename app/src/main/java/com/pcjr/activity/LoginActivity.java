@@ -19,6 +19,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.androidadvance.topsnackbar.TSnackbar;
 import com.google.gson.JsonObject;
 import com.mobsandgeeks.saripaar.ValidationError;
 import com.mobsandgeeks.saripaar.Validator;
@@ -33,6 +34,7 @@ import com.pcjr.utils.SharedPreferenceUtil;
 
 import java.util.List;
 
+import cn.pedant.SweetAlert.SweetAlertDialog;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -134,6 +136,10 @@ public class LoginActivity extends Activity implements View.OnClickListener, Val
                             overridePendingTransition(R.anim.slide_down_in, R.anim.slide_down_out);
                         }else{
                             //startActivity(new Intent(LoginActivity.this, MainActivity.class));
+                            spu.setFirstGesture(true);
+                            spu.setOpenGesture(false);
+                            spu.setGesture("");
+                            setResult(RESULT_OK,new Intent());
                             overridePendingTransition(R.anim.push_right_in, R.anim.push_right_out);
                         }
                     } else {
@@ -142,8 +148,9 @@ public class LoginActivity extends Activity implements View.OnClickListener, Val
                     }
                 }else{
                     dialog.dismiss();
-                    Snackbar snackbar = Snackbar.make(reg,"用户名或密码错误", Snackbar.LENGTH_SHORT);
-                    ColoredSnackbar.warning(snackbar).show();
+
+                 TSnackbar snackbar = TSnackbar.make(findViewById(android.R.id.content),"用户名或密码错误", TSnackbar.LENGTH_SHORT);
+                 ColoredSnackbar.warning(snackbar).show();
                 }
 
             }

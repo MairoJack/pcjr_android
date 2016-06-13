@@ -3,7 +3,7 @@
     android:id="@+id/swipeToLoadLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#EEEEEE">
+    android:background="#EEE">
 
     <include layout="@layout/no_records" />
 
@@ -22,15 +22,13 @@
             android:id="@+id/load_more"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="@color/cube_mints_white">
+            >
 
             <ListView
                 android:id="@+id/list_view"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_margin="5dp"
-                android:clipToPadding="false"
-                android:divider="#EEEEEE"
                 android:dividerHeight="5dp" />
 
         </in.srain.cube.views.loadmore.LoadMoreListViewContainer>

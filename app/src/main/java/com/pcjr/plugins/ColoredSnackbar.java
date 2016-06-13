@@ -4,6 +4,7 @@ import android.support.design.widget.Snackbar;
 import android.view.View;
 import android.widget.TextView;
 
+import com.androidadvance.topsnackbar.TSnackbar;
 import com.pcjr.R;
 
 /**
@@ -16,14 +17,14 @@ public class ColoredSnackbar {
     private static final int blue = 0xff2195f3;
     private static final int orange = 0xffffc107;
 
-    private static View getSnackBarLayout(Snackbar snackbar) {
+    private static View getSnackBarLayout(TSnackbar snackbar) {
         if (snackbar != null) {
             return snackbar.getView();
         }
         return null;
     }
 
-    private static Snackbar colorSnackBar(Snackbar snackbar, int colorId) {
+    private static TSnackbar colorSnackBar(TSnackbar snackbar, int colorId) {
         View snackBarView = getSnackBarLayout(snackbar);
         if (snackBarView != null) {
             snackBarView.setBackgroundColor(colorId);
@@ -34,19 +35,19 @@ public class ColoredSnackbar {
         return snackbar;
     }
 
-    public static Snackbar info(Snackbar snackbar) {
+    public static TSnackbar info(TSnackbar snackbar) {
         return colorSnackBar(snackbar, blue);
     }
 
-    public static Snackbar warning(Snackbar snackbar) {
+    public static TSnackbar warning(TSnackbar snackbar) {
         return colorSnackBar(snackbar, orange);
     }
 
-    public static Snackbar alert(Snackbar snackbar) {
+    public static TSnackbar alert(TSnackbar snackbar) {
         return colorSnackBar(snackbar, red);
     }
 
-    public static Snackbar confirm(Snackbar snackbar) {
+    public static TSnackbar confirm(TSnackbar snackbar) {
         return colorSnackBar(snackbar, green);
     }
 }

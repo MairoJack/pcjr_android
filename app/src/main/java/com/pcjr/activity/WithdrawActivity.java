@@ -3,7 +3,10 @@ package com.pcjr.activity;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.CountDownTimer;
 import android.support.design.widget.Snackbar;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.WindowManager;
@@ -17,6 +20,7 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.androidadvance.topsnackbar.TSnackbar;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import com.google.gson.reflect.TypeToken;
@@ -49,6 +53,8 @@ public class WithdrawActivity extends Activity {
     private List<BankCard> bankCards;
     private String bank_id;
     private ApiService service;
+    private TimeCount time;
+    private double free_withdraw = 0.00;
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         getWindow().setSoftInputMode( WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
@@ -72,7 +78,38 @@ public class WithdrawActivity extends Activity {
         btn_verify = (Button) findViewById(R.id.btn_verify);
         btn_apply = (Button) findViewById(R.id.btn_apply);
         bank_spinner = (Spinner) findViewById(R.id.bank_spinner);
+        time = new TimeCount(60000, 1000);
 
+        txt_mention_amount.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                if(s!=null && !s.toString().equals("")){
+                    try {
+                        double amount = Double.parseDouble(s.toString());
+                        if(amount>free_withdraw){
+                            double fee = (amount - free_withdraw)*0.15/100;
+                            txt_fee.setText(String.format("%.2f",fee));
+                        }else{
+                            txt_fee.setText("0.00");
+                        }
+                    }catch (Exception e){
+                        txt_fee.setText("0.00");
+                    }
+                }else{
+                    txt_fee.setText("0.00");
+                }
+            }
+        });
         bank_spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
 
             @Override
@@ -109,6 +146,9 @@ public class WithdrawActivity extends Activity {
         btn_verify.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                btn_verify.setClickable(false);
+                btn_verify.setBackgroundResource(R.drawable.button_gray);
+                time.start();
                 send_verify();
             }
         });
@@ -145,11 +185,12 @@ public class WithdrawActivity extends Activity {
                     if (json.get("success").getAsBoolean()) {
                         JsonObject data = json.get("data").getAsJsonObject();
                         txt_balance.setText(data.get("available_balance").getAsString());
-                        txt_mention_amount.setHint(data.get("free_withdraw").getAsString());
+                        free_withdraw = data.get("free_withdraw").getAsDouble();
+                        txt_mention_amount.setHint("免费可提"+data.get("free_withdraw").getAsString()+"元");
                         txt_realname.setText(data.get("realname").getAsString());
                         txt_mobile.setText(data.get("mobile").getAsString());
                     } else{
-                        Snackbar snackbar = Snackbar.make(back,"获取用户提现信息失败", Snackbar.LENGTH_SHORT);
+                        TSnackbar snackbar = TSnackbar.make(findViewById(android.R.id.content),"获取用户提现信息失败", TSnackbar.LENGTH_SHORT);
                         ColoredSnackbar.alert(snackbar).show();
                     }
                 }
@@ -201,10 +242,10 @@ public class WithdrawActivity extends Activity {
                 if (response.isSuccessful()) {
                     JsonObject json = response.body();
                     if (!json.get("success").isJsonNull() && json.get("success").getAsBoolean()) {
-                        Snackbar snackbar = Snackbar.make(back, json.get("message").getAsString(), Snackbar.LENGTH_SHORT);
+                        TSnackbar snackbar = TSnackbar.make(findViewById(android.R.id.content), json.get("message").getAsString(), TSnackbar.LENGTH_SHORT);
                         ColoredSnackbar.confirm(snackbar).show();
                     } else {
-                        Snackbar snackbar = Snackbar.make(back, json.get("message").getAsString(), Snackbar.LENGTH_SHORT);
+                        TSnackbar snackbar = TSnackbar.make(findViewById(android.R.id.content), json.get("message").getAsString(), TSnackbar.LENGTH_SHORT);
                         ColoredSnackbar.warning(snackbar).show();
                     }
                 }
@@ -225,28 +266,28 @@ public class WithdrawActivity extends Activity {
         String amount = txt_mention_amount.getText().toString().trim();
         String verify = txt_verify.getText().toString().trim();
         if(amount.equals("")){
-            Snackbar snackbar = Snackbar.make(back,"请输入提现金额", Snackbar.LENGTH_SHORT);
+            TSnackbar snackbar = TSnackbar.make(findViewById(android.R.id.content),"请输入提现金额", TSnackbar.LENGTH_SHORT);
             ColoredSnackbar.warning(snackbar).show();
             return;
         }
         if(verify.equals("")){
-            Snackbar snackbar = Snackbar.make(back,"请输入验证码", Snackbar.LENGTH_SHORT);
+            TSnackbar snackbar = TSnackbar.make(findViewById(android.R.id.content),"请输入验证码", TSnackbar.LENGTH_SHORT);
             ColoredSnackbar.warning(snackbar).show();
             return;
         }
-        Call<JsonObject> call = service.withdraw(Constant.access_token,amount,bank_id,verify);
+        Call<JsonObject> call = service.withdraw(Constant.BEARER+" "+Constant.access_token,amount,bank_id,verify);
         call.enqueue(new Callback<JsonObject>() {
             @Override
             public void onResponse(Call<JsonObject> call, Response<JsonObject> response) {
                 if (response.isSuccessful()) {
                     JsonObject json = response.body();
                     if (json.get("success").getAsBoolean()) {
-                        Snackbar snackbar = Snackbar.make(back,json.get("message").getAsString(), Snackbar.LENGTH_SHORT);
+                        TSnackbar snackbar = TSnackbar.make(findViewById(android.R.id.content),json.get("message").getAsString(), TSnackbar.LENGTH_SHORT);
                         ColoredSnackbar.confirm(snackbar).show();
                         finish();
                         overridePendingTransition(R.anim.push_right_in, R.anim.push_right_out);
                     }else{
-                        Snackbar snackbar = Snackbar.make(back,json.get("message").getAsString(), Snackbar.LENGTH_SHORT);
+                        TSnackbar snackbar = TSnackbar.make(findViewById(android.R.id.content),json.get("message").getAsString(), TSnackbar.LENGTH_SHORT);
                         ColoredSnackbar.warning(snackbar).show();
                     }
                 }
@@ -268,4 +309,21 @@ public class WithdrawActivity extends Activity {
 
     }
 
+    class TimeCount extends CountDownTimer {
+        public TimeCount(long millisInFuture, long countDownInterval) {
+            super(millisInFuture, countDownInterval);
+        }
+
+        @Override
+        public void onFinish() {// 计时完毕
+            btn_verify.setText("获取验证码");
+            btn_verify.setClickable(true);
+            btn_verify.setBackgroundResource(R.drawable.orangebtn);
+        }
+
+        @Override
+        public void onTick(long millisUntilFinished) {
+            btn_verify.setText(millisUntilFinished / 1000 + "秒后可重新获取");
+        }
+    }
 }

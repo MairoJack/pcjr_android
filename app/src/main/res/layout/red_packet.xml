@@ -10,7 +10,7 @@
         android:id="@+id/title"
         android:layout_width="fill_parent"
         android:layout_height="50dp"
-        android:background="#0099CC" >
+        android:background="#FF6602" >
 
         <TextView
             android:layout_width="wrap_content"
@@ -62,8 +62,8 @@
         android:layout_height="wrap_content"
         android:background="#fff"
         app:tabTextColor="#666"
-        app:tabIndicatorColor="#16b0f1"
-        app:tabSelectedTextColor="#16b0f1"
+        app:tabIndicatorColor="#FF6602"
+        app:tabSelectedTextColor="#FF6602"
 
         />
 

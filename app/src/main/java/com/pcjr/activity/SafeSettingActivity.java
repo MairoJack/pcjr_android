@@ -5,6 +5,7 @@ import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.widget.Button;
@@ -12,6 +13,7 @@ import android.widget.CompoundButton;
 import android.widget.RelativeLayout;
 import android.widget.Switch;
 
+import com.androidadvance.topsnackbar.TSnackbar;
 import com.google.gson.JsonObject;
 import com.pcjr.R;
 import com.pcjr.common.Constant;
@@ -30,11 +32,11 @@ import retrofit2.Response;
  * Created by Mario on 2016/5/24.
  */
 public class SafeSettingActivity extends Activity {
-    private RelativeLayout back,realname,bindphone,changepswd,gesture,verify_gesture;
+    private RelativeLayout back,realname,bindphone,changepswd,gesture;
     private Button btn_logout;
     private Switch btn_switch;
     private ProgressDialog dialog;
-
+    private SharedPreferenceUtil spu;
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.safe_setting);
@@ -43,6 +45,7 @@ public class SafeSettingActivity extends Activity {
     }
 
     public void initView(){
+        spu = new SharedPreferenceUtil(SafeSettingActivity.this, Constant.FILE);
         dialog = new ProgressDialog(this, ProgressDialog.STYLE_SPINNER);
         back = (RelativeLayout) findViewById(R.id.back);
         realname = (RelativeLayout) findViewById(R.id.realname);
@@ -50,7 +53,6 @@ public class SafeSettingActivity extends Activity {
         changepswd = (RelativeLayout) findViewById(R.id.changepswd);
         gesture = (RelativeLayout) findViewById(R.id.gesture);
         btn_switch = (Switch) findViewById(R.id.btn_switch);
-        verify_gesture = (RelativeLayout) findViewById(R.id.verify_gesture);
         btn_logout = (Button) findViewById(R.id.btn_logout);
         back.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -80,26 +82,27 @@ public class SafeSettingActivity extends Activity {
                 overridePendingTransition(R.anim.push_left_in, R.anim.push_left_out);
             }
         });
-        verify_gesture.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(SafeSettingActivity.this, GestureVerifyActivity.class));
-                overridePendingTransition(R.anim.push_left_in, R.anim.push_left_out);
-            }
-        });
 
-        SharedPreferenceUtil spu = new SharedPreferenceUtil(SafeSettingActivity.this, Constant.FILE);
+
         if(spu.getOpenGesture()){
             btn_switch.setChecked(true);
+            gesture.setVisibility(View.VISIBLE);
         }else{
             btn_switch.setChecked(false);
+            gesture.setVisibility(View.GONE);
         }
         btn_switch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if(isChecked){
-                    gesture.setVisibility(View.VISIBLE);
+                    if(spu.getFirstGesture()){
+                        startActivityForResult(new Intent(SafeSettingActivity.this, GestureEditActivity.class),1);
+                    }else {
+                        spu.setOpenGesture(true);
+                        gesture.setVisibility(View.VISIBLE);
+                    }
                 }else{
+                    spu.setOpenGesture(false);
                     gesture.setVisibility(View.GONE);
                 }
             }
@@ -159,7 +162,7 @@ public class SafeSettingActivity extends Activity {
                         overridePendingTransition(R.anim.push_left_in, R.anim.push_left_out);
                     }
                 }else{
-                    Snackbar snackbar = Snackbar.make(back,"获取手机信息失败", Snackbar.LENGTH_SHORT);
+                    TSnackbar snackbar = TSnackbar.make(findViewById(android.R.id.content),"获取手机信息失败", TSnackbar.LENGTH_SHORT);
                     ColoredSnackbar.warning(snackbar).show();
                 }
                 dialog.dismiss();
@@ -168,7 +171,7 @@ public class SafeSettingActivity extends Activity {
             @Override
             public void onFailure(Call<JsonObject> call, Throwable t) {
                 dialog.dismiss();
-                Snackbar snackbar = Snackbar.make(back,"网络错误", Snackbar.LENGTH_SHORT);
+                TSnackbar snackbar = TSnackbar.make(findViewById(android.R.id.content),"网络错误", TSnackbar.LENGTH_SHORT);
                 ColoredSnackbar.alert(snackbar).show();
             }
         });
@@ -189,7 +192,7 @@ public class SafeSettingActivity extends Activity {
                             startActivity(new Intent(SafeSettingActivity.this,MainActivity.class));
                             overridePendingTransition(R.anim.push_left_in, R.anim.push_left_out);
                         }else{
-                            Snackbar snackbar = Snackbar.make(back,"注销失败", Snackbar.LENGTH_SHORT);
+                            TSnackbar snackbar = TSnackbar.make(findViewById(android.R.id.content),"注销失败", TSnackbar.LENGTH_SHORT);
                             ColoredSnackbar.warning(snackbar).show();
                         }
                         dialog.dismiss();
@@ -198,7 +201,7 @@ public class SafeSettingActivity extends Activity {
                     @Override
                     public void onFailure(Call<JsonObject> call, Throwable t) {
                         dialog.dismiss();
-                        Snackbar snackbar = Snackbar.make(back,"网络错误", Snackbar.LENGTH_SHORT);
+                        TSnackbar snackbar = TSnackbar.make(findViewById(android.R.id.content),"网络错误", TSnackbar.LENGTH_SHORT);
                         ColoredSnackbar.alert(snackbar).show();
                     }
                 });
@@ -215,4 +218,16 @@ public class SafeSettingActivity extends Activity {
 
     }
 
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == 1 && resultCode == RESULT_OK) {
+            btn_switch.setChecked(true);
+            spu.setOpenGesture(true);
+            spu.setFirstGesture(false);
+            gesture.setVisibility(View.VISIBLE);
+        }else if(resultCode == RESULT_CANCELED){
+            btn_switch.setChecked(false);
+        }
+    }
 }

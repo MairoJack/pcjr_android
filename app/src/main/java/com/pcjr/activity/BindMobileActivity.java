@@ -3,6 +3,7 @@ package com.pcjr.activity;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.CountDownTimer;
 import android.support.design.widget.Snackbar;
 import android.view.KeyEvent;
 import android.view.View;
@@ -12,6 +13,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.androidadvance.topsnackbar.TSnackbar;
 import com.google.gson.JsonObject;
 import com.pcjr.R;
 import com.pcjr.common.Constant;
@@ -33,6 +35,7 @@ public class BindMobileActivity extends Activity {
     private EditText txt_checkcode;
     private TextView txt_mobile;
     private ApiService service;
+    private TimeCount time;
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.bind_mobile);
@@ -46,7 +49,7 @@ public class BindMobileActivity extends Activity {
         txt_mobile = (TextView) findViewById(R.id.txt_mobile);
         btn_checkcode = (Button) findViewById(R.id.btn_checkcode);
         back = (RelativeLayout) findViewById(R.id.back);
-
+        time = new TimeCount(60000, 1000);
         btn_save.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -57,7 +60,7 @@ public class BindMobileActivity extends Activity {
         btn_checkcode.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                btn_checkcode.setEnabled(false);
+
                 sendCheckCode();
             }
         });
@@ -74,12 +77,12 @@ public class BindMobileActivity extends Activity {
         String mobile = txt_mobile.getText().toString().trim();
         String checkcode = txt_checkcode.getText().toString().trim();
         if(mobile.equals("")){
-            Snackbar snackbar = Snackbar.make(back,"请输入手机号", Snackbar.LENGTH_SHORT);
+            TSnackbar snackbar = TSnackbar.make(findViewById(android.R.id.content),"请输入手机号", TSnackbar.LENGTH_SHORT);
             ColoredSnackbar.warning(snackbar).show();
             return;
         }
         if(checkcode.equals("")){
-            Snackbar snackbar = Snackbar.make(back,"请输入验证码", Snackbar.LENGTH_SHORT);
+            TSnackbar snackbar = TSnackbar.make(findViewById(android.R.id.content),"请输入验证码", TSnackbar.LENGTH_SHORT);
             ColoredSnackbar.warning(snackbar).show();
             return;
         }
@@ -90,12 +93,12 @@ public class BindMobileActivity extends Activity {
                 if (response.isSuccessful()) {
                     JsonObject json = response.body();
                     if (json.get("success").getAsBoolean()) {
-                        Snackbar snackbar = Snackbar.make(back, json.get("message").getAsString(), Snackbar.LENGTH_SHORT);
+                        TSnackbar snackbar = TSnackbar.make(findViewById(android.R.id.content), json.get("message").getAsString(), TSnackbar.LENGTH_SHORT);
                         ColoredSnackbar.warning(snackbar).show();
                         finish();
                         overridePendingTransition(R.anim.push_right_in, R.anim.push_right_out);
                     } else {
-                        Snackbar snackbar = Snackbar.make(back, json.get("message").getAsString(), Snackbar.LENGTH_SHORT);
+                        TSnackbar snackbar = TSnackbar.make(findViewById(android.R.id.content), json.get("message").getAsString(), TSnackbar.LENGTH_SHORT);
                         ColoredSnackbar.warning(snackbar).show();
                     }
                 }
@@ -111,10 +114,13 @@ public class BindMobileActivity extends Activity {
     public void sendCheckCode() {
         String mobile = txt_mobile.getText().toString().trim();
         if(mobile.equals("")){
-            Snackbar snackbar = Snackbar.make(back,"请输入手机号", Snackbar.LENGTH_SHORT);
+            TSnackbar snackbar = TSnackbar.make(findViewById(android.R.id.content),"请输入手机号", TSnackbar.LENGTH_SHORT);
             ColoredSnackbar.warning(snackbar).show();
             return;
         }
+        btn_checkcode.setClickable(false);
+        btn_checkcode.setBackgroundResource(R.drawable.button_gray);
+        time.start();
         Call<JsonObject> call = service.bindMobileVerify(Constant.BEARER+" "+Constant.access_token,mobile);
         call.enqueue(new Callback<JsonObject>() {
             @Override
@@ -122,10 +128,10 @@ public class BindMobileActivity extends Activity {
                 if (response.isSuccessful()) {
                     JsonObject json = response.body();
                     if (!json.get("success").isJsonNull() && json.get("success").getAsBoolean()) {
-                        Snackbar snackbar = Snackbar.make(back, json.get("message").getAsString(), Snackbar.LENGTH_SHORT);
+                        TSnackbar snackbar = TSnackbar.make(findViewById(android.R.id.content), json.get("message").getAsString(), TSnackbar.LENGTH_SHORT);
                         ColoredSnackbar.confirm(snackbar).show();
                     } else {
-                        Snackbar snackbar = Snackbar.make(back, json.get("message").getAsString(), Snackbar.LENGTH_SHORT);
+                        TSnackbar snackbar = TSnackbar.make(findViewById(android.R.id.content), json.get("message").getAsString(), TSnackbar.LENGTH_SHORT);
                         ColoredSnackbar.warning(snackbar).show();
                     }
 
@@ -151,4 +157,21 @@ public class BindMobileActivity extends Activity {
 
     }
 
+    class TimeCount extends CountDownTimer {
+        public TimeCount(long millisInFuture, long countDownInterval) {
+            super(millisInFuture, countDownInterval);
+        }
+
+        @Override
+        public void onFinish() {
+            btn_checkcode.setText("发送手机验证码");
+            btn_checkcode.setClickable(true);
+            btn_checkcode.setBackgroundResource(R.drawable.orangebtn);
+        }
+
+        @Override
+        public void onTick(long millisUntilFinished) {
+            btn_checkcode.setText(millisUntilFinished / 1000 + "秒后可重新获取");
+        }
+    }
 }

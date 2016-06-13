@@ -1,6 +1,7 @@
 package com.pcjr.adapter;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -49,6 +50,7 @@ public class LetterListViewAdapter extends BaseAdapter {
     @Override
     public View getView(final int position, View convertView, ViewGroup parent) {
         ViewHolder  viewHolder = null;
+        Letter letter = list.get(position);
         if(convertView == null){
             viewHolder = new ViewHolder();
             convertView = layoutInflater.inflate(R.layout.item_msg_center,null);
@@ -60,8 +62,15 @@ public class LetterListViewAdapter extends BaseAdapter {
         }else{
             viewHolder = (ViewHolder)convertView.getTag();
         }
-        viewHolder.title.setText(list.get(position).getTitle());
-        viewHolder.send_date.setText(DateUtil.transferLongToDate(DateUtil.DATE_FORMAT_YYYY_MM_DD,list.get(position).getSend_date()*1000));
+        if(letter.getRead_status() == 1){
+            viewHolder.title.setTextColor(Color.parseColor("#ABABAB"));
+            viewHolder.send_date.setTextColor(Color.parseColor("#ABABAB"));
+        }else{
+            viewHolder.title.setTextColor(Color.parseColor("#333333"));
+            viewHolder.send_date.setTextColor(Color.parseColor("#333333"));
+        }
+        viewHolder.title.setText(letter.getTitle());
+        viewHolder.send_date.setText(DateUtil.transferLongToDate(DateUtil.DATE_FORMAT_YYYY_MM_DD,letter.getSend_date()*1000));
 
         return convertView;
     }

@@ -12,6 +12,7 @@ import android.widget.EditText;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
 
+import com.androidadvance.topsnackbar.TSnackbar;
 import com.google.gson.JsonObject;
 import com.mobsandgeeks.saripaar.ValidationError;
 import com.mobsandgeeks.saripaar.Validator;
@@ -128,14 +129,14 @@ public class RealNameVerifiedActivity extends Activity implements Validator.Vali
                 if (response.isSuccessful()) {
                     JsonObject json = response.body();
                     if (json.get("success").getAsBoolean()) {
-                        Snackbar snackbar = Snackbar.make(back,"实名认证成功", Snackbar.LENGTH_SHORT);
+                        TSnackbar snackbar = TSnackbar.make(findViewById(android.R.id.content),"实名认证成功", TSnackbar.LENGTH_SHORT);
                         ColoredSnackbar.confirm(snackbar).show();
 
                     } else {
                         Toast.makeText(RealNameVerifiedActivity.this, json.get("message").toString(), Toast.LENGTH_SHORT).show();
                     }
                 }else{
-                    Snackbar snackbar = Snackbar.make(btn_save,"认证出错", Snackbar.LENGTH_SHORT);
+                    TSnackbar snackbar = TSnackbar.make(btn_save,"认证出错", TSnackbar.LENGTH_SHORT);
                     ColoredSnackbar.warning(snackbar).show();
                 }
                 dialog.dismiss();

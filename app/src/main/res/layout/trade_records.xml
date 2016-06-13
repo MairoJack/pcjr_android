@@ -10,16 +10,16 @@
         android:id="@+id/title"
         android:layout_width="fill_parent"
         android:layout_height="50dp"
-        android:background="#0099CC" >
+        android:background="#FF6602" >
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+        <com.jayfang.dropdownmenu.DropDownMenu
+            android:id="@+id/menu"
+            android:layout_width="150dp"
+            android:layout_height="60dp"
             android:layout_centerHorizontal="true"
             android:layout_centerVertical="true"
-            android:text="交易记录"
-            android:textColor="#FFFFFF"
-            android:textSize="20dp" />
+            android:background="#FF6602"
+            android:orientation="horizontal" />
 
         <RelativeLayout
             android:id="@+id/back"

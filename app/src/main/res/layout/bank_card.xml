@@ -9,7 +9,7 @@
         android:id="@+id/title"
         android:layout_width="fill_parent"
         android:layout_height="50dp"
-        android:background="#0099CC" >
+        android:background="#FF6602" >
 
         <TextView
             android:layout_width="wrap_content"
@@ -51,10 +51,13 @@
 
     <ListView
         android:id="@+id/list_view"
-        android:layout_margin="5dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:dividerHeight="5dp"
+
         android:divider="#EEEEEE">
 
     </ListView>

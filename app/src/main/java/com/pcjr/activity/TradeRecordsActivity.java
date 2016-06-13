@@ -1,6 +1,7 @@
 package com.pcjr.activity;
 
 import android.app.Activity;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.view.KeyEvent;
 import android.view.View;
@@ -11,6 +12,8 @@ import android.widget.Toast;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import com.google.gson.reflect.TypeToken;
+import com.jayfang.dropdownmenu.DropDownMenu;
+import com.jayfang.dropdownmenu.OnMenuSelectedListener;
 import com.pcjr.R;
 import com.pcjr.adapter.TradeRecordsListViewAdapter;
 import com.pcjr.common.Constant;
@@ -39,17 +42,19 @@ public class TradeRecordsActivity extends Activity {
     private PtrClassicFrameLayout mPtrFrame;
     private LoadMoreListViewContainer loadMoreListViewContainer;
     private LinearLayout empty;
-
+    private DropDownMenu mMenu;
     private RelativeLayout back;
     private ListView listView;
     private TradeRecordsListViewAdapter adapter;
     private int pageNow = 1;
+    private int type = 0;
     private List<TradeRecords> list = new ArrayList<>();
 
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.trade_records);
         initView();
+        initMenu();
     }
 
     public void initView() {
@@ -60,6 +65,7 @@ public class TradeRecordsActivity extends Activity {
 
         listView = (ListView) findViewById(R.id.list_view);
         back = (RelativeLayout) findViewById(R.id.back);
+        mMenu = (DropDownMenu) findViewById(R.id.menu);
 
         //下拉刷新
         mPtrFrame.disableWhenHorizontalMove(true);
@@ -108,6 +114,44 @@ public class TradeRecordsActivity extends Activity {
         });
     }
 
+    public void initMenu() {
+
+        final String[] arr=new String[]{"全部记录", "交易记录", "提现记录", "投资记录", "收益记录","奖励"};
+
+        final String[] strings=new String[]{"交易记录"};
+
+        mMenu=(DropDownMenu)findViewById(R.id.menu);
+        mMenu.setmMenuCount(1);//Menu的个数
+        mMenu.setmShowCount(6);//Menu展开list数量太多是只显示的个数
+        mMenu.setShowCheck(true);//是否显示展开list的选中项
+        mMenu.setmMenuTitleTextSize(16);//Menu的文字大小
+        mMenu.setmMenuTitleTextColor(Color.WHITE);//Menu的文字颜色
+        mMenu.setmMenuListTextSize(16);//Menu展开list的文字大小
+        mMenu.setmMenuListTextColor(Color.BLACK);//Menu展开list的文字颜色
+        mMenu.setmMenuBackColor(Color.parseColor("#FF6602"));//Menu的背景颜色
+        mMenu.setmMenuPressedBackColor(Color.parseColor("#FF6602"));//Menu按下的背景颜色
+        mMenu.setmCheckIcon(R.drawable.ico_make);//Menu展开list的勾选图片
+        mMenu.setmUpArrow(R.drawable.arrow_up);//Menu默认状态的箭头
+        mMenu.setmDownArrow(R.drawable.arrow_down);//Menu按下状态的箭头
+        mMenu.setDefaultMenuTitle(strings);//默认未选择任何过滤的Menu title
+        mMenu.setMenuSelectedListener(new OnMenuSelectedListener() {
+            @Override
+            //Menu展开的list点击事件  RowIndex：list的索引  ColumnIndex：menu的索引
+            public void onSelected(View listview, int RowIndex, int ColumnIndex) {
+                type = RowIndex;
+                mPtrFrame.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        mPtrFrame.autoRefresh();
+                    }
+                });
+            }
+        });
+
+        List<String[]> items = new ArrayList<>();
+        items.add(arr);
+        mMenu.setmMenuItems(items);
+    }
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         if (keyCode == KeyEvent.KEYCODE_BACK) {
@@ -121,7 +165,7 @@ public class TradeRecordsActivity extends Activity {
 
     public void loadData() {
         ApiService service = RetrofitUtils.createApi(ApiService.class);
-        Call<JsonObject> call = service.getMemberLogData(Constant.access_token, pageNow, Constant.PAGESIZE);
+        Call<JsonObject> call = service.getMemberLogData(Constant.access_token,type, pageNow, Constant.PAGESIZE);
         call.enqueue(new Callback<JsonObject>() {
             @Override
             public void onResponse(Call<JsonObject> call, Response<JsonObject> response) {

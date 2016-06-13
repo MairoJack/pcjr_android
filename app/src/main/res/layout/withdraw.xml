@@ -10,7 +10,7 @@
         android:id="@+id/title"
         android:layout_width="fill_parent"
         android:layout_height="50dp"
-        android:background="#0099CC">
+        android:background="#FF6602">
 
         <TextView
             android:layout_width="wrap_content"
@@ -164,7 +164,8 @@
                         android:layout_centerVertical="true"
                         android:layout_marginLeft="20dp"
                         android:layout_toRightOf="@+id/mention_amount"
-                        android:hint="免费可提9809.59"
+                        tools:hint="免费可提9809.59元"
+                        android:inputType="numberDecimal"
                         android:singleLine="true"
                         android:textSize="15dp"
                         />
@@ -228,7 +229,7 @@
                     android:layout_height="wrap_content"
                     android:textColor="#fbb712"
                     android:textSize="15dp"
-                    tools:text="0.00" />
+                    android:text="0.00" />
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -326,6 +327,7 @@
                         android:layout_toRightOf="@+id/verify"
                         android:hint="验证码"
                         android:background="@null"
+                        android:inputType="number"
                         android:singleLine="true"
                         android:textSize="15dp"
                         />
@@ -336,7 +338,11 @@
                         android:layout_height="40dp"
                         android:layout_alignParentRight="true"
                         android:layout_centerVertical="true"
+                        android:paddingRight="5dp"
+                        android:paddingLeft="5dp"
                         android:layout_marginRight="20dp"
+                        android:textColor="#FFFFFF"
+                        android:background="@drawable/orangebtn"
                         android:text="获取验证码" />
                 </RelativeLayout>
             </LinearLayout>
@@ -347,7 +353,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="20dp"
-                android:background="#F49D18"
+                android:background="@drawable/orangebtn"
                 android:text="申请提现"
                 android:textColor="#FFFFFF"
                 android:textSize="18dp" />

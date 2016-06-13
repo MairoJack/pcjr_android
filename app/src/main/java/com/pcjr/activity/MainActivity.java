@@ -31,6 +31,7 @@ public class MainActivity extends FragmentActivity implements BottomNavigatorVie
     // a simple custom bottom navigation view
     private BottomNavigatorView bottomNavigatorView;
     private int last_position = 0;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -56,12 +57,25 @@ public class MainActivity extends FragmentActivity implements BottomNavigatorVie
 
     @Override
     public void onBottomNavigatorViewItemClick(int position, View view) {
-        if(last_position !=position && position == 2){
-            startActivityForResult(new Intent(MainActivity.this,GestureVerifyActivity.class),REQUSET);
-        }else {
+        if (position == 2) {
+            if (Constant.isLogin && Constant.isGestureLogin) {
+                setCurrentTab(position);
+            } else if (!Constant.isLogin) {
+                startActivityForResult(new Intent(MainActivity.this, LoginActivity.class), REQUSET);
+                overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
+            } else if (!Constant.isGestureLogin) {
+                SharedPreferenceUtil spu = new SharedPreferenceUtil(MainActivity.this, Constant.FILE);
+                if(spu.getOpenGesture()) {
+                    startActivityForResult(new Intent(MainActivity.this, GestureVerifyActivity.class), REQUSET);
+                }else{
+                    setCurrentTab(position);
+                }
+            }else{
+                setCurrentTab(position);
+            }
+        }else{
             setCurrentTab(position);
         }
-        last_position = position;
     }
 
     public void setCurrentTab(int position) {
@@ -72,15 +86,15 @@ public class MainActivity extends FragmentActivity implements BottomNavigatorVie
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if(requestCode == REQUSET && resultCode ==RESULT_OK) {
+        if (requestCode == REQUSET && resultCode == RESULT_OK) {
             setCurrentTab(2);
-            Log.d("Mario", "onActivityResult: "+data.getStringExtra("abc"));
+            Log.d("Mario", "onActivityResult: " + data.getStringExtra("abc"));
         }
     }
 
     private void tryLogin() {
         final SharedPreferenceUtil spu = new SharedPreferenceUtil(this, Constant.FILE);
-        if(!spu.getisFirst()) {
+        if (!spu.getisFirst()) {
             ApiService service = RetrofitUtils.createApi(ApiService.class);
             Call<JsonObject> call = service.getAccessToken("password", spu.getUsernam(), spu.getPassword(), Constant.CLIENTID, Constant.CLIENTSECRET);
             call.enqueue(new Callback<JsonObject>() {
@@ -105,5 +119,17 @@ public class MainActivity extends FragmentActivity implements BottomNavigatorVie
                 }
             });
         }
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        Log.d("Mario", "onPause: ");
+    }
+
+    @Override
+    protected void onRestart() {
+        super.onRestart();
+        Log.d("Mario", "onRestart: ");
     }
 }

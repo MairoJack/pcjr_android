@@ -165,7 +165,7 @@ public class MemberFragment extends Fragment
                 getActivity().overridePendingTransition(R.anim.push_left_in, R.anim.push_left_out);
             }
         });
-		initData();
+		//initData();
 	}
 
 	private void initData(){
@@ -192,13 +192,19 @@ public class MemberFragment extends Fragment
 
     @Override
     public void onResume() {
+
         super.onResume();
-        if(!Constant.isLogin){
+        initData();
+        /*if(!Constant.isLogin){
             startActivity(new Intent(getActivity(), LoginActivity.class));
         }else{
+            if(Constant.isGestureLogin){
+
+            }
             initData();
-        }
+        } */
     }
+
 
 
     public static Fragment newInstance(String text) {

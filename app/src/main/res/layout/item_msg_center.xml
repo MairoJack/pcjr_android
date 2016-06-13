@@ -2,7 +2,8 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="50dp"
-    android:orientation="vertical" >
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical">
 
     <LinearLayout
         android:layout_width="fill_parent"
@@ -17,7 +18,7 @@
             android:gravity="center_vertical"
             android:paddingLeft="10dp"
             android:singleLine="true"
-            android:text="消息消息消息消息消息消息消息消息消息消息消息消息"
+            tools:text="消息消息消息消息消息消息消息消息消息消息消息消息"
             android:textColor="#333333" />
 
         <TextView
@@ -26,7 +27,7 @@
             android:layout_height="fill_parent"
             android:layout_weight="2"
             android:gravity="center"
-            android:text="2015-04-18"
+            tools:text="2015-04-18"
             android:textColor="#ABABAB" />
     </LinearLayout>
 

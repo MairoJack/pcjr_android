@@ -62,6 +62,7 @@ public class InvestDetailInfoFragment extends Fragment {
         preview_repayment = (LinearLayout) view.findViewById(R.id.preview_repayment);
         debx = (LinearLayout) view.findViewById(R.id.debx);
         txt_debx = (TextView) view.findViewById(R.id.txt_debx);
+        txt_repayment = (TextView) view.findViewById(R.id.txt_repayment);
         txt_preview_repayment = (TextView) view.findViewById(R.id.txt_preview_repayment);
         year_income = (TextView) view.findViewById(R.id.year_income);
         name = (TextView) view.findViewById(R.id.name);
@@ -94,14 +95,24 @@ public class InvestDetailInfoFragment extends Fragment {
             debx.setVisibility(View.VISIBLE);
             txt_debx.setText(Html.fromHtml(html_debx));
         }
+        int repayment = product.getRepayment();
+        if (repayment == 0) {
+            txt_repayment.setText("一次还本付息");
+        } else if (repayment == 1) {
+            txt_repayment.setText("先息后本(月)");
+        } else if (repayment == 2) {
+            txt_repayment.setText("等额本息");
+        } else if (repayment == 3) {
+            txt_repayment.setText("先息后本(季)");
+        }
         year_income.setText(product.getYear_income());
         name.setText(product.getName());
         threshold_amount.setText(product.getThreshold_amount() + "元起购");
         increasing_amount.setText(product.getIncreasing_amount() + "元递增");
-        amount.setText(String.valueOf(product.getAmount() / 10000));
+        amount.setText(String.format("%.2f",product.getAmount() / 10000));
         month.setText(product.getMonth());
         double can_invest_amount = (product.getAmount() - product.getProduct_amount()) / 10000;
-        invest_amount.setText(String.valueOf(can_invest_amount));
+        invest_amount.setText(String.format("%.2f",can_invest_amount));
         product_no.setText(product.getProduct_no());
         repayment_date.setText(DateUtil.transferLongToDate("yyyy-MM-dd", product.getValue_date()*1000));
         value_date.setText(DateUtil.transferLongToDate("yyyy-MM-dd", product.getValue_date()*1000));

@@ -47,6 +47,7 @@ public class GestureVerifyActivity extends Activity {
 	private void setUpViews() {
 		mTextTip = (TextView) findViewById(R.id.text_tip);
 		forget = (TextView) findViewById(R.id.forget);
+		close = (RelativeLayout) findViewById(R.id.close);
 		mGestureContainer = (FrameLayout) findViewById(R.id.gesture_container);
 
         SharedPreferenceUtil spu = new SharedPreferenceUtil(GestureVerifyActivity.this, Constant.FILE);
@@ -64,10 +65,11 @@ public class GestureVerifyActivity extends Activity {
 					@Override
 					public void checkedSuccess() {
 						mGestureContentView.clearDrawlineState(0L);
-						Toast.makeText(GestureVerifyActivity.this, "密码正确", Toast.LENGTH_SHORT).show();
+						//Toast.makeText(GestureVerifyActivity.this, "密码正确", Toast.LENGTH_SHORT).show();
                         Intent intent = new Intent();
                         intent.putExtra("abc","fuck");
                         setResult(RESULT_OK,intent);
+                        Constant.isGestureLogin = true;
                         GestureVerifyActivity.this.finish();
 
 					}
@@ -94,6 +96,12 @@ public class GestureVerifyActivity extends Activity {
 			}
 		});
 
+		close.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				finish();
+			}
+		});
 	}
 
 }

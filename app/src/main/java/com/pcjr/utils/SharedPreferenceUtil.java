@@ -66,6 +66,15 @@ public class SharedPreferenceUtil {
         editor.commit();
     }
 
+    public boolean getFirstGesture() {
+        return sp.getBoolean("isFirstGesture", true);
+    }
+
+    public void setFirstGesture(boolean isFirstGesture) {
+        editor.putBoolean("isFirstGesture", isFirstGesture);
+        editor.commit();
+    }
+
     public boolean getOpenGesture() {
         return sp.getBoolean("isOpen", false);
     }

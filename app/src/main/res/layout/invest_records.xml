@@ -10,7 +10,7 @@
         android:id="@+id/title"
         android:layout_width="fill_parent"
         android:layout_height="50dp"
-        android:background="#0099CC">
+        android:background="#FF6602">
 
         <com.jayfang.dropdownmenu.DropDownMenu
             android:id="@+id/menu"
@@ -18,7 +18,7 @@
             android:layout_height="60dp"
             android:layout_centerHorizontal="true"
             android:layout_centerVertical="true"
-            android:background="#0099CC"
+            android:background="#FF6602"
             android:orientation="horizontal" />
 
         <RelativeLayout

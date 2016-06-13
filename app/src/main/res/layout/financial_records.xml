@@ -2,14 +2,15 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:tools="http://schemas.android.com/tools"
     android:background="#f3f3f3"
-    android:orientation="vertical" >
+    android:orientation="vertical">
 
     <RelativeLayout
         android:id="@+id/title"
         android:layout_width="fill_parent"
         android:layout_height="50dp"
-        android:background="#0099CC" >
+        android:background="#FF6602" >
 
         <TextView
             android:layout_width="wrap_content"
@@ -69,7 +70,7 @@
                     android:layout_alignParentRight="true"
                     android:layout_centerVertical="true"
                     android:layout_marginRight="20dp"
-                    android:text="1000000.00元"
+                    tools:text="1000000.00元"
                     android:textColor="#333333" />
 
                 <View
@@ -100,7 +101,7 @@
                     android:layout_alignParentRight="true"
                     android:layout_centerVertical="true"
                     android:layout_marginRight="20dp"
-                    android:text="1000000.00元"
+                    tools:text="1000000.00元"
                     android:textColor="#333333" />
 
                 <View
@@ -131,7 +132,7 @@
                     android:layout_alignParentRight="true"
                     android:layout_centerVertical="true"
                     android:layout_marginRight="20dp"
-                    android:text="1000000.00元"
+                    tools:text="1000000.00元"
                     android:textColor="#333333" />
 
                 <View
@@ -162,7 +163,7 @@
                     android:layout_alignParentRight="true"
                     android:layout_centerVertical="true"
                     android:layout_marginRight="20dp"
-                    android:text="1000000.00元"
+                    tools:text="1000000.00元"
                     android:textColor="#333333" />
 
                 <View
@@ -194,7 +195,7 @@
                     android:layout_alignParentRight="true"
                     android:layout_centerVertical="true"
                     android:layout_marginRight="20dp"
-                    android:text="1000000.00元"
+                    tools:text="1000000.00元"
                     android:textColor="#333333" />
 
                 <View
@@ -225,7 +226,7 @@
                     android:layout_alignParentRight="true"
                     android:layout_centerVertical="true"
                     android:layout_marginRight="20dp"
-                    android:text="1000000.00元"
+                    tools:text="1000000.00元"
                     android:textColor="#333333" />
 
                 <View
@@ -287,7 +288,7 @@
                     android:layout_alignParentRight="true"
                     android:layout_centerVertical="true"
                     android:layout_marginRight="20dp"
-                    android:text="1000000.00元"
+                    tools:text="1000000.00元"
                     android:textColor="#333333" />
 
                 <View
@@ -319,7 +320,7 @@
                     android:layout_alignParentRight="true"
                     android:layout_centerVertical="true"
                     android:layout_marginRight="20dp"
-                    android:text="1000000.00元"
+                    tools:text="1000000.00元"
                     android:textColor="#333333" />
 
                 <View
@@ -350,7 +351,7 @@
                     android:layout_alignParentRight="true"
                     android:layout_centerVertical="true"
                     android:layout_marginRight="20dp"
-                    android:text="1000000.00元"
+                    tools:text="1000000.00元"
                     android:textColor="#333333" />
 
                 <View

@@ -12,6 +12,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.androidadvance.topsnackbar.TSnackbar;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import com.pcjr.R;
@@ -80,7 +81,7 @@ public class InvestTicketDetailActivity extends Activity {
                         end_time.setText(DateUtil.transferLongToDate("yyyy-MM-dd HH:mm:ss",investTicket.getEnd_time()*1000));
                         introduction.setText(investTicket.getActivity().getIntroduction().replace("</br>",""));
                     }else{
-                        Snackbar snackbar = Snackbar.make(back,"获取投资券详情失败", Snackbar.LENGTH_SHORT);
+                        TSnackbar snackbar = TSnackbar.make(findViewById(android.R.id.content),"获取投资券详情失败", TSnackbar.LENGTH_SHORT);
                         ColoredSnackbar.warning(snackbar).show();
                     }
                 }

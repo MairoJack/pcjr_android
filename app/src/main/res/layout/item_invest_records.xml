@@ -34,9 +34,9 @@
             android:paddingLeft="2dp"
             android:paddingRight="2dp"
             android:layout_toRightOf="@+id/product_name"
-            android:background="@drawable/categoryblue"
+            android:background="@drawable/border_bg_orange"
             android:text="一次性本息还付"
-            android:textColor="#00A2E8"
+            android:textColor="#F7822A"
             android:layout_marginBottom="4dp"
             android:textSize="10dp" />
     </RelativeLayout>
