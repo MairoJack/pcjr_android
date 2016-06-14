@@ -22,6 +22,7 @@ public class Constant extends Application{
     public static String access_token;
     public static boolean isLogin = false;              //用户登录
     public static boolean isGestureLogin = false;       //手势登录
+    public static String DEVICETOKEN;                   // 设备token
     public static String realname;
 
     //手势密码点的状态

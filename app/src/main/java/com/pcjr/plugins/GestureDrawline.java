@@ -304,7 +304,7 @@ public class GestureDrawline extends View {
 	 */
 	private void drawErrorPathTip() {
 		canvas.drawColor(Color.TRANSPARENT, PorterDuff.Mode.CLEAR);
-		paint.setColor(Color.rgb(154, 7, 21));// 设置默认线路颜色
+		paint.setColor(Color.rgb(255, 224, 34));// 设置默认线路颜色
 		for (Pair<GesturePoint, GesturePoint> pair : lineList) {
 			pair.first.setPointState(Constant.POINT_STATE_WRONG);
 			pair.second.setPointState(Constant.POINT_STATE_WRONG);

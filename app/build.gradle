@@ -24,7 +24,7 @@ dependencies {
     compile fileTree(include: ['*.jar'], dir: 'libs')
     testCompile 'junit:junit:4.12'
     compile 'com.android.support:appcompat-v7:23.3.0'
-    compile 'com.android.support:design:23.3.0'
+    compile 'com.android.support:design:23.4.0'
     compile 'com.android.support:support-vector-drawable:23.3.0'
     compile 'com.android.support:support-v4:23.3.0'
     //网络请求
@@ -51,4 +51,5 @@ dependencies {
     //CountdownView
     compile 'com.github.iwgang:countdownview:1.2'
     compile 'com.androidadvance:topsnackbar:0.0.9'
+    compile files('libs/Xg_sdk_v2.46_20160602_1638.jar')
 }

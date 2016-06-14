@@ -3,21 +3,16 @@ package com.pcjr.activity;
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.os.Bundle;
-import android.support.design.widget.Snackbar;
 import android.view.KeyEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
-
 import com.androidadvance.topsnackbar.TSnackbar;
 import com.google.gson.JsonObject;
 import com.mobsandgeeks.saripaar.ValidationError;
-import com.mobsandgeeks.saripaar.Validator;
-import com.mobsandgeeks.saripaar.annotation.ConfirmPassword;
-import com.mobsandgeeks.saripaar.annotation.NotEmpty;
-import com.mobsandgeeks.saripaar.annotation.Password;
+
 import com.pcjr.R;
 import com.pcjr.common.Constant;
 import com.pcjr.plugins.ColoredSnackbar;
@@ -34,27 +29,18 @@ import retrofit2.Response;
  * 修改密码
  * Created by Mario on 2016/5/24.
  */
-public class ChangePasswordActivity extends Activity  implements  Validator.ValidationListener{
+public class ChangePasswordActivity extends Activity {
     private RelativeLayout back;
-    @NotEmpty(message = "原密码不能为空")
     private EditText txt_old_password;
-    @NotEmpty(sequence=2,message = "新密码不能为空")
-    @Password()
     private EditText txt_password;
-    @NotEmpty(message = "确认密码不能为空")
-    @ConfirmPassword(message="两次密码不同")
     private EditText txt_confirm_password;
 
     private Button btn_save;
-
-    private Validator validator;
 
     private ProgressDialog dialog;
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.change_password);
-        validator = new Validator(this);
-        validator.setValidationListener(this);
         initView();
     }
 
@@ -68,7 +54,7 @@ public class ChangePasswordActivity extends Activity  implements  Validator.Vali
         btn_save.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                validator.validate();
+                change();
             }
         });
 
@@ -93,10 +79,30 @@ public class ChangePasswordActivity extends Activity  implements  Validator.Vali
 
     }
 
-    @Override
-    public void onValidationSucceeded() {
+    public void change() {
         final String oldPassword = txt_old_password.getText().toString().trim();
         final String newPassword = txt_password.getText().toString().trim();
+        final String confirm_password = txt_confirm_password.getText().toString().trim();
+        if (oldPassword.equals("")) {
+            TSnackbar snackbar = TSnackbar.make(findViewById(android.R.id.content), "旧密码不能为空", TSnackbar.LENGTH_SHORT);
+            ColoredSnackbar.warning(snackbar).show();
+            return;
+        }
+        if (newPassword.equals("")) {
+            TSnackbar snackbar = TSnackbar.make(findViewById(android.R.id.content), "新密码不能为空", TSnackbar.LENGTH_SHORT);
+            ColoredSnackbar.warning(snackbar).show();
+            return;
+        }
+        if (confirm_password.equals("")) {
+            TSnackbar snackbar = TSnackbar.make(findViewById(android.R.id.content), "确认密码不能为空", TSnackbar.LENGTH_SHORT);
+            ColoredSnackbar.warning(snackbar).show();
+            return;
+        }
+        if (!newPassword.equals(confirm_password)) {
+            TSnackbar snackbar = TSnackbar.make(findViewById(android.R.id.content), "两次密码不相同", TSnackbar.LENGTH_SHORT);
+            ColoredSnackbar.warning(snackbar).show();
+            return;
+        }
         ApiService service = RetrofitUtils.createApi(ApiService.class);
         Call<JsonObject> call = service.changePassword(Constant.BEARER+" "+Constant.access_token,oldPassword,newPassword);
         dialog.setMessage("正在提交...");
@@ -124,19 +130,5 @@ public class ChangePasswordActivity extends Activity  implements  Validator.Vali
                Toast.makeText(ChangePasswordActivity.this,"网络异常",Toast.LENGTH_SHORT).show();
             }
         });
-    }
-
-    @Override
-    public void onValidationFailed(List<ValidationError> errors) {
-        for (ValidationError error : errors) {
-            View view = error.getView();
-            String message = error.getCollatedErrorMessage(this);
-
-            if (view instanceof EditText) {
-                ((EditText) view).setError(message);
-            } else {
-                Toast.makeText(this, message, Toast.LENGTH_LONG).show();
-            }
-        }
     }
 }

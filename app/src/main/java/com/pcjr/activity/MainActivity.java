@@ -1,6 +1,7 @@
 package com.pcjr.activity;
 
 
+import android.content.Context;
 import android.content.Intent;
 import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
@@ -17,6 +18,9 @@ import com.pcjr.plugins.FragmentNavigator;
 import com.pcjr.service.ApiService;
 import com.pcjr.utils.RetrofitUtils;
 import com.pcjr.utils.SharedPreferenceUtil;
+import com.tencent.android.tpush.XGPushConfig;
+import com.tencent.android.tpush.XGPushManager;
+import com.tencent.android.tpush.service.XGPushService;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -46,6 +50,8 @@ public class MainActivity extends FragmentActivity implements BottomNavigatorVie
         bottomNavigatorView.setOnBottomNavigatorViewItemClickListener(this);
 
         setCurrentTab(mNavigator.getCurrentPosition());
+        // 信鸽
+        XGAction();
         tryLogin();
     }
 
@@ -119,6 +125,19 @@ public class MainActivity extends FragmentActivity implements BottomNavigatorVie
                 }
             });
         }
+    }
+
+    /**
+     * 开启信鸽推送
+     */
+    public void XGAction() {
+        Context context = getApplicationContext();
+        XGPushManager.registerPush(context);
+
+        Intent service = new Intent(context, XGPushService.class);
+        context.startService(service);
+
+        Constant.DEVICETOKEN = XGPushConfig.getToken(context);
     }
 
     @Override

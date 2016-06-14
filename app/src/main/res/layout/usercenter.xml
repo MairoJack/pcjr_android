@@ -6,7 +6,28 @@
     android:background="#f3f3f3"
     android:orientation="vertical">
 
+    <RelativeLayout
+        android:id="@+id/title"
+        android:layout_width="fill_parent"
+        android:layout_height="50dp"
+        android:background="#FF6602" >
 
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+            android:text="个人中心"
+            android:id="@+id/grzx"
+            android:textColor="#FFFFFF"
+            android:textSize="20dp" />
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0.4dp"
+            android:background="#EEE"
+            android:layout_alignParentBottom="true"/>
+
+    </RelativeLayout>
     <ScrollView
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"

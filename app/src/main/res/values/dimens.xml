@@ -6,4 +6,7 @@
     <dimen name="load_more_footer_height">60dp</dimen>
     <dimen name="indicator_size">6dp</dimen>
     <dimen name="indicator_margin">6dp</dimen>
+    <dimen name="item_product_text_size">20dp</dimen>
+    <dimen name="item_product_text_down_size">20dp</dimen>
+    <dimen name="invest_left_text">18dp</dimen>
 </resources>

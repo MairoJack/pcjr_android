@@ -72,7 +72,7 @@ public class GestureEditActivity extends Activity{
 			@Override
 			public void onGestureCodeInput(String inputCode) {
 				if (!isInputPassValidate(inputCode)) {
-					mTextTip.setText(Html.fromHtml("<font color='#c70c1e'>最少链接4个点, 请重新输入</font>"));
+					mTextTip.setText("最少链接4个点, 请重新输入");
 					mGestureContentView.clearDrawlineState(0L);
 					return;
 				}
@@ -91,7 +91,7 @@ public class GestureEditActivity extends Activity{
 						setResult(RESULT_OK);
 						GestureEditActivity.this.finish();
 					} else {
-						mTextTip.setText(Html.fromHtml("<font color='#c70c1e'>与上一次绘制不一致，请重新绘制</font>"));
+						mTextTip.setText("与上一次绘制不一致，请重新绘制");
 						// 左右移动动画
 						Animation shakeAnimation = AnimationUtils.loadAnimation(GestureEditActivity.this, R.anim.shake);
 						mTextTip.startAnimation(shakeAnimation);

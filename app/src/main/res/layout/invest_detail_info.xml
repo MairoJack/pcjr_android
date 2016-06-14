@@ -24,11 +24,6 @@
                 android:layout_margin="5dp"
                 android:visibility="gone"
                 >
-                <ImageView
-                    android:layout_width="13dp"
-                    android:layout_height="13dp"
-                    android:layout_marginTop="2dp"
-                    android:src="@drawable/info" />
                 <TextView
                     android:layout_marginLeft="2dp"
                     android:id="@+id/txt_preview_repayment"
@@ -46,11 +41,7 @@
                 android:layout_margin="5dp"
                 android:visibility="gone"
                 >
-                <ImageView
-                    android:layout_width="13dp"
-                    android:layout_height="13dp"
-                    android:layout_marginTop="2dp"
-                    android:src="@drawable/info" />
+
                 <TextView
                     android:layout_marginLeft="2dp"
                     android:id="@+id/txt_debx"
@@ -117,7 +108,7 @@
                     android:layout_centerHorizontal="true"
                     tools:text="一次还本付息"
                     android:textColor="#333333"
-                    android:textSize="20dp" />
+                    android:textSize="16dp" />
             </RelativeLayout>
 
             <TextView
@@ -317,14 +308,14 @@
                         android:layout_height="wrap_content"
                         android:text="项目编号："
                         android:textColor="#333333"
-                        android:textSize="18dp" />
+                        android:textSize="16dp" />
 
                     <TextView
                         android:id="@+id/product_no"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="DCXA20160117"
-                        android:textSize="16dp" />
+                        tools:text="DCXA20160117"
+                        android:textSize="14dp" />
                 </LinearLayout>
 
                 <LinearLayout
@@ -339,14 +330,14 @@
                         android:layout_height="wrap_content"
                         android:text="首次还息日："
                         android:textColor="#333333"
-                        android:textSize="18dp" />
+                        android:textSize="16dp" />
 
                     <TextView
                         android:id="@+id/repayment_date"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="2016-05-19"
-                        android:textSize="16dp" />
+                        tools:text="2016-05-19"
+                        android:textSize="14dp" />
                 </LinearLayout>
 
                 <LinearLayout
@@ -361,14 +352,14 @@
                         android:layout_height="wrap_content"
                         android:text="起息日："
                         android:textColor="#333333"
-                        android:textSize="18dp" />
+                        android:textSize="16dp" />
 
                     <TextView
                         android:id="@+id/value_date"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="2016-05-17"
-                        android:textSize="16dp" />
+                        tools:text="2016-05-17"
+                        android:textSize="14dp" />
                 </LinearLayout>
 
                 <LinearLayout
@@ -383,14 +374,14 @@
                         android:layout_height="wrap_content"
                         android:text="担保机构："
                         android:textColor="#333333"
-                        android:textSize="18dp" />
+                        android:textSize="16dp" />
 
                     <TextView
                         android:id="@+id/guarantors_name"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="海宁皮革城担保有限公司"
-                        android:textSize="16dp" />
+                        android:textSize="14dp" />
                 </LinearLayout>
 
                 <TextView
@@ -400,7 +391,7 @@
                     android:paddingLeft="10dp"
                     android:text="项目情况"
                     android:textColor="#333333"
-                    android:textSize="22dp"
+                    android:textSize="20dp"
                     android:textStyle="bold" />
 
                 <TextView
@@ -409,10 +400,10 @@
                     android:layout_height="wrap_content"
                     android:lineSpacingExtra="4dp"
                     android:padding="10dp"
-                    android:text="海宁皮城商户一般在采购原料、缴纳商铺租金等情况下资金较为紧张。
+                    tools:text="海宁皮城商户一般在采购原料、缴纳商铺租金等情况下资金较为紧张。
 海宁皮城商圈类项目主要为海宁皮城商圈内信用良好、经营业绩可观的中小商户提供原料采购款和补充经营流动资金。
 借款人的企业主要从事裘皮服装的生产销售，在本平台融资100万元主要用于贷款资金周转。"
-                    android:textSize="16dp" />
+                    android:textSize="14dp" />
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -421,7 +412,7 @@
                     android:paddingLeft="10dp"
                     android:text="借款人情况"
                     android:textColor="#333333"
-                    android:textSize="22dp"
+                    android:textSize="20dp"
                     android:textStyle="bold" />
 
                 <TextView
@@ -431,8 +422,8 @@
                     android:layout_marginBottom="40dp"
                     android:lineSpacingExtra="4dp"
                     android:padding="10dp"
-                    android:text="借款人拥有海宁中国皮革城多处商铺的租赁权，具有较大的市场价值。借款人企业主要从事裘皮服装的生产销售，经营状况良好。借款人从事皮革行业十多年，个人经济实力雄厚；每年按时缴纳商铺租金，信用记录良好。"
-                    android:textSize="16dp" />
+                    tools:text="借款人拥有海宁中国皮革城多处商铺的租赁权，具有较大的市场价值。借款人企业主要从事裘皮服装的生产销售，经营状况良好。借款人从事皮革行业十多年，个人经济实力雄厚；每年按时缴纳商铺租金，信用记录良好。"
+                    android:textSize="14dp" />
 
 
             </LinearLayout>

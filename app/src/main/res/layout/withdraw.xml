@@ -124,7 +124,7 @@
                         android:layout_centerVertical="true"
                         android:layout_marginLeft="20dp"
                         android:text="账户余额"
-                        android:textSize="20dp"
+                        android:textSize="@dimen/invest_left_text"
                         />
 
                     <TextView
@@ -135,8 +135,8 @@
                         android:layout_marginLeft="20dp"
                         android:layout_toRightOf="@+id/balance"
                         android:textColor="#e7420a"
-                        android:textSize="20dp"
-                        android:text="8999833827.80元" />
+                        android:textSize="@dimen/invest_left_text"
+                        tools:text="8999833827.80元" />
                 </RelativeLayout>
 
                 <RelativeLayout
@@ -153,7 +153,7 @@
                         android:layout_centerVertical="true"
                         android:layout_marginLeft="20dp"
                         android:text="提现金额"
-                        android:textSize="20dp"
+                        android:textSize="@dimen/invest_left_text"
                        />
 
                     <EditText
@@ -194,7 +194,7 @@
                         android:layout_centerVertical="true"
                         android:layout_marginLeft="20dp"
                         android:text="真实姓名"
-                        android:textSize="20dp" />
+                        android:textSize="@dimen/invest_left_text" />
 
                     <TextView
                         android:id="@+id/txt_realname"
@@ -204,7 +204,7 @@
                         android:layout_marginLeft="20dp"
                         android:layout_toRightOf="@+id/realname"
                         android:textColor="#c6c6c6"
-                        android:textSize="20dp"
+                        android:textSize="@dimen/invest_left_text"
                         android:text="大马" />
                 </RelativeLayout>
             </LinearLayout>
@@ -258,7 +258,7 @@
                         android:layout_centerVertical="true"
                         android:layout_marginLeft="20dp"
                         android:text="提现银行"
-                        android:textSize="20dp" />
+                        android:textSize="@dimen/invest_left_text" />
 
                     <Spinner
                         android:id="@+id/bank_spinner"
@@ -287,7 +287,7 @@
                         android:layout_centerVertical="true"
                         android:layout_marginLeft="20dp"
                         android:text="您的手机号"
-                        android:textSize="20dp" />
+                        android:textSize="@dimen/invest_left_text" />
 
                     <TextView
                         android:id="@+id/txt_mobile"
@@ -297,7 +297,7 @@
                         android:layout_marginLeft="5dp"
                         android:layout_toRightOf="@+id/mobile"
                         android:textColor="#c6c6c6"
-                        android:textSize="20dp"
+                        android:textSize="@dimen/invest_left_text"
                         android:text="130****1122" />
 
                 </RelativeLayout>
@@ -316,7 +316,7 @@
                         android:layout_centerVertical="true"
                         android:layout_marginLeft="20dp"
                         android:text="验证码"
-                        android:textSize="20dp" />
+                        android:textSize="@dimen/invest_left_text" />
 
                     <EditText
                         android:id="@+id/txt_verify"
@@ -329,7 +329,7 @@
                         android:background="@null"
                         android:inputType="number"
                         android:singleLine="true"
-                        android:textSize="15dp"
+                        android:textSize="@dimen/invest_left_text"
                         />
 
                     <Button

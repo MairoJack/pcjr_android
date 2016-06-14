@@ -47,15 +47,14 @@ public class InvestFragment extends Fragment
 
 		titleList = new ArrayList<>();
 		titleList.add("全部");
-		titleList.add("销售中");
-		titleList.add("销售结束");
-		titleList.add("项目结束");
+		titleList.add("大城小爱");
+		titleList.add("国泰民安");
+		titleList.add("珠联璧合");
 
-		tabLayout.addTab(tabLayout.newTab().setText(titleList.get(0)));
-		tabLayout.addTab(tabLayout.newTab().setText(titleList.get(1)));
-		tabLayout.addTab(tabLayout.newTab().setText(titleList.get(2)));
-		tabLayout.addTab(tabLayout.newTab().setText(titleList.get(3)));
-
+		tabLayout.addTab(tabLayout.newTab().setText(titleList.get(0)),false);
+		tabLayout.addTab(tabLayout.newTab().setText(titleList.get(1)),true );
+		tabLayout.addTab(tabLayout.newTab().setText(titleList.get(2)),false);
+		tabLayout.addTab(tabLayout.newTab().setText(titleList.get(3)),false);
 		fragmentPagerAdapter = new TabFragmentAdapter(getActivity().getSupportFragmentManager(),fragmentList,titleList);
 
 		viewPager.setAdapter(fragmentPagerAdapter);

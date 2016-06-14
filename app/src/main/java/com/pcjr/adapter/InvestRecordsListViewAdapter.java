@@ -80,9 +80,11 @@ public class InvestRecordsListViewAdapter extends BaseAdapter {
         if(type == 0){
             viewHolder.repayment.setText("一次性还本付息");
         }else if(type == 1){
-            viewHolder.repayment.setText("按月付息，到期还本");
-        }else{
+            viewHolder.repayment.setText("先息后本(按月付息)");
+        }else if(type == 2){
             viewHolder.repayment.setText("等额本息");
+        }else if(type == 3){
+            viewHolder.repayment.setText("先息后本(按季付息)");
         }
         viewHolder.product_name.setText(list.get(position).getProductName());
 

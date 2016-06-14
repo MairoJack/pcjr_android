@@ -360,4 +360,13 @@ public interface ApiService {
     @POST("/member/get_red_packet_reward")
     Call<JsonObject> getRedPacketReward(@Header("Authorization") String header, @Field("id") String id);
 
+    /**
+     * 绑定设备
+     * @param header
+     * @param device_token  设备号
+     * @return
+     */
+    @FormUrlEncoded
+    @POST("/member/refresh_device_token")
+    Call<JsonObject> refreshDeviceToken(@Header("Authorization") String header, @Field("device_token") String device_token);
 }

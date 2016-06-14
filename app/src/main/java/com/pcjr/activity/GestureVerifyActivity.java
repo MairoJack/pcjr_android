@@ -78,8 +78,7 @@ public class GestureVerifyActivity extends Activity {
 					public void checkedFail() {
 						mGestureContentView.clearDrawlineState(1300L);
 						mTextTip.setVisibility(View.VISIBLE);
-						mTextTip.setText(Html
-								.fromHtml("<font color='#c70c1e'>密码错误</font>"));
+						mTextTip.setText("密码错误");
 						// 左右移动动画
 						Animation shakeAnimation = AnimationUtils.loadAnimation(GestureVerifyActivity.this, R.anim.shake);
 						mTextTip.startAnimation(shakeAnimation);
@@ -92,6 +91,7 @@ public class GestureVerifyActivity extends Activity {
 		forget.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
+				finish();
                 startActivity(new Intent(GestureVerifyActivity.this,LoginActivity.class));
 			}
 		});

@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.pcjr.R;
@@ -31,7 +32,7 @@ public class ProductListViewAdapter extends BaseAdapter {
     private LayoutInflater layoutInflater;
 
     private static class ListItemView {
-        public RotateTextView rtv;
+        public ImageView rtv;
         public ProgressWheel progressWheel;
         public CountdownView cdv;
         public TextView
@@ -105,8 +106,7 @@ public class ProductListViewAdapter extends BaseAdapter {
 
         }
 
-        listItemView.rtv = (RotateTextView) convertView.findViewById(R.id.rtv);
-        listItemView.rtv.setDegrees(45);
+        listItemView.rtv = (ImageView) convertView.findViewById(R.id.rtv);
         listItemView.name = (TextView) convertView.findViewById(R.id.name);
         listItemView.repayment = (TextView) convertView.findViewById(R.id.repayment);
         listItemView.income = (TextView) convertView.findViewById(R.id.income);
@@ -122,25 +122,29 @@ public class ProductListViewAdapter extends BaseAdapter {
         if (repayment == 0) {
             listItemView.repayment.setText("一次还本付息");
         } else if (repayment == 1) {
-            listItemView.repayment.setText("先息后本(月)");
+            listItemView.repayment.setText("先息后本(按月付息)");
         } else if (repayment == 2) {
             listItemView.repayment.setText("等额本息");
         } else if (repayment == 3) {
-            listItemView.repayment.setText("先息后本(季)");
+            listItemView.repayment.setText("先息后本(按季付息)");
         }
         if(product.getFinish_preview_repayment()==1){
-            listItemView.rtv.setText("提前回款");
+            listItemView.rtv.setImageResource(R.drawable.tqhk);
         }else {
             if (preview_repayment == 0) {
                 listItemView.rtv.setVisibility(View.GONE);
             } else if (preview_repayment == 1) {
-                listItemView.rtv.setText("可能提前回款");
+                if(product.getStatus() == 4) {
+                    listItemView.rtv.setImageResource(R.drawable.kntqhk2);
+                }else{
+                    listItemView.rtv.setImageResource(R.drawable.kntqhk);
+                }
             }
         }
         listItemView.name.setText(product.getName());
 
         listItemView.income.setText(String.valueOf(product.getYear_income()));
-        listItemView.amount.setText(String.valueOf(product.getAmount() / 10000));
+        listItemView.amount.setText(String.format("%.2f",product.getAmount() / 10000));
         String month = product.getMonth();
         if(month!=null) {
             String regEx = "[^0-9]";

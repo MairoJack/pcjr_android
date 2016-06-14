@@ -4,36 +4,20 @@ import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
-import android.support.design.widget.Snackbar;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentTransaction;
 import android.view.KeyEvent;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import com.androidadvance.topsnackbar.TSnackbar;
 import com.google.gson.JsonObject;
-import com.mobsandgeeks.saripaar.ValidationError;
-import com.mobsandgeeks.saripaar.Validator;
-import com.mobsandgeeks.saripaar.annotation.ConfirmPassword;
-import com.mobsandgeeks.saripaar.annotation.NotEmpty;
 import com.mobsandgeeks.saripaar.annotation.Password;
 import com.pcjr.R;
 import com.pcjr.fragment.LoginFragment;
-import com.pcjr.fragment.PersonFragment;
 import com.pcjr.plugins.ColoredSnackbar;
 import com.pcjr.service.ApiService;
 import com.pcjr.utils.RetrofitUtils;
-
-import java.util.List;
-
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -42,7 +26,7 @@ import retrofit2.Response;
  * 注册
  * Created by Mario on 2016/6/1.
  */
-public class RegistActivity extends Activity implements View.OnClickListener,Validator.ValidationListener
+public class RegistActivity extends Activity implements View.OnClickListener
 {
 
     public static final String TAG = RegistActivity.class.getSimpleName();
@@ -50,18 +34,13 @@ public class RegistActivity extends Activity implements View.OnClickListener,Val
 	private TextView login,syxy,ystk;
 
 
-    @NotEmpty(message="用户名不能为空")
     private EditText text_username;
-    @NotEmpty(message="密码不能为空")
     @Password
     private EditText text_password;
-    @NotEmpty(message="确认密码不能为空")
-    @ConfirmPassword(message="两次密码不同")
     private EditText text_confirm_password;
     private EditText text_recommend;
 
     private Button but_regist;
-    private Validator validator;
     private ProgressDialog dialog;
 
 
@@ -69,8 +48,7 @@ public class RegistActivity extends Activity implements View.OnClickListener,Val
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.register);
-        validator = new Validator(this);
-        validator.setValidationListener(this);
+
         initView();
     }
 
@@ -95,7 +73,7 @@ public class RegistActivity extends Activity implements View.OnClickListener,Val
         but_regist.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                validator.validate();
+                regist();
             }
         });
 	}
@@ -123,11 +101,31 @@ public class RegistActivity extends Activity implements View.OnClickListener,Val
 		}
 	}
 
-    @Override
-    public void onValidationSucceeded() {
+    public void regist() {
         String username = text_username.getText().toString().trim();
         String password = text_password.getText().toString().trim();
+        String confirm_password = text_confirm_password.getText().toString().trim();
         String recommend = text_recommend.getText().toString().trim();
+        if (username.equals("")) {
+            TSnackbar snackbar = TSnackbar.make(findViewById(android.R.id.content), "用户名不能为空", TSnackbar.LENGTH_SHORT);
+            ColoredSnackbar.warning(snackbar).show();
+            return;
+        }
+        if (password.equals("")) {
+            TSnackbar snackbar = TSnackbar.make(findViewById(android.R.id.content), "密码不能为空", TSnackbar.LENGTH_SHORT);
+            ColoredSnackbar.warning(snackbar).show();
+            return;
+        }
+        if (confirm_password.equals("")) {
+            TSnackbar snackbar = TSnackbar.make(findViewById(android.R.id.content), "确认密码不能为空", TSnackbar.LENGTH_SHORT);
+            ColoredSnackbar.warning(snackbar).show();
+            return;
+        }
+        if (!password.equals(confirm_password)) {
+            TSnackbar snackbar = TSnackbar.make(findViewById(android.R.id.content), "两次密码不相同", TSnackbar.LENGTH_SHORT);
+            ColoredSnackbar.warning(snackbar).show();
+            return;
+        }
         ApiService service = RetrofitUtils.createApi(ApiService.class);
         Call<JsonObject> call = service.register(username,password,recommend);
         dialog.setMessage("正在提交...");
@@ -159,20 +157,7 @@ public class RegistActivity extends Activity implements View.OnClickListener,Val
         });
     }
 
-    @Override
-    public void onValidationFailed(List<ValidationError> errors) {
-        for (ValidationError error : errors) {
-            View view = error.getView();
-            String message = error.getCollatedErrorMessage(this);
 
-            // Display error messages ;)
-            if (view instanceof EditText) {
-                ((EditText) view).setError(message);
-            } else {
-                Toast.makeText(this, message, Toast.LENGTH_LONG).show();
-            }
-        }
-    }
 
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event)

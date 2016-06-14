@@ -116,7 +116,7 @@ public class TradeRecordsActivity extends Activity {
 
     public void initMenu() {
 
-        final String[] arr=new String[]{"全部记录", "交易记录", "提现记录", "投资记录", "收益记录","奖励"};
+        final String[] arr=new String[]{"全部记录", "充值记录", "提现记录", "投资记录", "收益记录","奖励"};
 
         final String[] strings=new String[]{"交易记录"};
 
@@ -126,6 +126,7 @@ public class TradeRecordsActivity extends Activity {
         mMenu.setShowCheck(true);//是否显示展开list的选中项
         mMenu.setmMenuTitleTextSize(16);//Menu的文字大小
         mMenu.setmMenuTitleTextColor(Color.WHITE);//Menu的文字颜色
+        mMenu.setmMenuPressedTitleTextColor(Color.WHITE);
         mMenu.setmMenuListTextSize(16);//Menu展开list的文字大小
         mMenu.setmMenuListTextColor(Color.BLACK);//Menu展开list的文字颜色
         mMenu.setmMenuBackColor(Color.parseColor("#FF6602"));//Menu的背景颜色

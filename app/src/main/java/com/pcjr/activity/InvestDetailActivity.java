@@ -116,7 +116,7 @@ public class InvestDetailActivity extends FragmentActivity
                                     }
                                 }else{
                                     btn_status.setBackgroundResource(R.drawable.redbtn);
-                                    btn_status.setText("立即加入");
+                                    btn_status.setText("立即投资");
                                     btn_status.setOnClickListener(new View.OnClickListener() {
                                         @Override
                                         public void onClick(View v) {

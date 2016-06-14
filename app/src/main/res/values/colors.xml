@@ -10,4 +10,5 @@
     <color name="colorTabNormal">#666666</color>
     <color name="colorTabSelected">#FF6602</color>
     <color name="divider">#FF6602</color>
+    <color name="orange">#FF6602</color>
 </resources>

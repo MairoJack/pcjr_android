@@ -60,7 +60,7 @@
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
             android:layout_marginRight="20dp"
-            android:src="@drawable/arrow1" />
+            android:src="@drawable/arrow" />
     </RelativeLayout>
 
     <RelativeLayout
@@ -85,7 +85,7 @@
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
             android:layout_marginRight="20dp"
-            android:src="@drawable/arrow1" />
+            android:src="@drawable/arrow" />
     </RelativeLayout>
 
     <RelativeLayout
@@ -110,7 +110,7 @@
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
             android:layout_marginRight="20dp"
-            android:src="@drawable/arrow1" />
+            android:src="@drawable/arrow" />
     </RelativeLayout>
     <RelativeLayout
         android:layout_width="fill_parent"
@@ -160,7 +160,7 @@
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
             android:layout_marginRight="20dp"
-            android:src="@drawable/arrow1" />
+            android:src="@drawable/arrow" />
     </RelativeLayout>
 
     <Button

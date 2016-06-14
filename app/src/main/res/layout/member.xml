@@ -6,6 +6,7 @@
     android:background="#fcfcfc"
     android:orientation="vertical">
 
+
     <FrameLayout
         android:id="@+id/member_content"
         android:layout_width="fill_parent"

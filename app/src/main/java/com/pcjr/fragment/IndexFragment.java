@@ -14,6 +14,7 @@ import android.view.ViewGroup;
 import android.view.animation.AnimationUtils;
 import android.widget.AdapterView;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
@@ -57,6 +58,7 @@ public class IndexFragment extends Fragment implements BaseSliderView.OnSliderCl
     private long lastRefreshTime;
 
     private RelativeLayout cpyg, dcxa, gtma, zlbh;
+    private LinearLayout all_invest;
     private ImageView img1;
     private TextView login_but;
     private ListView listView;
@@ -99,6 +101,7 @@ public class IndexFragment extends Fragment implements BaseSliderView.OnSliderCl
         dcxa = (RelativeLayout) view.findViewById(R.id.dcxa);
         gtma = (RelativeLayout) view.findViewById(R.id.gtma);
         zlbh = (RelativeLayout) view.findViewById(R.id.zlbh);
+        all_invest = (LinearLayout) view.findViewById(R.id.all_invest);
         sliderLayout = (SliderLayout) view.findViewById(R.id.slider);
         sliderLayoutSmall = (SliderLayout) view.findViewById(R.id.slider_small);
         /*swipeToLoadLayout = (SwipeToLoadLayout) view.findViewById(R.id.swipeToLoadLayout);
@@ -142,6 +145,13 @@ public class IndexFragment extends Fragment implements BaseSliderView.OnSliderCl
             }
         });
         zlbh.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                MainActivity mainActivity  = (MainActivity) getContext();
+                mainActivity.setCurrentTab(1);
+            }
+        });
+        all_invest.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 MainActivity mainActivity  = (MainActivity) getContext();
@@ -228,8 +238,9 @@ public class IndexFragment extends Fragment implements BaseSliderView.OnSliderCl
                 sliderLayout.addSlider(textSliderView);
             }
             sliderLayout.setPresetTransformer(SliderLayout.Transformer.Default);
-            sliderLayout.setPresetIndicator(SliderLayout.PresetIndicators.Right_Bottom);
+            sliderLayout.setPresetIndicator(SliderLayout.PresetIndicators.Center_Bottom);
             sliderLayout.setDuration(4000);
+            sliderLayout.addOnPageChangeListener(this);
 
         }
 

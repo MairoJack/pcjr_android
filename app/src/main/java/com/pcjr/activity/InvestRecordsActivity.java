@@ -124,6 +124,7 @@ public class InvestRecordsActivity extends Activity{
         mMenu.setShowCheck(true);//是否显示展开list的选中项
         mMenu.setmMenuTitleTextSize(16);//Menu的文字大小
         mMenu.setmMenuTitleTextColor(Color.WHITE);//Menu的文字颜色
+        mMenu.setmMenuPressedTitleTextColor(Color.WHITE);
         mMenu.setmMenuListTextSize(16);//Menu展开list的文字大小
         mMenu.setmMenuListTextColor(Color.BLACK);//Menu展开list的文字颜色
         mMenu.setmMenuBackColor(Color.parseColor("#FF6602"));//Menu的背景颜色

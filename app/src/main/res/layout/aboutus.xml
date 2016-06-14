@@ -54,7 +54,7 @@
                 android:layout_height="wrap_content"
                 android:lineSpacingExtra="4dp"
                 android:text="\t\t皮城金融（www.pcjr.com）是海宁中国皮革城互联网金融服务有限公司旗下的互联网金融平台。海宁中国皮革城互联网金融服务有限公司成立于2014年12月，注册资本5000万元，主要股东是国有上市公司海宁皮城（股票代码：002344）。截至2014年末，海宁皮城市值达到178.2亿人民币。海宁中国皮革城是中国规模最大、最具影响力的皮革专业市场，总部位于浙江海宁，在辽宁佟二堡、江苏沭阳、河南新乡、四川成都、黑龙江哈尔滨、湖北武汉等地建有连锁市场，济南、北京、天津和乌鲁木齐等连锁市场尚在筹建之中。"
-                android:textColor="#333333"
+                android:textColor="#6F6F6F"
                 android:textSize="12dp" />
 
             <TextView
@@ -71,7 +71,7 @@
                 android:layout_height="wrap_content"
                 android:lineSpacingExtra="4dp"
                 android:text="\t\t皮城金融以“立足商圈，服务产业链”为经营理念，深度挖掘国内优质商圈和核心产业链的金融需求，致力于为小微商户和企业提供便捷、低成本的融资服务，为普罗大众提供安全、高收益的理财产品。实体商圈具有统一收银、统一物流、统一仓储、预收租金或经营保证金等特点，使得资金流动能够形成有效闭环，从而保证资金借贷的安全。"
-                android:textColor="#333333"
+                android:textColor="#6F6F6F"
                 android:textSize="12dp" />
 
             <TextView
@@ -88,7 +88,7 @@
                 android:layout_height="wrap_content"
                 android:lineSpacingExtra="4dp"
                 android:text="\t\t皮城金融管理团队成员具有丰富的金融和互联网从业经验，业务和风控高管或来自于国内顶级投行，或具备20年以上的银行信贷从业经验；技术及运营团队由知名互联网企业从业人员组成。皮城金融已建立了完整和严谨的后台技术系统和资金管理体系，能够有效保证后台技术系统的安全，并能对资金流动和使用进行有效的风险控制。兴业银行杭州分行将对本平台的资金流动和使用进行严格的监督。\n\t\t千圈百链，财富无限。皮城金融真诚期待与国内优质商圈、核心产业链及广大投资者携手成长，低风险分享商圈繁荣的高收益，创造更多的财富。 "
-                android:textColor="#333333"
+                android:textColor="#6F6F6F"
                 android:textSize="12dp" />
         </LinearLayout>
     </ScrollView>

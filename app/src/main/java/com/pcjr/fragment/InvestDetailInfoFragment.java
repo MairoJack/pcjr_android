@@ -3,6 +3,7 @@ package com.pcjr.fragment;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
@@ -46,7 +47,7 @@ public class InvestDetailInfoFragment extends Fragment {
             product_no, repayment_date, value_date, guarantors_name, intro, borrower_intro;
 
     private String id;
-
+    private int index = 0;
 
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
@@ -84,14 +85,14 @@ public class InvestDetailInfoFragment extends Fragment {
 
     public void initData() {
         Bundle bundle = getArguments();
-        Product product = (Product) bundle.getSerializable("product");
+        final Product product = (Product) bundle.getSerializable("product");
         if(product.getIs_preview_repayment() == 1){
-            String html_preview_repayment = "本产品具有 <font color='#dc4d07'>提前回款</font> 可能，平台确保此产品最短借款时长为 <font color='#dc4d07'>"+product.getMin_repayment_date()+"</font> ，如提前回款则补偿本产品 <font color='#dc4d07'>"+product.getPay_interest_day()+"天利息</font> 于投资人";
+            String html_preview_repayment = "* 本产品具有 <font color='#dc4d07'>提前回款</font> 可能，平台确保此产品最短借款时长为 <font color='#dc4d07'>"+product.getMin_repayment_date()+"</font> ，如提前回款则补偿本产品 <font color='#dc4d07'>"+product.getPay_interest_day()+"天利息</font> 于投资人";
             preview_repayment.setVisibility(View.VISIBLE);
             txt_preview_repayment.setText(Html.fromHtml(html_preview_repayment));
         }
         if(product.getRepayment() == 2){
-            String html_debx = "本产品为 <font color='#dc4d07'>等额本息</font> 产品，每投资1000元预期收益为 <font color='#dc4d07'>"+product.getEstimate_interest()+"</font> 元，按月还本付息，资金更灵活，理财更安心";
+            String html_debx = "* 本产品为 <font color='#dc4d07'>等额本息</font> 产品，每投资1000元预期收益为 <font color='#dc4d07'>"+product.getEstimate_interest()+"</font> 元，按月还本付息，资金更灵活，理财更安心";
             debx.setVisibility(View.VISIBLE);
             txt_debx.setText(Html.fromHtml(html_debx));
         }
@@ -99,13 +100,13 @@ public class InvestDetailInfoFragment extends Fragment {
         if (repayment == 0) {
             txt_repayment.setText("一次还本付息");
         } else if (repayment == 1) {
-            txt_repayment.setText("先息后本(月)");
+            txt_repayment.setText("先息后本(按月付息)");
         } else if (repayment == 2) {
             txt_repayment.setText("等额本息");
         } else if (repayment == 3) {
-            txt_repayment.setText("先息后本(季)");
+            txt_repayment.setText("先息后本(按季付息)");
         }
-        year_income.setText(product.getYear_income());
+        year_income.setText(product.getYear_income()+"%");
         name.setText(product.getName());
         threshold_amount.setText(product.getThreshold_amount() + "元起购");
         increasing_amount.setText(product.getIncreasing_amount() + "元递增");
@@ -123,7 +124,24 @@ public class InvestDetailInfoFragment extends Fragment {
         }
         intro.setText(product.getIntro());
         borrower_intro.setText(product.getBorrower_intro());
-        progressWheel.setProgress(product.getRate()*18/5);
+        final Handler mHandler = new Handler();
+        mHandler.postDelayed(new Runnable() {
+
+            @Override
+            public void run()
+            {
+                if(index<=(int)(product.getRate()*18/5)){
+                    progressWheel.setProgress(index);
+                    index++;
+                    mHandler.postDelayed(this, 5);
+                }else{
+                    mHandler.removeCallbacks(this);
+                }
+            }
+        },1000);
+
+       // progressWheel.setProgress(product.getRate()*18/5);
+       // progressWheel.startSpinning();
 
 
     }

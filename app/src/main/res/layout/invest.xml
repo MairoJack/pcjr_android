@@ -92,7 +92,7 @@
                         android:layout_centerVertical="true"
                         android:layout_marginLeft="20dp"
                         android:text="投资金额"
-                        android:textSize="20dp" />
+                        android:textSize="@dimen/invest_left_text" />
 
                     <EditText
                         android:id="@+id/txt_invest_amount"
@@ -160,7 +160,7 @@
                         android:layout_marginLeft="20dp"
                         android:focusable="true"
                         android:text="可用余额"
-                        android:textSize="20dp" />
+                        android:textSize="@dimen/invest_left_text" />
 
                     <TextView
                         android:id="@+id/txt_balance"
@@ -171,7 +171,7 @@
                         android:layout_marginRight="10dp"
                         tools:text="8999833827.80元"
                         android:textColor="#f49d18"
-                        android:textSize="20dp" />
+                        android:textSize="@dimen/invest_left_text" />
                 </RelativeLayout>
 
                 <RelativeLayout
@@ -187,7 +187,7 @@
                         android:layout_centerVertical="true"
                         android:layout_marginLeft="20dp"
                         android:text="回款方式"
-                        android:textSize="20dp" />
+                        android:textSize="@dimen/invest_left_text" />
 
                     <TextView
                         android:id="@+id/txt_repayment"
@@ -197,7 +197,7 @@
                         android:layout_alignParentRight="true"
                         android:layout_marginRight="10dp"
                         tools:text="先息后本(按月付息)"
-                        android:textSize="20dp" />
+                        android:textSize="@dimen/invest_left_text" />
 
                 </RelativeLayout>
 
@@ -214,7 +214,7 @@
                         android:layout_centerVertical="true"
                         android:layout_marginLeft="20dp"
                         android:text="项目期限"
-                        android:textSize="20dp" />
+                        android:textSize="@dimen/invest_left_text" />
 
                     <TextView
                         android:id="@+id/txt_month"
@@ -224,7 +224,7 @@
                         android:layout_alignParentRight="true"
                         android:layout_marginRight="10dp"
                         tools:text="3个月"
-                        android:textSize="20dp" />
+                        android:textSize="@dimen/invest_left_text" />
 
                 </RelativeLayout>
                 <RelativeLayout
@@ -240,7 +240,7 @@
                         android:layout_centerVertical="true"
                         android:layout_marginLeft="20dp"
                         android:text="年化收益"
-                        android:textSize="20dp" />
+                        android:textSize="@dimen/invest_left_text" />
 
                     <TextView
                         android:id="@+id/txt_year_income"
@@ -250,7 +250,7 @@
                         android:layout_alignParentRight="true"
                         android:layout_marginRight="10dp"
                         tools:text="7.00%"
-                        android:textSize="20dp" />
+                        android:textSize="@dimen/invest_left_text" />
 
                 </RelativeLayout>
                 <RelativeLayout
@@ -266,7 +266,7 @@
                         android:layout_centerVertical="true"
                         android:layout_marginLeft="20dp"
                         android:text="首次还息日期"
-                        android:textSize="20dp" />
+                        android:textSize="@dimen/invest_left_text" />
 
                     <TextView
                         android:id="@+id/txt_repayment_date"
@@ -276,7 +276,7 @@
                         android:layout_alignParentRight="true"
                         android:layout_marginRight="10dp"
                         tools:text="2016-04-22"
-                        android:textSize="20dp" />
+                        android:textSize="@dimen/invest_left_text" />
 
                 </RelativeLayout>
             </LinearLayout>
@@ -294,7 +294,7 @@
                     android:layout_height="wrap_content"
                     android:text="购买时请确保可用余额资金充足"
                     android:textColor="#333"
-                    android:textSize="17dp" />
+                    android:textSize="15dp" />
 
             </LinearLayout>
 

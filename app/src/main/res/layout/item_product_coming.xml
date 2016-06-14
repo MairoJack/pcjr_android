@@ -7,18 +7,14 @@
     android:background="#FFFFFF">
 
 
-    <com.pcjr.utils.RotateTextView
-        android:paddingLeft="4dp"
-        android:paddingBottom="10dp"
+    <ImageView
         android:id="@+id/rtv"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
+        android:layout_width="55dp"
+        android:layout_height="55dp"
         android:layout_alignParentRight="true"
         android:layout_alignParentTop="true"
-        android:background="@drawable/redtypebg"
-        tools:text="一次还本付息"
-        android:textColor="#FFFFFF"
-        android:textSize="8dp" />
+        android:src="@drawable/kntqhk"
+        />
 
     <TextView
         android:id="@+id/goodname"
@@ -94,7 +90,7 @@
                     android:layout_height="wrap_content"
                     tools:text="6.90"
                     android:textColor="#FD7C21"
-                    android:textSize="26dp" />
+                    android:textSize="@dimen/item_product_text_size" />
 
                 <TextView
                     android:id="@+id/income1"
@@ -138,7 +134,7 @@
                     android:layout_height="wrap_content"
                     tools:text="12"
                     android:textColor="#FD7C21"
-                    android:textSize="26dp" />
+                    android:textSize="@dimen/item_product_text_size" />
 
                 <TextView
                     android:id="@+id/month1"
@@ -174,7 +170,7 @@
                 android:layout_marginTop="15dp"
                 tools:text="500"
                 android:textColor="#FD7C21"
-                android:textSize="26dp" />
+                android:textSize="@dimen/item_product_text_size" />
 
 
         </RelativeLayout>

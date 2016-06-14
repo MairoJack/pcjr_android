@@ -48,14 +48,23 @@ public class WebViewActivity extends Activity {
     }
     private void initData(){
         Intent intent = getIntent();
+        WebSettings webSettings = webView.getSettings();
+        webSettings.setJavaScriptEnabled(true);
+        webSettings
+                .setUserAgentString(webSettings.getUserAgentString() + "NewpcjrApp");
         webView.setWebViewClient(new WebViewClient(){
             @Override
             public boolean shouldOverrideUrlLoading(WebView view, String url) {
                 view.loadUrl(url);
                 return true;
             }
+
+            @Override
+            public void onPageFinished(WebView view, String url) {
+                dialog.dismiss();
+            }
         });
-        webView.setWebChromeClient(new WebChromeClient() {
+        /*webView.setWebChromeClient(new WebChromeClient() {
             @Override
             public void onProgressChanged(WebView view, int newProgress) {
                 if (newProgress == 100) {
@@ -65,7 +74,7 @@ public class WebViewActivity extends Activity {
                 }
 
             }
-        });
+        });*/
         title.setText(intent.getStringExtra("title"));
         webView.getSettings().setCacheMode(WebSettings.LOAD_CACHE_ELSE_NETWORK);
         webView.loadUrl(String.valueOf(intent.getStringExtra("url")));
