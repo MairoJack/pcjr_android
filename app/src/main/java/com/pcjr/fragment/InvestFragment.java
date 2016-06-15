@@ -6,11 +6,14 @@ import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import com.pcjr.R;
 import com.pcjr.adapter.TabFragmentAdapter;
+import com.pcjr.common.Constant;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -60,6 +63,7 @@ public class InvestFragment extends Fragment
 		viewPager.setAdapter(fragmentPagerAdapter);
 		viewPager.setOffscreenPageLimit(4);
 		tabLayout.setupWithViewPager(viewPager);
+        tabLayout.getTabAt(Constant.TYPE).select();
 	}
 
 	public static Fragment newInstance(String text) {

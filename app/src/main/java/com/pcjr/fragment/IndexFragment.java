@@ -130,11 +130,13 @@ public class IndexFragment extends Fragment implements BaseSliderView.OnSliderCl
                 getActivity().overridePendingTransition(R.anim.push_left_in, R.anim.push_left_out);
             }
         });
+        final Bundle bundle = new Bundle();
         dcxa.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 MainActivity mainActivity  = (MainActivity) getContext();
                 mainActivity.setCurrentTab(1);
+                Constant.TYPE = 1;
             }
         });
         gtma.setOnClickListener(new View.OnClickListener() {
@@ -142,6 +144,8 @@ public class IndexFragment extends Fragment implements BaseSliderView.OnSliderCl
             public void onClick(View v) {
                 MainActivity mainActivity  = (MainActivity) getContext();
                 mainActivity.setCurrentTab(1);
+                Constant.TYPE = 2;
+
             }
         });
         zlbh.setOnClickListener(new View.OnClickListener() {
@@ -149,6 +153,8 @@ public class IndexFragment extends Fragment implements BaseSliderView.OnSliderCl
             public void onClick(View v) {
                 MainActivity mainActivity  = (MainActivity) getContext();
                 mainActivity.setCurrentTab(1);
+                Constant.TYPE = 3;
+
             }
         });
         all_invest.setOnClickListener(new View.OnClickListener() {
@@ -156,6 +162,7 @@ public class IndexFragment extends Fragment implements BaseSliderView.OnSliderCl
             public void onClick(View v) {
                 MainActivity mainActivity  = (MainActivity) getContext();
                 mainActivity.setCurrentTab(1);
+                Constant.TYPE = 0;
             }
         });
 

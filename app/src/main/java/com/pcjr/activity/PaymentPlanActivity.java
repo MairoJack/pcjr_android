@@ -2,9 +2,9 @@ package com.pcjr.activity;
 
 import android.app.Activity;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.view.KeyEvent;
 import android.view.View;
-import android.widget.DatePicker;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
@@ -15,10 +15,17 @@ import com.google.gson.reflect.TypeToken;
 import com.pcjr.R;
 import com.pcjr.adapter.PaymentPlanListViewAdapter;
 import com.pcjr.common.Constant;
+import com.pcjr.decorators.DotDecorator;
+import com.pcjr.decorators.DotGrayDecorator;
 import com.pcjr.model.PaymentPlan;
 import com.pcjr.service.ApiService;
 import com.pcjr.utils.DateUtil;
 import com.pcjr.utils.RetrofitUtils;
+import com.prolificinteractive.materialcalendarview.CalendarDay;
+import com.prolificinteractive.materialcalendarview.MaterialCalendarView;
+import com.prolificinteractive.materialcalendarview.OnDateSelectedListener;
+import com.prolificinteractive.materialcalendarview.OnMonthChangedListener;
+
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -43,13 +50,14 @@ public class PaymentPlanActivity extends Activity {
     private LinearLayout empty;
 
     private PaymentPlanListViewAdapter adapter;
-    private DatePicker datePicker;
+    private MaterialCalendarView calendarView;
     private RelativeLayout back;
     private ListView listView;
 
     private int year, month;
     private int pageNow = 1;
     private List<PaymentPlan> list = new ArrayList<>();
+    private List<PaymentPlan> day_list = new ArrayList<>();
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.payment_plan);
@@ -64,7 +72,7 @@ public class PaymentPlanActivity extends Activity {
 
 
         listView = (ListView) findViewById(R.id.list_view);
-        datePicker = (DatePicker) findViewById(R.id.datepicker);
+        calendarView = (MaterialCalendarView) findViewById(R.id.calendarView);
         back = (RelativeLayout) findViewById(R.id.back);
 
         //下拉刷新
@@ -97,19 +105,26 @@ public class PaymentPlanActivity extends Activity {
         });
 
 
-
-
-        datePicker.init(datePicker.getYear(), datePicker.getMonth(), datePicker.getDayOfMonth(), new DatePicker.OnDateChangedListener() {
+        DotGrayDecorator dotGrayDecorator = new DotGrayDecorator();
+        calendarView.addDecorator(dotGrayDecorator);
+        calendarView.setOnMonthChangedListener(new OnMonthChangedListener() {
             @Override
-            public void onDateChanged(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
-                year = datePicker.getYear();
-                month = datePicker.getMonth() + 1;
+            public void onMonthChanged(MaterialCalendarView widget, CalendarDay date) {
+                year = date.getYear();
+                month = date.getMonth()+1;
                 mPtrFrame.post(new Runnable() {
                     @Override
                     public void run() {
                         mPtrFrame.autoRefresh();
                     }
                 });
+            }
+        });
+
+        calendarView.setOnDateChangedListener(new OnDateSelectedListener() {
+            @Override
+            public void onDateSelected(@NonNull MaterialCalendarView widget, @NonNull CalendarDay date, boolean selected) {
+                loadData(date.getDay());
             }
         });
 
@@ -126,7 +141,7 @@ public class PaymentPlanActivity extends Activity {
         Date date = new Date();
         year = DateUtil.getYearOfDate(date);
         month = DateUtil.getMonthOfDate(date);
-        adapter = new PaymentPlanListViewAdapter(list, PaymentPlanActivity.this);
+        adapter = new PaymentPlanListViewAdapter(day_list, PaymentPlanActivity.this);
         listView.setAdapter(adapter);
 
         //自动刷新
@@ -149,15 +164,33 @@ public class PaymentPlanActivity extends Activity {
     }
 
 
-
+    public void loadData(int day){
+        day_list.clear();
+        for(PaymentPlan pp :list){
+            Date date = new Date(pp.getEstimated_time()*1000);
+            if(DateUtil.getDayOfDate(date) == day){
+                day_list.add(pp);
+                adapter.notifyDataSetChanged();
+            }
+        }
+        if (day_list.isEmpty()) {
+            empty.setVisibility(View.VISIBLE);
+            loadMoreListViewContainer.setVisibility(View.INVISIBLE);
+        } else {
+            empty.setVisibility(View.INVISIBLE);
+            loadMoreListViewContainer.setVisibility(View.VISIBLE);
+        }
+    }
     public void loadData(){
         ApiService service = RetrofitUtils.createApi(ApiService.class);
         Call<JsonObject> call = service.getMemberRepaymentData(Constant.access_token, year, month,pageNow,Constant.PAGESIZE);
         call.enqueue(new Callback<JsonObject>() {
             @Override
             public void onResponse(Call<JsonObject> call, Response<JsonObject> response) {
-                if (pageNow == 1)
+                if (pageNow == 1) {
+                    day_list.clear();
                     list.clear();
+                }
                 mPtrFrame.refreshComplete();
                 if (response.isSuccessful()) {
                     JsonObject json = response.body();
@@ -167,11 +200,20 @@ public class PaymentPlanActivity extends Activity {
                         temps = gson.fromJson(json.get("data"), new TypeToken<List<PaymentPlan>>() {
                         }.getType());
                         list.addAll(temps);
+                        day_list.addAll(temps);
+
+
                     }
-                    if (list.isEmpty()) {
+                    if (day_list.isEmpty()) {
                         empty.setVisibility(View.VISIBLE);
                         loadMoreListViewContainer.setVisibility(View.INVISIBLE);
                     } else {
+                        for(PaymentPlan pp:list){
+                            DotDecorator dot  = new DotDecorator();
+                            dot.setDate(new Date(pp.getEstimated_time()*1000));
+                            calendarView.addDecorator(dot);
+                        }
+
                         empty.setVisibility(View.INVISIBLE);
                         loadMoreListViewContainer.setVisibility(View.VISIBLE);
                     }

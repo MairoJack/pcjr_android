@@ -11,13 +11,14 @@ import android.view.ViewGroup;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
 
-import com.bigkoo.alertview.AlertView;
+
 import com.bigkoo.alertview.OnItemClickListener;
 import com.pcjr.R;
 import com.pcjr.activity.AboutusActivity;
 import com.pcjr.activity.NewsActivity;
 import com.pcjr.activity.TestActivity;
 import com.pcjr.activity.WebViewActivity;
+import com.pcjr.plugins.AlertView;
 
 
 public class MoreFragment extends Fragment {

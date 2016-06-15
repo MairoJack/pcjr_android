@@ -29,7 +29,7 @@ public class ColoredSnackbar {
         if (snackBarView != null) {
             snackBarView.setBackgroundColor(colorId);
             TextView text = (TextView) snackBarView.findViewById(R.id.snackbar_text);
-            text.setTextColor(0xffffffff);
+            text.setTextColor(0xff6a5107);
         }
 
         return snackbar;

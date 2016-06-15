@@ -52,4 +52,5 @@ dependencies {
     compile 'com.github.iwgang:countdownview:1.2'
     compile 'com.androidadvance:topsnackbar:0.0.9'
     compile files('libs/Xg_sdk_v2.46_20160602_1638.jar')
+    compile 'com.prolificinteractive:material-calendarview:1.4.0'
 }

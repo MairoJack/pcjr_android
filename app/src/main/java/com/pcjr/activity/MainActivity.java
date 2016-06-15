@@ -63,6 +63,7 @@ public class MainActivity extends FragmentActivity implements BottomNavigatorVie
 
     @Override
     public void onBottomNavigatorViewItemClick(int position, View view) {
+        Constant.TYPE = 0;
         if (position == 2) {
             if (Constant.isLogin && Constant.isGestureLogin) {
                 setCurrentTab(position);

@@ -136,13 +136,13 @@ public class RegistActivity extends Activity implements View.OnClickListener
                 if (response.isSuccessful()) {
                     JsonObject json = response.body();
                     if (json.get("success").getAsBoolean()) {
-                        TSnackbar snackbar = TSnackbar.make(login,json.get("message").getAsString(), TSnackbar.LENGTH_SHORT);
+                        TSnackbar snackbar = TSnackbar.make(findViewById(android.R.id.content),json.get("message").getAsString(), TSnackbar.LENGTH_SHORT);
                         ColoredSnackbar.confirm(snackbar).show();
                         finish();
-                        startActivity(new Intent(RegistActivity.this, LoginFragment.class));
+                        startActivity(new Intent(RegistActivity.this, LoginActivity.class));
                         overridePendingTransition(R.anim.push_right_in, R.anim.push_right_out);
                     } else {
-                        TSnackbar snackbar = TSnackbar.make(login,json.get("message").getAsString(), TSnackbar.LENGTH_SHORT);
+                        TSnackbar snackbar = TSnackbar.make(findViewById(android.R.id.content),json.get("message").getAsString(), TSnackbar.LENGTH_SHORT);
                         ColoredSnackbar.warning(snackbar).show();
                     }
                 }

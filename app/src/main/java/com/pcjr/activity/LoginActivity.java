@@ -155,14 +155,7 @@ public class LoginActivity extends Activity implements View.OnClickListener {
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         if (keyCode == KeyEvent.KEYCODE_BACK) {
-            String tag = getIntent().getStringExtra("tag");
-            if (tag != null && tag.equals("invest")) {
-                finish();
-            } else {
-                finish();
-                startActivity(new Intent(LoginActivity.this, MainActivity.class));
-            }
-
+            finish();
         }
         return false;
 

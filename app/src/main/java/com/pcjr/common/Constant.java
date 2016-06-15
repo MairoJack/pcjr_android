@@ -24,7 +24,7 @@ public class Constant extends Application{
     public static boolean isGestureLogin = false;       //手势登录
     public static String DEVICETOKEN;                   // 设备token
     public static String realname;
-
+    public static int TYPE = 0;
     //手势密码点的状态
     public static final int POINT_STATE_NORMAL = 0;     // 正常状态
     public static final int POINT_STATE_SELECTED = 1;   // 按下状态
