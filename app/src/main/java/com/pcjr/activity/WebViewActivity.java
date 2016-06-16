@@ -62,6 +62,7 @@ public class WebViewActivity extends Activity {
             @Override
             public void onPageFinished(WebView view, String url) {
                 dialog.dismiss();
+                webView.loadUrl("javascript:appdeletehead()");
             }
         });
         /*webView.setWebChromeClient(new WebChromeClient() {
@@ -78,6 +79,7 @@ public class WebViewActivity extends Activity {
         title.setText(intent.getStringExtra("title"));
         webView.getSettings().setCacheMode(WebSettings.LOAD_CACHE_ELSE_NETWORK);
         webView.loadUrl(String.valueOf(intent.getStringExtra("url")));
+
     }
 
     @Override

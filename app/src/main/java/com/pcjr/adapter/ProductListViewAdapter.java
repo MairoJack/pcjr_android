@@ -134,10 +134,10 @@ public class ProductListViewAdapter extends BaseAdapter {
             if (preview_repayment == 0) {
                 listItemView.rtv.setVisibility(View.GONE);
             } else if (preview_repayment == 1) {
-                if(product.getStatus() == 4) {
-                    listItemView.rtv.setImageResource(R.drawable.kntqhk2);
-                }else{
+                if(product.getStatus() == 1) {
                     listItemView.rtv.setImageResource(R.drawable.kntqhk);
+                }else{
+                    listItemView.rtv.setImageResource(R.drawable.kntqhk2);
                 }
             }
         }

@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.ListView;
 import android.widget.ScrollView;
+import android.widget.TextView;
 
 
 import com.daimajia.slider.library.Animations.DescriptionAnimation;
@@ -42,6 +43,8 @@ public class TestActivity extends Activity implements BaseSliderView.OnSliderCli
     private ProgressWheel progressWheel;
     private DropDownMenu mMenu;
     private ScrollView scrollView;
+
+    private TextView but1,but2,but3,but4;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         setContentView(R.layout.test);
@@ -56,7 +59,7 @@ public class TestActivity extends Activity implements BaseSliderView.OnSliderCli
 
         final String[] strings=new String[]{"选择城市"};
 
-        mMenu=(DropDownMenu)findViewById(R.id.menu);
+       /* mMenu=(DropDownMenu)findViewById(R.id.menu);
         mMenu.setmMenuCount(1);//Menu的个数
         mMenu.setmShowCount(6);//Menu展开list数量太多是只显示的个数
         mMenu.setShowCheck(true);//是否显示展开list的选中项
@@ -83,7 +86,7 @@ public class TestActivity extends Activity implements BaseSliderView.OnSliderCli
         items.add(arr1);
         //items.add(arr2);
         //items.add(arr3);
-        mMenu.setmMenuItems(items);
+        mMenu.setmMenuItems(items);*/
 
         //scrollView = (ScrollView) findViewById(R.id.scroll_view);
         //mPtrFrame = (PtrClassicFrameLayout) findViewById(R.id.list_view_with_empty_view_fragment_ptr_frame);
@@ -111,9 +114,59 @@ public class TestActivity extends Activity implements BaseSliderView.OnSliderCli
         CountdownView mCvCountdownView = (CountdownView)findViewById(R.id.cv_countdown);
         mCvCountdownView.start(995550000); // Millisecond
 
+
+        but1 = (TextView) findViewById(R.id.but1);
+        but2 = (TextView) findViewById(R.id.but2);
+        but3 = (TextView) findViewById(R.id.but3);
+        but4 = (TextView) findViewById(R.id.but4);
+
+        but1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                restButton();
+                but1.setBackgroundResource(R.drawable.border_bg_orange_left_radius);
+                but1.getBackground().setAlpha(255);
+                but1.setTextColor(Color.parseColor("#FFFFFF"));
+            }
+        });
+        but2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                restButton();
+                but2.setBackgroundColor(Color.parseColor("#FF6602"));
+                but2.setTextColor(Color.parseColor("#FFFFFF"));
+            }
+        });
+        but3.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                restButton();
+                but3.setBackgroundColor(Color.parseColor("#FF6602"));
+                but3.setTextColor(Color.parseColor("#FFFFFF"));
+            }
+        });
+        but4.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                restButton();
+                but4.setBackgroundResource(R.drawable.border_bg_orange_right_radius);
+                but4.getBackground().setAlpha(255);
+                but4.setTextColor(Color.parseColor("#FFFFFF"));
+            }
+        });
         super.onCreate(savedInstanceState);
     }
 
+    public void restButton(){
+        but1.getBackground().setAlpha(0);
+        but2.getBackground().setAlpha(0);
+        but3.getBackground().setAlpha(0);
+        but4.getBackground().setAlpha(0);
+        but1.setTextColor(Color.parseColor("#FF6602"));
+        but2.setTextColor(Color.parseColor("#FF6602"));
+        but3.setTextColor(Color.parseColor("#FF6602"));
+        but4.setTextColor(Color.parseColor("#FF6602"));
+    }
     public void intiSlider() {
 
 

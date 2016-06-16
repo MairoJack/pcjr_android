@@ -64,7 +64,7 @@ public class MoreFragment extends Fragment {
                 startActivity(new Intent(getActivity(),TestActivity.class));
             }
         });
-        kefu.setOnClickListener(new View.OnClickListener() {
+        /*kefu.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 new AlertView("皮城金融竭诚为您服务", "服务时间：9:00-20:00", "取消", null,
@@ -78,7 +78,7 @@ public class MoreFragment extends Fragment {
                     }
                 }).show();
             }
-        });
+        });*/
     }
 
     public static Fragment newInstance(String text) {

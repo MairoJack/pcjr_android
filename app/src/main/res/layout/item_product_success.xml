@@ -88,7 +88,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     tools:text="6.90"
-                    android:textColor="#47aef0"
+                    android:textColor="#333333"
                     android:textSize="@dimen/item_product_text_size" />
 
                 <TextView
@@ -96,7 +96,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="%"
-                    android:textColor="#47aef0"
+                    android:textColor="#333333"
                     android:textSize="16dp" />
             </LinearLayout>
 
@@ -132,14 +132,14 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     tools:text="12"
-                    android:textColor="#47aef0"
+                    android:textColor="#333333"
                     android:textSize="@dimen/item_product_text_size" />
 
                 <TextView
                     android:id="@+id/month1"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textColor="#47aef0"
+                    android:textColor="#333333"
                     android:textSize="16dp" />
             </LinearLayout>
 
@@ -167,7 +167,7 @@
                 android:layout_centerHorizontal="true"
                 android:layout_marginTop="15dp"
                 tools:text="500"
-                android:textColor="#47aef0"
+                android:textColor="#333333"
                 android:textSize="@dimen/item_product_text_size" />
 
 
@@ -198,7 +198,7 @@
                 android:layout_centerHorizontal="true"
                 android:layout_centerVertical="true"
                 android:text="募集完成"
-                android:textColor="#47aef0"
+                android:textColor="#333333"
                 android:textSize="11dp"
                 />
         </RelativeLayout>

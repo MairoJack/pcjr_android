@@ -122,7 +122,7 @@ public class InvestRecordsActivity extends Activity{
         mMenu.setmMenuCount(1);//Menu的个数
         mMenu.setmShowCount(6);//Menu展开list数量太多是只显示的个数
         mMenu.setShowCheck(true);//是否显示展开list的选中项
-        mMenu.setmMenuTitleTextSize(16);//Menu的文字大小
+        mMenu.setmMenuTitleTextSize(20);//Menu的文字大小
         mMenu.setmMenuTitleTextColor(Color.WHITE);//Menu的文字颜色
         mMenu.setmMenuPressedTitleTextColor(Color.WHITE);
         mMenu.setmMenuListTextSize(16);//Menu展开list的文字大小

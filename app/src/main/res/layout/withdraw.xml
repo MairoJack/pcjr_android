@@ -57,14 +57,14 @@
                 android:layout_centerHorizontal="true"
                 android:layout_centerVertical="true"
                 android:text="账户提现"
-                android:textColor="#16B0F1"
+                android:textColor="@color/orange"
                 android:textSize="18dp" />
 
             <View
                 android:layout_width="match_parent"
                 android:layout_height="2dp"
                 android:layout_alignParentBottom="true"
-                android:background="#16B0F1" />
+                android:background="@color/orange" />
         </RelativeLayout>
 
         <View
@@ -172,8 +172,8 @@
 
                     <ImageView
                         android:id="@+id/info"
-                        android:layout_width="32dp"
-                        android:layout_height="32dp"
+                        android:layout_width="26dp"
+                        android:layout_height="26dp"
                         android:layout_alignParentRight="true"
                         android:layout_centerVertical="true"
                         android:layout_marginRight="20dp"
@@ -205,7 +205,7 @@
                         android:layout_toRightOf="@+id/realname"
                         android:textColor="#c6c6c6"
                         android:textSize="@dimen/invest_left_text"
-                        android:text="大马" />
+                        tools:text="test" />
                 </RelativeLayout>
             </LinearLayout>
 
@@ -298,7 +298,7 @@
                         android:layout_toRightOf="@+id/mobile"
                         android:textColor="#c6c6c6"
                         android:textSize="@dimen/invest_left_text"
-                        android:text="130****1122" />
+                        tools:text="130****1122" />
 
                 </RelativeLayout>
 
@@ -364,8 +364,9 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
                 android:text="提现细则?"
-                android:textColor="#16b0f1"
-                android:textSize="18dp" />
+                android:textColor="@color/orange"
+                android:textSize="18dp"
+                android:layout_marginBottom="10dp"/>
         </LinearLayout>
     </ScrollView>
 </LinearLayout>

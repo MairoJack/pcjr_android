@@ -187,7 +187,7 @@ public class AlertView {
         if(cancel != null){
             tvAlertCancel.setVisibility(View.VISIBLE);
             tvAlertCancel.setText(cancel);
-            tvAlertCancel.setTextColor(Color.parseColor("#00abed"));
+            tvAlertCancel.setTextColor(Color.parseColor("#007aff"));
         }
         tvAlertCancel.setOnClickListener(new OnTextClickListener(CANCELPOSITION));
     }

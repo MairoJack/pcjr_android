@@ -206,6 +206,7 @@
             android:layout_marginTop="5dp"
             android:layout_toRightOf="@+id/txtname"
             android:background="@null"
+            android:inputType="phone"
             android:hint="请填写推荐人手机号(可选填)"
             android:singleLine="true"
             android:textSize="12dp" />
