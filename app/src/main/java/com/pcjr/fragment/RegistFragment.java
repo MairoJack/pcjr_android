@@ -139,7 +139,7 @@ public class RegistFragment extends Fragment implements View.OnClickListener,Val
                     JsonObject json = response.body();
                     if (json.get("success").getAsBoolean()) {
                         TSnackbar snackbar = TSnackbar.make(getView(),json.get("message").getAsString(), TSnackbar.LENGTH_SHORT);
-                        ColoredSnackbar.confirm(snackbar).show();
+                        ColoredSnackbar.warning(snackbar).show();
                         personFragment.getNavigator().showFragment(0);
                     } else {
                         TSnackbar snackbar = TSnackbar.make(getView(),json.get("message").getAsString(), TSnackbar.LENGTH_SHORT);

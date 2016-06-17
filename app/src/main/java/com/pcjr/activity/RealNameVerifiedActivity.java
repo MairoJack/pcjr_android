@@ -33,15 +33,12 @@ import retrofit2.Response;
  * 实名认证
  * Created by Mario on 2016/5/24.
  */
-public class RealNameVerifiedActivity extends Activity implements Validator.ValidationListener{
+public class RealNameVerifiedActivity extends Activity {
     private RelativeLayout back;
-    @NotEmpty(message = "真实姓名不能为空")
     private EditText txt_realname;
-    @NotEmpty(message = "身份证号码不能为空")
     private EditText txt_idcard;
     private Button btn_save;
 
-    private Validator validator;
     private ProgressDialog dialog;
 
     public void onCreate(Bundle savedInstanceState) {
@@ -57,14 +54,13 @@ public class RealNameVerifiedActivity extends Activity implements Validator.Vali
         txt_idcard = (EditText) findViewById(R.id.txt_idcard);
         back = (RelativeLayout) findViewById(R.id.back);
 
-        validator = new Validator(this);
-        validator.setValidationListener(this);
+
         dialog = new ProgressDialog(this, ProgressDialog.STYLE_SPINNER);
 
         btn_save.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                validator.validate();
+                verify();
             }
         });
         back.setOnClickListener(new View.OnClickListener() {
@@ -113,12 +109,21 @@ public class RealNameVerifiedActivity extends Activity implements Validator.Vali
 
     }
 
-    @Override
-    public void onValidationSucceeded() {
+    public void verify() {
         String realname = txt_realname.getText().toString().trim();
         String idcard = txt_idcard.getText().toString().trim();
         txt_realname.clearFocus();
         txt_idcard.clearFocus();
+        if (realname.equals("")) {
+            TSnackbar snackbar = TSnackbar.make(findViewById(android.R.id.content), "真实姓名不能为空", TSnackbar.LENGTH_SHORT);
+            ColoredSnackbar.warning(snackbar).show();
+            return;
+        }
+        if (idcard.equals("")) {
+            TSnackbar snackbar = TSnackbar.make(findViewById(android.R.id.content), "身份证号码不能为空", TSnackbar.LENGTH_SHORT);
+            ColoredSnackbar.warning(snackbar).show();
+            return;
+        }
         ApiService service = RetrofitUtils.createApi(ApiService.class);
         Call<JsonObject> call = service.verifyIdentity(Constant.BEARER+" "+Constant.access_token,realname,idcard);
         dialog.setMessage("正在提交...");
@@ -130,13 +135,14 @@ public class RealNameVerifiedActivity extends Activity implements Validator.Vali
                     JsonObject json = response.body();
                     if (json.get("success").getAsBoolean()) {
                         TSnackbar snackbar = TSnackbar.make(findViewById(android.R.id.content),"实名认证成功", TSnackbar.LENGTH_SHORT);
-                        ColoredSnackbar.confirm(snackbar).show();
+                        ColoredSnackbar.warning(snackbar).show();
 
                     } else {
-                        Toast.makeText(RealNameVerifiedActivity.this, json.get("message").toString(), Toast.LENGTH_SHORT).show();
+                        TSnackbar snackbar = TSnackbar.make(findViewById(android.R.id.content), json.get("message").getAsString(), TSnackbar.LENGTH_SHORT);
+                        ColoredSnackbar.warning(snackbar).show();
                     }
                 }else{
-                    TSnackbar snackbar = TSnackbar.make(btn_save,"认证出错", TSnackbar.LENGTH_SHORT);
+                    TSnackbar snackbar = TSnackbar.make(findViewById(android.R.id.content),"认证出错", TSnackbar.LENGTH_SHORT);
                     ColoredSnackbar.warning(snackbar).show();
                 }
                 dialog.dismiss();
@@ -148,20 +154,5 @@ public class RealNameVerifiedActivity extends Activity implements Validator.Vali
                 Toast.makeText(RealNameVerifiedActivity.this,"网络异常",Toast.LENGTH_SHORT).show();
             }
         });
-    }
-
-    @Override
-    public void onValidationFailed(List<ValidationError> errors) {
-        for (ValidationError error : errors) {
-            View view = error.getView();
-            String message = error.getCollatedErrorMessage(this);
-
-            // Display error messages ;)
-            if (view instanceof EditText) {
-                ((EditText) view).setError(message);
-            } else {
-                Toast.makeText(this, message, Toast.LENGTH_LONG).show();
-            }
-        }
     }
 }

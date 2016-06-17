@@ -190,8 +190,11 @@ public class WithdrawActivity extends Activity {
                         txt_realname.setText(data.get("realname").getAsString());
                         txt_mobile.setText(data.get("mobile").getAsString());
                     } else{
-                        TSnackbar snackbar = TSnackbar.make(findViewById(android.R.id.content),"获取用户提现信息失败", TSnackbar.LENGTH_SHORT);
-                        ColoredSnackbar.alert(snackbar).show();
+                        Intent intent = new Intent();
+                        intent.putExtra("error",json.get("message").getAsString());
+                        setResult(RESULT_FIRST_USER,intent);
+                        finish();
+                        overridePendingTransition(R.anim.push_right_in, R.anim.push_right_out);
                     }
                 }
             }
@@ -243,7 +246,7 @@ public class WithdrawActivity extends Activity {
                     JsonObject json = response.body();
                     if (!json.get("success").isJsonNull() && json.get("success").getAsBoolean()) {
                         TSnackbar snackbar = TSnackbar.make(findViewById(android.R.id.content), json.get("message").getAsString(), TSnackbar.LENGTH_SHORT);
-                        ColoredSnackbar.confirm(snackbar).show();
+                        ColoredSnackbar.warning(snackbar).show();
                     } else {
                         TSnackbar snackbar = TSnackbar.make(findViewById(android.R.id.content), json.get("message").getAsString(), TSnackbar.LENGTH_SHORT);
                         ColoredSnackbar.warning(snackbar).show();
@@ -283,7 +286,7 @@ public class WithdrawActivity extends Activity {
                     JsonObject json = response.body();
                     if (json.get("success").getAsBoolean()) {
                         TSnackbar snackbar = TSnackbar.make(findViewById(android.R.id.content),json.get("message").getAsString(), TSnackbar.LENGTH_SHORT);
-                        ColoredSnackbar.confirm(snackbar).show();
+                        ColoredSnackbar.warning(snackbar).show();
                         finish();
                         overridePendingTransition(R.anim.push_right_in, R.anim.push_right_out);
                     }else{

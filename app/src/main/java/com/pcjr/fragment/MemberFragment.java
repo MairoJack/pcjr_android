@@ -12,23 +12,31 @@ import android.view.ViewGroup;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.google.gson.Gson;
 import com.google.gson.JsonObject;
+import com.google.gson.reflect.TypeToken;
 import com.pcjr.R;
 import com.pcjr.activity.BankCardActivity;
 import com.pcjr.activity.CouponActivity;
 import com.pcjr.activity.FinancialRecordsActivity;
 import com.pcjr.activity.InvestRecordsActivity;
 import com.pcjr.activity.LoginActivity;
+import com.pcjr.activity.MainActivity;
 import com.pcjr.activity.MsgCenterActivity;
 import com.pcjr.activity.PaymentPlanActivity;
 import com.pcjr.activity.SafeSettingActivity;
 import com.pcjr.activity.TradeRecordsActivity;
 import com.pcjr.activity.WithdrawActivity;
+import com.pcjr.adapter.BankCardListViewAdapter;
 import com.pcjr.common.Constant;
+import com.pcjr.model.BankCard;
 import com.pcjr.service.ApiService;
 import com.pcjr.utils.RetrofitUtils;
 import com.pcjr.utils.SharedPreferenceUtil;
 
+import java.util.List;
+
+import cn.pedant.SweetAlert.SweetAlertDialog;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -37,36 +45,36 @@ import retrofit2.Response;
  * 用户中心
  * Created by Mario on 2016/5/23.
  */
-public class MemberFragment extends Fragment
-{
+public class MemberFragment extends Fragment {
 
     public static final String TAG = RegistFragment.class.getSimpleName();
 
-	private RelativeLayout financial_records,invest_records,trade_records,safe_setting,bank_card,msg_center,payment_plan,withdraw_recharge,coupon;
-	private TextView username,available_balance,sum_assets,uncollected_interest_sum;
+    private RelativeLayout financial_records, invest_records, trade_records, safe_setting, bank_card, msg_center, payment_plan, withdraw_recharge, coupon;
+    private TextView username, available_balance, sum_assets, uncollected_interest_sum;
+    private ApiService service;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        service = RetrofitUtils.createApi(ApiService.class);
 
     }
 
     @Override
-	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
-	{
-		return inflater.inflate(R.layout.usercenter, container, false);
-	}
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        return inflater.inflate(R.layout.usercenter, container, false);
+    }
 
-	@Override
-	public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
-		super.onViewCreated(view, savedInstanceState);
+    @Override
+    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
 
         username = (TextView) view.findViewById(R.id.username);
         available_balance = (TextView) view.findViewById(R.id.available_balance);
         sum_assets = (TextView) view.findViewById(R.id.sum_assets);
         uncollected_interest_sum = (TextView) view.findViewById(R.id.uncollected_interest_sum);
 
-		financial_records = (RelativeLayout) view.findViewById(R.id.financial_records);
+        financial_records = (RelativeLayout) view.findViewById(R.id.financial_records);
         invest_records = (RelativeLayout) view.findViewById(R.id.invest_records);
         trade_records = (RelativeLayout) view.findViewById(R.id.trade_records);
         safe_setting = (RelativeLayout) view.findViewById(R.id.safe_setting);
@@ -78,13 +86,13 @@ public class MemberFragment extends Fragment
         /**
          * 资金记录
          */
-		financial_records.setOnClickListener(new View.OnClickListener() {
-			@Override
-			public void onClick(View v) {
-				startActivity(new Intent(getActivity(), FinancialRecordsActivity.class));
-				getActivity().overridePendingTransition(R.anim.push_left_in, R.anim.push_left_out);
-			}
-		});
+        financial_records.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(getActivity(), FinancialRecordsActivity.class));
+                getActivity().overridePendingTransition(R.anim.push_left_in, R.anim.push_left_out);
+            }
+        });
         /**
          * 投资记录
          */
@@ -111,7 +119,7 @@ public class MemberFragment extends Fragment
         safe_setting.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(getActivity(), SafeSettingActivity.class));
+                getActivity().startActivityForResult(new Intent(getActivity(), SafeSettingActivity.class),Constant.SAFESETTING);
                 getActivity().overridePendingTransition(R.anim.push_left_in, R.anim.push_left_out);
             }
         });
@@ -151,8 +159,30 @@ public class MemberFragment extends Fragment
         withdraw_recharge.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(getActivity(), WithdrawActivity.class));
-                getActivity().overridePendingTransition(R.anim.push_left_in, R.anim.push_left_out);
+                Call<JsonObject> call = service.getMemberBankCardInfo(Constant.access_token);
+                call.enqueue(new Callback<JsonObject>() {
+                    @Override
+                    public void onResponse(Call<JsonObject> call, Response<JsonObject> response) {
+                        if (response.isSuccessful()) {
+                            JsonObject json = response.body();
+                            Gson gson = new Gson();
+                            List<BankCard> bankCards = null;
+                            if (json.get("data").getAsJsonArray().size() <= 0) {
+                                new SweetAlertDialog(getContext())
+                                        .setTitleText("请先添加银行卡")
+                                        .show();
+                            } else {
+                                getActivity().startActivityForResult(new Intent(getActivity(), WithdrawActivity.class), Constant.REQUSET);
+                                getActivity().overridePendingTransition(R.anim.push_left_in, R.anim.push_left_out);
+                            }
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(Call<JsonObject> call, Throwable t) {
+                    }
+                });
+
             }
         });
         /**
@@ -165,30 +195,30 @@ public class MemberFragment extends Fragment
                 getActivity().overridePendingTransition(R.anim.push_left_in, R.anim.push_left_out);
             }
         });
-		//initData();
-	}
+        //initData();
+    }
 
-	private void initData(){
-		ApiService service = RetrofitUtils.createApi(ApiService.class);
-		Call<JsonObject> callUsers = service.getMemberIndex(Constant.access_token);
-		callUsers.enqueue(new Callback<JsonObject>() {
-			@Override
-			public void onResponse(Call<JsonObject> call, Response<JsonObject> response) {
-                if(response.isSuccessful()){
+    private void initData() {
+        ApiService service = RetrofitUtils.createApi(ApiService.class);
+        Call<JsonObject> callUsers = service.getMemberIndex(Constant.access_token);
+        callUsers.enqueue(new Callback<JsonObject>() {
+            @Override
+            public void onResponse(Call<JsonObject> call, Response<JsonObject> response) {
+                if (response.isSuccessful()) {
                     JsonObject json = response.body();
                     username.setText(json.get("user_name").getAsString());
                     available_balance.setText(json.get("available_balance").getAsString());
                     sum_assets.setText(json.get("total").getAsString());
                     uncollected_interest_sum.setText(json.get("interest").getAsString());
                 }
-			}
+            }
 
-			@Override
-			public void onFailure(Call<JsonObject> call, Throwable t) {
-				Log.d("Mario", "onResponse:Throwable " + t);
-			}
-		});
-	}
+            @Override
+            public void onFailure(Call<JsonObject> call, Throwable t) {
+                Log.d("Mario", "onResponse:Throwable " + t);
+            }
+        });
+    }
 
     @Override
     public void onResume() {
@@ -206,8 +236,10 @@ public class MemberFragment extends Fragment
     }
 
 
-
     public static Fragment newInstance(String text) {
         return new MemberFragment();
     }
+
+
+
 }

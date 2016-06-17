@@ -209,8 +209,11 @@ public class InvestActivity extends Activity {
                         txt_year_income.setText(product.getYear_income()+"%");
                         txt_repayment_date.setText(DateUtil.transferLongToDate("yyyy-MM-dd",product.getRepayment_date()*1000));
                     } else{
-                        TSnackbar snackbar = TSnackbar.make(findViewById(android.R.id.content),"获取用户投资信息失败", TSnackbar.LENGTH_SHORT);
-                        ColoredSnackbar.alert(snackbar).show();
+                        Intent intent = new Intent();
+                        intent.putExtra("error",json.get("message").getAsString());
+                        setResult(RESULT_OK,intent);
+                        finish();
+                        overridePendingTransition(R.anim.push_right_in, R.anim.push_right_out);
                     }
                 }
             }
@@ -236,7 +239,7 @@ public class InvestActivity extends Activity {
                     JsonObject json = response.body();
                     if (json.get("success").getAsBoolean()) {
                         TSnackbar snackbar = TSnackbar.make(findViewById(android.R.id.content),json.get("message").getAsString(), TSnackbar.LENGTH_SHORT);
-                        ColoredSnackbar.confirm(snackbar).show();
+                        ColoredSnackbar.warning(snackbar).show();
                         finish();
                         startActivity(new Intent(InvestActivity.this, InvestRecordsActivity.class));
                         overridePendingTransition(R.anim.push_right_in, R.anim.push_right_out);

@@ -20,6 +20,7 @@ import com.pcjr.common.Constant;
 import com.pcjr.plugins.ColoredSnackbar;
 import com.pcjr.service.ApiService;
 import com.pcjr.utils.RetrofitUtils;
+import com.pcjr.utils.Validator;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -118,6 +119,11 @@ public class BindMobileActivity extends Activity {
             ColoredSnackbar.warning(snackbar).show();
             return;
         }
+        if(!Validator.isMobile(mobile)){
+            TSnackbar snackbar = TSnackbar.make(findViewById(android.R.id.content), "手机号格式错误", TSnackbar.LENGTH_SHORT);
+            ColoredSnackbar.warning(snackbar).show();
+            return;
+        }
         btn_checkcode.setClickable(false);
         btn_checkcode.setBackgroundResource(R.drawable.button_gray);
         time.start();
@@ -129,7 +135,7 @@ public class BindMobileActivity extends Activity {
                     JsonObject json = response.body();
                     if (!json.get("success").isJsonNull() && json.get("success").getAsBoolean()) {
                         TSnackbar snackbar = TSnackbar.make(findViewById(android.R.id.content), json.get("message").getAsString(), TSnackbar.LENGTH_SHORT);
-                        ColoredSnackbar.confirm(snackbar).show();
+                        ColoredSnackbar.warning(snackbar).show();
                     } else {
                         TSnackbar snackbar = TSnackbar.make(findViewById(android.R.id.content), json.get("message").getAsString(), TSnackbar.LENGTH_SHORT);
                         ColoredSnackbar.warning(snackbar).show();

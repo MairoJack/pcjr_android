@@ -13,6 +13,9 @@ import java.util.List;
  * Created by Mario on 2016/5/22.
  */
 public class Constant extends Application{
+    public static final int ERROR = 0;
+    public static final int REQUSET = 1;
+    public final static int SAFESETTING = 2;
 
     public final static int PAGESIZE = 15;              //分页大小
     public final static String BEARER = "Bearer";       //BEARER

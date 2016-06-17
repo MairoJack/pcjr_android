@@ -6,7 +6,9 @@ import android.content.Intent;
 import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.View;
+import android.widget.Toast;
 
 import com.google.gson.JsonObject;
 import com.pcjr.R;
@@ -22,6 +24,7 @@ import com.tencent.android.tpush.XGPushConfig;
 import com.tencent.android.tpush.XGPushManager;
 import com.tencent.android.tpush.service.XGPushService;
 
+import cn.pedant.SweetAlert.SweetAlertDialog;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -29,12 +32,13 @@ import retrofit2.Response;
 public class MainActivity extends FragmentActivity implements BottomNavigatorView.OnBottomNavigatorViewItemClickListener {
 
     private static final int DEFAULT_POSITION = 0;
-    public static final int REQUSET = 1;
+
     private FragmentNavigator mNavigator;
 
     // a simple custom bottom navigation view
     private BottomNavigatorView bottomNavigatorView;
     private int last_position = 0;
+    private long exitTime = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -68,12 +72,12 @@ public class MainActivity extends FragmentActivity implements BottomNavigatorVie
             if (Constant.isLogin && Constant.isGestureLogin) {
                 setCurrentTab(position);
             } else if (!Constant.isLogin) {
-                startActivityForResult(new Intent(MainActivity.this, LoginActivity.class), REQUSET);
+                startActivityForResult(new Intent(MainActivity.this, LoginActivity.class), Constant.REQUSET);
                 overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
             } else if (!Constant.isGestureLogin) {
                 SharedPreferenceUtil spu = new SharedPreferenceUtil(MainActivity.this, Constant.FILE);
                 if(spu.getOpenGesture()) {
-                    startActivityForResult(new Intent(MainActivity.this, GestureVerifyActivity.class), REQUSET);
+                    startActivityForResult(new Intent(MainActivity.this, GestureVerifyActivity.class), Constant.REQUSET);
                 }else{
                     setCurrentTab(position);
                 }
@@ -93,9 +97,14 @@ public class MainActivity extends FragmentActivity implements BottomNavigatorVie
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == REQUSET && resultCode == RESULT_OK) {
+        if (requestCode == Constant.REQUSET && resultCode == RESULT_OK) {
             setCurrentTab(2);
-            Log.d("Mario", "onActivityResult: " + data.getStringExtra("abc"));
+        }else if (requestCode == Constant.REQUSET && resultCode == RESULT_FIRST_USER){
+            new SweetAlertDialog(this)
+                    .setTitleText(data.getStringExtra("error"))
+                    .show();
+        }else if(requestCode == Constant.SAFESETTING && resultCode == RESULT_FIRST_USER){
+            setCurrentTab(0);
         }
     }
 
@@ -151,5 +160,20 @@ public class MainActivity extends FragmentActivity implements BottomNavigatorVie
     protected void onRestart() {
         super.onRestart();
         Log.d("Mario", "onRestart: ");
+    }
+
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if (keyCode == KeyEvent.KEYCODE_BACK) {
+            if ((System.currentTimeMillis() - exitTime) > 2000) {
+                Object mHelperUtils;
+                Toast.makeText(this, "再按一次退出程序", Toast.LENGTH_SHORT).show();
+                exitTime = System.currentTimeMillis();
+
+            } else {
+                finish();
+            }
+            return true;
+        }
+        return super.onKeyDown(keyCode, event);
     }
 }

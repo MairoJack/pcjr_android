@@ -150,7 +150,7 @@ public interface ApiService {
      * @return
      */
     @POST("member/verify_identity")
-    Call<JsonObject> verifyIdentity(@Header("Authorization") String header,@Header("realname") String realname,@Header("identity") String identity);
+    Call<JsonObject> verifyIdentity(@Header("Authorization") String header,@Field("realname") String realname,@Field("identity") String identity);
 
     /**
      * 获取实名认证信息

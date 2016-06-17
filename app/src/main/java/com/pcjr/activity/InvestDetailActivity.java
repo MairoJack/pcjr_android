@@ -38,6 +38,7 @@ import java.util.Date;
 import java.util.List;
 
 import cn.iwgang.countdownview.CountdownView;
+import cn.pedant.SweetAlert.SweetAlertDialog;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -126,12 +127,12 @@ public class InvestDetailActivity extends FragmentActivity
                                                 Bundle bundle = new Bundle();
                                                 bundle.putSerializable("product", product);
                                                 intent.putExtras(bundle);
-                                                startActivity(intent);
+                                                startActivityForResult(intent,0);
                                             }else{
                                                 intent = new Intent(InvestDetailActivity.this, LoginActivity.class);
                                                 intent.putExtra("tag","invest");
                                                 startActivity(intent);
-                                                overridePendingTransition(R.anim.slide_up_in, R.anim.slide_up_out);
+                                                overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
                                             }
                                         }
                                     });
@@ -189,6 +190,16 @@ public class InvestDetailActivity extends FragmentActivity
         }
         return false;
 
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if(requestCode == 0 && resultCode == RESULT_OK){
+            new SweetAlertDialog(this)
+                    .setTitleText(data.getStringExtra("error"))
+                    .show();
+        }
     }
 
 }

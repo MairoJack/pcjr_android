@@ -188,8 +188,8 @@ public class SafeSettingActivity extends Activity {
                             SharedPreferenceUtil spu = new SharedPreferenceUtil(SafeSettingActivity.this,Constant.FILE);
                             spu.clear();
                             Constant.clear();
+                            setResult(RESULT_FIRST_USER);
                             finish();
-                            startActivity(new Intent(SafeSettingActivity.this,MainActivity.class));
                             overridePendingTransition(R.anim.push_left_in, R.anim.push_left_out);
                         }else{
                             TSnackbar snackbar = TSnackbar.make(findViewById(android.R.id.content),"注销失败", TSnackbar.LENGTH_SHORT);

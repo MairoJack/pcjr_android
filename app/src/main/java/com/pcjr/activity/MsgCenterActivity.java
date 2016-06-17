@@ -109,6 +109,8 @@ public class MsgCenterActivity extends Activity{
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Intent intent = new Intent(MsgCenterActivity.this,MsgDetailActivity.class);
                 intent.putExtra("id",letters.get(position).getId());
+                letters.get(position).setRead_status(1);
+                adapter.notifyDataSetChanged();
                 startActivity(intent);
                 overridePendingTransition(R.anim.push_left_in, R.anim.push_left_out);
             }

@@ -24,6 +24,7 @@ import com.pcjr.model.BankCard;
 import com.pcjr.plugins.ColoredSnackbar;
 import com.pcjr.service.ApiService;
 import com.pcjr.utils.RetrofitUtils;
+import com.pcjr.utils.Validator;
 
 import java.util.List;
 
@@ -95,6 +96,7 @@ public class UnbindMobileActivity extends Activity {
             ColoredSnackbar.warning(snackbar).show();
             return;
         }
+
         Call<JsonObject> call = service.unbind_mobile(Constant.BEARER+" "+Constant.access_token, checkcode);
         call.enqueue(new Callback<JsonObject>() {
             @Override
@@ -128,7 +130,7 @@ public class UnbindMobileActivity extends Activity {
                     JsonObject json = response.body();
                     if (!json.get("success").isJsonNull() && json.get("success").getAsBoolean()) {
                         TSnackbar snackbar = TSnackbar.make(findViewById(android.R.id.content), json.get("message").getAsString(), TSnackbar.LENGTH_SHORT);
-                        ColoredSnackbar.confirm(snackbar).show();
+                        ColoredSnackbar.warning(snackbar).show();
                     } else {
                         TSnackbar snackbar = TSnackbar.make(findViewById(android.R.id.content), json.get("message").getAsString(), TSnackbar.LENGTH_SHORT);
                         ColoredSnackbar.warning(snackbar).show();

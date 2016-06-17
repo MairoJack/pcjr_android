@@ -116,7 +116,7 @@ public class ChangePasswordActivity extends Activity {
                         SharedPreferenceUtil spu = new SharedPreferenceUtil(ChangePasswordActivity.this,Constant.FILE);
                         spu.setPassword(newPassword);
                         TSnackbar snackbar = TSnackbar.make(findViewById(android.R.id.content),json.get("message").getAsString(), TSnackbar.LENGTH_SHORT);
-                        ColoredSnackbar.confirm(snackbar).show();
+                        ColoredSnackbar.warning(snackbar).show();
                         finish();
                         overridePendingTransition(R.anim.push_right_in, R.anim.push_right_out);
                     } else {

@@ -18,6 +18,8 @@ import com.pcjr.fragment.LoginFragment;
 import com.pcjr.plugins.ColoredSnackbar;
 import com.pcjr.service.ApiService;
 import com.pcjr.utils.RetrofitUtils;
+import com.pcjr.utils.Validator;
+
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -84,9 +86,7 @@ public class RegistActivity extends Activity implements View.OnClickListener
 		switch (v.getId()){
 			case R.id.login:
                 finish();
-                intent = new Intent(RegistActivity.this, LoginActivity.class);
-                startActivity(intent);
-                overridePendingTransition(R.anim.slide_up_in, R.anim.slide_up_out);
+                overridePendingTransition(R.anim.push_right_in, R.anim.push_right_out);
 				break;
 			case R.id.syxy:
                 intent = new Intent(RegistActivity.this,AgreementActivity.class);
@@ -126,6 +126,11 @@ public class RegistActivity extends Activity implements View.OnClickListener
             ColoredSnackbar.warning(snackbar).show();
             return;
         }
+        if(!recommend.equals("") && !Validator.isMobile(recommend)){
+            TSnackbar snackbar = TSnackbar.make(findViewById(android.R.id.content), "推荐人手机号错误", TSnackbar.LENGTH_SHORT);
+            ColoredSnackbar.warning(snackbar).show();
+            return;
+        }
         ApiService service = RetrofitUtils.createApi(ApiService.class);
         Call<JsonObject> call = service.register(username,password,recommend);
         dialog.setMessage("正在提交...");
@@ -137,7 +142,7 @@ public class RegistActivity extends Activity implements View.OnClickListener
                     JsonObject json = response.body();
                     if (json.get("success").getAsBoolean()) {
                         TSnackbar snackbar = TSnackbar.make(findViewById(android.R.id.content),json.get("message").getAsString(), TSnackbar.LENGTH_SHORT);
-                        ColoredSnackbar.confirm(snackbar).show();
+                        ColoredSnackbar.warning(snackbar).show();
                         finish();
                         //startActivity(new Intent(RegistActivity.this, LoginActivity.class));
                         overridePendingTransition(R.anim.push_right_in, R.anim.push_right_out);

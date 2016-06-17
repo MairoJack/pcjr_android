@@ -119,7 +119,6 @@ public class LoginActivity extends Activity implements View.OnClickListener {
                         spu.setIsFirst(false);
                         dialog.dismiss();
                         String tag = getIntent().getStringExtra("tag");
-                        finish();
                         if (tag != null && tag.equals("invest")) {
                             overridePendingTransition(R.anim.slide_down_in, R.anim.slide_down_out);
                         } else {
@@ -130,6 +129,7 @@ public class LoginActivity extends Activity implements View.OnClickListener {
                             setResult(RESULT_OK, new Intent());
                             overridePendingTransition(R.anim.push_right_in, R.anim.push_right_out);
                         }
+                        finish();
                     } else {
                         //Snackbar.make(getView(),"dsds",Snackbar.LENGTH_SHORT).show();
                         Toast.makeText(LoginActivity.this, json.get("status_code").toString() + ":" + json.get("message").toString(), Toast.LENGTH_SHORT).show();
