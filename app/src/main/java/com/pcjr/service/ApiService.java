@@ -35,6 +35,19 @@ public interface ApiService {
 
 
     /**
+     * 刷新token
+     * @param grant_type
+     * @param refresh_token
+     * @param client_id
+     * @param client_secret
+     * @return
+     */
+    @FormUrlEncoded
+    @POST("oauth/access_token")
+    Call<JsonObject> refreshToken(@Field("grant_type") String grant_type, @Field("refresh_token") String refresh_token, @Field("client_id") String client_id, @Field("client_secret") String client_secret);
+
+
+    /**
      * 用户登出
      * @param header
      * @return

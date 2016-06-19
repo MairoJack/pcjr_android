@@ -30,12 +30,6 @@ dependencies {
     //网络请求
     compile 'com.squareup.retrofit2:retrofit:2.0.2'
     compile 'com.squareup.retrofit2:converter-gson:2.0.0-beta4'
-    //图片轮播
-    compile 'com.squareup.picasso:picasso:2.3.2'
-    compile 'com.nineoldandroids:library:2.4.0'
-    compile 'com.daimajia.slider:library:1.1.5@aar'
-    //表单验证
-    compile 'com.mobsandgeeks:android-saripaar:2.0-SNAPSHOT'
     //Sweet Alert Dialog
     compile 'cn.pedant.sweetalert:library:1.3'
     //Material Dialogs
@@ -50,7 +44,14 @@ dependencies {
     compile 'com.bigkoo:alertview:1.0.2'
     //CountdownView
     compile 'com.github.iwgang:countdownview:1.2'
+    //顶部snackbar
     compile 'com.androidadvance:topsnackbar:0.0.9'
+    //信鸽推送
     compile files('libs/Xg_sdk_v2.46_20160602_1638.jar')
+    //日历
     compile 'com.prolificinteractive:material-calendarview:1.4.0'
+    //轮播
+    compile 'com.bigkoo:convenientbanner:2.0.5'
+    //图片加载
+    compile files('libs/universal-image-loader-1.9.5.jar')
 }

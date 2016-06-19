@@ -8,6 +8,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
+import android.widget.Toast;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
@@ -24,6 +25,10 @@ import com.pcjr.utils.RetrofitUtils;
 
 import java.util.List;
 
+import in.srain.cube.views.ptr.PtrClassicFrameLayout;
+import in.srain.cube.views.ptr.PtrDefaultHandler;
+import in.srain.cube.views.ptr.PtrFrameLayout;
+import in.srain.cube.views.ptr.PtrHandler;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -33,6 +38,7 @@ import retrofit2.Response;
  * Created by Mario on 2016/5/24.
  */
 public class BankCardActivity extends Activity {
+    private PtrClassicFrameLayout mPtrFrame;
     private RelativeLayout back;
     private Button btn_addbankcard;
     private ListView listView;
@@ -45,6 +51,7 @@ public class BankCardActivity extends Activity {
     }
 
     public void initView(){
+        mPtrFrame = (PtrClassicFrameLayout) findViewById(R.id.ptr_frame);
         listView = (ListView) findViewById(R.id.list_view);
         back = (RelativeLayout) findViewById(R.id.back);
         btn_addbankcard = (Button) findViewById(R.id.btn_addbankcard);
@@ -62,6 +69,21 @@ public class BankCardActivity extends Activity {
                 overridePendingTransition(R.anim.push_left_in, R.anim.push_left_out);
             }
         });
+        //下拉刷新
+        mPtrFrame.disableWhenHorizontalMove(true);
+        mPtrFrame.setLastUpdateTimeRelateObject(this);
+        mPtrFrame.setPtrHandler(new PtrHandler() {
+            @Override
+            public boolean checkCanDoRefresh(PtrFrameLayout frame, View content, View header) {
+                return PtrDefaultHandler.checkContentCanBePulledDown(frame, listView, header);
+            }
+
+            @Override
+            public void onRefreshBegin(PtrFrameLayout frame) {
+                initData();
+            }
+        });
+
     }
 
     public void initData(){
@@ -70,6 +92,7 @@ public class BankCardActivity extends Activity {
         call.enqueue(new Callback<JsonObject>() {
             @Override
             public void onResponse(Call<JsonObject> call, Response<JsonObject> response) {
+                mPtrFrame.refreshComplete();
                 if (response.isSuccessful()) {
                     JsonObject json = response.body();
                     Gson gson = new Gson();
@@ -81,7 +104,7 @@ public class BankCardActivity extends Activity {
                     if (json.get("realName") != null) {
                         Constant.realname = json.get("realName").getAsString();
                     }
-                    BankCardListViewAdapter adapter = new BankCardListViewAdapter(bankCards, BankCardActivity.this,json.get("realName").getAsString());
+                    adapter = new BankCardListViewAdapter(bankCards, BankCardActivity.this,json.get("realName").getAsString());
                     listView.setAdapter(adapter);
 
                 }
@@ -89,6 +112,8 @@ public class BankCardActivity extends Activity {
 
             @Override
             public void onFailure(Call<JsonObject> call, Throwable t) {
+                mPtrFrame.refreshComplete();
+                Toast.makeText(BankCardActivity.this,"网络异常",Toast.LENGTH_SHORT).show();
             }
         });
     }

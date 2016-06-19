@@ -3,7 +3,6 @@ package com.pcjr.activity;
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.os.Bundle;
-import android.support.design.widget.Snackbar;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
@@ -11,20 +10,13 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
-
 import com.androidadvance.topsnackbar.TSnackbar;
 import com.google.gson.JsonObject;
-import com.mobsandgeeks.saripaar.ValidationError;
-import com.mobsandgeeks.saripaar.Validator;
-import com.mobsandgeeks.saripaar.annotation.NotEmpty;
 import com.pcjr.R;
 import com.pcjr.common.Constant;
 import com.pcjr.plugins.ColoredSnackbar;
 import com.pcjr.service.ApiService;
 import com.pcjr.utils.RetrofitUtils;
-
-import java.util.List;
-
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;

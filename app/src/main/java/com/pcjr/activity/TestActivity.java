@@ -2,62 +2,73 @@
 package com.pcjr.activity;
 
 import android.app.Activity;
-import android.app.ProgressDialog;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.support.v4.view.ViewPager;
 import android.view.View;
-import android.widget.ListView;
 import android.widget.ScrollView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 
-import com.daimajia.slider.library.Animations.DescriptionAnimation;
-import com.daimajia.slider.library.SliderLayout;
-import com.daimajia.slider.library.SliderTypes.BaseSliderView;
-import com.daimajia.slider.library.SliderTypes.TextSliderView;
-import com.daimajia.slider.library.Tricks.ViewPagerEx;
+import com.bigkoo.convenientbanner.ConvenientBanner;
+import com.bigkoo.convenientbanner.holder.CBViewHolderCreator;
+import com.bigkoo.convenientbanner.listener.OnItemClickListener;
 import com.jayfang.dropdownmenu.DropDownMenu;
-import com.jayfang.dropdownmenu.OnMenuSelectedListener;
+import com.nostra13.universalimageloader.cache.disc.naming.Md5FileNameGenerator;
+import com.nostra13.universalimageloader.core.DisplayImageOptions;
+import com.nostra13.universalimageloader.core.ImageLoader;
+import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
+import com.nostra13.universalimageloader.core.assist.QueueProcessingType;
 import com.pcjr.R;
+import com.pcjr.model.FocusImg;
+import com.pcjr.plugins.NetworkImageHolderView;
 import com.pcjr.plugins.ProgressWheel;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 
 import cn.iwgang.countdownview.CountdownView;
 import in.srain.cube.views.ptr.PtrClassicFrameLayout;
-import in.srain.cube.views.ptr.PtrDefaultHandler;
-import in.srain.cube.views.ptr.PtrFrameLayout;
-import in.srain.cube.views.ptr.PtrHandler;
 
 
 /**
  * Created by Mario on 2016/5/5.
  */
 
-public class TestActivity extends Activity implements BaseSliderView.OnSliderClickListener, ViewPagerEx.OnPageChangeListener {
+public class TestActivity extends Activity implements ViewPager.OnPageChangeListener, OnItemClickListener
 
-    private SliderLayout sliderLayout;
+{
+
     private PtrClassicFrameLayout mPtrFrame;
     private ProgressWheel progressWheel;
     private DropDownMenu mMenu;
     private ScrollView scrollView;
+    private ConvenientBanner convenientBanner;
+    private TextView but1, but2, but3, but4;
 
-    private TextView but1,but2,but3,but4;
+    private String[] images = {"http://img2.imgtn.bdimg.com/it/u=3093785514,1341050958&fm=21&gp=0.jpg",
+            "http://img2.3lian.com/2014/f2/37/d/40.jpg",
+            "http://d.3987.com/sqmy_131219/001.jpg",
+            "http://img2.3lian.com/2014/f2/37/d/39.jpg",
+            "http://www.8kmm.com/UploadFiles/2012/8/201208140920132659.jpg",
+            "http://f.hiphotos.baidu.com/image/h%3D200/sign=1478eb74d5a20cf45990f9df460b4b0c/d058ccbf6c81800a5422e5fdb43533fa838b4779.jpg",
+            "http://f.hiphotos.baidu.com/image/pic/item/09fa513d269759ee50f1971ab6fb43166c22dfba.jpg"
+    };
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         setContentView(R.layout.test);
         //sliderLayout = (SliderLayout)findViewById(R.id.slider3);
-        progressWheel = (ProgressWheel) findViewById(R.id.pw_spinner);
+        //progressWheel = (ProgressWheel) findViewById(R.id.pw_spinner);
         //intiSlider();
-        progressWheel.setProgress(90);
+        //progressWheel.setProgress(90);
 
-        final String[] arr1=new String[]{"全部城市","北京","上海","广州","深圳"};
-        final String[] arr2=new String[]{"性别","男","女"};
-        final String[] arr3=new String[]{"全部年龄","10","20","30","40","50","60","70"};
+        final String[] arr1 = new String[]{"全部城市", "北京", "上海", "广州", "深圳"};
+        final String[] arr2 = new String[]{"性别", "男", "女"};
+        final String[] arr3 = new String[]{"全部年龄", "10", "20", "30", "40", "50", "60", "70"};
 
-        final String[] strings=new String[]{"选择城市"};
+        final String[] strings = new String[]{"选择城市"};
 
        /* mMenu=(DropDownMenu)findViewById(R.id.menu);
         mMenu.setmMenuCount(1);//Menu的个数
@@ -95,8 +106,8 @@ public class TestActivity extends Activity implements BaseSliderView.OnSliderCli
         //mPtrFrame.setLastUpdateTimeRelateObject(this);
 
         //sliderLayout = (SliderLayout) findViewById(R.id.slider);
-
-        //initSlider();
+        convenientBanner = (ConvenientBanner) findViewById(R.id.convenientBanner);
+        initSlider();
        /* mPtrFrame.setPtrHandler(new PtrHandler() {
             @Override
             public boolean checkCanDoRefresh(PtrFrameLayout frame, View content, View header) {
@@ -111,7 +122,7 @@ public class TestActivity extends Activity implements BaseSliderView.OnSliderCli
             }
         });*/
 
-        CountdownView mCvCountdownView = (CountdownView)findViewById(R.id.cv_countdown);
+        CountdownView mCvCountdownView = (CountdownView) findViewById(R.id.cv_countdown);
         mCvCountdownView.start(995550000); // Millisecond
 
 
@@ -157,7 +168,7 @@ public class TestActivity extends Activity implements BaseSliderView.OnSliderCli
         super.onCreate(savedInstanceState);
     }
 
-    public void restButton(){
+    public void restButton() {
         but1.getBackground().setAlpha(0);
         but2.getBackground().setAlpha(0);
         but3.getBackground().setAlpha(0);
@@ -167,34 +178,32 @@ public class TestActivity extends Activity implements BaseSliderView.OnSliderCli
         but3.setTextColor(Color.parseColor("#FF6602"));
         but4.setTextColor(Color.parseColor("#FF6602"));
     }
-    public void intiSlider() {
+
+    public void initSlider() {
+
+        initImageLoader();
+
+        FocusImg focusImg = new FocusImg();
+        focusImg.setImg_url("http://img2.3lian.com/2014/f2/37/d/40.jpg");
+        FocusImg focusImg1 = new FocusImg();
+        focusImg.setImg_url("http://d.3987.com/sqmy_131219/001.jpg");
+        FocusImg focusImg2 = new FocusImg();
+        focusImg.setImg_url("http://img2.3lian.com/2014/f2/37/d/39.jpg");
+        List<FocusImg> networkImages = new ArrayList<>();
+        networkImages.add(focusImg);
+        networkImages.add(focusImg1);
+        networkImages.add(focusImg2);
+        convenientBanner.setPages(new CBViewHolderCreator<NetworkImageHolderView>() {
+            @Override
+            public NetworkImageHolderView createHolder() {
+                return new NetworkImageHolderView();
+            }
+        }, networkImages).setPageIndicator(new int[]{R.drawable.ic_page_indicator, R.drawable.ic_page_indicator_focused})
+                .setPageIndicatorAlign(ConvenientBanner.PageIndicatorAlign.ALIGN_PARENT_RIGHT)
+                .setOnPageChangeListener(this)//监听翻页事件
+                .setOnItemClickListener(this    );
 
 
-        HashMap<String, String> url_maps = new HashMap<String, String>();
-        url_maps.put("1", "https://www.pcjr.com/images/focus_img2.jpg");
-        url_maps.put("2", "https://www.pcjr.com/images/focus_img3.jpg");
-        url_maps.put("3", "https://www.pcjr.com/images/focus_img4.jpg");
-        url_maps.put("4", "https://www.pcjr.com/images/focus_img5.jpg");
-
-
-        for (String name : url_maps.keySet()) {
-            TextSliderView textSliderView = new TextSliderView(this);
-            // initialize a SliderLayout
-            textSliderView
-                    .image(url_maps.get(name))
-                    .setScaleType(BaseSliderView.ScaleType.Fit)
-                    .setOnSliderClickListener(this);
-
-            //add your extra information
-            //textSliderView.bundle(new Bundle());
-
-            sliderLayout.addSlider(textSliderView);
-        }
-        sliderLayout.setPresetTransformer(SliderLayout.Transformer.Default);
-        sliderLayout.setPresetIndicator(SliderLayout.PresetIndicators.Center_Bottom);
-        sliderLayout.setCustomAnimation(new DescriptionAnimation());
-        sliderLayout.setDuration(4000);
-       // sliderLayout.addOnPageChangeListener(this);
     }
 
     @Override
@@ -212,9 +221,28 @@ public class TestActivity extends Activity implements BaseSliderView.OnSliderCli
 
     }
 
-    @Override
-    public void onSliderClick(BaseSliderView slider) {
 
+    private void initImageLoader() {
+        DisplayImageOptions defaultOptions = new DisplayImageOptions.Builder().
+                showImageForEmptyUri(R.drawable.error_img)
+                .cacheInMemory(true).cacheOnDisk(true).build();
+
+        ImageLoaderConfiguration config = new ImageLoaderConfiguration.Builder(
+                getApplicationContext()).defaultDisplayImageOptions(defaultOptions)
+                .threadPriority(Thread.NORM_PRIORITY - 2)
+                .denyCacheImageMultipleSizesInMemory()
+                .diskCacheFileNameGenerator(new Md5FileNameGenerator())
+                .tasksProcessingOrder(QueueProcessingType.LIFO).build();
+        ImageLoader.getInstance().init(config);
+    }
+
+
+
+    @Override
+    public void onItemClick(int position) {
+        Toast.makeText(this,"点击了第"+position+"个", Toast.LENGTH_SHORT).show();
     }
 }
+
+
 

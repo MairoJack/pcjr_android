@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Pcjr</string>
+    <string name="app_name">皮城金融</string>
 
     <!-- Gesture code starting -->
     <string name="setup_gesture_code">设置手势密码</string>

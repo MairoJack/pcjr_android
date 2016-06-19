@@ -1,15 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:cube_ptr="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#EEEEEE"
-    android:orientation="vertical" >
+    android:orientation="vertical">
 
     <RelativeLayout
         android:id="@+id/title"
         android:layout_width="fill_parent"
         android:layout_height="50dp"
-        android:background="#FF6602" >
+        android:background="#FF6602">
 
         <TextView
             android:layout_width="wrap_content"
@@ -27,7 +28,7 @@
             android:layout_alignParentLeft="true"
             android:layout_centerVertical="true"
             android:layout_marginLeft="10dp"
-            android:padding="5dp" >
+            android:padding="5dp">
 
             <ImageView
                 android:layout_width="wrap_content"
@@ -41,24 +42,36 @@
     <Button
         android:id="@+id/btn_addbankcard"
         android:layout_width="fill_parent"
-        android:layout_marginLeft="20dp"
-        android:layout_marginRight="20dp"
-        android:layout_marginTop="10dp"
         android:layout_height="50dp"
-        android:background="@drawable/whitebtn"
-        android:textColor="#ABABAB"
-        android:text="+添加银行卡" />
-
-    <ListView
-        android:id="@+id/list_view"
-        android:layout_marginTop="10dp"
         android:layout_marginLeft="20dp"
         android:layout_marginRight="20dp"
+        android:layout_marginTop="10dp"
+        android:background="@drawable/whitebtn"
+        android:text="+添加银行卡"
+        android:textColor="#ABABAB" />
+
+    <in.srain.cube.views.ptr.PtrClassicFrameLayout
+        android:id="@+id/ptr_frame"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:dividerHeight="5dp"
+        android:layout_height="match_parent"
+        cube_ptr:ptr_duration_to_close="200"
+        cube_ptr:ptr_duration_to_close_header="1000"
+        cube_ptr:ptr_keep_header_when_refresh="true"
+        cube_ptr:ptr_pull_to_fresh="false"
+        cube_ptr:ptr_ratio_of_header_height_to_refresh="1.2"
+        cube_ptr:ptr_resistance="1.7">
 
-        android:divider="#EEEEEE">
+        <ListView
+            android:id="@+id/list_view"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:layout_marginTop="10dp"
+            android:divider="#EEEEEE"
 
-    </ListView>
+            android:dividerHeight="5dp">
+
+        </ListView>
+    </in.srain.cube.views.ptr.PtrClassicFrameLayout>
 </LinearLayout>

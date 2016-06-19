@@ -82,12 +82,12 @@ public class MsgCenterActivity extends Activity{
             }
         });
         //自动刷新
-        mPtrFrame.postDelayed(new Runnable() {
+        mPtrFrame.post(new Runnable() {
             @Override
             public void run() {
                 mPtrFrame.autoRefresh();
             }
-        }, 1000);
+        });
 
 
         //上拉加载

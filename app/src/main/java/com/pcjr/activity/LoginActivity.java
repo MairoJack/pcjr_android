@@ -13,7 +13,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 import com.androidadvance.topsnackbar.TSnackbar;
 import com.google.gson.JsonObject;
-import com.mobsandgeeks.saripaar.Validator;
 import com.pcjr.R;
 import com.pcjr.common.Constant;
 import com.pcjr.plugins.ColoredSnackbar;
@@ -111,6 +110,7 @@ public class LoginActivity extends Activity implements View.OnClickListener {
                         String accessToken = json.get("access_token").getAsString();
                         String refreshToken = json.get("refresh_token").getAsString();
                         Constant.access_token = accessToken;
+                        Constant.refresh_token = refreshToken;
                         Constant.isLogin = true;
                         spu.setUsername(username);
                         spu.setPassword(password);

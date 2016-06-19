@@ -18,6 +18,7 @@ import com.pcjr.model.PaymentPlan;
 import com.pcjr.plugins.BottomNavigatorView;
 import com.pcjr.plugins.FragmentNavigator;
 import com.pcjr.service.ApiService;
+import com.pcjr.service.RefreshTokenService;
 import com.pcjr.utils.RetrofitUtils;
 import com.pcjr.utils.SharedPreferenceUtil;
 import com.tencent.android.tpush.XGPushConfig;
@@ -57,6 +58,7 @@ public class MainActivity extends FragmentActivity implements BottomNavigatorVie
         // 信鸽
         XGAction();
         tryLogin();
+        startService(new Intent(this, RefreshTokenService.class));
     }
 
     @Override
@@ -125,6 +127,7 @@ public class MainActivity extends FragmentActivity implements BottomNavigatorVie
                             spu.setRefresToken(refreshToken);
                             Constant.isLogin = true;
                             Constant.access_token = accessToken;
+                            Constant.refresh_token = refreshToken;
                         }
                     }
                 }
@@ -175,5 +178,11 @@ public class MainActivity extends FragmentActivity implements BottomNavigatorVie
             return true;
         }
         return super.onKeyDown(keyCode, event);
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        stopService(new Intent(this,RefreshTokenService.class));
     }
 }

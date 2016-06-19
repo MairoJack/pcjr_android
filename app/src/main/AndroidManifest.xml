@@ -27,7 +27,7 @@
     <application
         tools:replace="android:icon, android:theme"
         android:allowBackup="true"
-        android:icon="@mipmap/ic_launcher"
+        android:icon="@drawable/app_logo"
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
@@ -44,7 +44,6 @@
         </activity>
 
         <activity android:name="com.pcjr.activity.InvestDetailActivity" android:screenOrientation="portrait"/>
-        <activity android:name=".activity.NewsActivity" android:screenOrientation="portrait"/>
         <activity android:name="com.pcjr.activity.AboutusActivity" android:screenOrientation="portrait"/>
         <activity android:name="com.pcjr.activity.AddBankCardActivity" android:screenOrientation="portrait"/>
         <activity android:name=".activity.BindMobileActivity" android:screenOrientation="portrait"/>
@@ -77,7 +76,7 @@
         <activity android:name="com.pcjr.activity.GestureEditActivity" android:screenOrientation="portrait"/>
         <activity android:name="com.pcjr.activity.GestureVerifyActivity" android:screenOrientation="portrait"/>
 
-
+        <service android:enabled="true" android:name="com.pcjr.service.RefreshTokenService" />
         <!-- 【必须】 信鸽receiver广播接收 -->
         <receiver
             android:name="com.tencent.android.tpush.XGPushReceiver"

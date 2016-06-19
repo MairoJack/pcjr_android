@@ -4,39 +4,35 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.util.Log;
-import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.RelativeLayout;
+import android.widget.ScrollView;
 import android.widget.TextView;
-
+import android.widget.Toast;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
-import com.google.gson.reflect.TypeToken;
 import com.pcjr.R;
 import com.pcjr.activity.BankCardActivity;
 import com.pcjr.activity.CouponActivity;
 import com.pcjr.activity.FinancialRecordsActivity;
 import com.pcjr.activity.InvestRecordsActivity;
-import com.pcjr.activity.LoginActivity;
-import com.pcjr.activity.MainActivity;
 import com.pcjr.activity.MsgCenterActivity;
 import com.pcjr.activity.PaymentPlanActivity;
 import com.pcjr.activity.SafeSettingActivity;
 import com.pcjr.activity.TradeRecordsActivity;
 import com.pcjr.activity.WithdrawActivity;
-import com.pcjr.adapter.BankCardListViewAdapter;
 import com.pcjr.common.Constant;
 import com.pcjr.model.BankCard;
 import com.pcjr.service.ApiService;
 import com.pcjr.utils.RetrofitUtils;
-import com.pcjr.utils.SharedPreferenceUtil;
-
 import java.util.List;
-
 import cn.pedant.SweetAlert.SweetAlertDialog;
+import in.srain.cube.views.ptr.PtrClassicFrameLayout;
+import in.srain.cube.views.ptr.PtrDefaultHandler;
+import in.srain.cube.views.ptr.PtrFrameLayout;
+import in.srain.cube.views.ptr.PtrHandler;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -47,8 +43,9 @@ import retrofit2.Response;
  */
 public class MemberFragment extends Fragment {
 
-    public static final String TAG = RegistFragment.class.getSimpleName();
-
+    public static final String TAG = MemberFragment.class.getSimpleName();
+    private PtrClassicFrameLayout mPtrFrame;
+    private ScrollView scrollView;
     private RelativeLayout financial_records, invest_records, trade_records, safe_setting, bank_card, msg_center, payment_plan, withdraw_recharge, coupon;
     private TextView username, available_balance, sum_assets, uncollected_interest_sum;
     private ApiService service;
@@ -68,7 +65,8 @@ public class MemberFragment extends Fragment {
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-
+        mPtrFrame = (PtrClassicFrameLayout) view.findViewById(R.id.ptr_frame);
+        scrollView = (ScrollView) view.findViewById(R.id.scroll_view);
         username = (TextView) view.findViewById(R.id.username);
         available_balance = (TextView) view.findViewById(R.id.available_balance);
         sum_assets = (TextView) view.findViewById(R.id.sum_assets);
@@ -195,7 +193,22 @@ public class MemberFragment extends Fragment {
                 getActivity().overridePendingTransition(R.anim.push_left_in, R.anim.push_left_out);
             }
         });
-        //initData();
+        //下拉刷新
+        mPtrFrame.disableWhenHorizontalMove(true);
+        mPtrFrame.setLastUpdateTimeRelateObject(this);
+        mPtrFrame.setPtrHandler(new PtrHandler() {
+            @Override
+            public boolean checkCanDoRefresh(PtrFrameLayout frame, View content, View header) {
+                return PtrDefaultHandler.checkContentCanBePulledDown(frame, scrollView, header);
+            }
+
+            @Override
+            public void onRefreshBegin(PtrFrameLayout frame) {
+                initData();
+            }
+        });
+
+        initData();
     }
 
     private void initData() {
@@ -204,6 +217,7 @@ public class MemberFragment extends Fragment {
         callUsers.enqueue(new Callback<JsonObject>() {
             @Override
             public void onResponse(Call<JsonObject> call, Response<JsonObject> response) {
+                mPtrFrame.refreshComplete();
                 if (response.isSuccessful()) {
                     JsonObject json = response.body();
                     username.setText(json.get("user_name").getAsString());
@@ -215,24 +229,16 @@ public class MemberFragment extends Fragment {
 
             @Override
             public void onFailure(Call<JsonObject> call, Throwable t) {
-                Log.d("Mario", "onResponse:Throwable " + t);
+                mPtrFrame.refreshComplete();
+                Toast.makeText(getContext(),"网络异常",Toast.LENGTH_SHORT).show();
             }
         });
     }
 
     @Override
     public void onResume() {
-
         super.onResume();
         initData();
-        /*if(!Constant.isLogin){
-            startActivity(new Intent(getActivity(), LoginActivity.class));
-        }else{
-            if(Constant.isGestureLogin){
-
-            }
-            initData();
-        } */
     }
 
 

@@ -126,20 +126,7 @@
             android:background="@drawable/button_invest_list_left"
             android:text="全部3"/>
     </RadioGroup>
-    <com.pcjr.plugins.ProgressWheel
-        android:id="@+id/pw_spinner"
-        android:layout_width="270dp"
-        android:layout_height="270dp"
-        android:layout_centerInParent="true"
-        ProgressWheel:pwBarColor="#FD5A4A"
-        ProgressWheel:pwBarLength="60dp"
-        ProgressWheel:pwBarWidth="20dp"
-        ProgressWheel:pwContourColor="#D3D3D3"
-        ProgressWheel:pwRimColor="#D3D3D3"
-        ProgressWheel:pwRimWidth="20dp"
-        ProgressWheel:pwSpinSpeed="3dp"
-        ProgressWheel:pwTextColor="#D3D3D3"
-        ProgressWheel:pwTextSize="14sp" />
+
 
     <cn.iwgang.countdownview.CountdownView
         android:id="@+id/cv_countdown"
@@ -160,4 +147,11 @@
         app:isHideTimeBackground="false"
         app:timeBgColor="#FF5000"
         app:isShowTimeBgDivisionLine="false" />
+
+    <com.bigkoo.convenientbanner.ConvenientBanner
+        android:id="@+id/convenientBanner"
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        app:canLoop="true"
+    />
 </LinearLayout>

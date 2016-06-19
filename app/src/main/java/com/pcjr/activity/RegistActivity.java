@@ -12,14 +12,11 @@ import android.widget.TextView;
 import android.widget.Toast;
 import com.androidadvance.topsnackbar.TSnackbar;
 import com.google.gson.JsonObject;
-import com.mobsandgeeks.saripaar.annotation.Password;
 import com.pcjr.R;
-import com.pcjr.fragment.LoginFragment;
 import com.pcjr.plugins.ColoredSnackbar;
 import com.pcjr.service.ApiService;
 import com.pcjr.utils.RetrofitUtils;
 import com.pcjr.utils.Validator;
-
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -37,7 +34,6 @@ public class RegistActivity extends Activity implements View.OnClickListener
 
 
     private EditText text_username;
-    @Password
     private EditText text_password;
     private EditText text_confirm_password;
     private EditText text_recommend;

@@ -11,16 +11,12 @@ import android.widget.RelativeLayout;
 import android.widget.Toast;
 import com.androidadvance.topsnackbar.TSnackbar;
 import com.google.gson.JsonObject;
-import com.mobsandgeeks.saripaar.ValidationError;
-
 import com.pcjr.R;
 import com.pcjr.common.Constant;
 import com.pcjr.plugins.ColoredSnackbar;
 import com.pcjr.service.ApiService;
 import com.pcjr.utils.RetrofitUtils;
 import com.pcjr.utils.SharedPreferenceUtil;
-
-import java.util.List;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;

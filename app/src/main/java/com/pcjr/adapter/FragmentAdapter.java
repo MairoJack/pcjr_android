@@ -2,13 +2,10 @@ package com.pcjr.adapter;
 
 import android.support.v4.app.Fragment;
 
-import com.pcjr.common.Constant;
 import com.pcjr.fragment.IndexFragment;
 import com.pcjr.fragment.InvestFragment;
-import com.pcjr.fragment.LoginFragment;
 import com.pcjr.fragment.MemberFragment;
 import com.pcjr.fragment.MoreFragment;
-import com.pcjr.fragment.PersonFragment;
 
 
 /**
