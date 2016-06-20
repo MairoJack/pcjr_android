@@ -238,7 +238,7 @@ public class AlertView {
                 }
                 //高亮按钮的样式
                 else if (mDestructive!= null && mDestructive.contains(data)){
-                    tvAlert.setTextColor(context.getResources().getColor(R.color.textColor_alert_button_destructive));
+                    tvAlert.setTextColor(context.getResources().getColor(R.color.textColor_alert_button_cancel));
                 }
 
                 tvAlert.setOnClickListener(new OnTextClickListener(position));

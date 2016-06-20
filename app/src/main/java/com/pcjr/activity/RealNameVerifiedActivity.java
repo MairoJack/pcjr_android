@@ -10,11 +10,10 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
-import com.androidadvance.topsnackbar.TSnackbar;
 import com.google.gson.JsonObject;
 import com.pcjr.R;
 import com.pcjr.common.Constant;
-import com.pcjr.plugins.ColoredSnackbar;
+import com.pcjr.plugins.IosDialog;
 import com.pcjr.service.ApiService;
 import com.pcjr.utils.RetrofitUtils;
 import retrofit2.Call;
@@ -107,13 +106,11 @@ public class RealNameVerifiedActivity extends Activity {
         txt_realname.clearFocus();
         txt_idcard.clearFocus();
         if (realname.equals("")) {
-            TSnackbar snackbar = TSnackbar.make(findViewById(android.R.id.content), "真实姓名不能为空", TSnackbar.LENGTH_SHORT);
-            ColoredSnackbar.warning(snackbar).show();
+            IosDialog.show("真实姓名不能为空",this);
             return;
         }
         if (idcard.equals("")) {
-            TSnackbar snackbar = TSnackbar.make(findViewById(android.R.id.content), "身份证号码不能为空", TSnackbar.LENGTH_SHORT);
-            ColoredSnackbar.warning(snackbar).show();
+            IosDialog.show("身份证号码不能为空",this);
             return;
         }
         ApiService service = RetrofitUtils.createApi(ApiService.class);
@@ -126,16 +123,14 @@ public class RealNameVerifiedActivity extends Activity {
                 if (response.isSuccessful()) {
                     JsonObject json = response.body();
                     if (json.get("success").getAsBoolean()) {
-                        TSnackbar snackbar = TSnackbar.make(findViewById(android.R.id.content),"实名认证成功", TSnackbar.LENGTH_SHORT);
-                        ColoredSnackbar.warning(snackbar).show();
-
+                        Toast.makeText(RealNameVerifiedActivity.this,"实名认证成功",Toast.LENGTH_SHORT).show();
+                        finish();
+                        overridePendingTransition(R.anim.push_right_in, R.anim.push_right_out);
                     } else {
-                        TSnackbar snackbar = TSnackbar.make(findViewById(android.R.id.content), json.get("message").getAsString(), TSnackbar.LENGTH_SHORT);
-                        ColoredSnackbar.warning(snackbar).show();
+                        IosDialog.show(json.get("message").getAsString(),RealNameVerifiedActivity.this);
                     }
                 }else{
-                    TSnackbar snackbar = TSnackbar.make(findViewById(android.R.id.content),"认证出错", TSnackbar.LENGTH_SHORT);
-                    ColoredSnackbar.warning(snackbar).show();
+                    IosDialog.show("认证出错",RealNameVerifiedActivity.this);
                 }
                 dialog.dismiss();
             }

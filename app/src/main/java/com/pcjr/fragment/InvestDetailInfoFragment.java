@@ -1,36 +1,20 @@
 package com.pcjr.fragment;
 
 import android.app.ProgressDialog;
-import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.Nullable;
-import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.text.Html;
-import android.text.SpannableString;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
-
-import com.google.gson.Gson;
-import com.google.gson.JsonObject;
 import com.pcjr.R;
-import com.pcjr.common.Constant;
-import com.pcjr.model.Letter;
 import com.pcjr.model.Product;
-import com.pcjr.plugins.ColoredSnackbar;
 import com.pcjr.plugins.ProgressWheel;
-import com.pcjr.service.ApiService;
 import com.pcjr.utils.DateUtil;
-import com.pcjr.utils.RetrofitUtils;
-
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
 
 
 /**
@@ -139,11 +123,6 @@ public class InvestDetailInfoFragment extends Fragment {
                 }
             }
         },1000);
-
-       // progressWheel.setProgress(product.getRate()*18/5);
-       // progressWheel.startSpinning();
-
-
     }
 
     public static Fragment newInstance(Product product) {

@@ -10,10 +10,9 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
-import com.androidadvance.topsnackbar.TSnackbar;
 import com.google.gson.JsonObject;
 import com.pcjr.R;
-import com.pcjr.plugins.ColoredSnackbar;
+import com.pcjr.plugins.IosDialog;
 import com.pcjr.service.ApiService;
 import com.pcjr.utils.RetrofitUtils;
 import com.pcjr.utils.Validator;
@@ -103,28 +102,23 @@ public class RegistActivity extends Activity implements View.OnClickListener
         String confirm_password = text_confirm_password.getText().toString().trim();
         String recommend = text_recommend.getText().toString().trim();
         if (username.equals("")) {
-            TSnackbar snackbar = TSnackbar.make(findViewById(android.R.id.content), "用户名不能为空", TSnackbar.LENGTH_SHORT);
-            ColoredSnackbar.warning(snackbar).show();
+            IosDialog.show("用户名不能为空",this);
             return;
         }
         if (password.equals("")) {
-            TSnackbar snackbar = TSnackbar.make(findViewById(android.R.id.content), "密码不能为空", TSnackbar.LENGTH_SHORT);
-            ColoredSnackbar.warning(snackbar).show();
+            IosDialog.show("密码不能为空",this);
             return;
         }
         if (confirm_password.equals("")) {
-            TSnackbar snackbar = TSnackbar.make(findViewById(android.R.id.content), "确认密码不能为空", TSnackbar.LENGTH_SHORT);
-            ColoredSnackbar.warning(snackbar).show();
+            IosDialog.show("确认密码不能为空",this);
             return;
         }
         if (!password.equals(confirm_password)) {
-            TSnackbar snackbar = TSnackbar.make(findViewById(android.R.id.content), "两次密码不相同", TSnackbar.LENGTH_SHORT);
-            ColoredSnackbar.warning(snackbar).show();
+            IosDialog.show("两次密码不相同",this);
             return;
         }
         if(!recommend.equals("") && !Validator.isMobile(recommend)){
-            TSnackbar snackbar = TSnackbar.make(findViewById(android.R.id.content), "推荐人手机号错误", TSnackbar.LENGTH_SHORT);
-            ColoredSnackbar.warning(snackbar).show();
+            IosDialog.show("推荐人手机号错误",this);
             return;
         }
         ApiService service = RetrofitUtils.createApi(ApiService.class);
@@ -137,14 +131,12 @@ public class RegistActivity extends Activity implements View.OnClickListener
                 if (response.isSuccessful()) {
                     JsonObject json = response.body();
                     if (json.get("success").getAsBoolean()) {
-                        TSnackbar snackbar = TSnackbar.make(findViewById(android.R.id.content),json.get("message").getAsString(), TSnackbar.LENGTH_SHORT);
-                        ColoredSnackbar.warning(snackbar).show();
+                        Toast.makeText(RegistActivity.this,json.get("message").getAsString(),Toast.LENGTH_SHORT).show();
                         finish();
                         //startActivity(new Intent(RegistActivity.this, LoginActivity.class));
                         overridePendingTransition(R.anim.push_right_in, R.anim.push_right_out);
                     } else {
-                        TSnackbar snackbar = TSnackbar.make(findViewById(android.R.id.content),json.get("message").getAsString(), TSnackbar.LENGTH_SHORT);
-                        ColoredSnackbar.warning(snackbar).show();
+                        IosDialog.show(json.get("message").getAsString(),RegistActivity.this);
                     }
                 }
                 dialog.dismiss();

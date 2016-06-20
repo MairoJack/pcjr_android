@@ -11,11 +11,10 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
-import com.androidadvance.topsnackbar.TSnackbar;
 import com.google.gson.JsonObject;
 import com.pcjr.R;
 import com.pcjr.common.Constant;
-import com.pcjr.plugins.ColoredSnackbar;
+import com.pcjr.plugins.AlertView;
 import com.pcjr.service.ApiService;
 import com.pcjr.utils.RetrofitUtils;
 import com.pcjr.utils.SharedPreferenceUtil;
@@ -85,17 +84,17 @@ public class LoginActivity extends Activity implements View.OnClickListener {
         final String username = text_username.getText().toString().trim();
         final String password = text_password.getText().toString().trim();
         if (username.equals("")) {
-            TSnackbar snackbar = TSnackbar.make(findViewById(android.R.id.content), "用户名不能为空", TSnackbar.LENGTH_SHORT);
-            ColoredSnackbar.warning(snackbar).show();
+            new AlertView("用户名不能为空",null, null, new String[]{"好"}, null, this,
+                    AlertView.Style.Alert, null).show();
             return;
         }
         if (password.equals("")) {
-            TSnackbar snackbar = TSnackbar.make(findViewById(android.R.id.content), "密码不能为空", TSnackbar.LENGTH_SHORT);
-            ColoredSnackbar.warning(snackbar).show();
+            new AlertView("密码不能为空", null, null, new String[]{"好"}, null, this,
+                    AlertView.Style.Alert, null).show();
             return;
         }
         ApiService service = RetrofitUtils.createApi(ApiService.class);
-        Call<JsonObject> call = service.getAccessToken("password", username, password, "1", "123");
+        Call<JsonObject> call = service.getAccessToken("password", username, password, Constant.CLIENTID, Constant.CLIENTSECRET);
         dialog.setMessage("正在登录...");
         dialog.show();
         call.enqueue(new Callback<JsonObject>() {
@@ -117,7 +116,6 @@ public class LoginActivity extends Activity implements View.OnClickListener {
                         spu.setAccessToken(accessToken);
                         spu.setRefresToken(refreshToken);
                         spu.setIsFirst(false);
-                        dialog.dismiss();
                         String tag = getIntent().getStringExtra("tag");
                         if (tag != null && tag.equals("invest")) {
                             overridePendingTransition(R.anim.slide_down_in, R.anim.slide_down_out);
@@ -131,15 +129,14 @@ public class LoginActivity extends Activity implements View.OnClickListener {
                         }
                         finish();
                     } else {
-                        //Snackbar.make(getView(),"dsds",Snackbar.LENGTH_SHORT).show();
                         Toast.makeText(LoginActivity.this, json.get("status_code").toString() + ":" + json.get("message").toString(), Toast.LENGTH_SHORT).show();
                     }
                 } else {
-                    dialog.dismiss();
 
-                    TSnackbar snackbar = TSnackbar.make(findViewById(android.R.id.content), "用户名或密码错误", TSnackbar.LENGTH_SHORT);
-                    ColoredSnackbar.warning(snackbar).show();
+                    new AlertView("登陆失败", "用户名或密码错误", null, new String[]{"好"}, null,LoginActivity.this ,
+                            AlertView.Style.Alert, null).show();
                 }
+                dialog.dismiss();
 
             }
 

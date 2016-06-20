@@ -4,7 +4,6 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.CountDownTimer;
-import android.support.design.widget.Snackbar;
 import android.view.KeyEvent;
 import android.view.View;
 import android.widget.Button;
@@ -12,22 +11,12 @@ import android.widget.EditText;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
-
-import com.androidadvance.topsnackbar.TSnackbar;
-import com.google.gson.Gson;
 import com.google.gson.JsonObject;
-import com.google.gson.reflect.TypeToken;
 import com.pcjr.R;
-import com.pcjr.adapter.BankCardListViewAdapter;
 import com.pcjr.common.Constant;
-import com.pcjr.model.BankCard;
-import com.pcjr.plugins.ColoredSnackbar;
+import com.pcjr.plugins.IosDialog;
 import com.pcjr.service.ApiService;
 import com.pcjr.utils.RetrofitUtils;
-import com.pcjr.utils.Validator;
-
-import java.util.List;
-
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -92,8 +81,7 @@ public class UnbindMobileActivity extends Activity {
     public void unbind() {
         String checkcode = txt_checkcode.getText().toString().trim();
         if(checkcode.equals("")){
-            TSnackbar snackbar = TSnackbar.make(findViewById(android.R.id.content),"请输入验证码", TSnackbar.LENGTH_SHORT);
-            ColoredSnackbar.warning(snackbar).show();
+            IosDialog.show("请输入验证码",this);
             return;
         }
 
@@ -108,8 +96,7 @@ public class UnbindMobileActivity extends Activity {
                         startActivity(new Intent(UnbindMobileActivity.this, BindMobileActivity.class));
                         overridePendingTransition(R.anim.push_left_in, R.anim.push_left_out);
                     } else {
-                        TSnackbar snackbar = TSnackbar.make(findViewById(android.R.id.content), json.get("message").getAsString(), TSnackbar.LENGTH_SHORT);
-                        ColoredSnackbar.warning(snackbar).show();
+                        IosDialog.show( json.get("message").getAsString(),UnbindMobileActivity.this);
                     }
                 }
             }
@@ -129,11 +116,9 @@ public class UnbindMobileActivity extends Activity {
                 if (response.isSuccessful()) {
                     JsonObject json = response.body();
                     if (!json.get("success").isJsonNull() && json.get("success").getAsBoolean()) {
-                        TSnackbar snackbar = TSnackbar.make(findViewById(android.R.id.content), json.get("message").getAsString(), TSnackbar.LENGTH_SHORT);
-                        ColoredSnackbar.warning(snackbar).show();
+                        IosDialog.show( json.get("message").getAsString(),UnbindMobileActivity.this);
                     } else {
-                        TSnackbar snackbar = TSnackbar.make(findViewById(android.R.id.content), json.get("message").getAsString(), TSnackbar.LENGTH_SHORT);
-                        ColoredSnackbar.warning(snackbar).show();
+                        IosDialog.show( json.get("message").getAsString(),UnbindMobileActivity.this);
                     }
 
                 }

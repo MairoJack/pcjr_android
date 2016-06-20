@@ -3,7 +3,6 @@ package com.pcjr.activity;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.design.widget.Snackbar;
 import android.view.KeyEvent;
 import android.view.View;
 import android.widget.AdapterView;
@@ -15,23 +14,15 @@ import android.widget.RelativeLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
-
-import com.androidadvance.topsnackbar.TSnackbar;
 import com.google.gson.Gson;
-import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.google.gson.reflect.TypeToken;
 import com.pcjr.R;
-import com.pcjr.adapter.BankCardListViewAdapter;
 import com.pcjr.common.Constant;
 import com.pcjr.model.BankCard;
-import com.pcjr.plugins.ColoredSnackbar;
 import com.pcjr.service.ApiService;
 import com.pcjr.utils.RetrofitUtils;
-
 import java.util.List;
-import java.util.Map;
-
 import cn.pedant.SweetAlert.SweetAlertDialog;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -157,8 +148,7 @@ public class AddBankCardActivity extends Activity {
                         startActivity(new Intent(AddBankCardActivity.this,BankCardActivity.class));
                         overridePendingTransition(R.anim.push_left_in, R.anim.push_left_out);
                     }else{
-                        TSnackbar snackbar = TSnackbar.make(findViewById(android.R.id.content),json.get("message").getAsString(), TSnackbar.LENGTH_SHORT);
-                        ColoredSnackbar.warning(snackbar).show();
+                        Toast.makeText(AddBankCardActivity.this,json.get("message").getAsString(),Toast.LENGTH_SHORT).show();
                     }
                 }
             }

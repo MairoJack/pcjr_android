@@ -12,6 +12,7 @@ import android.widget.Toast;
 
 import com.google.gson.JsonObject;
 import com.pcjr.R;
+import com.pcjr.action.UpdateManager;
 import com.pcjr.adapter.FragmentAdapter;
 import com.pcjr.common.Constant;
 import com.pcjr.model.PaymentPlan;
@@ -55,10 +56,17 @@ public class MainActivity extends FragmentActivity implements BottomNavigatorVie
         bottomNavigatorView.setOnBottomNavigatorViewItemClickListener(this);
 
         setCurrentTab(mNavigator.getCurrentPosition());
+
+        // 检查软件更新
+        UpdateManager manager = new UpdateManager(MainActivity.this);
+        manager.check();
+
         // 信鸽
         XGAction();
         tryLogin();
         startService(new Intent(this, RefreshTokenService.class));
+
+
     }
 
     @Override
@@ -156,13 +164,11 @@ public class MainActivity extends FragmentActivity implements BottomNavigatorVie
     @Override
     protected void onPause() {
         super.onPause();
-        Log.d("Mario", "onPause: ");
     }
 
     @Override
     protected void onRestart() {
         super.onRestart();
-        Log.d("Mario", "onRestart: ");
     }
 
     public boolean onKeyDown(int keyCode, KeyEvent event) {

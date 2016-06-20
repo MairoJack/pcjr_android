@@ -1,32 +1,19 @@
 package com.pcjr.adapter;
 
 import android.content.Context;
-import android.content.Intent;
-import android.graphics.Color;
-import android.support.design.widget.Snackbar;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
 import android.widget.Toast;
-
-import com.androidadvance.topsnackbar.TSnackbar;
 import com.google.gson.JsonObject;
 import com.pcjr.R;
-import com.pcjr.activity.BankCardActivity;
 import com.pcjr.common.Constant;
 import com.pcjr.model.BankCard;
-import com.pcjr.model.TradeRecords;
-import com.pcjr.plugins.ColoredSnackbar;
 import com.pcjr.service.ApiService;
-import com.pcjr.utils.DateUtil;
 import com.pcjr.utils.RetrofitUtils;
-import com.pcjr.utils.RotateTextView;
-
 import java.util.List;
-
 import cn.pedant.SweetAlert.SweetAlertDialog;
 import retrofit2.Call;
 import retrofit2.Callback;

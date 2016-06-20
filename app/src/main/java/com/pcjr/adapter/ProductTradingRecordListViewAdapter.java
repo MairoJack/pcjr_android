@@ -68,7 +68,7 @@ public class ProductTradingRecordListViewAdapter extends BaseAdapter {
         viewHolder.member_name.setText(list.get(position).getMember_name());
 
         viewHolder.amount.setText(list.get(position).getAmount()+"元");
-        viewHolder.join_date.setText(DateUtil.transferLongToDate("yyyy-MM-dd",list.get(position).getJoin_date()*1000));
+        viewHolder.join_date.setText(DateUtil.transferLongToDate("yyyy-MM-dd HH:mm",list.get(position).getJoin_date()*1000));
 
         return convertView;
     }

@@ -1,10 +1,8 @@
 package com.pcjr.activity;
 
 import android.app.Activity;
-import android.content.Intent;
 import android.os.Bundle;
 import android.os.CountDownTimer;
-import android.support.design.widget.Snackbar;
 import android.view.KeyEvent;
 import android.view.View;
 import android.widget.Button;
@@ -12,12 +10,10 @@ import android.widget.EditText;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
-
-import com.androidadvance.topsnackbar.TSnackbar;
 import com.google.gson.JsonObject;
 import com.pcjr.R;
 import com.pcjr.common.Constant;
-import com.pcjr.plugins.ColoredSnackbar;
+import com.pcjr.plugins.IosDialog;
 import com.pcjr.service.ApiService;
 import com.pcjr.utils.RetrofitUtils;
 import com.pcjr.utils.Validator;
@@ -78,13 +74,11 @@ public class BindMobileActivity extends Activity {
         String mobile = txt_mobile.getText().toString().trim();
         String checkcode = txt_checkcode.getText().toString().trim();
         if(mobile.equals("")){
-            TSnackbar snackbar = TSnackbar.make(findViewById(android.R.id.content),"请输入手机号", TSnackbar.LENGTH_SHORT);
-            ColoredSnackbar.warning(snackbar).show();
+            IosDialog.show("请输入手机号",this);
             return;
         }
         if(checkcode.equals("")){
-            TSnackbar snackbar = TSnackbar.make(findViewById(android.R.id.content),"请输入验证码", TSnackbar.LENGTH_SHORT);
-            ColoredSnackbar.warning(snackbar).show();
+            IosDialog.show("请输入验证码",this);
             return;
         }
         Call<JsonObject> call = service.bindMobile(Constant.BEARER+" "+Constant.access_token, mobile, checkcode);
@@ -94,13 +88,11 @@ public class BindMobileActivity extends Activity {
                 if (response.isSuccessful()) {
                     JsonObject json = response.body();
                     if (json.get("success").getAsBoolean()) {
-                        TSnackbar snackbar = TSnackbar.make(findViewById(android.R.id.content), json.get("message").getAsString(), TSnackbar.LENGTH_SHORT);
-                        ColoredSnackbar.warning(snackbar).show();
+                        Toast.makeText(BindMobileActivity.this, json.get("message").getAsString(), Toast.LENGTH_SHORT).show();
                         finish();
                         overridePendingTransition(R.anim.push_right_in, R.anim.push_right_out);
                     } else {
-                        TSnackbar snackbar = TSnackbar.make(findViewById(android.R.id.content), json.get("message").getAsString(), TSnackbar.LENGTH_SHORT);
-                        ColoredSnackbar.warning(snackbar).show();
+                        IosDialog.show(json.get("message").getAsString(),BindMobileActivity.this);
                     }
                 }
             }
@@ -115,13 +107,11 @@ public class BindMobileActivity extends Activity {
     public void sendCheckCode() {
         String mobile = txt_mobile.getText().toString().trim();
         if(mobile.equals("")){
-            TSnackbar snackbar = TSnackbar.make(findViewById(android.R.id.content),"请输入手机号", TSnackbar.LENGTH_SHORT);
-            ColoredSnackbar.warning(snackbar).show();
+            IosDialog.show("请输入手机号",this);
             return;
         }
         if(!Validator.isMobile(mobile)){
-            TSnackbar snackbar = TSnackbar.make(findViewById(android.R.id.content), "手机号格式错误", TSnackbar.LENGTH_SHORT);
-            ColoredSnackbar.warning(snackbar).show();
+            IosDialog.show("手机号格式错误",this);
             return;
         }
         btn_checkcode.setClickable(false);
@@ -134,11 +124,9 @@ public class BindMobileActivity extends Activity {
                 if (response.isSuccessful()) {
                     JsonObject json = response.body();
                     if (!json.get("success").isJsonNull() && json.get("success").getAsBoolean()) {
-                        TSnackbar snackbar = TSnackbar.make(findViewById(android.R.id.content), json.get("message").getAsString(), TSnackbar.LENGTH_SHORT);
-                        ColoredSnackbar.warning(snackbar).show();
+                        IosDialog.show(json.get("message").getAsString(),BindMobileActivity.this);
                     } else {
-                        TSnackbar snackbar = TSnackbar.make(findViewById(android.R.id.content), json.get("message").getAsString(), TSnackbar.LENGTH_SHORT);
-                        ColoredSnackbar.warning(snackbar).show();
+                        IosDialog.show(json.get("message").getAsString(),BindMobileActivity.this);
                     }
 
                 }

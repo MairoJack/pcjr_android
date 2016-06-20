@@ -1,30 +1,16 @@
 package com.pcjr.adapter;
 
 import android.content.Context;
-import android.support.design.widget.Snackbar;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
-import android.widget.Toast;
-
-import com.google.gson.JsonObject;
 import com.pcjr.R;
-import com.pcjr.common.Constant;
-import com.pcjr.model.BankCard;
 import com.pcjr.model.InvestTicket;
-import com.pcjr.plugins.ColoredSnackbar;
-import com.pcjr.service.ApiService;
 import com.pcjr.utils.DateUtil;
-import com.pcjr.utils.RetrofitUtils;
-
 import java.util.List;
 
-import cn.pedant.SweetAlert.SweetAlertDialog;
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
 
 /**
  * 投资券适配器
@@ -84,7 +70,7 @@ public class InvestTicketListViewAdapter extends BaseAdapter {
             viewHolder = (ViewHolder)convertView.getTag();
         }
         viewHolder.amount.setText(list.get(position).getAmount().replace(".00",""));
-        viewHolder.msg.setText("满 "+list.get(position).getReach_amount()+" 元返 "+list.get(position).getAmount().replace(".00","")+" 元");
+        viewHolder.msg.setText("满 "+list.get(position).getReach_amount().replace(".00","")+" 元返 "+list.get(position).getAmount().replace(".00","")+" 元");
         viewHolder.title.setText("来源:"+list.get(position).getTitle());
         viewHolder.end_time.setText("有效期至:"+ DateUtil.transferLongToDate("yyyy-MM-dd",list.get(position).getEnd_time()*1000));
 

@@ -11,19 +11,14 @@ import android.view.View;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
-
-import com.androidadvance.topsnackbar.TSnackbar;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import com.pcjr.R;
 import com.pcjr.common.Constant;
 import com.pcjr.model.InvestTicket;
-import com.pcjr.model.Letter;
-import com.pcjr.plugins.ColoredSnackbar;
 import com.pcjr.service.ApiService;
 import com.pcjr.utils.DateUtil;
 import com.pcjr.utils.RetrofitUtils;
-
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -81,8 +76,7 @@ public class InvestTicketDetailActivity extends Activity {
                         end_time.setText(DateUtil.transferLongToDate("yyyy-MM-dd HH:mm:ss",investTicket.getEnd_time()*1000));
                         introduction.setText(investTicket.getActivity().getIntroduction().replace("</br>",""));
                     }else{
-                        TSnackbar snackbar = TSnackbar.make(findViewById(android.R.id.content),"获取投资券详情失败", TSnackbar.LENGTH_SHORT);
-                        ColoredSnackbar.warning(snackbar).show();
+                        Toast.makeText(InvestTicketDetailActivity.this,"获取投资券详情失败",Toast.LENGTH_SHORT).show();
                     }
                 }
                 dialog.dismiss();

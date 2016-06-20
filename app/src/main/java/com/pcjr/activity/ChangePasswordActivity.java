@@ -9,11 +9,10 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
-import com.androidadvance.topsnackbar.TSnackbar;
 import com.google.gson.JsonObject;
 import com.pcjr.R;
 import com.pcjr.common.Constant;
-import com.pcjr.plugins.ColoredSnackbar;
+import com.pcjr.plugins.IosDialog;
 import com.pcjr.service.ApiService;
 import com.pcjr.utils.RetrofitUtils;
 import com.pcjr.utils.SharedPreferenceUtil;
@@ -80,23 +79,19 @@ public class ChangePasswordActivity extends Activity {
         final String newPassword = txt_password.getText().toString().trim();
         final String confirm_password = txt_confirm_password.getText().toString().trim();
         if (oldPassword.equals("")) {
-            TSnackbar snackbar = TSnackbar.make(findViewById(android.R.id.content), "旧密码不能为空", TSnackbar.LENGTH_SHORT);
-            ColoredSnackbar.warning(snackbar).show();
+            IosDialog.show("原密码不能为空",this);
             return;
         }
         if (newPassword.equals("")) {
-            TSnackbar snackbar = TSnackbar.make(findViewById(android.R.id.content), "新密码不能为空", TSnackbar.LENGTH_SHORT);
-            ColoredSnackbar.warning(snackbar).show();
+            IosDialog.show("新密码不能为空",this);
             return;
         }
         if (confirm_password.equals("")) {
-            TSnackbar snackbar = TSnackbar.make(findViewById(android.R.id.content), "确认密码不能为空", TSnackbar.LENGTH_SHORT);
-            ColoredSnackbar.warning(snackbar).show();
+            IosDialog.show("确认密码不能为空",this);
             return;
         }
         if (!newPassword.equals(confirm_password)) {
-            TSnackbar snackbar = TSnackbar.make(findViewById(android.R.id.content), "两次密码不相同", TSnackbar.LENGTH_SHORT);
-            ColoredSnackbar.warning(snackbar).show();
+            IosDialog.show("两次密码不相同",this);
             return;
         }
         ApiService service = RetrofitUtils.createApi(ApiService.class);
@@ -111,14 +106,13 @@ public class ChangePasswordActivity extends Activity {
                     if (json.get("success").getAsBoolean()) {
                         SharedPreferenceUtil spu = new SharedPreferenceUtil(ChangePasswordActivity.this,Constant.FILE);
                         spu.setPassword(newPassword);
-                        TSnackbar snackbar = TSnackbar.make(findViewById(android.R.id.content),json.get("message").getAsString(), TSnackbar.LENGTH_SHORT);
-                        ColoredSnackbar.warning(snackbar).show();
+                        Toast.makeText(ChangePasswordActivity.this,json.get("message").getAsString(),Toast.LENGTH_SHORT).show();
                         finish();
                         overridePendingTransition(R.anim.push_right_in, R.anim.push_right_out);
                     } else {
-                        TSnackbar snackbar = TSnackbar.make(findViewById(android.R.id.content),json.get("message").getAsString(), TSnackbar.LENGTH_SHORT);
-                        ColoredSnackbar.warning(snackbar).show();                    }
+                        IosDialog.show(json.get("message").getAsString(),ChangePasswordActivity.this);              }
                 }
+                dialog.dismiss();
             }
 
             @Override

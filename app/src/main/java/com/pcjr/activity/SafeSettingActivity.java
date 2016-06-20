@@ -12,12 +12,12 @@ import android.widget.Button;
 import android.widget.CompoundButton;
 import android.widget.RelativeLayout;
 import android.widget.Switch;
+import android.widget.Toast;
 
-import com.androidadvance.topsnackbar.TSnackbar;
 import com.google.gson.JsonObject;
 import com.pcjr.R;
 import com.pcjr.common.Constant;
-import com.pcjr.plugins.ColoredSnackbar;
+import com.pcjr.plugins.IosDialog;
 import com.pcjr.service.ApiService;
 import com.pcjr.utils.RetrofitUtils;
 import com.pcjr.utils.SharedPreferenceUtil;
@@ -162,8 +162,7 @@ public class SafeSettingActivity extends Activity {
                         overridePendingTransition(R.anim.push_left_in, R.anim.push_left_out);
                     }
                 }else{
-                    TSnackbar snackbar = TSnackbar.make(findViewById(android.R.id.content),"获取手机信息失败", TSnackbar.LENGTH_SHORT);
-                    ColoredSnackbar.warning(snackbar).show();
+                    Toast.makeText(SafeSettingActivity.this,"获取手机信息失败",Toast.LENGTH_SHORT).show();
                 }
                 dialog.dismiss();
             }
@@ -171,8 +170,7 @@ public class SafeSettingActivity extends Activity {
             @Override
             public void onFailure(Call<JsonObject> call, Throwable t) {
                 dialog.dismiss();
-                TSnackbar snackbar = TSnackbar.make(findViewById(android.R.id.content),"网络错误", TSnackbar.LENGTH_SHORT);
-                ColoredSnackbar.alert(snackbar).show();
+                Toast.makeText(SafeSettingActivity.this,"网络异常",Toast.LENGTH_SHORT).show();
             }
         });
     }
@@ -192,8 +190,7 @@ public class SafeSettingActivity extends Activity {
                             finish();
                             overridePendingTransition(R.anim.push_left_in, R.anim.push_left_out);
                         }else{
-                            TSnackbar snackbar = TSnackbar.make(findViewById(android.R.id.content),"注销失败", TSnackbar.LENGTH_SHORT);
-                            ColoredSnackbar.warning(snackbar).show();
+                            IosDialog.show("注销失败",SafeSettingActivity.this);
                         }
                         dialog.dismiss();
                     }
@@ -201,8 +198,7 @@ public class SafeSettingActivity extends Activity {
                     @Override
                     public void onFailure(Call<JsonObject> call, Throwable t) {
                         dialog.dismiss();
-                        TSnackbar snackbar = TSnackbar.make(findViewById(android.R.id.content),"网络错误", TSnackbar.LENGTH_SHORT);
-                        ColoredSnackbar.alert(snackbar).show();
+                        Toast.makeText(SafeSettingActivity.this,"网络异常",Toast.LENGTH_SHORT).show();
                     }
                 });
     }

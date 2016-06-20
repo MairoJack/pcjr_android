@@ -3,42 +3,26 @@ package com.pcjr.activity;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.design.widget.Snackbar;
 import android.text.Html;
 import android.text.InputType;
-import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.WindowManager;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
-import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import com.afollestad.materialdialogs.MaterialDialog;
-import com.androidadvance.topsnackbar.TSnackbar;
-import com.google.gson.Gson;
 import com.google.gson.JsonObject;
-import com.google.gson.reflect.TypeToken;
 import com.pcjr.R;
 import com.pcjr.common.Constant;
-import com.pcjr.model.BankCard;
-import com.pcjr.model.InvestRecords;
 import com.pcjr.model.Product;
-import com.pcjr.plugins.ColoredSnackbar;
+import com.pcjr.plugins.IosDialog;
 import com.pcjr.service.ApiService;
 import com.pcjr.utils.DateUtil;
 import com.pcjr.utils.RetrofitUtils;
-
-import java.util.List;
-
-import cn.pedant.SweetAlert.SweetAlertDialog;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -48,7 +32,7 @@ import retrofit2.Response;
  * Created by Mario on 2016/5/24.
  */
 public class InvestActivity extends Activity {
-    private RelativeLayout back;
+    private RelativeLayout back,tips;
     private LinearLayout preview_repayment;
     private TextView product_name,txt_preview_repayment, txt_threshold_amount,txt_balance,txt_repayment,txt_month,txt_year_income,txt_repayment_date;
     private EditText txt_invest_amount,txt_password;
@@ -67,6 +51,7 @@ public class InvestActivity extends Activity {
 
     public void initView() {
         back = (RelativeLayout) findViewById(R.id.back);
+        tips = (RelativeLayout) findViewById(R.id.tips);
         product_name = (TextView) findViewById(R.id.product_name);
         txt_balance = (TextView) findViewById(R.id.txt_balance);
         preview_repayment = (LinearLayout) findViewById(R.id.preview_repayment);
@@ -89,23 +74,19 @@ public class InvestActivity extends Activity {
                double can_invest_amount = product.getAmount() - product.getProduct_amount();
                final String amount = txt_invest_amount.getText().toString().trim();
                if(amount.equals("")){
-                   TSnackbar snackbar = TSnackbar.make(findViewById(android.R.id.content),"请输入投资金额", TSnackbar.LENGTH_SHORT);
-                   ColoredSnackbar.warning(snackbar).show();
+                   IosDialog.show("请输入投资金额",InvestActivity.this);
                    return;
                }
                if(Double.parseDouble(amount)>can_invest_amount){
-                   TSnackbar snackbar = TSnackbar.make(findViewById(android.R.id.content),"金额超过可投最大值！", TSnackbar.LENGTH_SHORT);
-                   ColoredSnackbar.warning(snackbar).show();
+                   IosDialog.show("金额超过可投最大值",InvestActivity.this);
                    return;
                }
                if(Double.parseDouble(amount)<Double.parseDouble(product.getThreshold_amount())){
-                   TSnackbar snackbar = TSnackbar.make(findViewById(android.R.id.content),"金额不能小于起投金额!", TSnackbar.LENGTH_SHORT);
-                   ColoredSnackbar.warning(snackbar).show();
+                   IosDialog.show("金额不能小于起投金额",InvestActivity.this);
                    return;
                }
                if(Double.parseDouble(amount)%Double.parseDouble(product.getIncreasing_amount())!=0){
-                   TSnackbar snackbar = TSnackbar.make(findViewById(android.R.id.content),"金额没有按递增金额填写，请重新输入!", TSnackbar.LENGTH_SHORT);
-                   ColoredSnackbar.warning(snackbar).show();
+                   IosDialog.show("金额没有按递增金额填写",InvestActivity.this);
                    return;
                }
                new MaterialDialog.Builder(InvestActivity.this)
@@ -116,8 +97,7 @@ public class InvestActivity extends Activity {
                             @Override
                             public void onInput(MaterialDialog dialog, CharSequence input) {
                                 if(input.toString().equals("")){
-                                    TSnackbar snackbar = TSnackbar.make(findViewById(android.R.id.content),"请输入密码", TSnackbar.LENGTH_SHORT);
-                                    ColoredSnackbar.warning(snackbar).show();
+                                    IosDialog.show("请输入密码",InvestActivity.this);
                                 }else{
                                     invest(input.toString(),amount);
                                 }
@@ -134,8 +114,7 @@ public class InvestActivity extends Activity {
                 if(can_invest_amount > available_balance){
                     amount = (int) (available_balance - available_balance%Double.parseDouble(product.getIncreasing_amount()));
                     if(amount<Double.parseDouble(product.getThreshold_amount())){
-                        TSnackbar snackbar = TSnackbar.make(findViewById(android.R.id.content),"可用余额不足!", TSnackbar.LENGTH_SHORT);
-                        ColoredSnackbar.warning(snackbar).show();
+                        IosDialog.show("可用余额不足",InvestActivity.this);
                         return;
                     }
                 }else{
@@ -149,8 +128,7 @@ public class InvestActivity extends Activity {
                             @Override
                             public void onInput(MaterialDialog dialog, CharSequence input) {
                                 if(input.toString().equals("")){
-                                    TSnackbar snackbar = TSnackbar.make(findViewById(android.R.id.content),"请输入密码", TSnackbar.LENGTH_SHORT);
-                                    ColoredSnackbar.warning(snackbar).show();
+                                    IosDialog.show("请输入密码",InvestActivity.this);
                                 }else{
                                     invest(input.toString(),String.valueOf(amount));
                                 }
@@ -164,6 +142,13 @@ public class InvestActivity extends Activity {
             public void onClick(View v) {
                 finish();
                 overridePendingTransition(R.anim.push_right_in, R.anim.push_right_out);
+            }
+        });
+
+        tips.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                IosDialog.show("投资提示","若您选择全投，且您的可用余额大于该产品剩余可投金额，投资金额将自动填写为该产品剩余可投金额，有一定概率投资失败，请谨慎操作",InvestActivity.this);
             }
         });
 
@@ -185,7 +170,7 @@ public class InvestActivity extends Activity {
                     JsonObject json = response.body();
                     if (json.get("success").getAsBoolean()) {
                         JsonObject data = json.get("data").getAsJsonObject();
-                        txt_balance.setText(data.get("available_balance").getAsString());
+                        txt_balance.setText(data.get("available_balance").getAsString()+"元");
                         available_balance = data.get("available_balance").getAsDouble();
                         product_name.setText(product.getName());
                         if(product.getIs_preview_repayment() == 1){
@@ -238,14 +223,12 @@ public class InvestActivity extends Activity {
                 if (response.isSuccessful()) {
                     JsonObject json = response.body();
                     if (json.get("success").getAsBoolean()) {
-                        TSnackbar snackbar = TSnackbar.make(findViewById(android.R.id.content),json.get("message").getAsString(), TSnackbar.LENGTH_SHORT);
-                        ColoredSnackbar.warning(snackbar).show();
+                        Toast.makeText(InvestActivity.this,json.get("message").getAsString(),Toast.LENGTH_SHORT).show();
                         finish();
                         startActivity(new Intent(InvestActivity.this, InvestRecordsActivity.class));
                         overridePendingTransition(R.anim.push_right_in, R.anim.push_right_out);
                     }else{
-                        TSnackbar snackbar = TSnackbar.make(findViewById(android.R.id.content),json.get("message").getAsString(), TSnackbar.LENGTH_SHORT);
-                        ColoredSnackbar.warning(snackbar).show();
+                        IosDialog.show(json.get("message").getAsString(),InvestActivity.this);
                     }
                 }
             }

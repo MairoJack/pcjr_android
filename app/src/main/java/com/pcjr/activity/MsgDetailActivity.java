@@ -4,30 +4,19 @@ import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.design.widget.Snackbar;
 import android.view.KeyEvent;
 import android.view.View;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
-
-import com.androidadvance.topsnackbar.TSnackbar;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
-import com.google.gson.reflect.TypeToken;
 import com.pcjr.R;
-import com.pcjr.adapter.LetterListViewAdapter;
 import com.pcjr.common.Constant;
 import com.pcjr.model.Letter;
-import com.pcjr.model.Pager;
-import com.pcjr.plugins.ColoredSnackbar;
 import com.pcjr.service.ApiService;
 import com.pcjr.utils.DateUtil;
 import com.pcjr.utils.RetrofitUtils;
-
-import java.util.ArrayList;
-import java.util.List;
-
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -83,8 +72,7 @@ public class MsgDetailActivity extends Activity {
                         msg_time.setText(DateUtil.transferLongToDate("yyyy-MM-dd HH:mm:ss",letter.getSend_date()*1000));
                         msg_content.setText(letter.getContent());
                     }else{
-                        TSnackbar snackbar = TSnackbar.make(findViewById(android.R.id.content),"获取站内信详情失败", TSnackbar.LENGTH_SHORT);
-                        ColoredSnackbar.warning(snackbar).show();
+                        Toast.makeText(MsgDetailActivity.this,"获取站内信详情失败",Toast.LENGTH_SHORT).show();
                     }
                 }
                 dialog.dismiss();

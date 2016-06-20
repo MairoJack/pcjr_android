@@ -4,7 +4,6 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.CountDownTimer;
-import android.support.design.widget.Snackbar;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.KeyEvent;
@@ -19,16 +18,13 @@ import android.widget.RelativeLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
-
-import com.androidadvance.topsnackbar.TSnackbar;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import com.google.gson.reflect.TypeToken;
 import com.pcjr.R;
-import com.pcjr.adapter.BankCardListViewAdapter;
 import com.pcjr.common.Constant;
 import com.pcjr.model.BankCard;
-import com.pcjr.plugins.ColoredSnackbar;
+import com.pcjr.plugins.IosDialog;
 import com.pcjr.service.ApiService;
 import com.pcjr.utils.RetrofitUtils;
 
@@ -168,6 +164,16 @@ public class WithdrawActivity extends Activity {
             }
         });
 
+        explain.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(WithdrawActivity.this, WebViewActivity.class);
+                intent.putExtra("title", "提现细则");
+                intent.putExtra("url", "https://m.pcjr.com/member/mention/rule");
+                startActivity(intent);
+                overridePendingTransition(R.anim.push_left_in, R.anim.push_left_out);
+            }
+        });
         initData();
     }
 
@@ -245,11 +251,9 @@ public class WithdrawActivity extends Activity {
                 if (response.isSuccessful()) {
                     JsonObject json = response.body();
                     if (!json.get("success").isJsonNull() && json.get("success").getAsBoolean()) {
-                        TSnackbar snackbar = TSnackbar.make(findViewById(android.R.id.content), json.get("message").getAsString(), TSnackbar.LENGTH_SHORT);
-                        ColoredSnackbar.warning(snackbar).show();
+                        IosDialog.show( json.get("message").getAsString(),WithdrawActivity.this);
                     } else {
-                        TSnackbar snackbar = TSnackbar.make(findViewById(android.R.id.content), json.get("message").getAsString(), TSnackbar.LENGTH_SHORT);
-                        ColoredSnackbar.warning(snackbar).show();
+                        IosDialog.show( json.get("message").getAsString(),WithdrawActivity.this);
                     }
                 }
             }
@@ -269,13 +273,11 @@ public class WithdrawActivity extends Activity {
         String amount = txt_mention_amount.getText().toString().trim();
         String verify = txt_verify.getText().toString().trim();
         if(amount.equals("")){
-            TSnackbar snackbar = TSnackbar.make(findViewById(android.R.id.content),"请输入提现金额", TSnackbar.LENGTH_SHORT);
-            ColoredSnackbar.warning(snackbar).show();
+            IosDialog.show( "请输入提现金额",this);
             return;
         }
         if(verify.equals("")){
-            TSnackbar snackbar = TSnackbar.make(findViewById(android.R.id.content),"请输入验证码", TSnackbar.LENGTH_SHORT);
-            ColoredSnackbar.warning(snackbar).show();
+            IosDialog.show( "请输入验证码",this);
             return;
         }
         Call<JsonObject> call = service.withdraw(Constant.BEARER+" "+Constant.access_token,amount,bank_id,verify);
@@ -285,13 +287,11 @@ public class WithdrawActivity extends Activity {
                 if (response.isSuccessful()) {
                     JsonObject json = response.body();
                     if (json.get("success").getAsBoolean()) {
-                        TSnackbar snackbar = TSnackbar.make(findViewById(android.R.id.content),json.get("message").getAsString(), TSnackbar.LENGTH_SHORT);
-                        ColoredSnackbar.warning(snackbar).show();
+                        Toast.makeText(WithdrawActivity.this,json.get("message").getAsString(),Toast.LENGTH_SHORT).show();
                         finish();
                         overridePendingTransition(R.anim.push_right_in, R.anim.push_right_out);
                     }else{
-                        TSnackbar snackbar = TSnackbar.make(findViewById(android.R.id.content),json.get("message").getAsString(), TSnackbar.LENGTH_SHORT);
-                        ColoredSnackbar.warning(snackbar).show();
+                        IosDialog.show(json.get("message").getAsString(),WithdrawActivity.this);
                     }
                 }
             }

@@ -33,7 +33,7 @@ public class UpdateManager {
 	private Context mContext;
 	private boolean cancel = false;
 	private String appname = "PcjinrongApp.apk";
-	private String updateurl = "https://m.pcjr.com/androidVersion/getNewstVersion";
+	private String updateurl = "https://m.pcjr.com/";
 
 	public UpdateManager(Context context) {
 		this.mContext = context;
@@ -69,7 +69,7 @@ public class UpdateManager {
 			}
 			@Override
 			public void onFailure(Call<JsonObject> call, Throwable t) {
-				Log.d("pcjr", "onFailure: 获取版本号失败");
+				Log.e("pcjr", "onFailure: 获取版本号失败");
 			}
 		});
 

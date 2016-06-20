@@ -1,6 +1,7 @@
 package com.pcjr.fragment;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -10,6 +11,8 @@ import android.view.ViewGroup;
 import android.widget.RelativeLayout;
 
 
+import com.bigkoo.alertview.AlertView;
+import com.bigkoo.alertview.OnItemClickListener;
 import com.pcjr.R;
 import com.pcjr.activity.AboutusActivity;
 import com.pcjr.activity.TestActivity;
@@ -53,13 +56,13 @@ public class MoreFragment extends Fragment {
             }
         });
 
-       kefu.setOnClickListener(new View.OnClickListener() {
+        /*kefu.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(getActivity(),TestActivity.class));
             }
-        });
-        /*kefu.setOnClickListener(new View.OnClickListener() {
+        });*/
+        kefu.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 new AlertView("皮城金融竭诚为您服务", "服务时间：9:00-20:00", "取消", null,
@@ -73,7 +76,7 @@ public class MoreFragment extends Fragment {
                     }
                 }).show();
             }
-        });*/
+        });
     }
 
     public static Fragment newInstance(String text) {
