@@ -162,6 +162,7 @@ public interface ApiService {
      * @param header
      * @return
      */
+    @FormUrlEncoded
     @POST("member/verify_identity")
     Call<JsonObject> verifyIdentity(@Header("Authorization") String header,@Field("realname") String realname,@Field("identity") String identity);
 

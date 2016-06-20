@@ -72,6 +72,8 @@ public class InvestDetailRecordFragment extends Fragment{
 
             @Override
             public void onRefreshBegin(PtrFrameLayout frame) {
+                empty.setVisibility(View.INVISIBLE);
+                loadMoreListViewContainer.setVisibility(View.INVISIBLE);
                 pageNow = 1;
                 loadData();
             }

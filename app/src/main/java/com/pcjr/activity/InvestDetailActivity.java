@@ -73,7 +73,12 @@ public class InvestDetailActivity extends FragmentActivity
         layout_cdv = (LinearLayout) findViewById(R.id.layout_cv_countdown);
         cdv = (CountdownView) findViewById(R.id.cv_countdown);
 
-
+        cdv.setOnCountdownEndListener(new CountdownView.OnCountdownEndListener() {
+            @Override
+            public void onEnd(CountdownView cv) {
+                onCreate(null);
+            }
+        });
 
         back.setOnClickListener(new View.OnClickListener() {
             @Override

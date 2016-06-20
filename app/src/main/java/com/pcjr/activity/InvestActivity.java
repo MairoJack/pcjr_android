@@ -23,6 +23,8 @@ import com.pcjr.plugins.IosDialog;
 import com.pcjr.service.ApiService;
 import com.pcjr.utils.DateUtil;
 import com.pcjr.utils.RetrofitUtils;
+
+import cn.pedant.SweetAlert.SweetAlertDialog;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -148,7 +150,10 @@ public class InvestActivity extends Activity {
         tips.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                IosDialog.show("投资提示","若您选择全投，且您的可用余额大于该产品剩余可投金额，投资金额将自动填写为该产品剩余可投金额，有一定概率投资失败，请谨慎操作",InvestActivity.this);
+                new SweetAlertDialog(InvestActivity.this)
+                        .setTitleText("投资提示")
+                        .setContentText("若您选择全投，且您的可用余额大于该产品剩余可投金额，投资金额将自动填写为该产品剩余可投金额，有一定概率投资失败，请谨慎操作")
+                        .show();
             }
         });
 

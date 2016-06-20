@@ -28,13 +28,13 @@ import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 public class UpdateManager {
-	HashMap<String, String> mHashMap;
 
 	private Context mContext;
 	private boolean cancel = false;
 	private String appname = "PcjinrongApp.apk";
 	private String updateurl = "https://m.pcjr.com/";
 
+	private String apk_url = "";
 	public UpdateManager(Context context) {
 		this.mContext = context;
 	}
@@ -47,7 +47,6 @@ public class UpdateManager {
 	public void check() {
 		// 获取当前软件版本
 		final int versionCode = getVersionCode(mContext);
-		mHashMap = new HashMap<String, String>();
 
 		Retrofit retrofit = new Retrofit.Builder()
 				.baseUrl(updateurl)
@@ -61,7 +60,7 @@ public class UpdateManager {
 				if (response.isSuccessful()) {
 					JsonObject json = response.body();
 					int version = json.get("Version").getAsInt();
-					String url = json.get("Url").getAsString();
+					apk_url = json.get("Url").getAsString();
 					if (version > versionCode) {
 						showNoticeDialog();
 					}
@@ -168,7 +167,6 @@ public class UpdateManager {
 
 			@Override
 			public void onClick(DialogInterface arg0, int arg1) {
-				// TODO Auto-generated method stub
 				pd.dismiss();
 				cancel = true;
 			}
@@ -178,7 +176,7 @@ public class UpdateManager {
 			@Override
 			public void run() {
 				try {
-					File file = getFileFromServer(mHashMap.get("url"), pd);
+					File file = getFileFromServer(apk_url, pd);
 					sleep(1500);
 					installApk(file);
 					pd.dismiss(); // 结束掉进度条对话框

@@ -1,6 +1,7 @@
 package com.pcjr.fragment;
 
 import android.app.ProgressDialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.Nullable;
@@ -10,11 +11,18 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
+import android.widget.ScrollView;
 import android.widget.TextView;
 import com.pcjr.R;
+import com.pcjr.activity.InvestDetailActivity;
 import com.pcjr.model.Product;
 import com.pcjr.plugins.ProgressWheel;
 import com.pcjr.utils.DateUtil;
+
+import in.srain.cube.views.ptr.PtrClassicFrameLayout;
+import in.srain.cube.views.ptr.PtrDefaultHandler;
+import in.srain.cube.views.ptr.PtrFrameLayout;
+import in.srain.cube.views.ptr.PtrHandler;
 
 
 /**
@@ -22,6 +30,8 @@ import com.pcjr.utils.DateUtil;
  */
 public class InvestDetailInfoFragment extends Fragment {
 
+    private PtrClassicFrameLayout mPtrFrame;
+    private ScrollView scrollView;
     private ProgressWheel progressWheel;
     private float progress;
     private ProgressDialog dialog;
@@ -32,6 +42,7 @@ public class InvestDetailInfoFragment extends Fragment {
 
     private String id;
     private int index = 0;
+    private Product product;
 
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
@@ -43,6 +54,8 @@ public class InvestDetailInfoFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         dialog = new ProgressDialog(getContext(), ProgressDialog.STYLE_SPINNER);
         progress = 0;
+        mPtrFrame = (PtrClassicFrameLayout) view.findViewById(R.id.ptr_frame);
+        scrollView = (ScrollView) view.findViewById(R.id.scroll_view);
         progressWheel = (ProgressWheel) view.findViewById(R.id.pw_spinner);
         preview_repayment = (LinearLayout) view.findViewById(R.id.preview_repayment);
         debx = (LinearLayout) view.findViewById(R.id.debx);
@@ -63,13 +76,29 @@ public class InvestDetailInfoFragment extends Fragment {
         intro = (TextView) view.findViewById(R.id.intro);
         borrower_intro = (TextView) view.findViewById(R.id.company_intro);
 
+        mPtrFrame.setPtrHandler(new PtrHandler() {
+            @Override
+            public boolean checkCanDoRefresh(PtrFrameLayout frame, View content, View header) {
+                return PtrDefaultHandler.checkContentCanBePulledDown(frame, scrollView, header);
+            }
+
+            @Override
+            public void onRefreshBegin(PtrFrameLayout frame) {
+                Intent intent = new Intent(getActivity(), InvestDetailActivity.class);
+                intent.putExtra("id",product.getId());
+                getActivity().finish();
+                startActivity(intent);
+
+            }
+        });
+
         initData();
 
     }
 
     public void initData() {
         Bundle bundle = getArguments();
-        final Product product = (Product) bundle.getSerializable("product");
+        product = (Product) bundle.getSerializable("product");
         if(product.getIs_preview_repayment() == 1){
             String html_preview_repayment = "* 本产品具有 <font color='#dc4d07'>提前回款</font> 可能，平台确保此产品最短借款时长为 <font color='#dc4d07'>"+product.getMin_repayment_date()+"</font> ，如提前回款则补偿本产品 <font color='#dc4d07'>"+product.getPay_interest_day()+"天利息</font> 于投资人";
             preview_repayment.setVisibility(View.VISIBLE);

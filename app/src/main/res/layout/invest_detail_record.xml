@@ -82,7 +82,9 @@
             cube_ptr:ptr_ratio_of_header_height_to_refresh="1.2"
             cube_ptr:ptr_resistance="1.7"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp">
 
             <in.srain.cube.views.loadmore.LoadMoreListViewContainer
                 android:id="@+id/load_more"
@@ -94,8 +96,6 @@
                     android:id="@+id/list_view"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:layout_marginLeft="10dp"
-                    android:layout_marginRight="10dp"
                     android:clipToPadding="false"
                     android:dividerHeight="0.8dp" />
 

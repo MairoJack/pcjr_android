@@ -30,7 +30,7 @@ public class DotDecorator implements DayViewDecorator {
 
     @Override
     public void decorate(DayViewFacade view) {
-        view.addSpan(new DotSpan(Color.parseColor("#FF6602")));
+        view.addSpan(new DotSpan(8,Color.parseColor("#FF6602")));
     }
 
 
