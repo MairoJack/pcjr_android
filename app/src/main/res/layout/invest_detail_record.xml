@@ -44,7 +44,7 @@
         android:layout_marginLeft="10dp"
         android:layout_marginRight="10dp"
         android:layout_marginTop="15dp"
-        android:background="#E6E6FA">
+        android:background="#f3f3f3">
 
         <TextView
             android:layout_width="wrap_content"
@@ -69,7 +69,9 @@
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp">
 
         <include layout="@layout/no_records" />
 
@@ -83,8 +85,7 @@
             cube_ptr:ptr_resistance="1.7"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginLeft="10dp"
-            android:layout_marginRight="10dp">
+            >
 
             <in.srain.cube.views.loadmore.LoadMoreListViewContainer
                 android:id="@+id/load_more"
@@ -97,6 +98,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:clipToPadding="false"
+                    android:divider="#f3f3f3"
                     android:dividerHeight="0.8dp" />
 
             </in.srain.cube.views.loadmore.LoadMoreListViewContainer>

@@ -15,6 +15,7 @@ import com.google.gson.JsonObject;
 import com.pcjr.R;
 import com.pcjr.common.Constant;
 import com.pcjr.plugins.AlertView;
+import com.pcjr.plugins.IosDialog;
 import com.pcjr.service.ApiService;
 import com.pcjr.utils.RetrofitUtils;
 import com.pcjr.utils.SharedPreferenceUtil;
@@ -30,7 +31,7 @@ public class LoginActivity extends Activity implements View.OnClickListener {
 
     public static final String TAG = LoginActivity.class.getSimpleName();
 
-    private TextView reg, forget;
+    private TextView reg, forget,index;
     private EditText text_username;
     private EditText text_password;
     private Button but_login;
@@ -45,6 +46,7 @@ public class LoginActivity extends Activity implements View.OnClickListener {
 
     public void initView() {
         dialog = new ProgressDialog(this, ProgressDialog.STYLE_SPINNER);
+        index = (TextView) findViewById(R.id.index);
         reg = (TextView) findViewById(R.id.reg);
         forget = (TextView) findViewById(R.id.forget);
         text_username = (EditText) findViewById(R.id.username);
@@ -59,12 +61,17 @@ public class LoginActivity extends Activity implements View.OnClickListener {
         });
         reg.setOnClickListener(this);
         forget.setOnClickListener(this);
+        index.setOnClickListener(this);
     }
 
     @Override
     public void onClick(View v) {
         Intent intent;
         switch (v.getId()) {
+            case R.id.index:
+                setResult(2);
+                finish();
+                break;
             case R.id.reg:
                 intent = new Intent(LoginActivity.this, RegistActivity.class);
                 startActivity(intent);
@@ -84,8 +91,7 @@ public class LoginActivity extends Activity implements View.OnClickListener {
         final String username = text_username.getText().toString().trim();
         final String password = text_password.getText().toString().trim();
         if (username.equals("")) {
-            new AlertView("用户名不能为空",null, null, new String[]{"好"}, null, this,
-                    AlertView.Style.Alert, null).show();
+            IosDialog.show("用户名不能为空",this);
             return;
         }
         if (password.equals("")) {
@@ -132,9 +138,7 @@ public class LoginActivity extends Activity implements View.OnClickListener {
                         Toast.makeText(LoginActivity.this, json.get("status_code").toString() + ":" + json.get("message").toString(), Toast.LENGTH_SHORT).show();
                     }
                 } else {
-
-                    new AlertView("登陆失败", "用户名或密码错误", null, new String[]{"好"}, null,LoginActivity.this ,
-                            AlertView.Style.Alert, null).show();
+                    IosDialog.show("用户名或密码错误",LoginActivity.this);
                 }
                 dialog.dismiss();
 

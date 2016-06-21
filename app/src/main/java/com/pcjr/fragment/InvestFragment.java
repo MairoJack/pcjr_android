@@ -1,7 +1,9 @@
 package com.pcjr.fragment;
 
 
+import android.content.Context;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentPagerAdapter;
@@ -71,4 +73,11 @@ public class InvestFragment extends Fragment
 		return fragment;
 	}
 
+    @Override
+    public void onHiddenChanged(boolean hidden) {
+        super.onHiddenChanged(hidden);
+        if(!hidden) {
+            tabLayout.getTabAt(Constant.TYPE).select();
+        }
+    }
 }

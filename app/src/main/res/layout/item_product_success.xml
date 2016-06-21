@@ -198,7 +198,7 @@
                 android:layout_centerHorizontal="true"
                 android:layout_centerVertical="true"
                 android:text="募集完成"
-                android:textColor="#333333"
+                android:textColor="#8F8F8F"
                 android:textSize="11dp"
                 />
         </RelativeLayout>

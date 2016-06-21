@@ -15,4 +15,5 @@ public class IosDialog {
         new AlertView(title,msg, null, new String[]{"好"}, null, context,
                 AlertView.Style.Alert, null).show();
     }
+
 }

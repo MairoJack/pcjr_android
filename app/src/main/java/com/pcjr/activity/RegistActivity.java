@@ -84,14 +84,18 @@ public class RegistActivity extends Activity implements View.OnClickListener
                 overridePendingTransition(R.anim.push_right_in, R.anim.push_right_out);
 				break;
 			case R.id.syxy:
-                intent = new Intent(RegistActivity.this,AgreementActivity.class);
+                intent = new Intent(RegistActivity.this, WebViewActivity.class);
+                intent.putExtra("title", "使用协议");
+                intent.putExtra("url", "https://m.pcjr.com/appdeal/use");
                 startActivity(intent);
-                overridePendingTransition(R.anim.slide_up_in, R.anim.slide_up_out);
+                overridePendingTransition(R.anim.push_left_in, R.anim.push_left_out);
 				break;
 			case R.id.ystk:
-                intent = new Intent(RegistActivity.this,PrivacyPolicyActivity.class);
+                intent = new Intent(RegistActivity.this, WebViewActivity.class);
+                intent.putExtra("title", "隐私条款");
+                intent.putExtra("url", "https://m.pcjr.com/appdeal/agreement");
                 startActivity(intent);
-                overridePendingTransition(R.anim.slide_up_in, R.anim.slide_up_out);
+                overridePendingTransition(R.anim.push_left_in, R.anim.push_left_out);
 				break;
 		}
 	}

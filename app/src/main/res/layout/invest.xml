@@ -321,7 +321,7 @@
                 android:layout_height="wrap_content"
                 android:layout_margin="10dp"
                 android:background="@drawable/corners_bg_red"
-                android:text="一键全投(ALL IN)"
+                android:text="一键全投"
                 android:textColor="#FFFFFF"
                 android:textSize="18dp" />
         </LinearLayout>

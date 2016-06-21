@@ -113,6 +113,8 @@ public class AlertView {
                 ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT
         ));
         contentContainer = (ViewGroup) rootView.findViewById(R.id.content_container);
+        int padding = context.getResources().getDimensionPixelSize(R.dimen.margin_actionsheet_left_right);
+       // contentContainer.setPadding(padding,0,padding,0);
         int margin_alert_left_right = 0;
         switch (style){
             case ActionSheet:
@@ -138,9 +140,17 @@ public class AlertView {
         //标题和消息
         TextView tvAlertTitle = (TextView) viewGroup.findViewById(R.id.tvAlertTitle);
         TextView tvAlertMsg = (TextView) viewGroup.findViewById(R.id.tvAlertMsg);
+
+        LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+        lp.setMargins(20, 30, 20, 30);
+        tvAlertTitle.setLayoutParams(lp);
+
+        LinearLayout.LayoutParams lp2 = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+        lp2.setMargins(20, 30, 20, 30);
+        tvAlertMsg.setLayoutParams(lp2);
         if(title != null) {
             tvAlertTitle.setText(title);
-            tvAlertTitle.setTextSize(16);
+            tvAlertTitle.setTextSize(18);
         }else{
             tvAlertTitle.setVisibility(View.GONE);
         }

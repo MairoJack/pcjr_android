@@ -84,7 +84,7 @@ public class TradeRecordsListViewAdapter extends BaseAdapter {
         }
         viewHolder.remark.setText(list.get(position).getRemark());
         viewHolder.date.setText(DateUtil.transferLongToDate(DateUtil.DATE_FORMAT_YYYY_MM_DD,list.get(position).getJoin_date()*1000));
-        viewHolder.balance.setText(String.valueOf(list.get(position).getBalance()));
+        viewHolder.balance.setText(String.valueOf(list.get(position).getBalance())+"元");
 
         return convertView;
     }

@@ -24,6 +24,7 @@ import com.pcjr.fragment.InvestDetailInfoFragment;
 import com.pcjr.fragment.InvestDetailRecordFragment;
 import com.pcjr.fragment.InvestDetailRiskFragment;
 import com.pcjr.model.Product;
+import com.pcjr.plugins.IosDialog;
 import com.pcjr.service.ApiService;
 import com.pcjr.utils.DateUtil;
 import com.pcjr.utils.RetrofitUtils;
@@ -34,7 +35,6 @@ import java.util.Date;
 import java.util.List;
 
 import cn.iwgang.countdownview.CountdownView;
-import cn.pedant.SweetAlert.SweetAlertDialog;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -56,6 +56,7 @@ public class InvestDetailActivity extends FragmentActivity
 	private List<String> titleList;
     private LinearLayout layout_cdv;
     private CountdownView cdv;
+    private  Product product;
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -76,7 +77,28 @@ public class InvestDetailActivity extends FragmentActivity
         cdv.setOnCountdownEndListener(new CountdownView.OnCountdownEndListener() {
             @Override
             public void onEnd(CountdownView cv) {
-                onCreate(null);
+                layout_cdv.setVisibility(View.GONE);
+                btn_status.setVisibility(View.VISIBLE);
+                btn_status.setBackgroundResource(R.drawable.redbtn);
+                btn_status.setText("立即投资");
+                btn_status.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Intent intent;
+                        if(Constant.isLogin) {
+                            intent = new Intent(InvestDetailActivity.this, InvestActivity.class);
+                            Bundle bundle = new Bundle();
+                            bundle.putSerializable("product", product);
+                            intent.putExtras(bundle);
+                            startActivityForResult(intent,0);
+                        }else{
+                            intent = new Intent(InvestDetailActivity.this, LoginActivity.class);
+                            intent.putExtra("tag","invest");
+                            startActivity(intent);
+                            overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
+                        }
+                    }
+                });
             }
         });
 
@@ -98,7 +120,7 @@ public class InvestDetailActivity extends FragmentActivity
                 if (response.isSuccessful()) {
                     JsonObject json = response.body();
                     Gson gson = new Gson();
-                    final Product product;
+
                     if (json.get("success").getAsBoolean()) {
                         product = gson.fromJson(json.get("data"), Product.class);
                         initTablayout(product);
@@ -197,9 +219,7 @@ public class InvestDetailActivity extends FragmentActivity
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if(requestCode == 0 && resultCode == RESULT_OK){
-            new SweetAlertDialog(this)
-                    .setTitleText(data.getStringExtra("error"))
-                    .show();
+            IosDialog.show(data.getStringExtra("error"),this);
         }
     }
 

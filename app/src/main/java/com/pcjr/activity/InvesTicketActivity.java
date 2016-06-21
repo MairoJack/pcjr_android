@@ -76,7 +76,10 @@ public class InvesTicketActivity extends FragmentActivity {
         tips.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(InvesTicketActivity.this,InvestTicketTipsActivity.class));
+                Intent intent = new Intent(InvesTicketActivity.this, WebViewActivity.class);
+                intent.putExtra("title", "温馨提示");
+                intent.putExtra("url", "https://m.pcjr.com/appdeal/coupons");
+                startActivity(intent);
                 overridePendingTransition(R.anim.push_left_in, R.anim.push_left_out);
             }
         });

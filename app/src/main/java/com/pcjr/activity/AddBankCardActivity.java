@@ -20,10 +20,10 @@ import com.google.gson.reflect.TypeToken;
 import com.pcjr.R;
 import com.pcjr.common.Constant;
 import com.pcjr.model.BankCard;
+import com.pcjr.plugins.IosDialog;
 import com.pcjr.service.ApiService;
 import com.pcjr.utils.RetrofitUtils;
 import java.util.List;
-import cn.pedant.SweetAlert.SweetAlertDialog;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -74,10 +74,7 @@ public class AddBankCardActivity extends Activity {
         img_info.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                new SweetAlertDialog(AddBankCardActivity.this)
-                        .setTitleText("持卡人说明")
-                        .setContentText("为了你的账户资金安全，只能绑定持卡人的银行卡。")
-                        .show();
+                IosDialog.show("持卡人说明","为了你的账户资金安全，只能绑定持卡人的银行卡",AddBankCardActivity.this);
             }
         });
 

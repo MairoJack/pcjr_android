@@ -15,6 +15,7 @@ import android.widget.ScrollView;
 import android.widget.TextView;
 import com.pcjr.R;
 import com.pcjr.activity.InvestDetailActivity;
+import com.pcjr.activity.WebViewActivity;
 import com.pcjr.model.Product;
 import com.pcjr.plugins.ProgressWheel;
 import com.pcjr.utils.DateUtil;
@@ -100,14 +101,34 @@ public class InvestDetailInfoFragment extends Fragment {
         Bundle bundle = getArguments();
         product = (Product) bundle.getSerializable("product");
         if(product.getIs_preview_repayment() == 1){
-            String html_preview_repayment = "* 本产品具有 <font color='#dc4d07'>提前回款</font> 可能，平台确保此产品最短借款时长为 <font color='#dc4d07'>"+product.getMin_repayment_date()+"</font> ，如提前回款则补偿本产品 <font color='#dc4d07'>"+product.getPay_interest_day()+"天利息</font> 于投资人";
+            String html_preview_repayment = "* 本产品具有 <font color='#dc4d07'>提前回款</font> 可能，平台确保此产品最短借款时长为 <font color='#dc4d07'>"+product.getMin_repayment_date()+"</font> ，如提前回款则补偿本产品 <font color='#dc4d07'>"+product.getPay_interest_day()+"天利息</font> 于投资人,利息计算方法请 点击此处";
             preview_repayment.setVisibility(View.VISIBLE);
             txt_preview_repayment.setText(Html.fromHtml(html_preview_repayment));
+            preview_repayment.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intent = new Intent(getActivity(), WebViewActivity.class);
+                    intent.putExtra("title", "平台公告");
+                    intent.putExtra("url", "https://m.pcjr.com/platformnews/platformnewsdetail/index.html?id=87");
+                    startActivity(intent);
+                    getActivity().overridePendingTransition(R.anim.push_left_in, R.anim.push_left_out);
+                }
+            });
         }
         if(product.getRepayment() == 2){
-            String html_debx = "* 本产品为 <font color='#dc4d07'>等额本息</font> 产品，每投资1000元预期收益为 <font color='#dc4d07'>"+product.getEstimate_interest()+"</font> 元，按月还本付息，资金更灵活，理财更安心";
+            String html_debx = "* 本产品为 <font color='#dc4d07'>等额本息</font> 产品，每投资1000元预期收益为 <font color='#dc4d07'>"+product.getEstimate_interest()+"</font> 元，按月还本付息，资金更灵活，理财更安心,具体收益计算公式请 点击此处";
             debx.setVisibility(View.VISIBLE);
             txt_debx.setText(Html.fromHtml(html_debx));
+            debx.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intent = new Intent(getActivity(), WebViewActivity.class);
+                    intent.putExtra("title", "平台公告");
+                    intent.putExtra("url", "https://m.pcjr.com/platformnews/platformnewsdetail?id=96");
+                    startActivity(intent);
+                    getActivity().overridePendingTransition(R.anim.push_left_in, R.anim.push_left_out);
+                }
+            });
         }
         int repayment = product.getRepayment();
         if (repayment == 0) {

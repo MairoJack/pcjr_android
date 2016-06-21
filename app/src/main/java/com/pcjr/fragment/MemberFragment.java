@@ -25,10 +25,10 @@ import com.pcjr.activity.TradeRecordsActivity;
 import com.pcjr.activity.WithdrawActivity;
 import com.pcjr.common.Constant;
 import com.pcjr.model.BankCard;
+import com.pcjr.plugins.IosDialog;
 import com.pcjr.service.ApiService;
 import com.pcjr.utils.RetrofitUtils;
 import java.util.List;
-import cn.pedant.SweetAlert.SweetAlertDialog;
 import in.srain.cube.views.ptr.PtrClassicFrameLayout;
 import in.srain.cube.views.ptr.PtrDefaultHandler;
 import in.srain.cube.views.ptr.PtrFrameLayout;
@@ -166,9 +166,7 @@ public class MemberFragment extends Fragment {
                             Gson gson = new Gson();
                             List<BankCard> bankCards = null;
                             if (json.get("data").getAsJsonArray().size() <= 0) {
-                                new SweetAlertDialog(getContext())
-                                        .setTitleText("请先添加银行卡")
-                                        .show();
+                                IosDialog.show("请先添加银行卡",getContext());
                             } else {
                                 getActivity().startActivityForResult(new Intent(getActivity(), WithdrawActivity.class), Constant.REQUSET);
                                 getActivity().overridePendingTransition(R.anim.push_left_in, R.anim.push_left_out);

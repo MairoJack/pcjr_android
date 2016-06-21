@@ -12,11 +12,11 @@ import com.google.gson.JsonObject;
 import com.pcjr.R;
 import com.pcjr.common.Constant;
 import com.pcjr.model.RedPacket;
+import com.pcjr.plugins.IosDialog;
 import com.pcjr.service.ApiService;
 import com.pcjr.utils.DateUtil;
 import com.pcjr.utils.RetrofitUtils;
 import java.util.List;
-import cn.pedant.SweetAlert.SweetAlertDialog;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -101,10 +101,7 @@ public class RedPacketListViewAdapter extends BaseAdapter {
                     JsonObject json = response.body();
                     if (json.get("success").getAsBoolean()) {
                         list.remove(position);
-                        new SweetAlertDialog(context)
-                                .setTitleText("领取成功")
-                                .setContentText("红包金额已转入您的账户余额内")
-                                .show();
+                        IosDialog.show("领取成功","红包金额已转入您的账户余额内",context);
                         notifyDataSetChanged();
                     }else{
                         Toast.makeText(context,json.get("message").getAsString(),Toast.LENGTH_SHORT).show();

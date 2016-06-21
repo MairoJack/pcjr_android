@@ -10,12 +10,14 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
+
 import com.google.gson.JsonObject;
 import com.pcjr.R;
 import com.pcjr.common.Constant;
 import com.pcjr.plugins.IosDialog;
 import com.pcjr.service.ApiService;
 import com.pcjr.utils.RetrofitUtils;
+
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -39,7 +41,7 @@ public class RealNameVerifiedActivity extends Activity {
         initData();
     }
 
-    public void initView(){
+    public void initView() {
         btn_save = (Button) findViewById(R.id.btn_save);
         txt_realname = (EditText) findViewById(R.id.txt_realname);
         txt_idcard = (EditText) findViewById(R.id.txt_idcard);
@@ -63,7 +65,7 @@ public class RealNameVerifiedActivity extends Activity {
         });
     }
 
-    public void initData(){
+    public void initData() {
         ApiService service = RetrofitUtils.createApi(ApiService.class);
         Call<JsonObject> call = service.getMemberIdentityInfo(Constant.access_token);
         call.enqueue(new Callback<JsonObject>() {
@@ -81,18 +83,17 @@ public class RealNameVerifiedActivity extends Activity {
                     }
                 }
             }
+
             @Override
             public void onFailure(Call call, Throwable t) {
-                Log.d("Mario", "onFailure: "+t);
+                Log.d("Mario", "onFailure: " + t);
             }
         });
     }
 
     @Override
-    public boolean onKeyDown(int keyCode, KeyEvent event)
-    {
-        if (keyCode == KeyEvent.KEYCODE_BACK )
-        {
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if (keyCode == KeyEvent.KEYCODE_BACK) {
             finish();
             overridePendingTransition(R.anim.push_right_in, R.anim.push_right_out);
         }
@@ -106,15 +107,15 @@ public class RealNameVerifiedActivity extends Activity {
         txt_realname.clearFocus();
         txt_idcard.clearFocus();
         if (realname.equals("")) {
-            IosDialog.show("真实姓名不能为空",this);
+            IosDialog.show("真实姓名不能为空", this);
             return;
         }
         if (idcard.equals("")) {
-            IosDialog.show("身份证号码不能为空",this);
+            IosDialog.show("身份证号码不能为空", this);
             return;
         }
         ApiService service = RetrofitUtils.createApi(ApiService.class);
-        Call<JsonObject> call = service.verifyIdentity(Constant.BEARER+" "+Constant.access_token,realname,idcard);
+        Call<JsonObject> call = service.verifyIdentity(Constant.BEARER + " " + Constant.access_token, realname, idcard);
         dialog.setMessage("正在提交...");
         dialog.show();
         call.enqueue(new Callback<JsonObject>() {
@@ -123,14 +124,14 @@ public class RealNameVerifiedActivity extends Activity {
                 if (response.isSuccessful()) {
                     JsonObject json = response.body();
                     if (json.get("success").getAsBoolean()) {
-                        Toast.makeText(RealNameVerifiedActivity.this,"实名认证成功",Toast.LENGTH_SHORT).show();
+                        Toast.makeText(RealNameVerifiedActivity.this, "实名认证成功", Toast.LENGTH_SHORT).show();
                         finish();
                         overridePendingTransition(R.anim.push_right_in, R.anim.push_right_out);
                     } else {
-                        IosDialog.show(json.get("message").getAsString(),RealNameVerifiedActivity.this);
+                        IosDialog.show(json.get("message").getAsString(), RealNameVerifiedActivity.this);
                     }
-                }else{
-                    IosDialog.show("认证出错",RealNameVerifiedActivity.this);
+                } else {
+                    IosDialog.show("认证出错", RealNameVerifiedActivity.this);
                 }
                 dialog.dismiss();
             }
@@ -138,7 +139,7 @@ public class RealNameVerifiedActivity extends Activity {
             @Override
             public void onFailure(Call<JsonObject> call, Throwable t) {
                 dialog.dismiss();
-                Toast.makeText(RealNameVerifiedActivity.this,"网络异常",Toast.LENGTH_SHORT).show();
+                Toast.makeText(RealNameVerifiedActivity.this, "网络异常", Toast.LENGTH_SHORT).show();
             }
         });
     }

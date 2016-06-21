@@ -30,7 +30,6 @@ import com.pcjr.utils.RetrofitUtils;
 
 import java.util.List;
 
-import cn.pedant.SweetAlert.SweetAlertDialog;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -122,20 +121,14 @@ public class WithdrawActivity extends Activity {
         btn_recharge.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                new SweetAlertDialog(WithdrawActivity.this)
-                        .setTitleText("温馨提示")
-                        .setContentText("皮城金融手机版暂不支持此操作 ，请在电脑上充值，谢谢您的合作，给您带来的不便，敬请谅解！")
-                        .show();
+                IosDialog.show("温馨提示","皮城金融手机版暂不支持此操作 ，请在电脑上充值，谢谢您的合作，给您带来的不便，敬请谅解",WithdrawActivity.this);
             }
         });
 
         info.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                new SweetAlertDialog(WithdrawActivity.this)
-                        .setTitleText("提现金额")
-                        .setContentText("已赚取利息与到期本金之和即为您可免费提现的总额，充值未投资金额则需收取0.15%手续费。")
-                        .show();
+                IosDialog.show("提现金额","已赚取利息与到期本金之和即为您可免费提现的总额，充值未投资金额则需收取0.15%手续费",WithdrawActivity.this);
             }
         });
 
@@ -169,7 +162,7 @@ public class WithdrawActivity extends Activity {
             public void onClick(View v) {
                 Intent intent = new Intent(WithdrawActivity.this, WebViewActivity.class);
                 intent.putExtra("title", "提现细则");
-                intent.putExtra("url", "https://m.pcjr.com/member/mention/rule");
+                intent.putExtra("url", "https://m.pcjr.com/appdeal/mention");
                 startActivity(intent);
                 overridePendingTransition(R.anim.push_left_in, R.anim.push_left_out);
             }

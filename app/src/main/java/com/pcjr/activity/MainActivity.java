@@ -18,6 +18,7 @@ import com.pcjr.common.Constant;
 import com.pcjr.model.PaymentPlan;
 import com.pcjr.plugins.BottomNavigatorView;
 import com.pcjr.plugins.FragmentNavigator;
+import com.pcjr.plugins.IosDialog;
 import com.pcjr.service.ApiService;
 import com.pcjr.service.RefreshTokenService;
 import com.pcjr.utils.RetrofitUtils;
@@ -25,8 +26,6 @@ import com.pcjr.utils.SharedPreferenceUtil;
 import com.tencent.android.tpush.XGPushConfig;
 import com.tencent.android.tpush.XGPushManager;
 import com.tencent.android.tpush.service.XGPushService;
-
-import cn.pedant.SweetAlert.SweetAlertDialog;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -110,10 +109,10 @@ public class MainActivity extends FragmentActivity implements BottomNavigatorVie
         if (requestCode == Constant.REQUSET && resultCode == RESULT_OK) {
             setCurrentTab(2);
         }else if (requestCode == Constant.REQUSET && resultCode == RESULT_FIRST_USER){
-            new SweetAlertDialog(this)
-                    .setTitleText(data.getStringExtra("error"))
-                    .show();
+            IosDialog.show(data.getStringExtra("error"),this);
         }else if(requestCode == Constant.SAFESETTING && resultCode == RESULT_FIRST_USER){
+            setCurrentTab(0);
+        }else if(requestCode == Constant.REQUSET && resultCode == 2){
             setCurrentTab(0);
         }
     }

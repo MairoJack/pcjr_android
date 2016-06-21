@@ -86,7 +86,7 @@
             android:layout_height="40dp"
             android:layout_marginLeft="10dp"
             android:layout_marginRight="10dp"
-            android:background="#FFA500"
+            android:background="@drawable/yellowbtn"
             android:visibility="gone"
             android:gravity="center_horizontal|center_vertical">
 
@@ -102,12 +102,12 @@
                 app:isShowSecond="true"
                 app:isShowTimeBgDivisionLine="false"
                 app:suffixGravity="center"
-                app:suffixTextColor="#FFBF00"
+                app:suffixTextColor="#FFFFFF"
                 app:suffixTextSize="16dp"
                 app:suffixHour="时"
                 app:suffixMinute="分"
                 app:suffixSecond="秒"
-                app:timeBgColor="#FFA500"
+                app:timeBgColor="#FFBF00"
                 app:timeTextColor="#FFFFFF"
                 app:timeTextSize="16dp" />
         </LinearLayout>

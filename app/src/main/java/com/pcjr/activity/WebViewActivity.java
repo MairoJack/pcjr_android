@@ -50,9 +50,10 @@ public class WebViewActivity extends Activity {
         Intent intent = getIntent();
         WebSettings webSettings = webView.getSettings();
         webSettings.setJavaScriptEnabled(true);
+        webSettings.setCacheMode(WebSettings.LOAD_CACHE_ELSE_NETWORK);
         webSettings
                 .setUserAgentString(webSettings.getUserAgentString() + "NewpcjrApp");
-        webView.setWebViewClient(new WebViewClient(){
+       /* webView.setWebViewClient(new WebViewClient(){
             @Override
             public boolean shouldOverrideUrlLoading(WebView view, String url) {
                 view.loadUrl(url);
@@ -64,21 +65,22 @@ public class WebViewActivity extends Activity {
                 dialog.dismiss();
                 webView.loadUrl("javascript:appdeletehead()");
             }
-        });
-        /*webView.setWebChromeClient(new WebChromeClient() {
+        });*/
+        webView.setWebChromeClient(new WebChromeClient() {
             @Override
             public void onProgressChanged(WebView view, int newProgress) {
                 if (newProgress == 100) {
-                    dialog.dismiss();
+                     dialog.dismiss();
+                    webView.loadUrl("javascript:appdeletehead()");
                 } else {
 
                 }
 
             }
-        });*/
+        });
+        String url = intent.getStringExtra("url");
         title.setText(intent.getStringExtra("title"));
-        webView.getSettings().setCacheMode(WebSettings.LOAD_CACHE_ELSE_NETWORK);
-        webView.loadUrl(String.valueOf(intent.getStringExtra("url")));
+        webView.loadUrl(url);
 
     }
 

@@ -82,7 +82,7 @@ public class PaymentPlanListViewAdapter extends BaseAdapter {
             viewHolder.icon.setImageResource(R.drawable.right);
         }
         viewHolder.product_name.setText(list.get(position).getProduct_name());
-        viewHolder.amount.setText(String.valueOf(Double.parseDouble(estimated_interest)+Double.parseDouble(estimated_capital))+"元");
+        viewHolder.amount.setText(String.format("%.2f",Double.parseDouble(estimated_interest)+Double.parseDouble(estimated_capital))+"元");
 
         return convertView;
     }

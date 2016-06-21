@@ -14,7 +14,8 @@ public class RetrofitUtils {
             synchronized (RetrofitUtils.class) {
                 if (retrofit == null) {
                     retrofit = new Retrofit.Builder()
-                            .baseUrl("https://www.pcjr.com/mapi/")
+                            //.baseUrl("https://www.pcjr.com/mapi/")
+                            .baseUrl("http://api.pcjr.test/mapi/")
                             .addConverterFactory(GsonConverterFactory.create())
                             .build();
                 }
