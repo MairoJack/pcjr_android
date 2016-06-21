@@ -265,7 +265,7 @@ public class IndexFragment extends Fragment{
             public NetworkImageHolderView createHolder() {
                 return new NetworkImageHolderView();
             }
-        }, focusImgs).setPageIndicator(new int[]{R.drawable.ic_page_indicator, R.drawable.ic_page_indicator_focused})
+        }, focusImgs).setPageIndicator(new int[]{R.mipmap.ic_page_indicator, R.mipmap.ic_page_indicator_focused})
                 .setPageIndicatorAlign(ConvenientBanner.PageIndicatorAlign.CENTER_HORIZONTAL)
                 .setOnItemClickListener(new SliderLayoutOnItemClick(focusImgs));
 
@@ -275,7 +275,7 @@ public class IndexFragment extends Fragment{
             public NetworkImageHolderView createHolder() {
                 return new NetworkImageHolderView();
             }
-        }, midFocusImgs).setPageIndicator(new int[]{R.drawable.ic_page_indicator, R.drawable.ic_page_indicator_focused})
+        }, midFocusImgs).setPageIndicator(new int[]{R.mipmap.ic_page_indicator, R.mipmap.ic_page_indicator_focused})
                 .setPageIndicatorAlign(ConvenientBanner.PageIndicatorAlign.CENTER_HORIZONTAL)
                 .setOnItemClickListener(new SliderLayoutSmallOnItemClick(midFocusImgs));
     }

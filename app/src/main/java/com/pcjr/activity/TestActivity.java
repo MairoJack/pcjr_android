@@ -198,7 +198,7 @@ public class TestActivity extends Activity implements ViewPager.OnPageChangeList
             public NetworkImageHolderView createHolder() {
                 return new NetworkImageHolderView();
             }
-        }, networkImages).setPageIndicator(new int[]{R.drawable.ic_page_indicator, R.drawable.ic_page_indicator_focused})
+        }, networkImages).setPageIndicator(new int[]{R.mipmap.ic_page_indicator, R.mipmap.ic_page_indicator_focused})
                 .setPageIndicatorAlign(ConvenientBanner.PageIndicatorAlign.ALIGN_PARENT_RIGHT)
                 .setOnPageChangeListener(this)//监听翻页事件
                 .setOnItemClickListener(this    );
