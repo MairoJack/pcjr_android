@@ -65,7 +65,7 @@ public class BankCardActivity extends Activity {
         btn_addbankcard.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(BankCardActivity.this, AddBankCardActivity.class));
+                startActivityForResult(new Intent(BankCardActivity.this, AddBankCardActivity.class),Constant.REQUSET);
                 overridePendingTransition(R.anim.push_left_in, R.anim.push_left_out);
             }
         });
@@ -129,4 +129,11 @@ public class BankCardActivity extends Activity {
 
     }
 
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if(requestCode == Constant.REQUSET && resultCode == RESULT_OK){
+            initData();
+        }
+    }
 }

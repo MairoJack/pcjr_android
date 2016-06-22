@@ -114,6 +114,7 @@ public class InvestDetailActivity extends FragmentActivity
     public void initData(){
         ApiService service = RetrofitUtils.createApi(ApiService.class);
         Call<JsonObject> call = service.getProductDetail(getIntent().getStringExtra("id"));
+        final long request_time = DateUtil.getMillisOfDate(new Date());
         call.enqueue(new Callback<JsonObject>() {
             @Override
             public void onResponse(Call<JsonObject> call, Response<JsonObject> response) {
@@ -126,7 +127,10 @@ public class InvestDetailActivity extends FragmentActivity
                         initTablayout(product);
                         title.setText(product.getName());
                         if(product.getStatus() == 1){
-                            Date date = new Date();
+                            long response_time = DateUtil.getMillisOfDate(new Date());
+                            long time = response_time - request_time;
+                            long current_time = json.get("current_time").getAsLong()*1000 + time;
+                            Date date = new Date(current_time);
                             Date pub_date = new Date(product.getPub_date()*1000);
                             try {
                                 if (DateUtil.isStartDateBeforeEndDate(date, pub_date)) {

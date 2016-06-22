@@ -48,9 +48,11 @@ import com.pcjr.model.FocusImg;
 import com.pcjr.model.Product;
 import com.pcjr.plugins.NetworkImageHolderView;
 import com.pcjr.service.ApiService;
+import com.pcjr.utils.DateUtil;
 import com.pcjr.utils.RetrofitUtils;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import in.srain.cube.views.ptr.PtrClassicFrameLayout;
@@ -230,16 +232,19 @@ public class IndexFragment extends Fragment{
         mCounter = constant.getmCounter();
 
         Call<JsonObject> call = service.getIndexProductList();
+        final long request_time = DateUtil.getMillisOfDate(new Date());
         call.enqueue(new Callback<JsonObject>() {
             @Override
             public void onResponse(Call<JsonObject> call, Response<JsonObject> response) {
+                long response_time = DateUtil.getMillisOfDate(new Date());
                 if (response.isSuccessful()) {
                     JsonObject json = response.body();
                     Gson gson = new Gson();
                     products = gson.fromJson(json.get("data"), new TypeToken<List<Product>>() {
                     }.getType());
-
-                    adapter = new ProductListViewAdapter(products,getContext());
+                    long time = response_time - request_time;
+                    long current_time = json.get("current_time").getAsLong()*1000 + time;
+                    adapter = new ProductListViewAdapter(products,getContext(),current_time);
                     listView.setAdapter(adapter);
                 }
             }
@@ -275,7 +280,7 @@ public class IndexFragment extends Fragment{
             public NetworkImageHolderView createHolder() {
                 return new NetworkImageHolderView();
             }
-        }, midFocusImgs).setPageIndicator(new int[]{R.mipmap.ic_page_indicator, R.mipmap.ic_page_indicator_focused})
+        }, midFocusImgs).setPageIndicator(new int[]{R.mipmap.ic_page_red_indicator_focused, R.mipmap.ic_page_red_indicator})
                 .setPageIndicatorAlign(ConvenientBanner.PageIndicatorAlign.CENTER_HORIZONTAL)
                 .setOnItemClickListener(new SliderLayoutSmallOnItemClick(midFocusImgs));
     }
@@ -393,15 +398,19 @@ public class IndexFragment extends Fragment{
         });
 
         Call<JsonObject> call = service.getIndexProductList();
+        final long request_time = DateUtil.getMillisOfDate(new Date());
         call.enqueue(new Callback<JsonObject>() {
             @Override
             public void onResponse(Call<JsonObject> call, Response<JsonObject> response) {
+                long response_time = DateUtil.getMillisOfDate(new Date());
                 if (response.isSuccessful()) {
                     JsonObject json = response.body();
                     Gson gson = new Gson();
                     products = gson.fromJson(json.get("data"), new TypeToken<List<Product>>() {
                     }.getType());
-                    adapter = new ProductListViewAdapter(products,getContext());
+                    long time = response_time - request_time;
+                    long current_time = json.get("current_time").getAsLong()*1000 + time;
+                    adapter = new ProductListViewAdapter(products,getContext(),current_time);
                     listView.setAdapter(adapter);
                     mPtrFrame.refreshComplete();
                 }

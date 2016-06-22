@@ -121,7 +121,7 @@ public class WithdrawActivity extends Activity {
         btn_recharge.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                IosDialog.show("温馨提示","皮城金融手机版暂不支持此操作 ，请在电脑上充值，谢谢您的合作，给您带来的不便，敬请谅解",WithdrawActivity.this);
+                IosDialog.show("温馨提示","皮城金融APP暂不支持此操作 ，请在电脑上充值，谢谢您的合作，给您带来的不便，敬请谅解",WithdrawActivity.this);
             }
         });
 

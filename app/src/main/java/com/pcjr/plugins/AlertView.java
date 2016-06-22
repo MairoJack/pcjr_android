@@ -142,21 +142,23 @@ public class AlertView {
         TextView tvAlertMsg = (TextView) viewGroup.findViewById(R.id.tvAlertMsg);
 
         LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
-        lp.setMargins(20, 30, 20, 30);
+        lp.setMargins(20, 40, 20, 25);
         tvAlertTitle.setLayoutParams(lp);
 
         LinearLayout.LayoutParams lp2 = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
-        lp2.setMargins(20, 30, 20, 30);
+        lp2.setMargins(35, 5, 35, 30);
         tvAlertMsg.setLayoutParams(lp2);
         if(title != null) {
             tvAlertTitle.setText(title);
-            tvAlertTitle.setTextSize(18);
+            tvAlertTitle.setTextSize(20);
         }else{
             tvAlertTitle.setVisibility(View.GONE);
         }
         if(msg != null) {
             tvAlertMsg.setText(msg);
-            tvAlertMsg.setTextSize(16);
+            tvAlertMsg.setTextSize(15);
+            tvAlertMsg.setTextColor(Color.parseColor("#878787"));
+            tvAlertMsg.setLineSpacing(1.5f,1);
         }else{
             tvAlertMsg.setVisibility(View.GONE);
         }

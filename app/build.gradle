@@ -43,7 +43,7 @@ dependencies {
     //AlertView
     compile 'com.bigkoo:alertview:1.0.2'
     //CountdownView
-    compile 'com.github.iwgang:countdownview:1.2'
+    compile 'com.github.iwgang:countdownview:2.0'
     //信鸽推送
     compile files('libs/Xg_sdk_v2.46_20160602_1638.jar')
     //日历

@@ -2,6 +2,8 @@ package com.pcjr.adapter;
 
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.os.Handler;
+import android.util.SparseArray;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,6 +20,8 @@ import com.pcjr.utils.RotateTextView;
 import java.text.ParseException;
 import java.util.Date;
 import java.util.List;
+import java.util.Timer;
+import java.util.TimerTask;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -30,6 +34,7 @@ public class ProductListViewAdapter extends BaseAdapter {
     private List<Product> list;
     private Context context;
     private LayoutInflater layoutInflater;
+    private long current_time;
 
     private static class ListItemView {
         public ImageView rtv;
@@ -46,10 +51,11 @@ public class ProductListViewAdapter extends BaseAdapter {
                 rate;
     }
 
-    public ProductListViewAdapter(List<Product> list, Context context) {
+    public ProductListViewAdapter(List<Product> list, Context context,long current_time) {
         this.list = list;
         this.context = context;
         this.layoutInflater = LayoutInflater.from(context);
+        this.current_time = current_time;
     }
 
     @Override
@@ -78,7 +84,7 @@ public class ProductListViewAdapter extends BaseAdapter {
         } else if (product.getStatus() == 4) {
             convertView = layoutInflater.inflate(R.layout.item_product_over, null);
         } else {
-            Date date = new Date();
+            Date date = new Date(current_time);
             Date pub_date = new Date(product.getPub_date()*1000);
             try {
                 if(DateUtil.isStartDateBeforeEndDate(date,pub_date)){

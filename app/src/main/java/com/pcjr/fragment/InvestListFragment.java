@@ -20,8 +20,10 @@ import com.pcjr.adapter.ProductListViewAdapter;
 import com.pcjr.model.Pager;
 import com.pcjr.model.Product;
 import com.pcjr.service.ApiService;
+import com.pcjr.utils.DateUtil;
 import com.pcjr.utils.RetrofitUtils;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import in.srain.cube.views.loadmore.LoadMoreContainer;
 import in.srain.cube.views.loadmore.LoadMoreHandler;
@@ -100,8 +102,7 @@ public class InvestListFragment extends Fragment   {
         });
 
 
-        adapter = new ProductListViewAdapter(list, getContext());
-        listView.setAdapter(adapter);
+
 
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -118,9 +119,11 @@ public class InvestListFragment extends Fragment   {
     public void loadData() {
         ApiService service = RetrofitUtils.createApi(ApiService.class);
         Call<JsonObject> call = service.getInvestProductList(type,pageNow,8);
+        final long request_time = DateUtil.getMillisOfDate(new Date());
         call.enqueue(new Callback<JsonObject>() {
             @Override
             public void onResponse(Call<JsonObject> call, Response<JsonObject> response) {
+
                 if (pageNow == 1)
                     list.clear();
                 mPtrFrame.refreshComplete();
@@ -137,7 +140,13 @@ public class InvestListFragment extends Fragment   {
                         }.getType());
                         list.addAll(temps);
                     }
-
+                    long response_time = DateUtil.getMillisOfDate(new Date());
+                    long time = response_time - request_time;
+                    long current_time = json.get("current_time").getAsLong()*1000 + time;
+                    if(adapter==null){
+                        adapter = new ProductListViewAdapter(list, getContext(),current_time);
+                        listView.setAdapter(adapter);
+                    }
                     int totalPage = (pager.getTotal() + pager.getPageSize() - 1) / pager.getPageSize();
                     if (pageNow >= totalPage) {
                         loadMoreListViewContainer.loadMoreFinish(false, false);

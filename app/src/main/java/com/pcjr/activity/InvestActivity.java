@@ -16,6 +16,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.afollestad.materialdialogs.GravityEnum;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.google.gson.JsonObject;
 import com.pcjr.R;
@@ -100,7 +101,8 @@ public class InvestActivity extends Activity {
                 new MaterialDialog.Builder(InvestActivity.this)
                         .title("输入密码")
                         .content("投资金额：" + amount + "元")
-                        .positiveColor(Color.parseColor("#3F51B5"))
+                        .positiveColor(Color.parseColor("#FF6602"))
+                        .buttonsGravity(GravityEnum.CENTER)
                         .inputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD)
                         .input("请输入密码", "", new MaterialDialog.InputCallback() {
                             @Override
@@ -132,6 +134,7 @@ public class InvestActivity extends Activity {
                 new MaterialDialog.Builder(InvestActivity.this)
                         .title("输入密码")
                         .content("投资金额：" + amount + "元")
+                        .positiveColor(Color.parseColor("#FF6602"))
                         .inputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD)
                         .input("请输入密码", "", new MaterialDialog.InputCallback() {
                             @Override

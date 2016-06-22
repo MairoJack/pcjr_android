@@ -141,11 +141,11 @@ public class AddBankCardActivity extends Activity {
                 if (response.isSuccessful()) {
                     JsonObject json = response.body();
                     if (json.get("success").getAsBoolean()) {
+                        setResult(RESULT_OK);
                         finish();
-                        startActivity(new Intent(AddBankCardActivity.this,BankCardActivity.class));
                         overridePendingTransition(R.anim.push_left_in, R.anim.push_left_out);
                     }else{
-                        Toast.makeText(AddBankCardActivity.this,json.get("message").getAsString(),Toast.LENGTH_SHORT).show();
+                        IosDialog.show(json.get("message").getAsString(),AddBankCardActivity.this);
                     }
                 }
             }
