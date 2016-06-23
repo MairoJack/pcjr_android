@@ -15,7 +15,7 @@ import com.google.gson.reflect.TypeToken;
 import com.jayfang.dropdownmenu.DropDownMenu;
 import com.jayfang.dropdownmenu.OnMenuSelectedListener;
 import com.pcjinrong.pcjr.adapter.TradeRecordsListViewAdapter;
-import com.pcjr.R;
+import com.pcjinrong.pcjr.R;
 import com.pcjinrong.pcjr.common.Constant;
 import com.pcjinrong.pcjr.model.Pager;
 import com.pcjinrong.pcjr.model.TradeRecords;

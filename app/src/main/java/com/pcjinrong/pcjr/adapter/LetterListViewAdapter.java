@@ -7,7 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
-import com.pcjr.R;
+import com.pcjinrong.pcjr.R;
 import com.pcjinrong.pcjr.model.Letter;
 import com.pcjinrong.pcjr.utils.DateUtil;
 import java.util.List;

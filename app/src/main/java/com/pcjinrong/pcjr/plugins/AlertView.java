@@ -21,7 +21,7 @@ import android.widget.TextView;
 import com.bigkoo.alertview.AlertViewAdapter;
 import com.bigkoo.alertview.OnDismissListener;
 import com.bigkoo.alertview.OnItemClickListener;
-import com.pcjr.R;
+import com.pcjinrong.pcjr.R;
 
 import java.util.ArrayList;
 import java.util.Arrays;

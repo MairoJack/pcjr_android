@@ -14,7 +14,7 @@ import com.google.gson.JsonObject;
 import com.google.gson.reflect.TypeToken;
 import com.pcjinrong.pcjr.adapter.RedPacketListViewAdapter;
 import com.pcjinrong.pcjr.service.ApiService;
-import com.pcjr.R;
+import com.pcjinrong.pcjr.R;
 import com.pcjinrong.pcjr.common.Constant;
 import com.pcjinrong.pcjr.model.Pager;
 import com.pcjinrong.pcjr.model.RedPacket;

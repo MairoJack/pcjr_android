@@ -10,7 +10,7 @@ import android.text.TextUtils;
 import android.util.AttributeSet;
 import android.view.View;
 
-import com.pcjr.R;
+import com.pcjinrong.pcjr.R;
 
 
 /**

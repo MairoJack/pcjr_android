@@ -40,7 +40,7 @@ import com.pcjinrong.pcjr.model.Product;
 import com.pcjinrong.pcjr.plugins.NetworkImageHolderView;
 import com.pcjinrong.pcjr.service.ApiService;
 import com.pcjinrong.pcjr.utils.DateUtil;
-import com.pcjr.R;
+import com.pcjinrong.pcjr.R;
 import com.pcjinrong.pcjr.common.Constant;
 import com.pcjinrong.pcjr.model.Announce;
 import com.pcjinrong.pcjr.utils.RetrofitUtils;

@@ -15,7 +15,7 @@ import com.bigkoo.alertview.AlertView;
 import com.bigkoo.alertview.OnItemClickListener;
 import com.pcjinrong.pcjr.activity.AboutusActivity;
 import com.pcjinrong.pcjr.activity.WebViewActivity;
-import com.pcjr.R;
+import com.pcjinrong.pcjr.R;
 
 
 public class MoreFragment extends Fragment {

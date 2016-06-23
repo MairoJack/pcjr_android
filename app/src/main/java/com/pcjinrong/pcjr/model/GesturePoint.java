@@ -4,7 +4,7 @@ package com.pcjinrong.pcjr.model;
 import android.widget.ImageView;
 
 import com.pcjinrong.pcjr.common.Constant;
-import com.pcjr.R;
+import com.pcjinrong.pcjr.R;
 
 
 public class GesturePoint {

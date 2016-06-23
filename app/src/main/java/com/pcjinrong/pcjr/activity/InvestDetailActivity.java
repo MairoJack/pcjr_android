@@ -18,7 +18,7 @@ import android.widget.Toast;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import com.pcjinrong.pcjr.fragment.InvestDetailRecordFragment;
-import com.pcjr.R;
+import com.pcjinrong.pcjr.R;
 import com.pcjinrong.pcjr.adapter.TabFragmentAdapter;
 import com.pcjinrong.pcjr.common.Constant;
 import com.pcjinrong.pcjr.fragment.InvestDetailInfoFragment;

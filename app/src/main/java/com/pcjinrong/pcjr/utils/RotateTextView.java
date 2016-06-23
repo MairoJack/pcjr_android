@@ -7,7 +7,7 @@ import android.util.AttributeSet;
 import android.view.Gravity;
 import android.widget.TextView;
 
-import com.pcjr.R;
+import com.pcjinrong.pcjr.R;
 
 
 /**

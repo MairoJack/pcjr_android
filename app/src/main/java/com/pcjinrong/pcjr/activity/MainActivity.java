@@ -15,7 +15,7 @@ import com.pcjinrong.pcjr.adapter.FragmentAdapter;
 import com.pcjinrong.pcjr.plugins.FragmentNavigator;
 import com.pcjinrong.pcjr.plugins.IosDialog;
 import com.pcjinrong.pcjr.utils.SharedPreferenceUtil;
-import com.pcjr.R;
+import com.pcjinrong.pcjr.R;
 import com.pcjinrong.pcjr.action.UpdateManager;
 import com.pcjinrong.pcjr.common.Constant;
 import com.pcjinrong.pcjr.plugins.BottomNavigatorView;

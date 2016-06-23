@@ -14,7 +14,7 @@ import com.google.gson.JsonObject;
 import com.google.gson.reflect.TypeToken;
 import com.pcjinrong.pcjr.decorators.DotDecorator;
 import com.pcjinrong.pcjr.utils.DateUtil;
-import com.pcjr.R;
+import com.pcjinrong.pcjr.R;
 import com.pcjinrong.pcjr.adapter.PaymentPlanListViewAdapter;
 import com.pcjinrong.pcjr.common.Constant;
 import com.pcjinrong.pcjr.decorators.DotGrayDecorator;

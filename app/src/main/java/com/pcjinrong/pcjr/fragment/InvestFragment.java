@@ -11,7 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.pcjinrong.pcjr.adapter.TabFragmentAdapter;
-import com.pcjr.R;
+import com.pcjinrong.pcjr.R;
 import com.pcjinrong.pcjr.common.Constant;
 
 import java.util.ArrayList;

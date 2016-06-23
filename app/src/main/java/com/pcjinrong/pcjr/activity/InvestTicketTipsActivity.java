@@ -6,8 +6,7 @@ import android.view.KeyEvent;
 import android.view.View;
 import android.widget.RelativeLayout;
 
-import com.pcjr.R;
-
+import com.pcjinrong.pcjr.R;
 /**
  * 投资券-温馨提示
  * Created by Mario on 2016/5/24.

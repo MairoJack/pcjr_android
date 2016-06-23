@@ -13,7 +13,7 @@ import android.widget.Toast;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import com.google.gson.reflect.TypeToken;
-import com.pcjr.R;
+import com.pcjinrong.pcjr.R;
 import com.pcjinrong.pcjr.adapter.ProductTradingRecordListViewAdapter;
 import com.pcjinrong.pcjr.model.Pager;
 import com.pcjinrong.pcjr.model.ProductTradingRecord;

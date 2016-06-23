@@ -18,7 +18,7 @@ import com.pcjinrong.pcjr.adapter.LetterListViewAdapter;
 import com.pcjinrong.pcjr.common.Constant;
 import com.pcjinrong.pcjr.model.Letter;
 import com.pcjinrong.pcjr.service.ApiService;
-import com.pcjr.R;
+import com.pcjinrong.pcjr.R;
 import com.pcjinrong.pcjr.model.Pager;
 import com.pcjinrong.pcjr.utils.RetrofitUtils;
 

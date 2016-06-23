@@ -10,7 +10,7 @@ import android.widget.Toast;
 
 import com.pcjinrong.pcjr.model.FinanceRecords;
 import com.pcjinrong.pcjr.service.ApiService;
-import com.pcjr.R;
+import com.pcjinrong.pcjr.R;
 import com.pcjinrong.pcjr.common.Constant;
 import com.pcjinrong.pcjr.utils.RetrofitUtils;
 ;import retrofit2.Call;

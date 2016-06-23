@@ -15,7 +15,7 @@ import android.widget.ScrollView;
 import android.widget.TextView;
 
 import com.pcjinrong.pcjr.activity.InvestDetailActivity;
-import com.pcjr.R;
+import com.pcjinrong.pcjr.R;
 import com.pcjinrong.pcjr.activity.WebViewActivity;
 import com.pcjinrong.pcjr.model.Product;
 import com.pcjinrong.pcjr.plugins.ProgressWheel;

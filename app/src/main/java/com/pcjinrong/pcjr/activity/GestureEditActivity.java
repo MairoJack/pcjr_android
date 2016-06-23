@@ -15,7 +15,7 @@ import android.widget.Toast;
 
 import com.pcjinrong.pcjr.plugins.GestureDrawline;
 import com.pcjinrong.pcjr.utils.SharedPreferenceUtil;
-import com.pcjr.R;
+import com.pcjinrong.pcjr.R;
 import com.pcjinrong.pcjr.common.Constant;
 import com.pcjinrong.pcjr.plugins.GestureContentView;
 import com.pcjinrong.pcjr.plugins.LockIndicator;

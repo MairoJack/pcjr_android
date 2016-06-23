@@ -8,7 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.pcjr.R;
+import com.pcjinrong.pcjr.R;
 
 /**
  * Created by Mario on 2016/5/12.

@@ -6,7 +6,7 @@ import android.view.KeyEvent;
 import android.view.View;
 import android.widget.RelativeLayout;
 
-import com.pcjr.R;
+import com.pcjinrong.pcjr.R;
 
 /**
  * 红包-温馨提示

@@ -11,7 +11,7 @@ import android.view.KeyEvent;
 import android.view.View;
 import android.widget.RelativeLayout;
 
-import com.pcjr.R;
+import com.pcjinrong.pcjr.R;
 import com.pcjinrong.pcjr.adapter.TabFragmentAdapter;
 import com.pcjinrong.pcjr.fragment.RedPacketFragment;
 

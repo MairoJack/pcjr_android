@@ -12,7 +12,7 @@ import com.google.gson.JsonObject;
 import com.pcjinrong.pcjr.plugins.IosDialog;
 import com.pcjinrong.pcjr.service.ApiService;
 import com.pcjinrong.pcjr.utils.DateUtil;
-import com.pcjr.R;
+import com.pcjinrong.pcjr.R;
 import com.pcjinrong.pcjr.common.Constant;
 import com.pcjinrong.pcjr.model.RedPacket;
 import com.pcjinrong.pcjr.utils.RetrofitUtils;

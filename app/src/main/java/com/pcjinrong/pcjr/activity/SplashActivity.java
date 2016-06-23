@@ -13,7 +13,7 @@ import com.pcjinrong.pcjr.model.Announce;
 import com.pcjinrong.pcjr.model.FocusImg;
 import com.pcjinrong.pcjr.service.ApiService;
 import com.pcjinrong.pcjr.utils.RetrofitUtils;
-import com.pcjr.R;
+import com.pcjinrong.pcjr.R;
 
 import java.util.List;
 

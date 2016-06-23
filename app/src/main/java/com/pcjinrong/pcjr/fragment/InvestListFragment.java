@@ -18,7 +18,7 @@ import com.pcjinrong.pcjr.activity.InvestDetailActivity;
 import com.pcjinrong.pcjr.adapter.ProductListViewAdapter;
 import com.pcjinrong.pcjr.service.ApiService;
 import com.pcjinrong.pcjr.utils.DateUtil;
-import com.pcjr.R;
+import com.pcjinrong.pcjr.R;
 import com.pcjinrong.pcjr.model.Pager;
 import com.pcjinrong.pcjr.model.Product;
 import com.pcjinrong.pcjr.utils.RetrofitUtils;

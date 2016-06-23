@@ -2,7 +2,7 @@ package com.pcjinrong.pcjr.plugins;
 
 import android.view.Gravity;
 
-import com.pcjr.R;
+import com.pcjinrong.pcjr.R;
 
 /**
  * Created by Sai on 15/8/9.

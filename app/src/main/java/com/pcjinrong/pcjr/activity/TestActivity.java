@@ -23,7 +23,7 @@ import com.nostra13.universalimageloader.core.assist.QueueProcessingType;
 import com.pcjinrong.pcjr.model.FocusImg;
 import com.pcjinrong.pcjr.plugins.NetworkImageHolderView;
 import com.pcjinrong.pcjr.plugins.ProgressWheel;
-import com.pcjr.R;
+import com.pcjinrong.pcjr.R;
 
 import java.util.ArrayList;
 import java.util.List;

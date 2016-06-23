@@ -9,7 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 
-import com.pcjr.R;
+import com.pcjinrong.pcjr.R;
 
 /**
  * Created by aspsine on 16/3/31.

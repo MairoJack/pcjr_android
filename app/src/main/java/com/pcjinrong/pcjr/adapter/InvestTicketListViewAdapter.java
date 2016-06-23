@@ -9,7 +9,7 @@ import android.widget.TextView;
 
 import com.pcjinrong.pcjr.model.InvestTicket;
 import com.pcjinrong.pcjr.utils.DateUtil;
-import com.pcjr.R;
+import com.pcjinrong.pcjr.R;
 
 import java.util.List;
 

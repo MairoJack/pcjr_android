@@ -16,7 +16,7 @@ import com.jayfang.dropdownmenu.DropDownMenu;
 import com.jayfang.dropdownmenu.OnMenuSelectedListener;
 import com.pcjinrong.pcjr.model.InvestRecords;
 import com.pcjinrong.pcjr.service.ApiService;
-import com.pcjr.R;
+import com.pcjinrong.pcjr.R;
 import com.pcjinrong.pcjr.adapter.InvestRecordsListViewAdapter;
 import com.pcjinrong.pcjr.common.Constant;
 import com.pcjinrong.pcjr.model.Pager;

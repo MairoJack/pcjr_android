@@ -7,7 +7,7 @@ import android.widget.ImageView;
 import com.bigkoo.convenientbanner.holder.Holder;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.pcjinrong.pcjr.model.FocusImg;
-import com.pcjr.R;
+import com.pcjinrong.pcjr.R;
 
 /**
  * Created by Mario on 16/6/19.

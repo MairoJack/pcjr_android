@@ -17,7 +17,7 @@ import com.pcjinrong.pcjr.activity.BankCardActivity;
 import com.pcjinrong.pcjr.activity.CouponActivity;
 import com.pcjinrong.pcjr.activity.TradeRecordsActivity;
 import com.pcjinrong.pcjr.plugins.IosDialog;
-import com.pcjr.R;
+import com.pcjinrong.pcjr.R;
 import com.pcjinrong.pcjr.activity.FinancialRecordsActivity;
 import com.pcjinrong.pcjr.activity.InvestRecordsActivity;
 import com.pcjinrong.pcjr.activity.MsgCenterActivity;
