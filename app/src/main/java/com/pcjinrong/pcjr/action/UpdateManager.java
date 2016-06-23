@@ -32,7 +32,7 @@ public class UpdateManager {
 	private Context mContext;
 	private boolean cancel = false;
 	private String appname = "PcjinrongApp.apk";
-	private String updateurl = "https://m.pcjinrong.pcjinrong.com.pcjinrong.com.pcjinrong.pcjr.com/";
+	private String updateurl = "https://m.pcjr.com/";
 
 	private String apk_url = "";
 	public UpdateManager(Context context) {

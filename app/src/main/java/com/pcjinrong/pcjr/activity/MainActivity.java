@@ -22,6 +22,7 @@ import com.pcjinrong.pcjr.plugins.BottomNavigatorView;
 import com.pcjinrong.pcjr.service.ApiService;
 import com.pcjinrong.pcjr.service.RefreshTokenService;
 import com.pcjinrong.pcjr.utils.RetrofitUtils;
+import com.tencent.android.tpush.XGIOperateCallback;
 import com.tencent.android.tpush.XGPushConfig;
 import com.tencent.android.tpush.XGPushManager;
 import com.tencent.android.tpush.service.XGPushService;
@@ -151,10 +152,21 @@ public class MainActivity extends FragmentActivity implements BottomNavigatorVie
      */
     public void XGAction() {
         Context context = getApplicationContext();
-        XGPushManager.registerPush(context);
+        XGPushManager.registerPush(context,new XGIOperateCallback(){
 
-        Intent service = new Intent(context, XGPushService.class);
-        context.startService(service);
+            @Override
+            public void onSuccess(Object o, int i) {
+                Log.d("Mario", "onSuccess: "+i);
+            }
+
+            @Override
+            public void onFail(Object o, int i, String s) {
+                Log.d("Mario", "onFail: "+i+":"+s);
+            }
+        });
+
+        //Intent service = new Intent(context, XGPushService.class);
+        //context.startService(service);
 
         Constant.DEVICETOKEN = XGPushConfig.getToken(context);
     }
