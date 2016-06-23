@@ -96,7 +96,7 @@
 -keep class com.google.gson.** { *; }
 -keep class com.google.gson.stream.** { *; }
 
--keep class com.pcjr.model.** {*;}
+-keep class pcjinrong.pcjr.model.** {*;}
 -keep class com.bigkoo.alertview.** {*;}
 -keep class com.bigkoo.convenientbanner.** {*;}
 -keep class com.afollestad.materialdialogs.** {*;}

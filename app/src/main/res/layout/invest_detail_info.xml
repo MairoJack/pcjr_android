@@ -70,7 +70,7 @@
                     android:layout_width="fill_parent"
                     android:layout_height="300dp">
 
-                    <com.pcjr.plugins.ProgressWheel
+                    <com.pcjinrong.pcjr.plugins.ProgressWheel
                         android:id="@+id/pw_spinner"
                         android:layout_width="270dp"
                         android:layout_height="270dp"

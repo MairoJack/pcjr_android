@@ -31,10 +31,10 @@
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
-        android:name=".common.Constant">
+        android:name="com.pcjinrong.pcjr.common.Constant">
 
         <activity
-            android:name="com.pcjr.activity.SplashActivity"
+            android:name="com.pcjinrong.pcjr.activity.SplashActivity"
             android:label="@string/app_name"
             android:screenOrientation="portrait">
             <intent-filter>
@@ -43,40 +43,40 @@
             </intent-filter>
         </activity>
 
-        <activity android:name="com.pcjr.activity.InvestDetailActivity" android:screenOrientation="portrait"/>
-        <activity android:name="com.pcjr.activity.AboutusActivity" android:screenOrientation="portrait"/>
-        <activity android:name="com.pcjr.activity.AddBankCardActivity" android:screenOrientation="portrait"/>
-        <activity android:name=".activity.BindMobileActivity" android:screenOrientation="portrait"/>
-        <activity android:name=".activity.UnbindMobileActivity" android:screenOrientation="portrait"/>
-        <activity android:name="com.pcjr.activity.BankCardActivity" android:screenOrientation="portrait"/>
-        <activity android:name="com.pcjr.activity.ChangePasswordActivity" android:screenOrientation="portrait"/>
-        <activity android:name="com.pcjr.activity.FinancialRecordsActivity" android:screenOrientation="portrait"/>
-        <activity android:name="com.pcjr.activity.InvestRecordsActivity" android:screenOrientation="portrait"/>
-        <activity android:name="com.pcjr.activity.MsgCenterActivity" android:screenOrientation="portrait"/>
-        <activity android:name="com.pcjr.activity.MsgDetailActivity" android:screenOrientation="portrait"/>
-        <activity android:name="com.pcjr.activity.RealNameVerifiedActivity" android:screenOrientation="portrait"/>
-        <activity android:name="com.pcjr.activity.SafeSettingActivity" android:screenOrientation="portrait"/>
-        <activity android:name="com.pcjr.activity.TradeRecordsActivity" android:screenOrientation="portrait"/>
-        <activity android:name="com.pcjr.activity.PaymentPlanActivity" android:screenOrientation="portrait"/>
-        <activity android:name=".activity.WithdrawActivity" android:screenOrientation="portrait"/>
-        <activity android:name="com.pcjr.activity.CouponActivity" android:screenOrientation="portrait"/>
-        <activity android:name="com.pcjr.activity.WebViewActivity" android:screenOrientation="portrait"/>
-        <activity android:name=".activity.MainActivity" android:launchMode="singleTask" android:screenOrientation="portrait"/>
-        <activity android:name=".activity.InvesTicketActivity" android:screenOrientation="portrait"/>
-        <activity android:name="com.pcjr.activity.RedPacketActivity" android:screenOrientation="portrait"/>
-        <activity android:name="com.pcjr.activity.AgreementActivity" android:screenOrientation="portrait"/>
-        <activity android:name="com.pcjr.activity.PrivacyPolicyActivity" android:screenOrientation="portrait"/>
-        <activity android:name="com.pcjr.activity.InvestTicketDetailActivity" android:screenOrientation="portrait"/>
-        <activity android:name="com.pcjr.activity.InvestTicketTipsActivity" android:screenOrientation="portrait"/>
-        <activity android:name="com.pcjr.activity.RedPacketTipsActivity" android:screenOrientation="portrait"/>
-        <activity android:name="com.pcjr.activity.InvestActivity" android:screenOrientation="portrait"/>
-        <activity android:name="com.pcjr.activity.LoginActivity"  android:screenOrientation="portrait"/>
-        <activity android:name="com.pcjr.activity.RegistActivity"  android:screenOrientation="portrait"/>
-        <activity android:name="com.pcjr.activity.TestActivity" android:screenOrientation="portrait"/>
-        <activity android:name="com.pcjr.activity.GestureEditActivity" android:screenOrientation="portrait"/>
-        <activity android:name="com.pcjr.activity.GestureVerifyActivity" android:screenOrientation="portrait"/>
+        <activity android:name="com.pcjinrong.pcjr.activity.InvestDetailActivity" android:screenOrientation="portrait"/>
+        <activity android:name="com.pcjinrong.pcjr.activity.AboutusActivity" android:screenOrientation="portrait"/>
+        <activity android:name="com.pcjinrong.pcjr.activity.AddBankCardActivity" android:screenOrientation="portrait"/>
+        <activity android:name="com.pcjinrong.pcjr.activity.BindMobileActivity" android:screenOrientation="portrait"/>
+        <activity android:name="com.pcjinrong.pcjr.activity.UnbindMobileActivity" android:screenOrientation="portrait"/>
+        <activity android:name="com.pcjinrong.pcjr.activity.BankCardActivity" android:screenOrientation="portrait"/>
+        <activity android:name="com.pcjinrong.pcjr.activity.ChangePasswordActivity" android:screenOrientation="portrait"/>
+        <activity android:name="com.pcjinrong.pcjr.activity.FinancialRecordsActivity" android:screenOrientation="portrait"/>
+        <activity android:name="com.pcjinrong.pcjr.activity.InvestRecordsActivity" android:screenOrientation="portrait"/>
+        <activity android:name="com.pcjinrong.pcjr.activity.MsgCenterActivity" android:screenOrientation="portrait"/>
+        <activity android:name="com.pcjinrong.pcjr.activity.MsgDetailActivity" android:screenOrientation="portrait"/>
+        <activity android:name="com.pcjinrong.pcjr.activity.RealNameVerifiedActivity" android:screenOrientation="portrait"/>
+        <activity android:name="com.pcjinrong.pcjr.activity.SafeSettingActivity" android:screenOrientation="portrait"/>
+        <activity android:name="com.pcjinrong.pcjr.activity.TradeRecordsActivity" android:screenOrientation="portrait"/>
+        <activity android:name="com.pcjinrong.pcjr.activity.PaymentPlanActivity" android:screenOrientation="portrait"/>
+        <activity android:name="com.pcjinrong.pcjr.activity.WithdrawActivity" android:screenOrientation="portrait"/>
+        <activity android:name="com.pcjinrong.pcjr.activity.CouponActivity" android:screenOrientation="portrait"/>
+        <activity android:name="com.pcjinrong.pcjr.activity.WebViewActivity" android:screenOrientation="portrait"/>
+        <activity android:name="com.pcjinrong.pcjr.activity.MainActivity" android:launchMode="singleTask" android:screenOrientation="portrait"/>
+        <activity android:name="com.pcjinrong.pcjr.activity.InvesTicketActivity" android:screenOrientation="portrait"/>
+        <activity android:name="com.pcjinrong.pcjr.activity.RedPacketActivity" android:screenOrientation="portrait"/>
+        <activity android:name="com.pcjinrong.pcjr.activity.AgreementActivity" android:screenOrientation="portrait"/>
+        <activity android:name="com.pcjinrong.pcjr.activity.PrivacyPolicyActivity" android:screenOrientation="portrait"/>
+        <activity android:name="com.pcjinrong.pcjr.activity.InvestTicketDetailActivity" android:screenOrientation="portrait"/>
+        <activity android:name="com.pcjinrong.pcjr.activity.InvestTicketTipsActivity" android:screenOrientation="portrait"/>
+        <activity android:name="com.pcjinrong.pcjr.activity.RedPacketTipsActivity" android:screenOrientation="portrait"/>
+        <activity android:name="com.pcjinrong.pcjr.activity.InvestActivity" android:screenOrientation="portrait"/>
+        <activity android:name="com.pcjinrong.pcjr.activity.LoginActivity"  android:screenOrientation="portrait"/>
+        <activity android:name="com.pcjinrong.pcjr.activity.RegistActivity"  android:screenOrientation="portrait"/>
+        <activity android:name="com.pcjinrong.pcjr.activity.TestActivity" android:screenOrientation="portrait"/>
+        <activity android:name="com.pcjinrong.pcjr.activity.GestureEditActivity" android:screenOrientation="portrait"/>
+        <activity android:name="com.pcjinrong.pcjr.activity.GestureVerifyActivity" android:screenOrientation="portrait"/>
 
-        <service android:enabled="true" android:name="com.pcjr.service.RefreshTokenService" />
+        <service android:enabled="true" android:name="com.pcjinrong.pcjr.service.RefreshTokenService" />
         <!-- 【必须】 信鸽receiver广播接收 -->
         <receiver
             android:name="com.tencent.android.tpush.XGPushReceiver"
@@ -127,11 +127,11 @@
         <!-- 【必须】 请将YOUR_ACCESS_ID修改为APP的AccessId，“21”开头的10位数字，中间没空格 -->
         <meta-data
             android:name="XG_V2_ACCESS_ID"
-            android:value="2100180811" />
+            android:value="2100205982" />
         <!-- 【必须】 请将YOUR_ACCESS_KEY修改为APP的AccessKey，“A”开头的12位字符串，中间没空格 -->
         <meta-data
             android:name="XG_V2_ACCESS_KEY"
-            android:value="AJVCB127P91Q" />
+            android:value="ATID8V4K441B" />
 
 
     </application>
