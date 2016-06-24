@@ -87,14 +87,14 @@ public class RegistActivity extends Activity implements View.OnClickListener
 			case R.id.syxy:
                 intent = new Intent(RegistActivity.this, WebViewActivity.class);
                 intent.putExtra("title", "使用协议");
-                intent.putExtra("url", "https://m.pcjinrong.pcjinrong.com.pcjinrong.com.pcjinrong.pcjr.com/appdeal/use");
+                intent.putExtra("url", "https://m.pcjr.com/appdeal/use");
                 startActivity(intent);
                 overridePendingTransition(R.anim.push_left_in, R.anim.push_left_out);
 				break;
 			case R.id.ystk:
                 intent = new Intent(RegistActivity.this, WebViewActivity.class);
                 intent.putExtra("title", "隐私条款");
-                intent.putExtra("url", "https://m.pcjinrong.pcjinrong.com.pcjinrong.com.pcjinrong.pcjr.com/appdeal/agreement");
+                intent.putExtra("url", "https://m.pcjr.com/appdeal/agreement");
                 startActivity(intent);
                 overridePendingTransition(R.anim.push_left_in, R.anim.push_left_out);
 				break;

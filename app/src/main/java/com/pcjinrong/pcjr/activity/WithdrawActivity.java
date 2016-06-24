@@ -162,7 +162,7 @@ public class WithdrawActivity extends Activity {
             public void onClick(View v) {
                 Intent intent = new Intent(WithdrawActivity.this, WebViewActivity.class);
                 intent.putExtra("title", "提现细则");
-                intent.putExtra("url", "https://m.pcjinrong.pcjinrong.com.pcjinrong.com.pcjinrong.pcjr.com/appdeal/mention");
+                intent.putExtra("url", "https://m.pcjr.com/appdeal/mention");
                 startActivity(intent);
                 overridePendingTransition(R.anim.push_left_in, R.anim.push_left_out);
             }

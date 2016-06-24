@@ -128,7 +128,11 @@ public class RealNameVerifiedActivity extends Activity {
                         finish();
                         overridePendingTransition(R.anim.push_right_in, R.anim.push_right_out);
                     } else {
-                        IosDialog.show(json.get("message").getAsString(), RealNameVerifiedActivity.this);
+                        if(json.get("message").isJsonNull()){
+                            IosDialog.show("实名认证失败,请联系客服", RealNameVerifiedActivity.this);
+                        }else {
+                            IosDialog.show(json.get("message").getAsString(), RealNameVerifiedActivity.this);
+                        }
                     }
                 } else {
                     IosDialog.show("认证出错", RealNameVerifiedActivity.this);

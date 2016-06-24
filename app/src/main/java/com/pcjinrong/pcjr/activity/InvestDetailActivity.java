@@ -28,6 +28,7 @@ import com.pcjinrong.pcjr.plugins.IosDialog;
 import com.pcjinrong.pcjr.service.ApiService;
 import com.pcjinrong.pcjr.utils.DateUtil;
 import com.pcjinrong.pcjr.utils.RetrofitUtils;
+import com.pcjinrong.pcjr.utils.SharedPreferenceUtil;
 
 import java.text.ParseException;
 import java.util.ArrayList;
@@ -149,17 +150,29 @@ public class InvestDetailActivity extends FragmentActivity
                                         @Override
                                         public void onClick(View v) {
                                             Intent intent;
-                                            if(Constant.isLogin) {
+                                            boolean flag = false;
+                                            if (Constant.isLogin && Constant.isGestureLogin) {
+                                                flag = true;
+                                            } else if (!Constant.isLogin) {
+                                                intent = new Intent(InvestDetailActivity.this, LoginActivity.class);
+                                                intent.putExtra("tag","invest");
+                                                startActivity(intent);
+                                                overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
+                                            } else if (!Constant.isGestureLogin) {
+                                                SharedPreferenceUtil spu = new SharedPreferenceUtil(InvestDetailActivity.this, Constant.FILE);
+                                                if(spu.getOpenGesture()) {
+                                                    startActivity(new Intent(InvestDetailActivity.this, GestureVerifyActivity.class));
+                                                }else{
+                                                    flag = true;
+                                                }
+                                            }
+
+                                            if(flag) {
                                                 intent = new Intent(InvestDetailActivity.this, InvestActivity.class);
                                                 Bundle bundle = new Bundle();
                                                 bundle.putSerializable("product", product);
                                                 intent.putExtras(bundle);
                                                 startActivityForResult(intent,0);
-                                            }else{
-                                                intent = new Intent(InvestDetailActivity.this, LoginActivity.class);
-                                                intent.putExtra("tag","invest");
-                                                startActivity(intent);
-                                                overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
                                             }
                                         }
                                     });

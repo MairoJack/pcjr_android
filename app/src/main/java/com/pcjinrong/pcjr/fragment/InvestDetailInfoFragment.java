@@ -110,7 +110,7 @@ public class InvestDetailInfoFragment extends Fragment {
                 public void onClick(View v) {
                     Intent intent = new Intent(getActivity(), WebViewActivity.class);
                     intent.putExtra("title", "平台公告");
-                    intent.putExtra("url", "https://m.pcjinrong.pcjinrong.com.pcjinrong.com.pcjinrong.pcjr.com/platformnews/platformnewsdetail/index.html?id=87");
+                    intent.putExtra("url", "https://m.pcjr.com/platformnews/platformnewsdetail/index.html?id=87");
                     startActivity(intent);
                     getActivity().overridePendingTransition(R.anim.push_left_in, R.anim.push_left_out);
                 }
@@ -125,7 +125,7 @@ public class InvestDetailInfoFragment extends Fragment {
                 public void onClick(View v) {
                     Intent intent = new Intent(getActivity(), WebViewActivity.class);
                     intent.putExtra("title", "平台公告");
-                    intent.putExtra("url", "https://m.pcjinrong.pcjinrong.com.pcjinrong.com.pcjinrong.pcjr.com/platformnews/platformnewsdetail?id=96");
+                    intent.putExtra("url", "https://m.pcjr.com/platformnews/platformnewsdetail?id=96");
                     startActivity(intent);
                     getActivity().overridePendingTransition(R.anim.push_left_in, R.anim.push_left_out);
                 }

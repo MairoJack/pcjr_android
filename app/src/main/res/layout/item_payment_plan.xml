@@ -48,10 +48,11 @@
 
         <ImageView
             android:id="@+id/icon"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="14dp"
+            android:layout_height="14dp"
+            android:layout_marginTop="3dp"
             android:layout_marginRight="5dp"
-            android:src="@drawable/right"/>
+            android:src="@mipmap/right"/>
 
         <TextView
             android:id="@+id/status"

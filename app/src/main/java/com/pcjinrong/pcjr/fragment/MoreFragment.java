@@ -41,7 +41,7 @@ public class MoreFragment extends Fragment {
             public void onClick(View v) {
                 Intent intent = new Intent(getActivity(), WebViewActivity.class);
                 intent.putExtra("title", "平台公告");
-                intent.putExtra("url", "https://m.pcjinrong.pcjinrong.com.pcjinrong.com.pcjinrong.pcjr.com/platformnews");
+                intent.putExtra("url", "https://m.pcjr.com/platformnews");
                 startActivity(intent);
                 getActivity().overridePendingTransition(R.anim.push_left_in, R.anim.push_left_out);
             }
@@ -50,7 +50,10 @@ public class MoreFragment extends Fragment {
         aboutus.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(getActivity(), AboutusActivity.class));
+                Intent intent = new Intent(getActivity(), WebViewActivity.class);
+                intent.putExtra("title", "关于我们");
+                intent.putExtra("url", "https://m.pcjr.com/aboutus");
+                startActivity(intent);
                 getActivity().overridePendingTransition(R.anim.push_left_in, R.anim.push_left_out);
             }
         });

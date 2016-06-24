@@ -79,7 +79,7 @@ public class InvesTicketActivity extends FragmentActivity {
             public void onClick(View v) {
                 Intent intent = new Intent(InvesTicketActivity.this, WebViewActivity.class);
                 intent.putExtra("title", "温馨提示");
-                intent.putExtra("url", "https://m.pcjinrong.pcjinrong.com.pcjinrong.com.pcjinrong.pcjr.com/appdeal/coupons");
+                intent.putExtra("url", "https://m.pcjr.com/appdeal/coupons");
                 startActivity(intent);
                 overridePendingTransition(R.anim.push_left_in, R.anim.push_left_out);
             }

@@ -80,7 +80,7 @@ public class LoginActivity extends Activity implements View.OnClickListener {
                 break;
             case R.id.forget:
                 intent = new Intent(LoginActivity.this, WebViewActivity.class);
-                intent.putExtra("url", "https://m.pcjinrong.pcjinrong.com.pcjinrong.com.pcjinrong.pcjr.com/forgetpassword");
+                intent.putExtra("url", "https://m.pcjr.com/forgetpassword");
                 intent.putExtra("title", "忘记密码");
                 startActivity(intent);
                 overridePendingTransition(R.anim.push_left_in, R.anim.push_left_out);
@@ -172,16 +172,16 @@ public class LoginActivity extends Activity implements View.OnClickListener {
                 if (response.isSuccessful()) {
                     JsonObject json = response.body();
                     if (json.get("success").getAsBoolean()) {
-                        Log.i("pcjinrong.pcjinrong.com.pcjinrong.com.pcjinrong.pcjr", "refreshDeviceToken:onResponse:" + json.get("message").getAsString());
+                        Log.i("pcjr", "refreshDeviceToken:onResponse:" + json.get("message").getAsString());
                     } else {
-                        Log.i("pcjinrong.pcjinrong.com.pcjinrong.com.pcjinrong.pcjr", "refreshDeviceToken:onResponse:" + json.get("message").getAsString());
+                        Log.i("pcjr", "refreshDeviceToken:onResponse:" + json.get("message").getAsString());
                     }
                 }
             }
 
             @Override
             public void onFailure(Call<JsonObject> call, Throwable t) {
-                Log.i("pcjinrong.pcjinrong.com.pcjinrong.com.pcjinrong.pcjr", "refreshDeviceToken:onResponse:网络异常");
+                Log.i("pcjr", "refreshDeviceToken:onResponse:网络异常");
             }
         });
     }

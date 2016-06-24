@@ -237,7 +237,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
-            android:background="@drawable/agree" />
+            android:src="@drawable/agree" />
 
         <TextView
             android:id="@+id/textView1"
@@ -245,7 +245,7 @@
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
             android:layout_toRightOf="@+id/imageView1"
-            android:text="我已阅读并同意皮城金融"
+            android:text=" 我已阅读并同意皮城金融"
             android:textColor="#333333"
             android:textSize="12dp" />
 

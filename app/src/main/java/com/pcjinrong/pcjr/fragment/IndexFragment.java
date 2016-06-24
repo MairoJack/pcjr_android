@@ -132,7 +132,7 @@ public class IndexFragment extends Fragment{
             public void onClick(View v) {
                 Intent intent = new Intent(getActivity(), WebViewActivity.class);
                 intent.putExtra("title","产品预告");
-                intent.putExtra("url","https://m.pcjinrong.pcjinrong.com.pcjinrong.com.pcjinrong.pcjr.com/notice");
+                intent.putExtra("url","https://m.pcjr.com/notice");
                 startActivity(intent);
                 getActivity().overridePendingTransition(R.anim.push_left_in, R.anim.push_left_out);
             }
@@ -176,9 +176,12 @@ public class IndexFragment extends Fragment{
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getActivity(), WebViewActivity.class);
-                intent.putExtra("url",announces.get(mCounter).getUrl());
-                startActivity(intent);
-                getActivity().overridePendingTransition(R.anim.push_left_in, R.anim.push_left_out);
+                String url = announces.get(mCounter).getUrl();
+                if(url !=null && !url.equals("")) {
+                    intent.putExtra("url", announces.get(mCounter).getUrl());
+                    startActivity(intent);
+                    getActivity().overridePendingTransition(R.anim.push_left_in, R.anim.push_left_out);
+                }
 
             }
         });
@@ -308,9 +311,12 @@ public class IndexFragment extends Fragment{
         @Override
         public void onItemClick(int position) {
             Intent intent = new Intent(getActivity(), WebViewActivity.class);
-            intent.putExtra("url",focusImgs.get(position).getUrl());
-            startActivity(intent);
-            getActivity().overridePendingTransition(R.anim.push_left_in, R.anim.push_left_out);
+            String url = focusImgs.get(position).getUrl();
+            if(url !=null && !url.equals("")) {
+                intent.putExtra("url", url);
+                startActivity(intent);
+                getActivity().overridePendingTransition(R.anim.push_left_in, R.anim.push_left_out);
+            }
         }
     }
 
@@ -322,9 +328,12 @@ public class IndexFragment extends Fragment{
         @Override
         public void onItemClick(int position) {
             Intent intent = new Intent(getActivity(), WebViewActivity.class);
-            intent.putExtra("url",focusImgs.get(position).getUrl());
-            startActivity(intent);
-            getActivity().overridePendingTransition(R.anim.push_left_in, R.anim.push_left_out);
+            String url = focusImgs.get(position).getUrl();
+            if(url !=null && !url.equals("")) {
+                intent.putExtra("url", url);
+                startActivity(intent);
+                getActivity().overridePendingTransition(R.anim.push_left_in, R.anim.push_left_out);
+            }
         }
     }
 

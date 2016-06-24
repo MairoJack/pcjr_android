@@ -18,8 +18,6 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
-
-
 }
 
 dependencies {
@@ -54,6 +52,6 @@ dependencies {
     compile 'com.bigkoo:convenientbanner:2.0.5'
     //图片加载
     compile files('libs/universal-image-loader-1.9.5.jar')
-    compile files('libs/jg_filter_sdk_1.1.jar')
     compile files('libs/wup-1.0.0.E-SNAPSHOT.jar')
+    compile files('libs/jg_filter_sdk_1.1.jar')
 }

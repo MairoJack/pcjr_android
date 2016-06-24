@@ -75,7 +75,7 @@ public class RedPacketActivity extends FragmentActivity {
             public void onClick(View v) {
                 Intent intent = new Intent(RedPacketActivity.this, WebViewActivity.class);
                 intent.putExtra("title", "温馨提示");
-                intent.putExtra("url", "https://m.pcjinrong.pcjinrong.com.pcjinrong.com.pcjinrong.pcjr.com/appdeal/redpacket");
+                intent.putExtra("url", "https://m.pcjr.com/appdeal/redpacket");
                 startActivity(intent);
                 overridePendingTransition(R.anim.push_left_in, R.anim.push_left_out);
             }

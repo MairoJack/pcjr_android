@@ -95,7 +95,7 @@
                 android:layout_marginTop="2dp"
                 android:text="投资券需再次投资才能转入账户余额"
                 android:textColor="#bababa"
-                android:textSize="16dp" />
+                android:textSize="14dp" />
         </LinearLayout>
 
         <ImageView
@@ -163,7 +163,7 @@
                 android:layout_marginTop="2dp"
                 android:text="红包领取后将即时转入账户余额"
                 android:textColor="#bababa"
-                android:textSize="16dp" />
+                android:textSize="14dp" />
         </LinearLayout>
 
         <ImageView
