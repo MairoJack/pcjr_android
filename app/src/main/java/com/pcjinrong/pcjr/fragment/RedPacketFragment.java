@@ -36,7 +36,7 @@ import retrofit2.Response;
  * 红包
  * Created by Mario on 2016/5/12.
  */
-public class RedPacketFragment extends Fragment{
+public class RedPacketFragment extends BaseFragment{
     private PtrClassicFrameLayout mPtrFrame;
     private LoadMoreListViewContainer loadMoreListViewContainer;
     private LinearLayout empty;
@@ -46,6 +46,11 @@ public class RedPacketFragment extends Fragment{
     private int type;
     private int pageNow = 1;
     private List<RedPacket> list = new ArrayList<>();
+
+    /** 标志位，标志已经初始化完成 */
+    private boolean isPrepared;
+    /** 是否已被加载过一次，第二次就不再去请求数据了 */
+    private boolean mHasLoadedOnce;
 
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
@@ -97,6 +102,8 @@ public class RedPacketFragment extends Fragment{
         adapter = new RedPacketListViewAdapter(list, getContext(),type);
         listView.setAdapter(adapter);
 
+        isPrepared = true;
+        lazyLoad();
     }
 
 
@@ -149,9 +156,19 @@ public class RedPacketFragment extends Fragment{
         });
     }
 
+    public static Fragment newInstance(int type) {
+        RedPacketFragment fragment = new RedPacketFragment();
+        Bundle bundle = new Bundle();
+        bundle.putInt("type", type);
+        fragment.setArguments(bundle);
+        return fragment;
+    }
+
     @Override
-    public void onResume() {
-        super.onResume();
+    public void lazyLoad(){
+        if (!isPrepared || !isVisible || mHasLoadedOnce) {
+            return;
+        }
         //自动刷新
         mPtrFrame.post(new Runnable() {
             @Override
@@ -161,11 +178,4 @@ public class RedPacketFragment extends Fragment{
         });
     }
 
-    public static Fragment newInstance(int type) {
-        RedPacketFragment fragment = new RedPacketFragment();
-        Bundle bundle = new Bundle();
-        bundle.putInt("type", type);
-        fragment.setArguments(bundle);
-        return fragment;
-    }
 }

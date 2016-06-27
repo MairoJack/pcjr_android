@@ -150,7 +150,7 @@ public class InvestDetailRecordFragment extends Fragment{
             public void onFailure(Call<JsonObject> call, Throwable t) {
                 loadMoreListViewContainer.loadMoreError(1, "加载失败.");
                 mPtrFrame.refreshComplete();
-                Toast.makeText(getContext(), "网络异常", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getActivity(), "网络异常", Toast.LENGTH_SHORT).show();
             }
         });
     }

@@ -41,7 +41,7 @@ public class WebViewActivity extends Activity {
     }
 
     public void initView() {
-        mPtrFrame = (PtrClassicFrameLayout) findViewById(R.id.ptr_frame);
+        //mPtrFrame = (PtrClassicFrameLayout) findViewById(R.id.ptr_frame);
         back = (RelativeLayout) findViewById(R.id.back);
         title = (TextView) findViewById(R.id.title);
         webView = (WebView) findViewById(R.id.web_view);
@@ -50,7 +50,7 @@ public class WebViewActivity extends Activity {
         dialog.show();
 
         //下拉刷新
-        mPtrFrame.disableWhenHorizontalMove(true);
+        /*mPtrFrame.disableWhenHorizontalMove(true);
         mPtrFrame.setLastUpdateTimeRelateObject(this);
         mPtrFrame.setPtrHandler(new PtrHandler() {
             @Override
@@ -62,7 +62,7 @@ public class WebViewActivity extends Activity {
             public void onRefreshBegin(PtrFrameLayout frame) {
                 webView.loadUrl(url);
             }
-        });
+        });*/
 
         back.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -92,7 +92,7 @@ public class WebViewActivity extends Activity {
             public void onPageFinished(WebView view, String url) {
                 super.onPageFinished(view, url);
                 dialog.dismiss();
-                mPtrFrame.refreshComplete();
+                //mPtrFrame.refreshComplete();
                 webView.loadUrl("javascript:appdeletehead()");
             }
         });

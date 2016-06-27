@@ -39,7 +39,7 @@ import retrofit2.Response;
  * 投资券
  * Created by Mario on 2016/5/12.
  */
-public class InvestTicketFragment extends Fragment  {
+public class InvestTicketFragment extends BaseFragment  {
     private PtrClassicFrameLayout mPtrFrame;
     private LoadMoreListViewContainer loadMoreListViewContainer;
     private LinearLayout empty;
@@ -49,6 +49,12 @@ public class InvestTicketFragment extends Fragment  {
     private int type;
     private int pageNow = 1;
     private List<InvestTicket> list = new ArrayList<>();
+
+    /** 标志位，标志已经初始化完成 */
+    private boolean isPrepared;
+    /** 是否已被加载过一次，第二次就不再去请求数据了 */
+    private boolean mHasLoadedOnce;
+
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
         return inflater.inflate(R.layout.ic_list, container, false);
@@ -81,14 +87,6 @@ public class InvestTicketFragment extends Fragment  {
                 loadData();
             }
         });
-        //自动刷新
-        mPtrFrame.post(new Runnable() {
-            @Override
-            public void run() {
-                mPtrFrame.autoRefresh();
-            }
-        });
-
 
         //上拉加载
         //loadMoreListViewContainer.useDefaultFooter();
@@ -113,6 +111,9 @@ public class InvestTicketFragment extends Fragment  {
                 getActivity().overridePendingTransition(R.anim.push_left_in, R.anim.push_left_out);
             }
         });
+
+        isPrepared = true;
+        lazyLoad();
     }
 
 
@@ -122,6 +123,7 @@ public class InvestTicketFragment extends Fragment  {
         call.enqueue(new Callback<JsonObject>() {
             @Override
             public void onResponse(Call<JsonObject> call, Response<JsonObject> response) {
+                mHasLoadedOnce = true;
                 if (pageNow == 1)
                     list.clear();
                 mPtrFrame.refreshComplete();
@@ -175,5 +177,19 @@ public class InvestTicketFragment extends Fragment  {
 
     public void setType(int type){
         this.type = type;
+    }
+
+    @Override
+    public void lazyLoad(){
+        if (!isPrepared || !isVisible || mHasLoadedOnce) {
+            return;
+        }
+        //自动刷新
+        mPtrFrame.post(new Runnable() {
+            @Override
+            public void run() {
+                mPtrFrame.autoRefresh();
+            }
+        });
     }
 }

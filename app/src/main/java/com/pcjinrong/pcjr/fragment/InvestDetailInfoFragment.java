@@ -13,18 +13,34 @@ import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.google.gson.Gson;
+import com.google.gson.JsonObject;
+import com.pcjinrong.pcjr.activity.GestureVerifyActivity;
+import com.pcjinrong.pcjr.activity.InvestActivity;
 import com.pcjinrong.pcjr.activity.InvestDetailActivity;
 import com.pcjinrong.pcjr.R;
+import com.pcjinrong.pcjr.activity.LoginActivity;
 import com.pcjinrong.pcjr.activity.WebViewActivity;
+import com.pcjinrong.pcjr.common.Constant;
 import com.pcjinrong.pcjr.model.Product;
 import com.pcjinrong.pcjr.plugins.ProgressWheel;
+import com.pcjinrong.pcjr.service.ApiService;
 import com.pcjinrong.pcjr.utils.DateUtil;
+import com.pcjinrong.pcjr.utils.RetrofitUtils;
+import com.pcjinrong.pcjr.utils.SharedPreferenceUtil;
+
+import java.text.ParseException;
+import java.util.Date;
 
 import in.srain.cube.views.ptr.PtrClassicFrameLayout;
 import in.srain.cube.views.ptr.PtrDefaultHandler;
 import in.srain.cube.views.ptr.PtrFrameLayout;
 import in.srain.cube.views.ptr.PtrHandler;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 
 /**
@@ -45,7 +61,7 @@ public class InvestDetailInfoFragment extends Fragment {
     private String id;
     private int index = 0;
     private Product product;
-
+    private boolean is_first = true;
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
         return inflater.inflate(R.layout.invest_detail_info, container, false);
@@ -86,21 +102,24 @@ public class InvestDetailInfoFragment extends Fragment {
 
             @Override
             public void onRefreshBegin(PtrFrameLayout frame) {
-                Intent intent = new Intent(getActivity(), InvestDetailActivity.class);
+                /*Intent intent = new Intent(getActivity(), InvestDetailActivity.class);
                 intent.putExtra("id",product.getId());
                 getActivity().finish();
-                startActivity(intent);
+                startActivity(intent);*/
+                refresh();
 
             }
         });
 
-        initData();
+        Bundle bundle = getArguments();
+        product = (Product) bundle.getSerializable("product");
 
+        initData();
+        is_first = false;
     }
 
     public void initData() {
-        Bundle bundle = getArguments();
-        product = (Product) bundle.getSerializable("product");
+
         if(product.getIs_preview_repayment() == 1){
             String html_preview_repayment = "* 本产品具有 <font color='#dc4d07'>提前回款</font> 可能，平台确保此产品最短借款时长为 <font color='#dc4d07'>"+product.getMin_repayment_date()+"</font> ，如提前回款则补偿本产品 <font color='#dc4d07'>"+product.getPay_interest_day()+"天利息</font> 于投资人,利息计算方法请 点击此处";
             preview_repayment.setVisibility(View.VISIBLE);
@@ -168,7 +187,7 @@ public class InvestDetailInfoFragment extends Fragment {
                 if(index<=(int)(product.getRate()*18/5)){
                     progressWheel.setProgress(index);
                     index++;
-                    mHandler.postDelayed(this, 5);
+                    mHandler.postDelayed(this, 4);
                 }else{
                     mHandler.removeCallbacks(this);
                 }
@@ -182,5 +201,43 @@ public class InvestDetailInfoFragment extends Fragment {
         bundle.putSerializable("product", product);
         fragment.setArguments(bundle);
         return fragment;
+    }
+
+    public void refresh(){
+        ApiService service = RetrofitUtils.createApi(ApiService.class);
+        Call<JsonObject> call = service.getProductDetail(product.getId());
+        final long request_time = DateUtil.getMillisOfDate(new Date());
+        call.enqueue(new Callback<JsonObject>() {
+            @Override
+            public void onResponse(Call<JsonObject> call, Response<JsonObject> response) {
+                mPtrFrame.refreshComplete();
+                if (response.isSuccessful()) {
+                    JsonObject json = response.body();
+                    Gson gson = new Gson();
+                    if (json.get("success").getAsBoolean()) {
+                        product = gson.fromJson(json.get("data"), Product.class);
+                    }
+                    long response_time = DateUtil.getMillisOfDate(new Date());
+                    long time = response_time - request_time;
+                    long current_time = json.get("current_time").getAsLong()*1000 + time;
+                    ((InvestDetailActivity)getActivity()).refreshButton(product,current_time);
+                    initData();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<JsonObject> call, Throwable t) {
+                mPtrFrame.refreshComplete();
+                Toast.makeText(getActivity(),"网络异常",Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        if(!is_first) {
+            refresh();
+        }
     }
 }

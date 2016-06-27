@@ -146,6 +146,7 @@ public class InvestDetailActivity extends FragmentActivity
                                 }else{
                                     btn_status.setBackgroundResource(R.drawable.redbtn);
                                     btn_status.setText("立即投资");
+                                    btn_status.setClickable(true);
                                     btn_status.setOnClickListener(new View.OnClickListener() {
                                         @Override
                                         public void onClick(View v) {
@@ -184,9 +185,11 @@ public class InvestDetailActivity extends FragmentActivity
                         }else if(product.getStatus() == 2 || product.getStatus() == 3){
                             btn_status.setBackgroundResource(R.drawable.bluebtn);
                             btn_status.setText("募集成功");
+                            btn_status.setClickable(false);
                         }else{
                             btn_status.setBackgroundResource(R.drawable.graybtn);
                             btn_status.setText("项目结束");
+                            btn_status.setClickable(false);
                         }
                     }
                 }
@@ -240,4 +243,69 @@ public class InvestDetailActivity extends FragmentActivity
         }
     }
 
+
+    public void refreshButton(final Product product, long current_time){
+        btn_status.setClickable(false);
+        if(product.getStatus() == 1){
+            Date date = new Date(current_time);
+            Date pub_date = new Date(product.getPub_date()*1000);
+            try {
+                if (DateUtil.isStartDateBeforeEndDate(date, pub_date)) {
+                    if (DateUtil.getHoursOfTowDiffDate(date, pub_date) > 1) {
+                        btn_status.setBackgroundResource(R.drawable.orangebtn);
+                        btn_status.setText(DateUtil.transferLongToDate("MM月dd日 HH:mm",product.getPub_date()*1000)+"开抢");
+                    }else{
+                        btn_status.setVisibility(View.GONE);
+                        layout_cdv.setVisibility(View.VISIBLE);
+                        cdv.start(DateUtil.getMinusMillisOfDate(date,pub_date));
+                    }
+                }else{
+                    btn_status.setBackgroundResource(R.drawable.redbtn);
+                    btn_status.setText("立即投资");
+                    btn_status.setClickable(true);
+                    btn_status.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            Intent intent;
+                            boolean flag = false;
+                            if (Constant.isLogin && Constant.isGestureLogin) {
+                                flag = true;
+                            } else if (!Constant.isLogin) {
+                                intent = new Intent(InvestDetailActivity.this, LoginActivity.class);
+                                intent.putExtra("tag","invest");
+                                startActivity(intent);
+                                overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
+                            } else if (!Constant.isGestureLogin) {
+                                SharedPreferenceUtil spu = new SharedPreferenceUtil(InvestDetailActivity.this, Constant.FILE);
+                                if(spu.getOpenGesture()) {
+                                    startActivity(new Intent(InvestDetailActivity.this, GestureVerifyActivity.class));
+                                }else{
+                                    flag = true;
+                                }
+                            }
+
+                            if(flag) {
+                                intent = new Intent(InvestDetailActivity.this, InvestActivity.class);
+                                Bundle bundle = new Bundle();
+                                bundle.putSerializable("product", product);
+                                intent.putExtras(bundle);
+                                startActivityForResult(intent,0);
+                            }
+                        }
+                    });
+                }
+            }catch (ParseException e) {
+                e.printStackTrace();
+            }
+
+        }else if(product.getStatus() == 2 || product.getStatus() == 3){
+            btn_status.setBackgroundResource(R.drawable.bluebtn);
+            btn_status.setText("募集成功");
+            btn_status.setClickable(false);
+        }else{
+            btn_status.setBackgroundResource(R.drawable.graybtn);
+            btn_status.setText("项目结束");
+            btn_status.setClickable(false);
+        }
+    }
 }

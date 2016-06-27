@@ -19,7 +19,7 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="15dp"
             tools:text="￥3485.68"
-            android:textSize="40dp"
+            android:textSize="35dp"
             android:textStyle="bold"
             android:textColor="@color/gray" />
         <TextView

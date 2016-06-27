@@ -39,7 +39,7 @@ import retrofit2.Response;
 /**
  * Created by Mario on 2016/5/12.
  */
-public class InvestListFragment extends Fragment   {
+public class InvestListFragment extends BaseFragment   {
     private PtrClassicFrameLayout mPtrFrame;
     private LoadMoreListViewContainer loadMoreListViewContainer;
     private LinearLayout empty;
@@ -49,9 +49,16 @@ public class InvestListFragment extends Fragment   {
     private int type;
     private int pageNow = 1;
     private List<Product> list = new ArrayList<>();
+
+    /** 标志位，标志已经初始化完成 */
+    private boolean isPrepared;
+    /** 是否已被加载过一次，第二次就不再去请求数据了 */
+    private boolean mHasLoadedOnce;
+
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.invest_list,container,false);
+
         return view;
     }
 
@@ -82,13 +89,7 @@ public class InvestListFragment extends Fragment   {
                 loadData();
             }
         });
-        //自动刷新
-        mPtrFrame.post(new Runnable() {
-            @Override
-            public void run() {
-                mPtrFrame.autoRefresh();
-            }
-        });
+
 
 
         //上拉加载
@@ -103,6 +104,8 @@ public class InvestListFragment extends Fragment   {
 
 
 
+        adapter = new ProductListViewAdapter(list, getContext(),System.currentTimeMillis());
+        listView.setAdapter(adapter);
 
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -113,6 +116,9 @@ public class InvestListFragment extends Fragment   {
                 getActivity().overridePendingTransition(R.anim.push_left_in, R.anim.push_left_out);
             }
         });
+
+        isPrepared = true;
+        lazyLoad();
     }
 
 
@@ -123,7 +129,7 @@ public class InvestListFragment extends Fragment   {
         call.enqueue(new Callback<JsonObject>() {
             @Override
             public void onResponse(Call<JsonObject> call, Response<JsonObject> response) {
-
+                mHasLoadedOnce = true;
                 if (pageNow == 1)
                     list.clear();
                 mPtrFrame.refreshComplete();
@@ -143,12 +149,7 @@ public class InvestListFragment extends Fragment   {
                     long response_time = DateUtil.getMillisOfDate(new Date());
                     long time = response_time - request_time;
                     long current_time = json.get("current_time").getAsLong()*1000 + time;
-                    if(adapter==null){
-                        adapter = new ProductListViewAdapter(list, getContext(),current_time);
-                        listView.setAdapter(adapter);
-                    }else{
-                        adapter.setCurrent_time(current_time);
-                    }
+                    adapter.setCurrent_time(current_time);
                     int totalPage = (pager.getTotal() + pager.getPageSize() - 1) / pager.getPageSize();
                     if (pageNow >= totalPage) {
                         loadMoreListViewContainer.loadMoreFinish(false, false);
@@ -182,5 +183,20 @@ public class InvestListFragment extends Fragment   {
         bundle.putInt("type", type);
         fragment.setArguments(bundle);
         return fragment;
+    }
+
+
+    @Override
+    public void lazyLoad(){
+        if (!isPrepared || !isVisible || mHasLoadedOnce) {
+            return;
+        }
+        //自动刷新
+        mPtrFrame.post(new Runnable() {
+            @Override
+            public void run() {
+                mPtrFrame.autoRefresh();
+            }
+        });
     }
 }
