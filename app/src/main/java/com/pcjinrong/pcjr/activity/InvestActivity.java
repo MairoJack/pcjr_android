@@ -122,14 +122,20 @@ public class InvestActivity extends Activity {
             public void onClick(View v) {
                 double can_invest_amount = product.getAmount() - product.getProduct_amount();
                 final int amount;
+                double increase = Double.parseDouble(product.getIncreasing_amount());
                 if (can_invest_amount > available_balance) {
-                    amount = (int) (available_balance - available_balance % Double.parseDouble(product.getIncreasing_amount()));
+                    if(increase == 0){
+                        amount = (int)available_balance;
+                    }else if(available_balance%increase == 0){
+                        amount = (int)available_balance;
+                    }else{
+                        amount = (int) (available_balance - available_balance % increase);
+                    }
                     if (amount < Double.parseDouble(product.getThreshold_amount())) {
                         IosDialog.show("可用余额不足", InvestActivity.this);
                         return;
                     }
                 } else {
-                    double increase = Double.parseDouble(product.getIncreasing_amount());
                     if(increase == 0){
                         amount = (int)can_invest_amount;
                     }else if(can_invest_amount%increase == 0){

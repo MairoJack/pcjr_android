@@ -12,6 +12,7 @@ import android.view.ViewGroup;
 import android.view.animation.AnimationUtils;
 import android.widget.AdapterView;
 import android.widget.LinearLayout;
+import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.ScrollView;
@@ -43,6 +44,7 @@ import com.pcjinrong.pcjr.utils.DateUtil;
 import com.pcjinrong.pcjr.R;
 import com.pcjinrong.pcjr.common.Constant;
 import com.pcjinrong.pcjr.model.Announce;
+import com.pcjinrong.pcjr.utils.NoScrollListview;
 import com.pcjinrong.pcjr.utils.RetrofitUtils;
 
 import java.util.ArrayList;
@@ -143,6 +145,7 @@ public class IndexFragment extends Fragment{
                 MainActivity mainActivity  = (MainActivity) getContext();
                 mainActivity.setCurrentTab(1);
                 Constant.TYPE = 1;
+                Constant.FLAG = true;
             }
         });
         gtma.setOnClickListener(new View.OnClickListener() {
@@ -151,6 +154,7 @@ public class IndexFragment extends Fragment{
                 MainActivity mainActivity  = (MainActivity) getContext();
                 mainActivity.setCurrentTab(1);
                 Constant.TYPE = 2;
+                Constant.FLAG = true;
 
             }
         });
@@ -160,6 +164,7 @@ public class IndexFragment extends Fragment{
                 MainActivity mainActivity  = (MainActivity) getContext();
                 mainActivity.setCurrentTab(1);
                 Constant.TYPE = 3;
+                Constant.FLAG = true;
 
             }
         });
@@ -169,6 +174,7 @@ public class IndexFragment extends Fragment{
                 MainActivity mainActivity  = (MainActivity) getContext();
                 mainActivity.setCurrentTab(1);
                 Constant.TYPE = 0;
+                Constant.FLAG = true;
             }
         });
 
@@ -185,6 +191,10 @@ public class IndexFragment extends Fragment{
 
             }
         });
+
+        ViewGroup.LayoutParams params = listView.getLayoutParams();
+        params.height = listView.getDividerHeight() * 23 * 5;
+        listView.setLayoutParams(params);
 
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -210,6 +220,7 @@ public class IndexFragment extends Fragment{
                 refreshData();
             }
         });
+
 
         initData();
 
@@ -243,6 +254,7 @@ public class IndexFragment extends Fragment{
                     long current_time = json.get("current_time").getAsLong()*1000 + time;
                     adapter = new ProductListViewAdapter(products,getContext(),current_time);
                     listView.setAdapter(adapter);
+
                 }
             }
 

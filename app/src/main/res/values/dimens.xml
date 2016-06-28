@@ -9,4 +9,6 @@
     <dimen name="item_product_text_size">20dp</dimen>
     <dimen name="item_product_text_down_size">20dp</dimen>
     <dimen name="invest_left_text">18dp</dimen>
+    <dimen name="margin_5dp">5dp</dimen>
+    <dimen name="back_width">50dp</dimen>
 </resources>

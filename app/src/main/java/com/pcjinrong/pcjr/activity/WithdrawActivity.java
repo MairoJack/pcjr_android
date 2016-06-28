@@ -135,6 +135,16 @@ public class WithdrawActivity extends Activity {
         btn_verify.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                String amount = txt_mention_amount.getText().toString().trim();
+                String verify = txt_verify.getText().toString().trim();
+                if(amount.equals("")){
+                    IosDialog.show( "请输入提现金额",WithdrawActivity.this);
+                    return;
+                }
+                if(Double.parseDouble(amount)<=0){
+                    IosDialog.show( "提现金额必须大于0",WithdrawActivity.this);
+                    return;
+                }
                 btn_verify.setClickable(false);
                 btn_verify.setBackgroundResource(R.drawable.button_gray);
                 time.start();
@@ -237,6 +247,7 @@ public class WithdrawActivity extends Activity {
      */
     public void send_verify(){
 
+
         Call<JsonObject> call = service.withdrawVerify(Constant.BEARER+" "+Constant.access_token);
         call.enqueue(new Callback<JsonObject>() {
             @Override
@@ -269,12 +280,12 @@ public class WithdrawActivity extends Activity {
             IosDialog.show( "请输入提现金额",this);
             return;
         }
-        if(verify.equals("")){
-            IosDialog.show( "请输入验证码",this);
-            return;
-        }
         if(Double.parseDouble(amount)<=0){
             IosDialog.show( "提现金额必须大于0",this);
+            return;
+        }
+        if(verify.equals("")){
+            IosDialog.show( "请输入验证码",this);
             return;
         }
         Call<JsonObject> call = service.withdraw(Constant.BEARER+" "+Constant.access_token,amount,bank_id,verify);

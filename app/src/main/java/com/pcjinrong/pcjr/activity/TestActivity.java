@@ -184,11 +184,11 @@ public class TestActivity extends Activity implements ViewPager.OnPageChangeList
         initImageLoader();
 
         FocusImg focusImg = new FocusImg();
-        focusImg.setImg_url("http://img2.3lian.com/2014/f2/37/d/40.jpg");
+        focusImg.setImg_url("https://m.pcjr.com/images/wapFocus/6.jpg");
         FocusImg focusImg1 = new FocusImg();
-        focusImg.setImg_url("http://d.3987.com/sqmy_131219/001.jpg");
+        focusImg1.setImg_url("https://m.pcjr.com/images/wapFocus/3.jpg");
         FocusImg focusImg2 = new FocusImg();
-        focusImg.setImg_url("http://img2.3lian.com/2014/f2/37/d/39.jpg");
+        focusImg2.setImg_url("https://m.pcjr.com/images/wapFocus/4.jpg");
         List<FocusImg> networkImages = new ArrayList<>();
         networkImages.add(focusImg);
         networkImages.add(focusImg1);
@@ -201,7 +201,7 @@ public class TestActivity extends Activity implements ViewPager.OnPageChangeList
         }, networkImages).setPageIndicator(new int[]{R.mipmap.ic_page_indicator, R.mipmap.ic_page_indicator_focused})
                 .setPageIndicatorAlign(ConvenientBanner.PageIndicatorAlign.ALIGN_PARENT_RIGHT)
                 .setOnPageChangeListener(this)//监听翻页事件
-                .setOnItemClickListener(this    );
+                .setOnItemClickListener(this);
 
 
     }
