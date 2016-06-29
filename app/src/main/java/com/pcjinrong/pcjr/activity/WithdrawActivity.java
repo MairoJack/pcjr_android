@@ -1,6 +1,7 @@
 package com.pcjinrong.pcjr.activity;
 
 import android.app.Activity;
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.CountDownTimer;
@@ -55,6 +56,8 @@ public class WithdrawActivity extends Activity {
     private ApiService service;
     private TimeCount time;
     private double free_withdraw = 0.00;
+    private double available_balance = 0.00;
+    private ProgressDialog dialog;
 
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -65,6 +68,7 @@ public class WithdrawActivity extends Activity {
     }
 
     public void initView() {
+        dialog = new ProgressDialog(this, ProgressDialog.STYLE_SPINNER);
         btn_recharge = (RelativeLayout) findViewById(R.id.btn_recharge);
         btn_bank = (RelativeLayout) findViewById(R.id.btn_bank);
         back = (RelativeLayout) findViewById(R.id.back);
@@ -97,6 +101,9 @@ public class WithdrawActivity extends Activity {
                 if (s != null && !s.toString().equals("")) {
                     try {
                         double amount = Double.parseDouble(s.toString());
+                        if(amount > available_balance){
+                            txt_mention_amount.setText(String.valueOf(available_balance));
+                        }
                         if (amount > free_withdraw) {
                             double fee = (amount - free_withdraw) * 0.15 / 100;
                             BigDecimal b = new BigDecimal(String.valueOf(fee));
@@ -196,6 +203,8 @@ public class WithdrawActivity extends Activity {
      * 初始化数据
      */
     public void initData() {
+        dialog.setMessage("正在加载...");
+        dialog.show();
         Call<JsonObject> call = null;
         call = service.getWithdrawInvestInfo(Constant.access_token);
         call.enqueue(new Callback<JsonObject>() {
@@ -205,6 +214,7 @@ public class WithdrawActivity extends Activity {
                     JsonObject json = response.body();
                     if (json.get("success").getAsBoolean()) {
                         JsonObject data = json.get("data").getAsJsonObject();
+                        available_balance = data.get("available_balance").getAsDouble();
                         txt_balance.setText(data.get("available_balance").getAsString());
                         free_withdraw = data.get("free_withdraw").getAsDouble();
                         txt_mention_amount.setHint("免费可提" + data.get("free_withdraw").getAsString() + "元");
@@ -218,11 +228,13 @@ public class WithdrawActivity extends Activity {
                         overridePendingTransition(R.anim.push_right_in, R.anim.push_right_out);
                     }
                 }
+                dialog.dismiss();
             }
 
             @Override
             public void onFailure(Call<JsonObject> call, Throwable t) {
                 Toast.makeText(WithdrawActivity.this, "网络异常", Toast.LENGTH_SHORT).show();
+                dialog.dismiss();
             }
         });
 

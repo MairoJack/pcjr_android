@@ -44,7 +44,6 @@
         </activity>
 
         <activity android:name="com.pcjinrong.pcjr.activity.InvestDetailActivity" android:screenOrientation="portrait"/>
-        <activity android:name="com.pcjinrong.pcjr.activity.AboutusActivity" android:screenOrientation="portrait"/>
         <activity android:name="com.pcjinrong.pcjr.activity.AddBankCardActivity" android:screenOrientation="portrait"/>
         <activity android:name="com.pcjinrong.pcjr.activity.BindMobileActivity" android:screenOrientation="portrait"/>
         <activity android:name="com.pcjinrong.pcjr.activity.UnbindMobileActivity" android:screenOrientation="portrait"/>
@@ -64,8 +63,6 @@
         <activity android:name="com.pcjinrong.pcjr.activity.MainActivity" android:launchMode="singleTask" android:screenOrientation="portrait"/>
         <activity android:name="com.pcjinrong.pcjr.activity.InvesTicketActivity" android:screenOrientation="portrait"/>
         <activity android:name="com.pcjinrong.pcjr.activity.RedPacketActivity" android:screenOrientation="portrait"/>
-        <activity android:name="com.pcjinrong.pcjr.activity.AgreementActivity" android:screenOrientation="portrait"/>
-        <activity android:name="com.pcjinrong.pcjr.activity.PrivacyPolicyActivity" android:screenOrientation="portrait"/>
         <activity android:name="com.pcjinrong.pcjr.activity.InvestTicketDetailActivity" android:screenOrientation="portrait"/>
         <activity android:name="com.pcjinrong.pcjr.activity.InvestTicketTipsActivity" android:screenOrientation="portrait"/>
         <activity android:name="com.pcjinrong.pcjr.activity.RedPacketTipsActivity" android:screenOrientation="portrait"/>

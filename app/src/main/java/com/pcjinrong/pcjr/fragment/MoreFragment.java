@@ -13,7 +13,6 @@ import android.widget.RelativeLayout;
 
 import com.bigkoo.alertview.AlertView;
 import com.bigkoo.alertview.OnItemClickListener;
-import com.pcjinrong.pcjr.activity.AboutusActivity;
 import com.pcjinrong.pcjr.activity.WebViewActivity;
 import com.pcjinrong.pcjr.R;
 

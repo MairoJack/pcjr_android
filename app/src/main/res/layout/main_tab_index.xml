@@ -65,7 +65,7 @@
                             android:layout_height="wrap_content"
                             android:layout_marginLeft="7dp"
                             android:textColor="#8A8A8A"
-                            android:textSize="16dp"></TextSwitcher>
+                            android:textSize="14dp"></TextSwitcher>
 
                     </LinearLayout>
 
