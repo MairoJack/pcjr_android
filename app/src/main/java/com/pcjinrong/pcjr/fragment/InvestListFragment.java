@@ -91,7 +91,6 @@ public class InvestListFragment extends BaseFragment   {
         });
 
 
-
         //上拉加载
         //loadMoreListViewContainer.useDefaultFooter();
         loadMoreListViewContainer.setLoadMoreHandler(new LoadMoreHandler() {

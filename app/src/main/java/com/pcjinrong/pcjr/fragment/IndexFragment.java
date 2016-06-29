@@ -145,7 +145,6 @@ public class IndexFragment extends Fragment{
                 MainActivity mainActivity  = (MainActivity) getContext();
                 mainActivity.setCurrentTab(1);
                 Constant.TYPE = 1;
-                Constant.FLAG = true;
             }
         });
         gtma.setOnClickListener(new View.OnClickListener() {
@@ -154,7 +153,6 @@ public class IndexFragment extends Fragment{
                 MainActivity mainActivity  = (MainActivity) getContext();
                 mainActivity.setCurrentTab(1);
                 Constant.TYPE = 2;
-                Constant.FLAG = true;
 
             }
         });
@@ -164,7 +162,6 @@ public class IndexFragment extends Fragment{
                 MainActivity mainActivity  = (MainActivity) getContext();
                 mainActivity.setCurrentTab(1);
                 Constant.TYPE = 3;
-                Constant.FLAG = true;
 
             }
         });
@@ -174,7 +171,6 @@ public class IndexFragment extends Fragment{
                 MainActivity mainActivity  = (MainActivity) getContext();
                 mainActivity.setCurrentTab(1);
                 Constant.TYPE = 0;
-                Constant.FLAG = true;
             }
         });
 

@@ -114,12 +114,12 @@ public class PaymentPlanActivity extends Activity {
             public void onMonthChanged(MaterialCalendarView widget, CalendarDay date) {
                 year = date.getYear();
                 month = date.getMonth()+1;
-                mPtrFrame.post(new Runnable() {
+                mPtrFrame.postDelayed(new Runnable() {
                     @Override
                     public void run() {
-                        mPtrFrame.autoRefresh();
+                        loadData();
                     }
-                });
+                },100);
             }
         });
 

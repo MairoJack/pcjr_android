@@ -11,6 +11,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.pcjinrong.pcjr.adapter.TabChildFragmentAdapter;
 import com.pcjinrong.pcjr.adapter.TabFragmentAdapter;
 import com.pcjinrong.pcjr.R;
 import com.pcjinrong.pcjr.common.Constant;
@@ -59,7 +60,7 @@ public class InvestFragment extends Fragment
 		tabLayout.addTab(tabLayout.newTab().setText(titleList.get(1)),true );
 		tabLayout.addTab(tabLayout.newTab().setText(titleList.get(2)),false);
 		tabLayout.addTab(tabLayout.newTab().setText(titleList.get(3)),false);
-		fragmentPagerAdapter = new TabFragmentAdapter(getActivity().getSupportFragmentManager(),fragmentList,titleList);
+		fragmentPagerAdapter = new TabChildFragmentAdapter(this,fragmentList,titleList);
 
 		viewPager.setAdapter(fragmentPagerAdapter);
 		viewPager.setOffscreenPageLimit(1);
@@ -72,12 +73,11 @@ public class InvestFragment extends Fragment
 		return fragment;
 	}
 
-    @Override
+	@Override
     public void onHiddenChanged(boolean hidden) {
         super.onHiddenChanged(hidden);
-        if(!hidden && Constant.FLAG) {
+        if(!hidden) {
             tabLayout.getTabAt(Constant.TYPE).select();
         }
-        Constant.FLAG = false;
     }
 }

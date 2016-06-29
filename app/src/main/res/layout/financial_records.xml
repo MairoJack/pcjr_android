@@ -71,7 +71,7 @@
                     android:layout_alignParentRight="true"
                     android:layout_centerVertical="true"
                     android:layout_marginRight="20dp"
-                    tools:text="1000000.00元"
+                    tools:text="0.00元"
                     android:textColor="#333333" />
 
                 <View
@@ -258,7 +258,7 @@
                     android:layout_alignParentRight="true"
                     android:layout_centerVertical="true"
                     android:layout_marginRight="20dp"
-                    android:text="1000000.00元"
+                    tools:text="1000000.00元"
                     android:textColor="#333333" />
 
                 <View

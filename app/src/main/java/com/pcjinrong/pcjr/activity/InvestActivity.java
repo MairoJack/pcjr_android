@@ -1,6 +1,7 @@
 package com.pcjinrong.pcjr.activity;
 
 import android.app.Activity;
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -43,6 +44,7 @@ public class InvestActivity extends Activity {
     private ApiService service;
     private Product product;
     private double available_balance = 0;
+    private ProgressDialog dialog;
 
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -54,6 +56,7 @@ public class InvestActivity extends Activity {
     }
 
     public void initView() {
+        dialog = new ProgressDialog(this, ProgressDialog.STYLE_SPINNER);
         back = (RelativeLayout) findViewById(R.id.back);
         tips = (RelativeLayout) findViewById(R.id.tips);
         product_name = (TextView) findViewById(R.id.product_name);
@@ -189,6 +192,8 @@ public class InvestActivity extends Activity {
      * 初始化数据
      */
     public void initData() {
+        dialog.setMessage("正在加载...");
+        dialog.show();
         Bundle bundle = getIntent().getExtras();
         product = (Product) bundle.getSerializable("product");
         Call<JsonObject> call = null;
@@ -204,11 +209,11 @@ public class InvestActivity extends Activity {
                         available_balance = data.get("available_balance").getAsDouble();
                         product_name.setText(product.getName());
                         if (product.getIs_preview_repayment() == 1) {
-                            String html_preview_repayment = "本产品具有 <font color='#dc4d07'>提前回款</font> 可能，平台确保此产品最短借款时长为 <font color='#dc4d07'>" + product.getMin_repayment_date() + "</font> ，如提前回款则补偿本产品 <font color='#dc4d07'>" + product.getPay_interest_day() + "天利息</font> 于投资人";
+                            String html_preview_repayment = "* 本产品具有 <font color='#dc4d07'>提前回款</font> 可能，平台确保此产品最短借款时长为 <font color='#dc4d07'>" + product.getMin_repayment_date() + "</font> ，如提前回款则补偿本产品 <font color='#dc4d07'>" + product.getPay_interest_day() + "天利息</font> 于投资人";
                             preview_repayment.setVisibility(View.VISIBLE);
                             txt_preview_repayment.setText(Html.fromHtml(html_preview_repayment));
                         }
-                        txt_invest_amount.setHint("可投金额" + String.format("%.2f", (product.getAmount() - product.getProduct_amount())) + "元");
+                        txt_invest_amount.setHint("可投" + String.format("%.2f", (product.getAmount() - product.getProduct_amount())) + "元");
                         txt_threshold_amount.setText("起投/递增金额:" + product.getThreshold_amount() + "元/" + product.getIncreasing_amount() + " 元");
                         int repayment = product.getRepayment();
                         if (repayment == 0) {
@@ -231,11 +236,13 @@ public class InvestActivity extends Activity {
                         overridePendingTransition(R.anim.push_right_in, R.anim.push_right_out);
                     }
                 }
+                dialog.dismiss();
             }
 
             @Override
             public void onFailure(Call<JsonObject> call, Throwable t) {
                 Toast.makeText(InvestActivity.this, "网络异常", Toast.LENGTH_SHORT).show();
+                dialog.dismiss();
             }
         });
 

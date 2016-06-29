@@ -1,6 +1,7 @@
 package com.pcjinrong.pcjr.activity;
 
 import android.app.Activity;
+import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.view.KeyEvent;
 import android.view.View;
@@ -28,6 +29,8 @@ public class FinancialRecordsActivity extends Activity {
                      reward_amount,total_reward_amount,total_amount,recharge_success_amount,
                      invest_success_amount,withdraw_success_amount;
 
+    private ProgressDialog dialog;
+
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.financial_records);
@@ -35,6 +38,8 @@ public class FinancialRecordsActivity extends Activity {
     }
 
     public void initView(){
+
+        dialog = new ProgressDialog(this, ProgressDialog.STYLE_SPINNER);
         available_balance = (TextView) findViewById(R.id.available_balance);
         capital = (TextView) findViewById(R.id.capital);
         interest = (TextView) findViewById(R.id.interest);
@@ -71,6 +76,8 @@ public class FinancialRecordsActivity extends Activity {
     }
 
     private void initData(){
+        dialog.setMessage("正在加载...");
+        dialog.show();
         ApiService service = RetrofitUtils.createApi(ApiService.class);
         Call<FinanceRecords> callUsers = service.getMemberFinanceData(Constant.access_token);
         callUsers.enqueue(new Callback<FinanceRecords>() {
@@ -89,11 +96,13 @@ public class FinancialRecordsActivity extends Activity {
                     invest_success_amount.setText(finance.getInvest_success_amount()+"元");
                     withdraw_success_amount.setText(finance.getWithdraw_success_amount()+"元");
                 }
+                dialog.dismiss();
             }
 
             @Override
             public void onFailure(Call<FinanceRecords> call, Throwable t) {
                 Toast.makeText(FinancialRecordsActivity.this,"网络异常",Toast.LENGTH_SHORT).show();
+                dialog.dismiss();
             }
         });
     }

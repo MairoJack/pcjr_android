@@ -1,5 +1,6 @@
 package com.pcjinrong.pcjr.activity;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
@@ -29,6 +30,7 @@ import com.pcjinrong.pcjr.service.ApiService;
 import com.pcjinrong.pcjr.utils.DateUtil;
 import com.pcjinrong.pcjr.utils.RetrofitUtils;
 import com.pcjinrong.pcjr.utils.SharedPreferenceUtil;
+import com.pcjinrong.pcjr.utils.ViewUtil;
 
 import java.text.ParseException;
 import java.util.ArrayList;
@@ -58,6 +60,7 @@ public class InvestDetailActivity extends FragmentActivity
     private LinearLayout layout_cdv;
     private CountdownView cdv;
     private  Product product;
+    private ProgressDialog dialog;
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -67,6 +70,7 @@ public class InvestDetailActivity extends FragmentActivity
     }
 
 	private void initView() {
+        dialog = new ProgressDialog(this, ProgressDialog.STYLE_SPINNER);
 		tabLayout = (TabLayout) findViewById(R.id.invest_tab_layout);
 		viewPager = (ViewPager) findViewById(R.id.invest_tab_viewpager);
         back = (RelativeLayout) findViewById(R.id.back);
@@ -113,6 +117,8 @@ public class InvestDetailActivity extends FragmentActivity
 	}
 
     public void initData(){
+        dialog.setMessage("正在加载...");
+        dialog.show();
         ApiService service = RetrofitUtils.createApi(ApiService.class);
         Call<JsonObject> call = service.getProductDetail(getIntent().getStringExtra("id"));
         final long request_time = DateUtil.getMillisOfDate(new Date());
@@ -174,6 +180,7 @@ public class InvestDetailActivity extends FragmentActivity
                                                 bundle.putSerializable("product", product);
                                                 intent.putExtras(bundle);
                                                 startActivityForResult(intent,0);
+                                                overridePendingTransition(R.anim.fade_in,R.anim.fade_out);
                                             }
                                         }
                                     });
@@ -193,11 +200,13 @@ public class InvestDetailActivity extends FragmentActivity
                         }
                     }
                 }
+                dialog.dismiss();
             }
 
             @Override
             public void onFailure(Call<JsonObject> call, Throwable t) {
                 Toast.makeText(InvestDetailActivity.this,"网络异常",Toast.LENGTH_SHORT).show();
+                dialog.dismiss();
             }
         });
     }

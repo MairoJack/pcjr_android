@@ -8,6 +8,7 @@ import android.content.res.Resources;
  */
 public class ViewUtil {
 
+    private static long lastClickTime;
     /**
      * 获取屏幕的宽度
      * @param context
@@ -97,5 +98,18 @@ public class ViewUtil {
     public static int sp2px(Context context, float spValue) {
         final float scale = context.getResources().getDisplayMetrics().scaledDensity;
         return Math.round(spValue * scale);
+    }
+
+    /**
+     * 判断是否快速点击
+     * @return
+     */
+    public static boolean isFastDoubleClick() {
+        long time = System.currentTimeMillis();
+        if ( time - lastClickTime < 1000) {
+            return true;
+        }
+        lastClickTime = time;
+        return false;
     }
 }

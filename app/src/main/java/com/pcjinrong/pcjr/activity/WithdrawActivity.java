@@ -18,6 +18,7 @@ import android.widget.RelativeLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
+
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import com.google.gson.reflect.TypeToken;
@@ -28,6 +29,10 @@ import com.pcjinrong.pcjr.model.BankCard;
 import com.pcjinrong.pcjr.service.ApiService;
 import com.pcjinrong.pcjr.utils.RetrofitUtils;
 
+import java.math.BigDecimal;
+import java.math.RoundingMode;
+import java.text.DecimalFormat;
+import java.text.NumberFormat;
 import java.util.List;
 
 import retrofit2.Call;
@@ -40,8 +45,8 @@ import retrofit2.Response;
  */
 public class WithdrawActivity extends Activity {
     private RelativeLayout back, btn_recharge, btn_bank;
-    private TextView txt_balance, txt_realname, txt_fee, txt_mobile,explain;
-    private EditText txt_mention_amount,txt_verify;
+    private TextView txt_balance, txt_realname, txt_fee, txt_mobile, explain;
+    private EditText txt_mention_amount, txt_verify;
     private ImageView info;
     private Button btn_verify, btn_apply;
     private Spinner bank_spinner;
@@ -50,9 +55,10 @@ public class WithdrawActivity extends Activity {
     private ApiService service;
     private TimeCount time;
     private double free_withdraw = 0.00;
+
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        getWindow().setSoftInputMode( WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
+        getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
         setContentView(R.layout.withdraw);
         service = RetrofitUtils.createApi(ApiService.class);
         initView();
@@ -88,19 +94,25 @@ public class WithdrawActivity extends Activity {
 
             @Override
             public void afterTextChanged(Editable s) {
-                if(s!=null && !s.toString().equals("")){
+                if (s != null && !s.toString().equals("")) {
                     try {
                         double amount = Double.parseDouble(s.toString());
-                        if(amount>free_withdraw){
-                            double fee = (amount - free_withdraw)*0.15/100;
-                            txt_fee.setText(String.format("%.2f",fee));
-                        }else{
+                        if (amount > free_withdraw) {
+                            double fee = (amount - free_withdraw) * 0.15 / 100;
+                            BigDecimal b = new BigDecimal(String.valueOf(fee));
+                            double f = b.setScale(2, RoundingMode.HALF_UP).doubleValue();
+                            if(f<=0){
+                                txt_fee.setText("0.01");
+                            }else {
+                                txt_fee.setText(String.valueOf(f));
+                            }
+                        } else {
                             txt_fee.setText("0.00");
                         }
-                    }catch (Exception e){
+                    } catch (Exception e) {
                         txt_fee.setText("0.00");
                     }
-                }else{
+                } else {
                     txt_fee.setText("0.00");
                 }
             }
@@ -121,14 +133,14 @@ public class WithdrawActivity extends Activity {
         btn_recharge.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                IosDialog.show("温馨提示","皮城金融APP暂不支持此操作 ，请在电脑上充值，谢谢您的合作，给您带来的不便，敬请谅解",WithdrawActivity.this);
+                IosDialog.show("温馨提示", "皮城金融APP暂不支持此操作 ，请在电脑上充值，谢谢您的合作，给您带来的不便，敬请谅解", WithdrawActivity.this);
             }
         });
 
         info.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                IosDialog.show("提现金额","已赚取利息与到期本金之和即为您可免费提现的总额，充值未投资金额则需收取0.15%手续费",WithdrawActivity.this);
+                IosDialog.show("提现金额", "已赚取利息与到期本金之和即为您可免费提现的总额，充值未投资金额则需收取0.15%手续费", WithdrawActivity.this);
             }
         });
 
@@ -137,12 +149,12 @@ public class WithdrawActivity extends Activity {
             public void onClick(View v) {
                 String amount = txt_mention_amount.getText().toString().trim();
                 String verify = txt_verify.getText().toString().trim();
-                if(amount.equals("")){
-                    IosDialog.show( "请输入提现金额",WithdrawActivity.this);
+                if (amount.equals("")) {
+                    IosDialog.show("请输入提现金额", WithdrawActivity.this);
                     return;
                 }
-                if(Double.parseDouble(amount)<=0){
-                    IosDialog.show( "提现金额必须大于0",WithdrawActivity.this);
+                if (Double.parseDouble(amount) <= 0) {
+                    IosDialog.show("提现金额必须大于0", WithdrawActivity.this);
                     return;
                 }
                 btn_verify.setClickable(false);
@@ -183,7 +195,7 @@ public class WithdrawActivity extends Activity {
     /**
      * 初始化数据
      */
-    public void initData(){
+    public void initData() {
         Call<JsonObject> call = null;
         call = service.getWithdrawInvestInfo(Constant.access_token);
         call.enqueue(new Callback<JsonObject>() {
@@ -195,13 +207,13 @@ public class WithdrawActivity extends Activity {
                         JsonObject data = json.get("data").getAsJsonObject();
                         txt_balance.setText(data.get("available_balance").getAsString());
                         free_withdraw = data.get("free_withdraw").getAsDouble();
-                        txt_mention_amount.setHint("免费可提"+data.get("free_withdraw").getAsString()+"元");
+                        txt_mention_amount.setHint("免费可提" + data.get("free_withdraw").getAsString() + "元");
                         txt_realname.setText(data.get("realname").getAsString());
                         txt_mobile.setText(data.get("mobile").getAsString());
-                    } else{
+                    } else {
                         Intent intent = new Intent();
-                        intent.putExtra("error",json.get("message").getAsString());
-                        setResult(RESULT_FIRST_USER,intent);
+                        intent.putExtra("error", json.get("message").getAsString());
+                        setResult(RESULT_FIRST_USER, intent);
                         finish();
                         overridePendingTransition(R.anim.push_right_in, R.anim.push_right_out);
                     }
@@ -210,7 +222,7 @@ public class WithdrawActivity extends Activity {
 
             @Override
             public void onFailure(Call<JsonObject> call, Throwable t) {
-                Toast.makeText(WithdrawActivity.this,"网络异常",Toast.LENGTH_SHORT).show();
+                Toast.makeText(WithdrawActivity.this, "网络异常", Toast.LENGTH_SHORT).show();
             }
         });
 
@@ -225,19 +237,19 @@ public class WithdrawActivity extends Activity {
                         bankCards = gson.fromJson(json.get("data"), new TypeToken<List<BankCard>>() {
                         }.getType());
                         String[] mItems = new String[bankCards.size()];
-                        for(int i=0;i<bankCards.size();i++){
-                            mItems[i] = bankCards.get(i).getBank()+" "+bankCards.get(i).getCard_no();
+                        for (int i = 0; i < bankCards.size(); i++) {
+                            mItems[i] = bankCards.get(i).getBank() + " " + bankCards.get(i).getCard_no();
                         }
-                        ArrayAdapter<String> adapter=new ArrayAdapter<String>(WithdrawActivity.this,android.R.layout.simple_spinner_item, mItems);
+                        ArrayAdapter<String> adapter = new ArrayAdapter<String>(WithdrawActivity.this, android.R.layout.simple_spinner_item, mItems);
                         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-                        bank_spinner .setAdapter(adapter);
+                        bank_spinner.setAdapter(adapter);
                     }
                 }
             }
 
             @Override
             public void onFailure(Call<JsonObject> call, Throwable t) {
-                Toast.makeText(WithdrawActivity.this,"网络异常",Toast.LENGTH_SHORT).show();
+                Toast.makeText(WithdrawActivity.this, "网络异常", Toast.LENGTH_SHORT).show();
             }
         });
     }
@@ -245,26 +257,26 @@ public class WithdrawActivity extends Activity {
     /**
      * 发送提现验证码
      */
-    public void send_verify(){
+    public void send_verify() {
 
 
-        Call<JsonObject> call = service.withdrawVerify(Constant.BEARER+" "+Constant.access_token);
+        Call<JsonObject> call = service.withdrawVerify(Constant.BEARER + " " + Constant.access_token);
         call.enqueue(new Callback<JsonObject>() {
             @Override
             public void onResponse(Call<JsonObject> call, Response<JsonObject> response) {
                 if (response.isSuccessful()) {
                     JsonObject json = response.body();
                     if (!json.get("success").isJsonNull() && json.get("success").getAsBoolean()) {
-                        IosDialog.show( json.get("message").getAsString(),WithdrawActivity.this);
+                        IosDialog.show(json.get("message").getAsString(), WithdrawActivity.this);
                     } else {
-                        IosDialog.show( json.get("message").getAsString(),WithdrawActivity.this);
+                        IosDialog.show(json.get("message").getAsString(), WithdrawActivity.this);
                     }
                 }
             }
 
             @Override
             public void onFailure(Call<JsonObject> call, Throwable t) {
-                Toast.makeText(WithdrawActivity.this,"网络异常",Toast.LENGTH_SHORT).show();
+                Toast.makeText(WithdrawActivity.this, "网络异常", Toast.LENGTH_SHORT).show();
             }
         });
     }
@@ -272,44 +284,45 @@ public class WithdrawActivity extends Activity {
     /**
      * 申请提现
      */
-    public void apply(){
+    public void apply() {
 
         String amount = txt_mention_amount.getText().toString().trim();
         String verify = txt_verify.getText().toString().trim();
-        if(amount.equals("")){
-            IosDialog.show( "请输入提现金额",this);
+        if (amount.equals("")) {
+            IosDialog.show("请输入提现金额", this);
             return;
         }
-        if(Double.parseDouble(amount)<=0){
-            IosDialog.show( "提现金额必须大于0",this);
+        if (Double.parseDouble(amount) <= 0) {
+            IosDialog.show("提现金额必须大于0", this);
             return;
         }
-        if(verify.equals("")){
-            IosDialog.show( "请输入验证码",this);
+        if (verify.equals("")) {
+            IosDialog.show("请输入验证码", this);
             return;
         }
-        Call<JsonObject> call = service.withdraw(Constant.BEARER+" "+Constant.access_token,amount,bank_id,verify);
+        Call<JsonObject> call = service.withdraw(Constant.BEARER + " " + Constant.access_token, amount, bank_id, verify);
         call.enqueue(new Callback<JsonObject>() {
             @Override
             public void onResponse(Call<JsonObject> call, Response<JsonObject> response) {
                 if (response.isSuccessful()) {
                     JsonObject json = response.body();
                     if (json.get("success").getAsBoolean()) {
-                        Toast.makeText(WithdrawActivity.this,json.get("message").getAsString(),Toast.LENGTH_SHORT).show();
+                        Toast.makeText(WithdrawActivity.this, json.get("message").getAsString(), Toast.LENGTH_SHORT).show();
                         finish();
                         overridePendingTransition(R.anim.push_right_in, R.anim.push_right_out);
-                    }else{
-                        IosDialog.show(json.get("message").getAsString(),WithdrawActivity.this);
+                    } else {
+                        IosDialog.show(json.get("message").getAsString(), WithdrawActivity.this);
                     }
                 }
             }
 
             @Override
             public void onFailure(Call<JsonObject> call, Throwable t) {
-                Toast.makeText(WithdrawActivity.this,"网络异常",Toast.LENGTH_SHORT).show();
+                Toast.makeText(WithdrawActivity.this, "网络异常", Toast.LENGTH_SHORT).show();
             }
         });
     }
+
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         if (keyCode == KeyEvent.KEYCODE_BACK) {

@@ -132,6 +132,10 @@ public class AddBankCardActivity extends Activity {
 
     public void save(){
         String card_no = txt_card_no.getText().toString().trim();
+        if(card_no.equals("")){
+            IosDialog.show("银行卡号不能为空",this);
+            return;
+        }
         service = RetrofitUtils.createApi(ApiService.class);
         Call<JsonObject> call = service.addBankCard(Constant.BEARER+" "+Constant.access_token,bank_id,card_no,Constant.realname);
         call.enqueue(new Callback<JsonObject>() {

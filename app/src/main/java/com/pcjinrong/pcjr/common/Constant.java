@@ -22,14 +22,15 @@ public class Constant extends Application{
     public final static String FILE = "user_data";      //存储文件名
     public final static String CLIENTID = "1";
     public final static String CLIENTSECRET = "123";
+    // public final static String CLIENTID = "AqxfAi8mmNjPGse0DLpb22V5PE4d8LokHIlQmqpc";
+    //public final static String CLIENTSECRET = "NvpDXLAQ18afeIePzsZmkwsXW0ClXYFReixiPu2P";
     public static String access_token = "";
     public static String refresh_token = "";
     public static boolean isLogin = false;              //用户登录
     public static boolean isGestureLogin = false;       //手势登录
     public static String DEVICETOKEN;                   // 设备token
     public static String realname;
-    public static int TYPE;
-    public static boolean FLAG = false;
+    public static int TYPE = 0;
     //手势密码点的状态
     public static final int POINT_STATE_NORMAL = 0;     // 正常状态
     public static final int POINT_STATE_SELECTED = 1;   // 按下状态
