@@ -55,6 +55,8 @@ public class InvestListFragment extends BaseFragment   {
     /** 是否已被加载过一次，第二次就不再去请求数据了 */
     private boolean mHasLoadedOnce;
 
+    private long current_time = System.currentTimeMillis();
+
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.invest_list,container,false);
@@ -102,8 +104,8 @@ public class InvestListFragment extends BaseFragment   {
         });
 
 
-
-        adapter = new ProductListViewAdapter(list, getContext(),System.currentTimeMillis());
+        long sys_time = System.currentTimeMillis();
+        adapter = new ProductListViewAdapter(list, getContext(),current_time,sys_time);
         listView.setAdapter(adapter);
 
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -147,8 +149,9 @@ public class InvestListFragment extends BaseFragment   {
                     }
                     long response_time = DateUtil.getMillisOfDate(new Date());
                     long time = response_time - request_time;
-                    long current_time = json.get("current_time").getAsLong()*1000 + time;
+                    current_time = json.get("current_time").getAsLong()*1000 + time;
                     adapter.setCurrent_time(current_time);
+                    adapter.setSys_time(System.currentTimeMillis());
                     int totalPage = (pager.getTotal() + pager.getPageSize() - 1) / pager.getPageSize();
                     if (pageNow >= totalPage) {
                         loadMoreListViewContainer.loadMoreFinish(false, false);

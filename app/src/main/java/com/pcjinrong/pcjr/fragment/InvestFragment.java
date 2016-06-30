@@ -63,7 +63,7 @@ public class InvestFragment extends Fragment
 		fragmentPagerAdapter = new TabChildFragmentAdapter(this,fragmentList,titleList);
 
 		viewPager.setAdapter(fragmentPagerAdapter);
-		viewPager.setOffscreenPageLimit(1);
+		viewPager.setOffscreenPageLimit(4);
 		tabLayout.setupWithViewPager(viewPager);
         tabLayout.getTabAt(Constant.TYPE).select();
 	}

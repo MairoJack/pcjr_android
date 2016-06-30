@@ -253,6 +253,8 @@ public class InvestActivity extends Activity {
      * 确认投资
      */
     public void invest(String password, String amount) {
+        dialog.setMessage("正在提交...");
+        dialog.show();
         Call<JsonObject> call = service.investProduct(Constant.BEARER + " " + Constant.access_token, Constant.access_token, amount, product.getId(), password);
         call.enqueue(new Callback<JsonObject>() {
             @Override
@@ -268,11 +270,13 @@ public class InvestActivity extends Activity {
                         IosDialog.show(json.get("message").getAsString(), InvestActivity.this);
                     }
                 }
+                dialog.dismiss();
             }
 
             @Override
             public void onFailure(Call<JsonObject> call, Throwable t) {
                 Toast.makeText(InvestActivity.this, "网络异常", Toast.LENGTH_SHORT).show();
+                dialog.dismiss();
             }
         });
     }

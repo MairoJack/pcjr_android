@@ -12,6 +12,7 @@ import android.widget.Toast;
 import com.google.gson.JsonObject;
 import com.pcjinrong.pcjr.R;
 import com.pcjinrong.pcjr.common.Constant;
+import com.pcjinrong.pcjr.plugins.IosDialog;
 import com.pcjinrong.pcjr.service.ApiService;
 import com.pcjinrong.pcjr.utils.RetrofitUtils;
 
@@ -44,7 +45,7 @@ public class CouponActivity extends Activity {
         invest_certificate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(CouponActivity.this, InvesTicketActivity.class));
+                startActivityForResult(new Intent(CouponActivity.this, InvesTicketActivity.class),Constant.REQUSET);
                 overridePendingTransition(R.anim.push_left_in, R.anim.push_left_out);
             }
         });
@@ -52,7 +53,7 @@ public class CouponActivity extends Activity {
         red_packet.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(CouponActivity.this, RedPacketActivity.class));
+                startActivityForResult(new Intent(CouponActivity.this, RedPacketActivity.class),Constant.REQUSET);
                 overridePendingTransition(R.anim.push_left_in, R.anim.push_left_out);
             }
         });
@@ -82,6 +83,8 @@ public class CouponActivity extends Activity {
                         if(investTicketNum!=0){
                             invest_ticket_number.setVisibility(View.VISIBLE);
                             invest_ticket_number.setText(String.valueOf(investTicketNum));
+                        }else{
+                            invest_ticket_number.setVisibility(View.GONE);
                         }
                     }
                     if (json.get("red_packet_num") != null) {
@@ -89,6 +92,8 @@ public class CouponActivity extends Activity {
                         if(redPacketNum!=0){
                             red_packet_number.setVisibility(View.VISIBLE);
                             red_packet_number.setText(String.valueOf(redPacketNum));
+                        }else{
+                            red_packet_number.setVisibility(View.GONE);
                         }
                     }
                 }
@@ -109,6 +114,14 @@ public class CouponActivity extends Activity {
         }
         return false;
 
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == Constant.REQUSET && resultCode == RESULT_CANCELED) {
+            initData();
+        }
     }
 
 }

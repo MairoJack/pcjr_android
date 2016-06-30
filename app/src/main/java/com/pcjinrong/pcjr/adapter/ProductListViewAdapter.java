@@ -29,7 +29,7 @@ public class ProductListViewAdapter extends BaseAdapter {
     private Context context;
     private LayoutInflater layoutInflater;
     private long current_time;
-
+    private long sys_time = System.currentTimeMillis();
     private static class ListItemView {
         public ImageView rtv;
         public ProgressWheel progressWheel;
@@ -45,11 +45,12 @@ public class ProductListViewAdapter extends BaseAdapter {
                 rate;
     }
 
-    public ProductListViewAdapter(List<Product> list, Context context,long current_time) {
+    public ProductListViewAdapter(List<Product> list, Context context,long current_time,long sys_time) {
         this.list = list;
         this.context = context;
         this.layoutInflater = LayoutInflater.from(context);
         this.current_time = current_time;
+        this.sys_time = sys_time;
     }
 
     @Override
@@ -78,6 +79,7 @@ public class ProductListViewAdapter extends BaseAdapter {
         } else if (product.getStatus() == 4) {
             convertView = layoutInflater.inflate(R.layout.item_product_over, null);
         } else {
+            current_time = current_time +  System.currentTimeMillis() - sys_time ;
             Date date = new Date(current_time);
             Date pub_date = new Date(product.getPub_date()*1000);
             try {
@@ -163,5 +165,8 @@ public class ProductListViewAdapter extends BaseAdapter {
     }
     public void setCurrent_time(long current_time){
         this.current_time = current_time;
+    }
+    public void setSys_time(long sys_time){
+        this.sys_time = sys_time;
     }
 }

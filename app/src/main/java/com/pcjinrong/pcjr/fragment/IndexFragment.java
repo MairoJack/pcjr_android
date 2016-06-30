@@ -191,7 +191,7 @@ public class IndexFragment extends Fragment{
         ViewGroup.LayoutParams params = listView.getLayoutParams();
         params.height = listView.getDividerHeight() * 23 * 5;
         listView.setLayoutParams(params);
-
+        listView.setFocusable(false);
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -248,7 +248,7 @@ public class IndexFragment extends Fragment{
                     }.getType());
                     long time = response_time - request_time;
                     long current_time = json.get("current_time").getAsLong()*1000 + time;
-                    adapter = new ProductListViewAdapter(products,getContext(),current_time);
+                    adapter = new ProductListViewAdapter(products,getContext(),current_time,System.currentTimeMillis());
                     listView.setAdapter(adapter);
 
                 }
@@ -298,8 +298,10 @@ public class IndexFragment extends Fragment{
     }
 
     private void initImageLoader() {
-        DisplayImageOptions defaultOptions = new DisplayImageOptions.Builder().
-                showImageForEmptyUri(R.drawable.ic_default_adimage)
+        DisplayImageOptions defaultOptions = new DisplayImageOptions.Builder()
+                .showImageOnLoading(R.drawable.ic_default_adimage)
+                .showImageOnFail(R.drawable.ic_default_adimage)
+                .showImageForEmptyUri(R.drawable.ic_default_adimage)
                 .cacheInMemory(true).cacheOnDisk(true).build();
 
         ImageLoaderConfiguration config = new ImageLoaderConfiguration.Builder(
@@ -421,7 +423,7 @@ public class IndexFragment extends Fragment{
                     }.getType());
                     long time = response_time - request_time;
                     long current_time = json.get("current_time").getAsLong()*1000 + time;
-                    adapter = new ProductListViewAdapter(products,getContext(),current_time);
+                    adapter = new ProductListViewAdapter(products,getContext(),current_time,System.currentTimeMillis());
                     listView.setAdapter(adapter);
                     mPtrFrame.refreshComplete();
                 }

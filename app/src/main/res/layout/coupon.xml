@@ -45,7 +45,7 @@
         android:layout_width="match_parent"
         android:layout_height="80dp"
         android:layout_marginTop="1dp"
-        android:background="#FFFFFF">
+        android:background="@drawable/list_selector">
 
         <ImageView
             android:id="@+id/img_invest"
@@ -113,7 +113,7 @@
         android:layout_width="match_parent"
         android:layout_height="80dp"
         android:layout_marginTop="1dp"
-        android:background="#FFFFFF">
+        android:background="@drawable/list_selector">
 
         <ImageView
             android:id="@+id/img_red_packet"

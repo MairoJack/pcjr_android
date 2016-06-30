@@ -60,6 +60,9 @@ public class Product implements Serializable{
     private String borrower_intro;
     @Expose
     private String estimate_interest;
+    @Expose
+    private long preview_repayment_date;
+
     public String getId() {
         return id;
     }
@@ -266,5 +269,13 @@ public class Product implements Serializable{
 
     public void setEstimate_interest(String estimate_interest) {
         this.estimate_interest = estimate_interest;
+    }
+
+    public long getPreview_repayment_date() {
+        return preview_repayment_date;
+    }
+
+    public void setPreview_repayment_date(long preview_repayment_date) {
+        this.preview_repayment_date = preview_repayment_date;
     }
 }

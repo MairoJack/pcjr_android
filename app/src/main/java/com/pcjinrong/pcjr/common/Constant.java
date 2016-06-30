@@ -20,10 +20,18 @@ public class Constant extends Application{
     public final static int PAGESIZE = 15;              //分页大小
     public final static String BEARER = "Bearer";       //BEARER
     public final static String FILE = "user_data";      //存储文件名
-    //public final static String CLIENTID = "1";
-    //public final static String CLIENTSECRET = "123";
+    /**
+     * test
+     */
+    public final static String BASEURL = "http://api.pcjr.test/mapi/";
+    public final static String CLIENTID = "1";
+    public final static String CLIENTSECRET = "123";
+    /**
+     * pro
+     */
+   /* public final static String BASEURL = "https://www.pcjr.com/mapi/";
     public final static String CLIENTID = "AqxfAi8mmNjPGse0DLpb22V5PE4d8LokHIlQmqpc";
-    public final static String CLIENTSECRET = "NvpDXLAQ18afeIePzsZmkwsXW0ClXYFReixiPu2P";
+    public final static String CLIENTSECRET = "NvpDXLAQ18afeIePzsZmkwsXW0ClXYFReixiPu2P";*/
     public static String access_token = "";
     public static String refresh_token = "";
     public static boolean isLogin = false;              //用户登录

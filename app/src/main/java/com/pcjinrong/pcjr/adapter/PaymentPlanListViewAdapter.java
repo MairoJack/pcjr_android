@@ -73,11 +73,11 @@ public class PaymentPlanListViewAdapter extends BaseAdapter {
         String estimated_capital = list.get(position).getEstimated_capital();
         if(status == 0){
             viewHolder.date.setText(DateUtil.transferLongToDate("yyyy-MM-dd",list.get(position).getEstimated_time()*1000));
-            viewHolder.amount.setText("未回款");
+            viewHolder.status.setText("未回款");
             viewHolder.icon.setImageResource(R.mipmap.error);
         }else if(status == 1){
             viewHolder.date.setText(DateUtil.transferLongToDate("yyyy-MM-dd",list.get(position).getActual_time()*1000));
-            viewHolder.amount.setText("已回款");
+            viewHolder.status.setText("已回款");
             viewHolder.icon.setImageResource(R.mipmap.right);
         }
         viewHolder.product_name.setText(list.get(position).getProduct_name());

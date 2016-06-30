@@ -1,5 +1,7 @@
 package com.pcjinrong.pcjr.utils;
 
+import com.pcjinrong.pcjr.common.Constant;
+
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
@@ -14,8 +16,7 @@ public class RetrofitUtils {
             synchronized (RetrofitUtils.class) {
                 if (retrofit == null) {
                     retrofit = new Retrofit.Builder()
-                             .baseUrl("https://www.pcjr.com/mapi/")
-                            //.baseUrl("http://api.pcjr.test/mapi/")
+                            .baseUrl(Constant.BASEURL)
                             .addConverterFactory(GsonConverterFactory.create())
                             .build();
                 }
