@@ -42,18 +42,21 @@
 
         <RelativeLayout
             android:id="@+id/tips"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="60dp"
+            android:layout_height="match_parent"
+            android:background="@drawable/back_selector"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
-            android:layout_marginRight="15dp"
             >
 
             <ImageView
-                android:layout_width="24dp"
+                android:layout_width="wrap_content"
                 android:layout_height="24dp"
                 android:layout_alignParentLeft="true"
                 android:layout_centerVertical="true"
+                android:layout_centerHorizontal="true"
+                android:paddingLeft="10dp"
+                android:paddingRight="10dp"
                 android:src="@drawable/ask" />
         </RelativeLayout>
     </RelativeLayout>

@@ -7,19 +7,21 @@
 
     <RelativeLayout
         android:id="@+id/title"
-        android:layout_width="fill_parent"
+        android:layout_width="match_parent"
         android:layout_height="50dp"
         android:background="@color/orange" >
 
         <TextView
             android:id="@+id/index"
-            android:layout_width="60dp"
-            android:layout_height="40dp"
+            android:layout_width="70dp"
+            android:layout_height="50dp"
             android:layout_alignParentLeft="true"
             android:layout_centerVertical="true"
             android:gravity="center_vertical|center_horizontal"
-            android:layout_marginLeft="15dp"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp"
             android:text="首页"
+            android:background="@drawable/back_selector"
             android:textColor="#FFFFFF"
             android:textSize="16dp" />
 
@@ -34,12 +36,14 @@
 
         <TextView
             android:id="@+id/reg"
-            android:layout_width="60dp"
-            android:layout_height="40dp"
+            android:layout_width="70dp"
+            android:layout_height="50dp"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
             android:gravity="center_vertical|center_horizontal"
-            android:layout_marginRight="15dp"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp"
+            android:background="@drawable/back_selector"
             android:text="注册"
             android:textColor="#FFFFFF"
             android:textSize="16dp" />

@@ -44,7 +44,7 @@
         android:layout_width="fill_parent"
         android:layout_height="50dp"
         android:layout_marginTop="1dp"
-        android:background="#FFFFFF" >
+        android:background="@drawable/list_selector" >
 
         <TextView
             android:layout_width="wrap_content"
@@ -69,7 +69,7 @@
         android:layout_width="fill_parent"
         android:layout_height="50dp"
         android:layout_marginTop="1dp"
-        android:background="#FFFFFF" >
+        android:background="@drawable/list_selector" >
 
         <TextView
             android:layout_width="wrap_content"
@@ -94,7 +94,7 @@
         android:layout_width="fill_parent"
         android:layout_height="50dp"
         android:layout_marginTop="1dp"
-        android:background="#FFFFFF" >
+        android:background="@drawable/list_selector" >
 
         <TextView
             android:layout_width="wrap_content"
@@ -144,7 +144,7 @@
         android:layout_width="fill_parent"
         android:layout_height="50dp"
         android:layout_marginTop="1dp"
-        android:background="#FFFFFF" >
+        android:background="@drawable/list_selector" >
 
         <TextView
             android:layout_width="wrap_content"
