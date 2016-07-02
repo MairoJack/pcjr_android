@@ -225,15 +225,18 @@ public class InvestDetailInfoFragment extends Fragment {
                     long response_time = DateUtil.getMillisOfDate(new Date());
                     long time = response_time - request_time;
                     long current_time = json.get("current_time").getAsLong()*1000 + time;
-                    ((InvestDetailActivity)getActivity()).refreshButton(product,current_time);
-                    initData();
+                    if(getActivity()!=null) {
+                        ((InvestDetailActivity) getActivity()).refreshButton(product, current_time);
+                        initData();
+                    }
                 }
             }
 
             @Override
             public void onFailure(Call<JsonObject> call, Throwable t) {
                 mPtrFrame.refreshComplete();
-                Toast.makeText(getActivity(),"网络异常",Toast.LENGTH_SHORT).show();
+                if(getActivity()!=null)
+                    Toast.makeText(getActivity(),"网络异常",Toast.LENGTH_SHORT).show();
             }
         });
     }

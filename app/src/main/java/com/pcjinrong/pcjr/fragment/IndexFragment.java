@@ -256,7 +256,8 @@ public class IndexFragment extends Fragment{
 
             @Override
             public void onFailure(Call<JsonObject> call, Throwable t) {
-                Toast.makeText(getActivity(),"网络异常",Toast.LENGTH_SHORT).show();
+                if(getActivity()!=null)
+                    Toast.makeText(getActivity(),"网络异常",Toast.LENGTH_SHORT).show();
             }
         });
     }
@@ -432,7 +433,8 @@ public class IndexFragment extends Fragment{
             @Override
             public void onFailure(Call<JsonObject> call, Throwable t) {
                 mPtrFrame.refreshComplete();
-                Toast.makeText(getActivity(),"网络异常",Toast.LENGTH_SHORT).show();
+                if(getActivity()!=null)
+                    Toast.makeText(getActivity(),"网络异常",Toast.LENGTH_SHORT).show();
             }
         });
     }
