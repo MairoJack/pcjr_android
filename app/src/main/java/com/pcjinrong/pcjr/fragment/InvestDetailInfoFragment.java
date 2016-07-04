@@ -44,6 +44,7 @@ import retrofit2.Response;
 
 
 /**
+ * 产品详情
  * Created by Mario on 2016/5/12.
  */
 public class InvestDetailInfoFragment extends Fragment {

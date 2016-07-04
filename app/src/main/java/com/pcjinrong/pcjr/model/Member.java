@@ -5,6 +5,7 @@ import com.google.gson.annotations.Expose;
 import java.io.Serializable;
 
 /**
+ * 用户
  * Created by Mario on 2016/5/4.
  */
 public class Member implements Serializable{

@@ -76,7 +76,7 @@ public class SplashActivity extends Activity {
 
             @Override
             public void onFailure(Call call, Throwable t) {
-                Log.d("Mario", "onResponse:Throwable:"+t.getMessage());
+                Log.d("pcjr", "onResponse:Throwable:"+t.getMessage());
                 Intent intent = new Intent(SplashActivity.this, MainActivity.class);
                 overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
                 startActivity(intent);

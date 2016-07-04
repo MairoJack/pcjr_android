@@ -29,6 +29,7 @@ import com.pcjinrong.pcjr.common.Constant;
 import com.pcjinrong.pcjr.model.BankCard;
 import com.pcjinrong.pcjr.service.ApiService;
 import com.pcjinrong.pcjr.utils.RetrofitUtils;
+import com.pcjinrong.pcjr.utils.ViewUtil;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
@@ -154,6 +155,9 @@ public class WithdrawActivity extends Activity {
         btn_verify.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                if(ViewUtil.isFastDoubleClick()){
+                    return;
+                }
                 String amount = txt_mention_amount.getText().toString().trim();
                 String verify = txt_verify.getText().toString().trim();
                 if (amount.equals("")) {
@@ -174,6 +178,9 @@ public class WithdrawActivity extends Activity {
         btn_apply.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                if(ViewUtil.isFastDoubleClick()){
+                    return;
+                }
                 apply();
             }
         });
@@ -189,6 +196,9 @@ public class WithdrawActivity extends Activity {
         explain.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                if(ViewUtil.isFastDoubleClick()){
+                    return;
+                }
                 Intent intent = new Intent(WithdrawActivity.this, WebViewActivity.class);
                 intent.putExtra("title", "提现细则");
                 intent.putExtra("url", "https://m.pcjr.com/appdeal/mention");

@@ -11,6 +11,7 @@ import android.widget.TextView;
 import com.pcjinrong.pcjr.R;
 
 /**
+ * 产品风控
  * Created by Mario on 2016/5/12.
  */
 public class InvestDetailRiskFragment extends Fragment{

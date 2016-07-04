@@ -19,6 +19,7 @@ import com.pcjinrong.pcjr.utils.SharedPreferenceUtil;
 import com.pcjinrong.pcjr.R;
 import com.pcjinrong.pcjr.common.Constant;
 import com.pcjinrong.pcjr.utils.RetrofitUtils;
+import com.pcjinrong.pcjr.utils.ViewUtil;
 
 import cn.pedant.SweetAlert.SweetAlertDialog;
 import retrofit2.Call;
@@ -62,6 +63,9 @@ public class SafeSettingActivity extends Activity {
         realname.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                if(ViewUtil.isFastDoubleClick()){
+                    return;
+                }
                 startActivity(new Intent(SafeSettingActivity.this, RealNameVerifiedActivity.class));
                 overridePendingTransition(R.anim.push_left_in, R.anim.push_left_out);
             }
@@ -69,6 +73,9 @@ public class SafeSettingActivity extends Activity {
         bindphone.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                if(ViewUtil.isFastDoubleClick()){
+                    return;
+                }
                 getMobileInfo();
 
             }
@@ -76,6 +83,9 @@ public class SafeSettingActivity extends Activity {
         changepswd.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                if(ViewUtil.isFastDoubleClick()){
+                    return;
+                }
                 startActivity(new Intent(SafeSettingActivity.this, ChangePasswordActivity.class));
                 overridePendingTransition(R.anim.push_left_in, R.anim.push_left_out);
             }
@@ -92,6 +102,9 @@ public class SafeSettingActivity extends Activity {
         btn_switch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if(ViewUtil.isFastDoubleClick()){
+                    return;
+                }
                 if(isChecked){
                     if(spu.getFirstGesture()){
                         startActivityForResult(new Intent(SafeSettingActivity.this, GestureEditActivity.class),1);
@@ -108,6 +121,9 @@ public class SafeSettingActivity extends Activity {
         gesture.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                if(ViewUtil.isFastDoubleClick()){
+                    return;
+                }
                 startActivity(new Intent(SafeSettingActivity.this, GestureEditActivity.class));
                 overridePendingTransition(R.anim.push_left_in, R.anim.push_left_out);
             }

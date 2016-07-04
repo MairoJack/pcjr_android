@@ -26,7 +26,10 @@ import retrofit2.Callback;
 import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
-
+/**
+ * 更新版本
+ * Created by Mario on 2016/7/4.
+ */
 public class UpdateManager {
 
 	private Context mContext;

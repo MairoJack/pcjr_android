@@ -19,6 +19,7 @@ import com.pcjinrong.pcjr.common.Constant;
 import com.pcjinrong.pcjr.plugins.AlertView;
 import com.pcjinrong.pcjr.service.ApiService;
 import com.pcjinrong.pcjr.utils.RetrofitUtils;
+import com.pcjinrong.pcjr.utils.ViewUtil;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -74,11 +75,17 @@ public class LoginActivity extends Activity implements View.OnClickListener {
                 finish();
                 break;
             case R.id.reg:
+                if(ViewUtil.isFastDoubleClick()){
+                    return;
+                }
                 intent = new Intent(LoginActivity.this, RegistActivity.class);
                 startActivity(intent);
                 overridePendingTransition(R.anim.push_left_in, R.anim.push_left_out);
                 break;
             case R.id.forget:
+                if(ViewUtil.isFastDoubleClick()){
+                    return;
+                }
                 intent = new Intent(LoginActivity.this, WebViewActivity.class);
                 intent.putExtra("url", "https://m.pcjr.com/forgetpassword");
                 intent.putExtra("title", "忘记密码");

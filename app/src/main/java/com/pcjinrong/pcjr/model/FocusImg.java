@@ -5,6 +5,7 @@ import com.google.gson.annotations.Expose;
 import java.io.Serializable;
 
 /**
+ * 焦点图
  * Created by Mario on 2016/5/25.
  */
 public class FocusImg implements Serializable{

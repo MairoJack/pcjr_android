@@ -161,7 +161,7 @@ public interface ApiService {
      */
     @FormUrlEncoded
     @POST("member/verify_identity")
-    Call<JsonObject> verifyIdentity(@Header("Authorization") String header,@Field("realname") String realname,@Field("identity") String identity);
+    Call<JsonObject> verifyIdentity(@Header("Authorization") String header,@Field("real_name") String real_name,@Field("identity") String identity);
 
     /**
      * 获取实名认证信息

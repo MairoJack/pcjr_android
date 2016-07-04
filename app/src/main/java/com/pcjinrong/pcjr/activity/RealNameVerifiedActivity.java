@@ -42,6 +42,7 @@ public class RealNameVerifiedActivity extends Activity {
     }
 
     public void initView() {
+        dialog = new ProgressDialog(this, ProgressDialog.STYLE_SPINNER);
         btn_save = (Button) findViewById(R.id.btn_save);
         txt_realname = (EditText) findViewById(R.id.txt_realname);
         txt_idcard = (EditText) findViewById(R.id.txt_idcard);
@@ -66,6 +67,8 @@ public class RealNameVerifiedActivity extends Activity {
     }
 
     public void initData() {
+        dialog.setMessage("正在加载...");
+        dialog.show();
         ApiService service = RetrofitUtils.createApi(ApiService.class);
         Call<JsonObject> call = service.getMemberIdentityInfo(Constant.access_token);
         call.enqueue(new Callback<JsonObject>() {
@@ -82,11 +85,13 @@ public class RealNameVerifiedActivity extends Activity {
                         btn_save.setVisibility(View.GONE);
                     }
                 }
+                dialog.dismiss();
             }
 
             @Override
             public void onFailure(Call call, Throwable t) {
-                Log.d("Mario", "onFailure: " + t);
+                Toast.makeText(RealNameVerifiedActivity.this,"网络异常",Toast.LENGTH_SHORT).show();
+                dialog.dismiss();
             }
         });
     }

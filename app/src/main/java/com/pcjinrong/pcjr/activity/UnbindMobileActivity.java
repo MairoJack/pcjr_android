@@ -17,12 +17,14 @@ import com.pcjinrong.pcjr.R;
 import com.pcjinrong.pcjr.common.Constant;
 import com.pcjinrong.pcjr.service.ApiService;
 import com.pcjinrong.pcjr.utils.RetrofitUtils;
+import com.pcjinrong.pcjr.utils.ViewUtil;
+
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
 /**
- * 绑定手机
+ * 解绑手机
  * Created by Mario on 2016/5/24.
  */
 public class UnbindMobileActivity extends Activity {
@@ -50,6 +52,9 @@ public class UnbindMobileActivity extends Activity {
         btn_save.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                if(ViewUtil.isFastDoubleClick()){
+                    return;
+                }
                 unbind();
             }
         });
@@ -57,6 +62,9 @@ public class UnbindMobileActivity extends Activity {
         btn_checkcode.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                if(ViewUtil.isFastDoubleClick()){
+                    return;
+                }
                 btn_checkcode.setClickable(false);
                 btn_checkcode.setBackgroundResource(R.drawable.button_gray);
                 time.start();

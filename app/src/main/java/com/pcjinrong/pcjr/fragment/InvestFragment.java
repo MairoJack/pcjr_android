@@ -19,6 +19,9 @@ import com.pcjinrong.pcjr.common.Constant;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Created by Mario on 2016/7/4.
+ */
 public class InvestFragment extends Fragment
 {
 

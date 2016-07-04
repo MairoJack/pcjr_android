@@ -37,6 +37,7 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 /**
+ * 投资列表Fragment
  * Created by Mario on 2016/5/12.
  */
 public class InvestListFragment extends BaseFragment   {

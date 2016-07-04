@@ -16,6 +16,7 @@ import com.pcjinrong.pcjr.service.ApiService;
 import com.pcjinrong.pcjr.utils.Validator;
 import com.pcjinrong.pcjr.R;
 import com.pcjinrong.pcjr.utils.RetrofitUtils;
+import com.pcjinrong.pcjr.utils.ViewUtil;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -85,6 +86,9 @@ public class RegistActivity extends Activity implements View.OnClickListener
                 overridePendingTransition(R.anim.push_right_in, R.anim.push_right_out);
 				break;
 			case R.id.syxy:
+                if(ViewUtil.isFastDoubleClick()){
+                    return;
+                }
                 intent = new Intent(RegistActivity.this, WebViewActivity.class);
                 intent.putExtra("title", "使用协议");
                 intent.putExtra("url", "https://m.pcjr.com/appdeal/use");
@@ -92,6 +96,9 @@ public class RegistActivity extends Activity implements View.OnClickListener
                 overridePendingTransition(R.anim.push_left_in, R.anim.push_left_out);
 				break;
 			case R.id.ystk:
+                if(ViewUtil.isFastDoubleClick()){
+                    return;
+                }
                 intent = new Intent(RegistActivity.this, WebViewActivity.class);
                 intent.putExtra("title", "隐私条款");
                 intent.putExtra("url", "https://m.pcjr.com/appdeal/agreement");

@@ -14,6 +14,7 @@ import android.widget.RelativeLayout;
 import com.pcjinrong.pcjr.R;
 import com.pcjinrong.pcjr.adapter.TabFragmentAdapter;
 import com.pcjinrong.pcjr.fragment.RedPacketFragment;
+import com.pcjinrong.pcjr.utils.ViewUtil;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -73,6 +74,9 @@ public class RedPacketActivity extends FragmentActivity {
         tips.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                if(ViewUtil.isFastDoubleClick()){
+                    return;
+                }
                 Intent intent = new Intent(RedPacketActivity.this, WebViewActivity.class);
                 intent.putExtra("title", "温馨提示");
                 intent.putExtra("url", "https://m.pcjr.com/appdeal/redpacket");

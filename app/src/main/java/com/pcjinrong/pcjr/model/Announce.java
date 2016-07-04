@@ -3,6 +3,7 @@ package com.pcjinrong.pcjr.model;
 import com.google.gson.annotations.Expose;
 
 /**
+ * 公告
  * Created by Mario on 2016/5/25.
  */
 public class Announce {

@@ -46,6 +46,7 @@ import com.pcjinrong.pcjr.common.Constant;
 import com.pcjinrong.pcjr.model.Announce;
 import com.pcjinrong.pcjr.utils.NoScrollListview;
 import com.pcjinrong.pcjr.utils.RetrofitUtils;
+import com.pcjinrong.pcjr.utils.ViewUtil;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -58,7 +59,10 @@ import in.srain.cube.views.ptr.PtrHandler;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
-
+/**
+ * 首页Fragment
+ * Created by Mario on 2016/7/4.
+ */
 public class IndexFragment extends Fragment{
 
     public static final String TAG = IndexFragment.class.getSimpleName();
@@ -132,6 +136,9 @@ public class IndexFragment extends Fragment{
         cpyg.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                if(ViewUtil.isFastDoubleClick()){
+                    return;
+                }
                 Intent intent = new Intent(getActivity(), WebViewActivity.class);
                 intent.putExtra("title","产品预告");
                 intent.putExtra("url","https://m.pcjr.com/notice");
@@ -407,7 +414,7 @@ public class IndexFragment extends Fragment{
             }
             @Override
             public void onFailure(Call call, Throwable t) {
-                Log.d("Mario", "onResponse:Throwable:"+t.getMessage());
+                Log.d("pcjr", "onResponse:Throwable:"+t.getMessage());
             }
         });
 

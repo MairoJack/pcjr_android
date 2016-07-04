@@ -9,6 +9,7 @@ import com.pcjinrong.pcjr.fragment.MoreFragment;
 
 
 /**
+ * Fragement适配器
  * Created by aspsine on 16/3/31.
  */
 public class FragmentAdapter implements FragmentNavigatorAdapter {

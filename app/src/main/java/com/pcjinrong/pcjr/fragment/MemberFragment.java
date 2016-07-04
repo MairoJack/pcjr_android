@@ -28,6 +28,8 @@ import com.pcjinrong.pcjr.common.Constant;
 import com.pcjinrong.pcjr.model.BankCard;
 import com.pcjinrong.pcjr.service.ApiService;
 import com.pcjinrong.pcjr.utils.RetrofitUtils;
+import com.pcjinrong.pcjr.utils.ViewUtil;
+
 import java.util.List;
 import in.srain.cube.views.ptr.PtrClassicFrameLayout;
 import in.srain.cube.views.ptr.PtrDefaultHandler;
@@ -87,6 +89,9 @@ public class MemberFragment extends Fragment {
         financial_records.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                if(ViewUtil.isFastDoubleClick()){
+                    return;
+                }
                 startActivity(new Intent(getActivity(), FinancialRecordsActivity.class));
                 getActivity().overridePendingTransition(R.anim.push_left_in, R.anim.push_left_out);
             }
@@ -97,6 +102,9 @@ public class MemberFragment extends Fragment {
         invest_records.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                if(ViewUtil.isFastDoubleClick()){
+                    return;
+                }
                 startActivity(new Intent(getActivity(), InvestRecordsActivity.class));
                 getActivity().overridePendingTransition(R.anim.push_left_in, R.anim.push_left_out);
             }
@@ -107,6 +115,9 @@ public class MemberFragment extends Fragment {
         trade_records.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                if(ViewUtil.isFastDoubleClick()){
+                    return;
+                }
                 startActivity(new Intent(getActivity(), TradeRecordsActivity.class));
                 getActivity().overridePendingTransition(R.anim.push_left_in, R.anim.push_left_out);
             }
@@ -117,6 +128,9 @@ public class MemberFragment extends Fragment {
         safe_setting.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                if(ViewUtil.isFastDoubleClick()){
+                    return;
+                }
                 getActivity().startActivityForResult(new Intent(getActivity(), SafeSettingActivity.class),Constant.SAFESETTING);
                 getActivity().overridePendingTransition(R.anim.push_left_in, R.anim.push_left_out);
             }
@@ -127,6 +141,9 @@ public class MemberFragment extends Fragment {
         bank_card.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                if(ViewUtil.isFastDoubleClick()){
+                    return;
+                }
                 startActivity(new Intent(getActivity(), BankCardActivity.class));
                 getActivity().overridePendingTransition(R.anim.push_left_in, R.anim.push_left_out);
             }
@@ -137,6 +154,9 @@ public class MemberFragment extends Fragment {
         msg_center.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                if(ViewUtil.isFastDoubleClick()){
+                    return;
+                }
                 startActivity(new Intent(getActivity(), MsgCenterActivity.class));
                 getActivity().overridePendingTransition(R.anim.push_left_in, R.anim.push_left_out);
             }
@@ -147,6 +167,9 @@ public class MemberFragment extends Fragment {
         payment_plan.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                if(ViewUtil.isFastDoubleClick()){
+                    return;
+                }
                 startActivity(new Intent(getActivity(), PaymentPlanActivity.class));
                 getActivity().overridePendingTransition(R.anim.push_left_in, R.anim.push_left_out);
             }
@@ -157,6 +180,9 @@ public class MemberFragment extends Fragment {
         withdraw_recharge.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                if(ViewUtil.isFastDoubleClick()){
+                    return;
+                }
                 Call<JsonObject> call = service.getMemberBankCardInfo(Constant.access_token);
                 call.enqueue(new Callback<JsonObject>() {
                     @Override
@@ -187,6 +213,9 @@ public class MemberFragment extends Fragment {
         coupon.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                if(ViewUtil.isFastDoubleClick()){
+                    return;
+                }
                 startActivity(new Intent(getActivity(), CouponActivity.class));
                 getActivity().overridePendingTransition(R.anim.push_left_in, R.anim.push_left_out);
             }

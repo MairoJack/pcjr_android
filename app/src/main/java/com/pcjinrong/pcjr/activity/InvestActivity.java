@@ -27,6 +27,8 @@ import com.pcjinrong.pcjr.common.Constant;
 import com.pcjinrong.pcjr.model.Product;
 import com.pcjinrong.pcjr.service.ApiService;
 import com.pcjinrong.pcjr.utils.RetrofitUtils;
+import com.pcjinrong.pcjr.utils.ViewUtil;
+
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -77,6 +79,9 @@ public class InvestActivity extends Activity {
         btn_invest.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                if(ViewUtil.isFastDoubleClick()){
+                    return;
+                }
                 double can_invest_amount = product.getAmount() - product.getProduct_amount();
                 final String amount = txt_invest_amount.getText().toString().trim();
                 if (amount.equals("")) {
@@ -123,6 +128,9 @@ public class InvestActivity extends Activity {
         btn_allin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                if(ViewUtil.isFastDoubleClick()){
+                    return;
+                }
                 double can_invest_amount = product.getAmount() - product.getProduct_amount();
                 final int amount;
                 double increase = Double.parseDouble(product.getIncreasing_amount());

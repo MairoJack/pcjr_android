@@ -15,6 +15,7 @@ import com.bigkoo.alertview.AlertView;
 import com.bigkoo.alertview.OnItemClickListener;
 import com.pcjinrong.pcjr.activity.WebViewActivity;
 import com.pcjinrong.pcjr.R;
+import com.pcjinrong.pcjr.utils.ViewUtil;
 
 
 public class MoreFragment extends Fragment {
@@ -38,6 +39,9 @@ public class MoreFragment extends Fragment {
         news.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                if(ViewUtil.isFastDoubleClick()){
+                    return;
+                }
                 Intent intent = new Intent(getActivity(), WebViewActivity.class);
                 intent.putExtra("title", "平台公告");
                 intent.putExtra("url", "https://m.pcjr.com/platformnews");
@@ -49,6 +53,9 @@ public class MoreFragment extends Fragment {
         aboutus.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                if(ViewUtil.isFastDoubleClick()){
+                    return;
+                }
                 Intent intent = new Intent(getActivity(), WebViewActivity.class);
                 intent.putExtra("title", "关于我们");
                 intent.putExtra("url", "https://m.pcjr.com/aboutus");

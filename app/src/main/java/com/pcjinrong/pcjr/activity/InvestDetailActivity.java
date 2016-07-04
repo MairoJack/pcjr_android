@@ -43,6 +43,7 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 /**
+ * 投资产品详情
  * Created by Mario on 2016/5/16.
  */
 public class InvestDetailActivity extends FragmentActivity
@@ -89,6 +90,9 @@ public class InvestDetailActivity extends FragmentActivity
                 btn_status.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
+                        if(ViewUtil.isFastDoubleClick()){
+                            return;
+                        }
                         Intent intent;
                         if(Constant.isLogin) {
                             intent = new Intent(InvestDetailActivity.this, InvestActivity.class);
@@ -275,6 +279,9 @@ public class InvestDetailActivity extends FragmentActivity
                     btn_status.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
+                            if(ViewUtil.isFastDoubleClick()){
+                                return;
+                            }
                             Intent intent;
                             boolean flag = false;
                             if (Constant.isLogin && Constant.isGestureLogin) {

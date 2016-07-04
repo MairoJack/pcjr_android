@@ -13,6 +13,8 @@ import com.pcjinrong.pcjr.common.Constant;
 import com.pcjinrong.pcjr.model.BankCard;
 import com.pcjinrong.pcjr.service.ApiService;
 import com.pcjinrong.pcjr.utils.RetrofitUtils;
+import com.pcjinrong.pcjr.utils.ViewUtil;
+
 import java.util.List;
 import cn.pedant.SweetAlert.SweetAlertDialog;
 import retrofit2.Call;
@@ -82,6 +84,9 @@ public class BankCardListViewAdapter extends BaseAdapter {
         viewHolder.delete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(final View v) {
+                if(ViewUtil.isFastDoubleClick()){
+                    return;
+                }
                 new SweetAlertDialog(context, SweetAlertDialog.WARNING_TYPE)
                         .setTitleText("确认删除尾号为"+list.get(position).getCard_no().substring(list.get(position).getCard_no().length()-4)+"的银行卡吗?")
                         .setConfirmText("确认")

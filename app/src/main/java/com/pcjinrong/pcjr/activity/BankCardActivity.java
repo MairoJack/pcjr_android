@@ -19,6 +19,7 @@ import com.pcjinrong.pcjr.common.Constant;
 import com.pcjinrong.pcjr.model.BankCard;
 import com.pcjinrong.pcjr.service.ApiService;
 import com.pcjinrong.pcjr.utils.RetrofitUtils;
+import com.pcjinrong.pcjr.utils.ViewUtil;
 
 import java.util.List;
 
@@ -62,6 +63,9 @@ public class BankCardActivity extends Activity {
         btn_addbankcard.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                if(ViewUtil.isFastDoubleClick()){
+                    return;
+                }
                 startActivityForResult(new Intent(BankCardActivity.this, AddBankCardActivity.class),Constant.REQUSET);
                 overridePendingTransition(R.anim.push_left_in, R.anim.push_left_out);
             }

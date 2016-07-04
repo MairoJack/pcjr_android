@@ -22,6 +22,7 @@ import java.util.regex.Pattern;
 import cn.iwgang.countdownview.CountdownView;
 
 /**
+ * 产品适配器
  * Created by Mario on 2016/5/4.
  */
 public class ProductListViewAdapter extends BaseAdapter {

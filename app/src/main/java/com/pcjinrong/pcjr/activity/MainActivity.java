@@ -29,7 +29,10 @@ import com.tencent.android.tpush.service.XGPushService;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
-
+/**
+ * 主界面
+ * Created by Mario on 2016/7/4.
+ */
 public class MainActivity extends FragmentActivity implements BottomNavigatorView.OnBottomNavigatorViewItemClickListener {
 
     private static final int DEFAULT_POSITION = 0;
@@ -141,7 +144,7 @@ public class MainActivity extends FragmentActivity implements BottomNavigatorVie
 
                 @Override
                 public void onFailure(Call<JsonObject> call, Throwable t) {
-                    Log.d("Mario", "onResponse:Throwable:" + t);
+                    Log.d("pcjr", "onResponse:Throwable:" + t);
                 }
             });
         }
@@ -156,12 +159,12 @@ public class MainActivity extends FragmentActivity implements BottomNavigatorVie
 
             @Override
             public void onSuccess(Object o, int i) {
-                Log.d("Mario", "onSuccess: "+i);
+                Log.i("pcjr", "XGAction:onSuccess: "+i);
             }
 
             @Override
             public void onFail(Object o, int i, String s) {
-                Log.d("Mario", "onFail: "+i+":"+s);
+                Log.e("pcjr", "XGAction:onFail: "+i+":"+s);
             }
         });
 

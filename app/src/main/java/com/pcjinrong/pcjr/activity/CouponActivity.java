@@ -15,6 +15,7 @@ import com.pcjinrong.pcjr.common.Constant;
 import com.pcjinrong.pcjr.plugins.IosDialog;
 import com.pcjinrong.pcjr.service.ApiService;
 import com.pcjinrong.pcjr.utils.RetrofitUtils;
+import com.pcjinrong.pcjr.utils.ViewUtil;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -45,6 +46,9 @@ public class CouponActivity extends Activity {
         invest_certificate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                if(ViewUtil.isFastDoubleClick()){
+                    return;
+                }
                 startActivityForResult(new Intent(CouponActivity.this, InvesTicketActivity.class),Constant.REQUSET);
                 overridePendingTransition(R.anim.push_left_in, R.anim.push_left_out);
             }
@@ -53,6 +57,9 @@ public class CouponActivity extends Activity {
         red_packet.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                if(ViewUtil.isFastDoubleClick()){
+                    return;
+                }
                 startActivityForResult(new Intent(CouponActivity.this, RedPacketActivity.class),Constant.REQUSET);
                 overridePendingTransition(R.anim.push_left_in, R.anim.push_left_out);
             }

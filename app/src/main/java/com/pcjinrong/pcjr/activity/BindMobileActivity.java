@@ -17,6 +17,7 @@ import com.pcjinrong.pcjr.common.Constant;
 import com.pcjinrong.pcjr.service.ApiService;
 import com.pcjinrong.pcjr.utils.RetrofitUtils;
 import com.pcjinrong.pcjr.utils.Validator;
+import com.pcjinrong.pcjr.utils.ViewUtil;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -50,6 +51,9 @@ public class BindMobileActivity extends Activity {
         btn_save.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                if(ViewUtil.isFastDoubleClick()){
+                    return;
+                }
                 bind();
             }
         });
@@ -57,7 +61,9 @@ public class BindMobileActivity extends Activity {
         btn_checkcode.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                if(ViewUtil.isFastDoubleClick()){
+                    return;
+                }
                 sendCheckCode();
             }
         });
