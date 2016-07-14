@@ -51,15 +51,6 @@ public class SharedPreferenceUtil {
         return this.sp.getString("gesture", "");
     }
 
-    public void setPassword(String password) {
-        this.editor.putString("password", password);
-        this.editor.commit();
-    }
-
-    public String getPassword() {
-        return this.sp.getString("password", "");
-    }
-
 
     public void setOpenGesture(boolean isOpen) {
         editor.putBoolean("isOpen", isOpen);
@@ -93,6 +84,5 @@ public class SharedPreferenceUtil {
         this.setAccessToken("");
         this.setAccessToken("");
         this.setUsername("");
-        this.setPassword("");
     }
 }

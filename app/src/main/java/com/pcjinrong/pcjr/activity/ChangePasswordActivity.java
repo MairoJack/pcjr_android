@@ -106,7 +106,6 @@ public class ChangePasswordActivity extends Activity {
                     JsonObject json = response.body();
                     if (json.get("success").getAsBoolean()) {
                         SharedPreferenceUtil spu = new SharedPreferenceUtil(ChangePasswordActivity.this,Constant.FILE);
-                        spu.setPassword(newPassword);
                         Toast.makeText(ChangePasswordActivity.this,json.get("message").getAsString(),Toast.LENGTH_SHORT).show();
                         finish();
                         overridePendingTransition(R.anim.push_right_in, R.anim.push_right_out);

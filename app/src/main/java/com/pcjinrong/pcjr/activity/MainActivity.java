@@ -122,9 +122,35 @@ public class MainActivity extends FragmentActivity implements BottomNavigatorVie
 
     private void tryLogin() {
         final SharedPreferenceUtil spu = new SharedPreferenceUtil(this, Constant.FILE);
+        Log.d("Mario", "tryLogin: "+spu.getRefresToken());
         if (!spu.getisFirst()) {
-            ApiService service = RetrofitUtils.createApi(ApiService.class);
-            Call<JsonObject> call = service.getAccessToken("password", spu.getUsernam(), spu.getPassword(), Constant.CLIENTID, Constant.CLIENTSECRET);
+            ApiService service = RetrofitUtils.createRefreshApi(ApiService.class);
+
+            Call<JsonObject> call = service.refreshToken("refresh_token",spu.getRefresToken(),Constant.CLIENTID,Constant.CLIENTSECRET);
+            call.enqueue(new Callback<JsonObject>() {
+                @Override
+                public void onResponse(Call<JsonObject> call, Response<JsonObject> response) {
+                    if (response.isSuccessful()) {
+                        JsonObject json = response.body();
+                        String accessToken = json.get("access_token").getAsString();
+                        String refreshToken = json.get("refresh_token").getAsString();
+                        Constant.access_token = accessToken;
+                        Constant.refresh_token = refreshToken;
+                        Constant.isLogin = true;
+                        spu.setAccessToken(accessToken);
+                        spu.setRefresToken(refreshToken);
+                    }
+                }
+
+                @Override
+                public void onFailure(Call call, Throwable t) {
+                    Log.e("pcjr", "onFailure: refreshToken:"+t.getMessage());
+                }
+            });
+
+
+
+          /*  Call<JsonObject> call = service.getAccessToken("password", spu.getUsernam(), spu.getPassword(), Constant.CLIENTID, Constant.CLIENTSECRET);
             call.enqueue(new Callback<JsonObject>() {
                 @Override
                 public void onResponse(Call<JsonObject> call, Response<JsonObject> response) {
@@ -146,7 +172,7 @@ public class MainActivity extends FragmentActivity implements BottomNavigatorVie
                 public void onFailure(Call<JsonObject> call, Throwable t) {
                     Log.d("pcjr", "onResponse:Throwable:" + t);
                 }
-            });
+            });*/
         }
     }
 

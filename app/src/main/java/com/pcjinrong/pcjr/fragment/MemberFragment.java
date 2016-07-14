@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,8 +14,10 @@ import android.widget.TextView;
 import android.widget.Toast;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
+import com.pcjinrong.pcjr.action.NoLoginExecption;
 import com.pcjinrong.pcjr.activity.BankCardActivity;
 import com.pcjinrong.pcjr.activity.CouponActivity;
+import com.pcjinrong.pcjr.activity.LoginActivity;
 import com.pcjinrong.pcjr.activity.TradeRecordsActivity;
 import com.pcjinrong.pcjr.plugins.IosDialog;
 import com.pcjinrong.pcjr.R;
@@ -235,7 +238,7 @@ public class MemberFragment extends Fragment {
             }
         });
 
-        initData();
+        //initData();
     }
 
     private void initData() {
@@ -251,6 +254,9 @@ public class MemberFragment extends Fragment {
                     available_balance.setText(json.get("available_balance").getAsString());
                     sum_assets.setText(json.get("total").getAsString());
                     uncollected_interest_sum.setText(json.get("interest").getAsString());
+                }else{
+                    getActivity().finish();
+                    startActivity(new Intent(getActivity(), LoginActivity.class));
                 }
             }
 
@@ -258,6 +264,10 @@ public class MemberFragment extends Fragment {
             public void onFailure(Call<JsonObject> call, Throwable t) {
                 mPtrFrame.refreshComplete();
                 if(getActivity()!=null)
+                    if(t instanceof NoLoginExecption){
+                        getActivity().finish();
+                        startActivity(new Intent(getActivity(), LoginActivity.class));
+                    }
                     Toast.makeText(getActivity(),"网络异常",Toast.LENGTH_SHORT).show();
             }
         });

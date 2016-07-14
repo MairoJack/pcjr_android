@@ -118,15 +118,13 @@ public class LoginActivity extends Activity implements View.OnClickListener {
                     JsonObject json = response.body();
                     if (json.get("access_token") != null) {
                         //绑定设备号
-                        bindDevice();
+                        //bindDevice();
                         SharedPreferenceUtil spu = new SharedPreferenceUtil(LoginActivity.this, Constant.FILE);
                         String accessToken = json.get("access_token").getAsString();
                         String refreshToken = json.get("refresh_token").getAsString();
                         Constant.access_token = accessToken;
                         Constant.refresh_token = refreshToken;
                         Constant.isLogin = true;
-                        spu.setUsername(username);
-                        spu.setPassword(password);
                         spu.setAccessToken(accessToken);
                         spu.setRefresToken(refreshToken);
                         spu.setIsFirst(false);
