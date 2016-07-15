@@ -2,6 +2,7 @@ package com.pcjinrong.pcjr.activity;
 
 import android.app.Activity;
 import android.app.ProgressDialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.KeyEvent;
@@ -90,8 +91,14 @@ public class RealNameVerifiedActivity extends Activity {
 
             @Override
             public void onFailure(Call call, Throwable t) {
-                Toast.makeText(RealNameVerifiedActivity.this,"网络异常",Toast.LENGTH_SHORT).show();
                 dialog.dismiss();
+                if(t.getMessage().equals("登陆过期")){
+                    finish();
+                    Toast.makeText(RealNameVerifiedActivity.this, "登陆过期,请重新登陆", Toast.LENGTH_SHORT).show();
+                    startActivityForResult(new Intent(RealNameVerifiedActivity.this, LoginActivity.class),Constant.REQUSET);
+                }else {
+                    Toast.makeText(RealNameVerifiedActivity.this, "网络异常", Toast.LENGTH_SHORT).show();
+                }
             }
         });
     }
@@ -148,7 +155,13 @@ public class RealNameVerifiedActivity extends Activity {
             @Override
             public void onFailure(Call<JsonObject> call, Throwable t) {
                 dialog.dismiss();
-                Toast.makeText(RealNameVerifiedActivity.this, "网络异常", Toast.LENGTH_SHORT).show();
+                if(t.getMessage().equals("登陆过期")){
+                    finish();
+                    Toast.makeText(RealNameVerifiedActivity.this, "登陆过期,请重新登陆", Toast.LENGTH_SHORT).show();
+                    startActivityForResult(new Intent(RealNameVerifiedActivity.this, LoginActivity.class),Constant.REQUSET);
+                }else {
+                    Toast.makeText(RealNameVerifiedActivity.this, "网络异常", Toast.LENGTH_SHORT).show();
+                }
             }
         });
     }

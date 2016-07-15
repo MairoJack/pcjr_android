@@ -111,7 +111,13 @@ public class UnbindMobileActivity extends Activity {
 
             @Override
             public void onFailure(Call<JsonObject> call, Throwable t) {
-                Toast.makeText(UnbindMobileActivity.this, "网络异常", Toast.LENGTH_SHORT).show();
+                if(t.getMessage().equals("登陆过期")){
+                    finish();
+                    Toast.makeText(UnbindMobileActivity.this, "登陆过期,请重新登陆", Toast.LENGTH_SHORT).show();
+                    startActivityForResult(new Intent(UnbindMobileActivity.this, LoginActivity.class),Constant.REQUSET);
+                }else {
+                    Toast.makeText(UnbindMobileActivity.this, "网络异常", Toast.LENGTH_SHORT).show();
+                }
             }
         });
     }

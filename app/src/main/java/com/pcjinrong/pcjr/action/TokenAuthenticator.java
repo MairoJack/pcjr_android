@@ -25,7 +25,7 @@ public class TokenAuthenticator implements Authenticator {
 
     @Override
     public Request authenticate(Route route, Response response) throws IOException {
-
+        SharedPreferenceUtil spu = new SharedPreferenceUtil(Constant.getContext(), Constant.FILE);
         ApiService service = RetrofitUtils.createRefreshApi(ApiService.class);
         Call<JsonObject> call = service.refreshToken("refresh_token", Constant.refresh_token, Constant.CLIENTID, Constant.CLIENTSECRET);
         JsonObject json = call.execute().body();
@@ -40,10 +40,15 @@ public class TokenAuthenticator implements Authenticator {
             String refreshToken = json.get("refresh_token").getAsString();
             Constant.access_token = accessToken;
             Constant.refresh_token = refreshToken;
+            spu.setAccessToken(accessToken);
+            spu.setRefresToken(refreshToken);
             return response.request().newBuilder().header("Authorization", Constant.BEARER + " " + accessToken)
             .build();
+
         } else {
-            throw new IOException("12");
+            Constant.clear();
+            spu.clear();
+            throw new IOException("登陆过期");
         }
     }
 

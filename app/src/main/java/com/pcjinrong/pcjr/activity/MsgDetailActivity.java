@@ -17,6 +17,9 @@ import com.pcjinrong.pcjr.model.Letter;
 import com.pcjinrong.pcjr.service.ApiService;
 import com.pcjinrong.pcjr.utils.DateUtil;
 import com.pcjinrong.pcjr.utils.RetrofitUtils;
+
+import java.io.IOException;
+
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -80,8 +83,15 @@ public class MsgDetailActivity extends Activity {
 
             @Override
             public void onFailure(Call<JsonObject> call, Throwable t) {
-                Toast.makeText(MsgDetailActivity.this,"网络异常",Toast.LENGTH_SHORT).show();
                 dialog.dismiss();
+                if(t.getMessage().equals("登陆过期")){
+                    Toast.makeText(MsgDetailActivity.this, "登陆过期,请重新登陆", Toast.LENGTH_SHORT).show();
+                    finish();
+                    startActivityForResult(new Intent(MsgDetailActivity.this, LoginActivity.class),Constant.REQUSET);
+                }else {
+                    Toast.makeText(MsgDetailActivity.this, "网络异常", Toast.LENGTH_SHORT).show();
+                }
+
             }
         });
     }
@@ -97,5 +107,4 @@ public class MsgDetailActivity extends Activity {
         return false;
 
     }
-
 }

@@ -17,11 +17,13 @@ import com.google.gson.reflect.TypeToken;
 import com.pcjinrong.pcjr.adapter.LetterListViewAdapter;
 import com.pcjinrong.pcjr.common.Constant;
 import com.pcjinrong.pcjr.model.Letter;
+import com.pcjinrong.pcjr.plugins.IosDialog;
 import com.pcjinrong.pcjr.service.ApiService;
 import com.pcjinrong.pcjr.R;
 import com.pcjinrong.pcjr.model.Pager;
 import com.pcjinrong.pcjr.utils.RetrofitUtils;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -187,10 +189,28 @@ public class MsgCenterActivity extends Activity{
             public void onFailure(Call call, Throwable t) {
                 loadMoreListViewContainer.loadMoreError(1,"加载失败.");
                 mPtrFrame.refreshComplete();
-                Toast.makeText(MsgCenterActivity.this,"网络异常",Toast.LENGTH_SHORT).show();
+                if(t instanceof IOException){
+                    Toast.makeText(MsgCenterActivity.this, "登陆过期,请重新登陆", Toast.LENGTH_SHORT).show();
+                    startActivityForResult(new Intent(MsgCenterActivity.this, LoginActivity.class),Constant.REQUSET);
+                }else{
+                    Toast.makeText(MsgCenterActivity.this,"网络异常",Toast.LENGTH_SHORT).show();
+                }
+
             }
         });
     }
 
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == Constant.REQUSET && resultCode == RESULT_OK) {
+            mPtrFrame.post(new Runnable() {
+                @Override
+                public void run() {
+                    mPtrFrame.autoRefresh();
+                }
+            });
+        }
+    }
 
 }

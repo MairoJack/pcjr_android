@@ -15,6 +15,7 @@ import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import com.google.gson.reflect.TypeToken;
 import com.pcjinrong.pcjr.activity.InvestTicketDetailActivity;
+import com.pcjinrong.pcjr.activity.LoginActivity;
 import com.pcjinrong.pcjr.adapter.InvestTicketListViewAdapter;
 import com.pcjinrong.pcjr.common.Constant;
 import com.pcjinrong.pcjr.model.InvestTicket;
@@ -161,8 +162,16 @@ public class InvestTicketFragment extends BaseFragment  {
             public void onFailure(Call<JsonObject> call, Throwable t) {
                 loadMoreListViewContainer.loadMoreError(1, "加载失败.");
                 mPtrFrame.refreshComplete();
-                if(getActivity()!=null)
-                    Toast.makeText(getActivity(), "网络异常", Toast.LENGTH_SHORT).show();
+                if(getActivity()!=null){
+                    if(t.getMessage().equals("登陆过期")){
+                        Toast.makeText(getActivity(), "登陆过期,请重新登陆", Toast.LENGTH_SHORT).show();
+                        getActivity().finish();
+                        startActivityForResult(new Intent(getActivity(), LoginActivity.class),Constant.REQUSET);
+                    }else {
+                        Toast.makeText(getActivity(), "网络异常", Toast.LENGTH_SHORT).show();
+                    }
+                }
+
             }
         });
     }

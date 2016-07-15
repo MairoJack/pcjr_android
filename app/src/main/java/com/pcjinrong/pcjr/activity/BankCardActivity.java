@@ -114,7 +114,12 @@ public class BankCardActivity extends Activity {
             @Override
             public void onFailure(Call<JsonObject> call, Throwable t) {
                 mPtrFrame.refreshComplete();
-                Toast.makeText(BankCardActivity.this,"网络异常",Toast.LENGTH_SHORT).show();
+                if(t.getMessage().equals("登陆过期")){
+                    Toast.makeText(BankCardActivity.this, "登陆过期,请重新登陆", Toast.LENGTH_SHORT).show();
+                    startActivityForResult(new Intent(BankCardActivity.this, LoginActivity.class),Constant.REQUSET);
+                }else {
+                    Toast.makeText(BankCardActivity.this, "网络异常", Toast.LENGTH_SHORT).show();
+                }
             }
         });
     }

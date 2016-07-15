@@ -1,6 +1,7 @@
 package com.pcjinrong.pcjr.activity;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.view.KeyEvent;
@@ -227,7 +228,13 @@ public class PaymentPlanActivity extends Activity {
             public void onFailure(Call call, Throwable t) {
                 loadMoreListViewContainer.loadMoreError(1, "加载失败.");
                 mPtrFrame.refreshComplete();
-                Toast.makeText(PaymentPlanActivity.this, "网络异常", Toast.LENGTH_SHORT).show();
+                if(t.getMessage().equals("登陆过期")){
+                    finish();
+                    Toast.makeText(PaymentPlanActivity.this, "登陆过期,请重新登陆", Toast.LENGTH_SHORT).show();
+                    startActivityForResult(new Intent(PaymentPlanActivity.this, LoginActivity.class),Constant.REQUSET);
+                }else {
+                    Toast.makeText(PaymentPlanActivity.this, "网络异常", Toast.LENGTH_SHORT).show();
+                }
             }
         });
     }

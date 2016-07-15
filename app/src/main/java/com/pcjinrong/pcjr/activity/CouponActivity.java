@@ -108,7 +108,12 @@ public class CouponActivity extends Activity {
 
             @Override
             public void onFailure(Call<JsonObject> call, Throwable t) {
-                Toast.makeText(CouponActivity.this,"网络异常",Toast.LENGTH_SHORT).show();
+                if(t.getMessage().equals("登陆过期")){
+                    Toast.makeText(CouponActivity.this, "登陆过期,请重新登陆", Toast.LENGTH_SHORT).show();
+                    startActivityForResult(new Intent(CouponActivity.this, LoginActivity.class),Constant.REQUSET);
+                }else {
+                    Toast.makeText(CouponActivity.this, "网络异常", Toast.LENGTH_SHORT).show();
+                }
             }
         });
     }

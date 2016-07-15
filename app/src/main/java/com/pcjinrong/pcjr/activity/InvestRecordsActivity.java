@@ -1,6 +1,7 @@
 package com.pcjinrong.pcjr.activity;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.view.KeyEvent;
@@ -212,7 +213,13 @@ public class InvestRecordsActivity extends Activity{
             public void onFailure(Call<JsonObject> call, Throwable t) {
                 loadMoreListViewContainer.loadMoreError(1,"加载失败.");
                 mPtrFrame.refreshComplete();
-                Toast.makeText(InvestRecordsActivity.this,"网络异常",Toast.LENGTH_SHORT).show();
+                if(t.getMessage().equals("登陆过期")){
+                    Toast.makeText(InvestRecordsActivity.this, "登陆过期,请重新登陆", Toast.LENGTH_SHORT).show();
+                    finish();
+                    startActivityForResult(new Intent(InvestRecordsActivity.this, LoginActivity.class),Constant.REQUSET);
+                }else {
+                    Toast.makeText(InvestRecordsActivity.this, "网络异常", Toast.LENGTH_SHORT).show();
+                }
             }
         });
     }

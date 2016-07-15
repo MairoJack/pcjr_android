@@ -271,7 +271,13 @@ public class WithdrawActivity extends Activity {
 
             @Override
             public void onFailure(Call<JsonObject> call, Throwable t) {
-                Toast.makeText(WithdrawActivity.this, "网络异常", Toast.LENGTH_SHORT).show();
+                if(t.getMessage().equals("登陆过期")){
+                    Toast.makeText(WithdrawActivity.this, "登陆过期,请重新登陆", Toast.LENGTH_SHORT).show();
+                    finish();
+                    startActivityForResult(new Intent(WithdrawActivity.this, LoginActivity.class),Constant.REQUSET);
+                }else {
+                    Toast.makeText(WithdrawActivity.this, "网络异常", Toast.LENGTH_SHORT).show();
+                }
             }
         });
     }

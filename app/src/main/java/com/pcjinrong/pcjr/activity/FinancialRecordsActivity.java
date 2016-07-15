@@ -2,6 +2,7 @@ package com.pcjinrong.pcjr.activity;
 
 import android.app.Activity;
 import android.app.ProgressDialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.KeyEvent;
 import android.view.View;
@@ -101,7 +102,12 @@ public class FinancialRecordsActivity extends Activity {
 
             @Override
             public void onFailure(Call<FinanceRecords> call, Throwable t) {
-                Toast.makeText(FinancialRecordsActivity.this,"网络异常",Toast.LENGTH_SHORT).show();
+                if(t.getMessage().equals("登陆过期")){
+                    Toast.makeText(FinancialRecordsActivity.this, "登陆过期,请重新登陆", Toast.LENGTH_SHORT).show();
+                    startActivityForResult(new Intent(FinancialRecordsActivity.this, LoginActivity.class),Constant.REQUSET);
+                }else {
+                    Toast.makeText(FinancialRecordsActivity.this, "网络异常", Toast.LENGTH_SHORT).show();
+                }
                 dialog.dismiss();
             }
         });

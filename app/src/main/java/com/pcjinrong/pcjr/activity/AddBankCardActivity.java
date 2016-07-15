@@ -1,6 +1,7 @@
 package com.pcjinrong.pcjr.activity;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.KeyEvent;
 import android.view.View;
@@ -125,7 +126,13 @@ public class AddBankCardActivity extends Activity {
 
             @Override
             public void onFailure(Call<JsonObject> call, Throwable t) {
-                Toast.makeText(AddBankCardActivity.this,"网络异常",Toast.LENGTH_SHORT).show();
+                if(t.getMessage().equals("登陆过期")){
+                    Toast.makeText(AddBankCardActivity.this, "登陆过期,请重新登陆", Toast.LENGTH_SHORT).show();
+                    finish();
+                    startActivityForResult(new Intent(AddBankCardActivity.this, LoginActivity.class),Constant.REQUSET);
+                }else {
+                    Toast.makeText(AddBankCardActivity.this, "网络异常", Toast.LENGTH_SHORT).show();
+                }
             }
         });
     }
@@ -155,7 +162,13 @@ public class AddBankCardActivity extends Activity {
 
             @Override
             public void onFailure(Call<JsonObject> call, Throwable t) {
-                Toast.makeText(AddBankCardActivity.this,"网络异常",Toast.LENGTH_SHORT).show();
+                if(t.getMessage().equals("登陆过期")){
+                    Toast.makeText(AddBankCardActivity.this, "登陆过期,请重新登陆", Toast.LENGTH_SHORT).show();
+                    finish();
+                    startActivityForResult(new Intent(AddBankCardActivity.this, LoginActivity.class),Constant.REQUSET);
+                }else {
+                    Toast.makeText(AddBankCardActivity.this, "网络异常", Toast.LENGTH_SHORT).show();
+                }
             }
         });
     }

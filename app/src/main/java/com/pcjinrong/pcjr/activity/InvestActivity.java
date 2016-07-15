@@ -249,8 +249,15 @@ public class InvestActivity extends Activity {
 
             @Override
             public void onFailure(Call<JsonObject> call, Throwable t) {
-                Toast.makeText(InvestActivity.this, "网络异常", Toast.LENGTH_SHORT).show();
                 dialog.dismiss();
+                if(t.getMessage().equals("登陆过期")){
+                    Toast.makeText(InvestActivity.this, "登陆过期,请重新登陆", Toast.LENGTH_SHORT).show();
+                    finish();
+                    startActivityForResult(new Intent(InvestActivity.this, LoginActivity.class),Constant.REQUSET);
+                }else {
+                    Toast.makeText(InvestActivity.this, "网络异常", Toast.LENGTH_SHORT).show();
+                }
+
             }
         });
 

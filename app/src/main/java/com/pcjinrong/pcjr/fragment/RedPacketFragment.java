@@ -1,5 +1,6 @@
 package com.pcjinrong.pcjr.fragment;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -12,6 +13,7 @@ import android.widget.Toast;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import com.google.gson.reflect.TypeToken;
+import com.pcjinrong.pcjr.activity.LoginActivity;
 import com.pcjinrong.pcjr.adapter.RedPacketListViewAdapter;
 import com.pcjinrong.pcjr.service.ApiService;
 import com.pcjinrong.pcjr.R;
@@ -151,8 +153,15 @@ public class RedPacketFragment extends BaseFragment{
             public void onFailure(Call<JsonObject> call, Throwable t) {
                 loadMoreListViewContainer.loadMoreError(1, "加载失败.");
                 mPtrFrame.refreshComplete();
-                if(getActivity()!=null)
-                    Toast.makeText(getActivity(), "网络异常", Toast.LENGTH_SHORT).show();
+                if(getActivity()!=null) {
+                    if (t.getMessage().equals("登陆过期")) {
+                        Toast.makeText(getActivity(), "登陆过期,请重新登陆", Toast.LENGTH_SHORT).show();
+                        getActivity().finish();
+                        startActivityForResult(new Intent(getActivity(), LoginActivity.class), Constant.REQUSET);
+                    } else {
+                        Toast.makeText(getActivity(), "网络异常", Toast.LENGTH_SHORT).show();
+                    }
+                }
             }
         });
     }

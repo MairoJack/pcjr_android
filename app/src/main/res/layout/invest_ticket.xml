@@ -41,7 +41,7 @@
 
         <RelativeLayout
             android:id="@+id/tips"
-            android:layout_width="@dimen/back_width"
+            android:layout_width="60dp"
             android:layout_height="match_parent"
             android:background="@drawable/back_selector"
             android:layout_alignParentRight="true"

@@ -1,6 +1,7 @@
 package com.pcjinrong.pcjr.common;
 
 import android.app.Application;
+import android.content.Context;
 
 import com.pcjinrong.pcjr.model.FocusImg;
 import com.pcjinrong.pcjr.model.Announce;
@@ -49,6 +50,17 @@ public class Constant extends Application{
     private List<Announce> announces;
     private int mCounter;
 
+    private static Context context;
+
+    @Override
+    public void onCreate() {
+        super.onCreate();
+        context=getApplicationContext();
+    }
+    public static Context getContext(){
+        return context;
+    }
+
     public List<FocusImg> getFocusImgs() {
         return focusImgs;
     }
@@ -83,6 +95,7 @@ public class Constant extends Application{
 
     public static void clear(){
         access_token = "";
+        refresh_token = "";
         isLogin = false;
     }
 }
