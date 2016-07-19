@@ -117,8 +117,7 @@ public class LoginActivity extends Activity implements View.OnClickListener {
                 if (response.isSuccessful()) {
                     JsonObject json = response.body();
                     if (json.get("access_token") != null) {
-                        //绑定设备号
-                        //bindDevice();
+
                         SharedPreferenceUtil spu = new SharedPreferenceUtil(LoginActivity.this, Constant.FILE);
                         String accessToken = json.get("access_token").getAsString();
                         String refreshToken = json.get("refresh_token").getAsString();
@@ -129,6 +128,11 @@ public class LoginActivity extends Activity implements View.OnClickListener {
                         spu.setRefresToken(refreshToken);
                         spu.setIsFirst(false);
                         String tag = getIntent().getStringExtra("tag");
+
+                        //绑定设备号
+                        bindDevice();
+
+
                         if (tag != null && tag.equals("invest")) {
                             overridePendingTransition(R.anim.slide_down_in, R.anim.slide_down_out);
                         } else {

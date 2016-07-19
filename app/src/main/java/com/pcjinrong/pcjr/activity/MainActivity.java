@@ -170,6 +170,9 @@ public class MainActivity extends FragmentActivity implements BottomNavigatorVie
             }
         });
 
+        Intent service = new Intent(context, XGPushService.class);
+        context.startService(service);
+
         Constant.DEVICETOKEN = XGPushConfig.getToken(context);
     }
 
