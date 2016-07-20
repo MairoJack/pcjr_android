@@ -125,7 +125,7 @@ public class InvestListFragment extends BaseFragment   {
 
 
     public void loadData() {
-        ApiService service = RetrofitUtils.createApi(ApiService.class);
+        ApiService service = RetrofitUtils.createNoTokenApi(ApiService.class);
         Call<JsonObject> call = service.getInvestProductList(type,pageNow,8);
         final long request_time = DateUtil.getMillisOfDate(new Date());
         call.enqueue(new Callback<JsonObject>() {

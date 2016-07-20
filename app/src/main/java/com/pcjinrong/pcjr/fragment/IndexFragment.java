@@ -103,7 +103,7 @@ public class IndexFragment extends Fragment{
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
         View view = inflater.inflate(R.layout.main_tab_index, container, false);
-        service = RetrofitUtils.createApi(ApiService.class);
+        service = RetrofitUtils.createNoTokenApi(ApiService.class);
         return view;
     }
 

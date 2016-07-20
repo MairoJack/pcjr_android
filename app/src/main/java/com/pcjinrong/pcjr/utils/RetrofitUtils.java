@@ -14,6 +14,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
  */
 public class RetrofitUtils {
     private static Retrofit retrofit;
+    private static Retrofit retrofit_no_token;
 
     public static <T> T createApi(Class<T> clazz) {
         if (retrofit == null) {
@@ -34,17 +35,21 @@ public class RetrofitUtils {
         return retrofit.create(clazz);
     }
 
-    public static <T> T createRefreshApi(Class<T> clazz) {
-        if (retrofit == null) {
+    public static <T> T createNoTokenApi(Class<T> clazz) {
+        if (retrofit_no_token == null) {
             synchronized (RetrofitUtils.class) {
-                if (retrofit == null) {
-                    retrofit = new Retrofit.Builder()
+                OkHttpClient.Builder client = new OkHttpClient.Builder();
+                client.readTimeout(7, TimeUnit.SECONDS);
+                client.connectTimeout(7,TimeUnit.SECONDS);
+                if (retrofit_no_token == null) {
+                    retrofit_no_token = new Retrofit.Builder()
                             .baseUrl(Constant.BASEURL)
                             .addConverterFactory(GsonConverterFactory.create())
+                            .client(client.build())
                             .build();
                 }
             }
         }
-        return retrofit.create(clazz);
+        return retrofit_no_token.create(clazz);
     }
 }

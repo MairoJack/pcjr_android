@@ -210,7 +210,7 @@ public class InvestDetailInfoFragment extends Fragment {
     }
 
     public void refresh(){
-        ApiService service = RetrofitUtils.createApi(ApiService.class);
+        ApiService service = RetrofitUtils.createNoTokenApi(ApiService.class);
         Call<JsonObject> call = service.getProductDetail(product.getId());
         final long request_time = DateUtil.getMillisOfDate(new Date());
         call.enqueue(new Callback<JsonObject>() {

@@ -133,7 +133,7 @@ public class RegistActivity extends Activity implements View.OnClickListener
             IosDialog.show("推荐人手机号错误",this);
             return;
         }
-        ApiService service = RetrofitUtils.createApi(ApiService.class);
+        ApiService service = RetrofitUtils.createNoTokenApi(ApiService.class);
         Call<JsonObject> call = service.register(username,password,recommend);
         dialog.setMessage("正在提交...");
         dialog.show();

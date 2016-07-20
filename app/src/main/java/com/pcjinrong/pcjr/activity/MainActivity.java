@@ -20,7 +20,6 @@ import com.pcjinrong.pcjr.action.UpdateManager;
 import com.pcjinrong.pcjr.common.Constant;
 import com.pcjinrong.pcjr.plugins.BottomNavigatorView;
 import com.pcjinrong.pcjr.service.ApiService;
-import com.pcjinrong.pcjr.service.RefreshTokenService;
 import com.pcjinrong.pcjr.utils.RetrofitUtils;
 import com.tencent.android.tpush.XGIOperateCallback;
 import com.tencent.android.tpush.XGPushConfig;
@@ -66,7 +65,6 @@ public class MainActivity extends FragmentActivity implements BottomNavigatorVie
         // 信鸽
         XGAction();
         tryLogin();
-        startService(new Intent(this, RefreshTokenService.class));
 
 
     }
@@ -123,7 +121,7 @@ public class MainActivity extends FragmentActivity implements BottomNavigatorVie
     private void tryLogin() {
         final SharedPreferenceUtil spu = new SharedPreferenceUtil(this, Constant.FILE);
         if (!spu.getisFirst()) {
-            ApiService service = RetrofitUtils.createRefreshApi(ApiService.class);
+            ApiService service = RetrofitUtils.createNoTokenApi(ApiService.class);
 
             Call<JsonObject> call = service.refreshToken("refresh_token",spu.getRefresToken(),Constant.CLIENTID,Constant.CLIENTSECRET);
             call.enqueue(new Callback<JsonObject>() {
@@ -204,6 +202,5 @@ public class MainActivity extends FragmentActivity implements BottomNavigatorVie
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        stopService(new Intent(this,RefreshTokenService.class));
     }
 }

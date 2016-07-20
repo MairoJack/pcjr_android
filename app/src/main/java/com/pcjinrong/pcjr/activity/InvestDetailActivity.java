@@ -123,7 +123,7 @@ public class InvestDetailActivity extends FragmentActivity
     public void initData(){
         dialog.setMessage("正在加载...");
         dialog.show();
-        ApiService service = RetrofitUtils.createApi(ApiService.class);
+        ApiService service = RetrofitUtils.createNoTokenApi(ApiService.class);
         Call<JsonObject> call = service.getProductDetail(getIntent().getStringExtra("id"));
         final long request_time = DateUtil.getMillisOfDate(new Date());
         call.enqueue(new Callback<JsonObject>() {

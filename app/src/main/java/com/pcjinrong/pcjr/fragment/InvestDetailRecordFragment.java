@@ -107,7 +107,7 @@ public class InvestDetailRecordFragment extends Fragment{
     public void loadData(){
         Bundle bundle = getArguments();
         String id = bundle.getString("id");
-        ApiService service = RetrofitUtils.createApi(ApiService.class);
+        ApiService service = RetrofitUtils.createNoTokenApi(ApiService.class);
         Call<JsonObject> call = service.getProductTradingRecordList(id,pageNow,10);
         call.enqueue(new Callback<JsonObject>() {
             @Override

@@ -26,7 +26,7 @@ public class TokenAuthenticator implements Authenticator {
     @Override
     public Request authenticate(Route route, Response response) throws IOException {
         SharedPreferenceUtil spu = new SharedPreferenceUtil(Constant.getContext(), Constant.FILE);
-        ApiService service = RetrofitUtils.createRefreshApi(ApiService.class);
+        ApiService service = RetrofitUtils.createNoTokenApi(ApiService.class);
         Call<JsonObject> call = service.refreshToken("refresh_token", Constant.refresh_token, Constant.CLIENTID, Constant.CLIENTSECRET);
         JsonObject json = call.execute().body();
 

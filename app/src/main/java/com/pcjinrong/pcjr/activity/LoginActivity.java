@@ -74,6 +74,7 @@ public class LoginActivity extends Activity implements View.OnClickListener {
                 setResult(2);
                 finish();
                 break;
+
             case R.id.reg:
                 if(ViewUtil.isFastDoubleClick()){
                     return;
@@ -107,7 +108,7 @@ public class LoginActivity extends Activity implements View.OnClickListener {
                     AlertView.Style.Alert, null).show();
             return;
         }
-        ApiService service = RetrofitUtils.createApi(ApiService.class);
+        ApiService service = RetrofitUtils.createNoTokenApi(ApiService.class);
         Call<JsonObject> call = service.getAccessToken("password", username, password, Constant.CLIENTID, Constant.CLIENTSECRET);
         dialog.setMessage("正在登录...");
         dialog.show();

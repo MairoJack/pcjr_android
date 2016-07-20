@@ -37,7 +37,7 @@ public class SplashActivity extends Activity {
     }
 
     private void init() {
-        ApiService service = RetrofitUtils.createApi(ApiService.class);
+        ApiService service = RetrofitUtils.createNoTokenApi(ApiService.class);
         Call<JsonObject> call = service.getIndexFocusInfo();
         call.enqueue(new Callback<JsonObject>() {
             @Override

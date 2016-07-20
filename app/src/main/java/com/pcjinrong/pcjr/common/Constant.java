@@ -24,15 +24,15 @@ public class Constant extends Application{
     /**
      * test
      */
-    /*public final static String BASEURL = "http://api.pcjr.test/mapi/";
+    public final static String BASEURL = "http://api.pcjr.test/mapi/";
     public final static String CLIENTID = "1";
-    public final static String CLIENTSECRET = "123";*/
+    public final static String CLIENTSECRET = "123";
     /**
      * pro
      */
-    public final static String BASEURL = "https://www.pcjr.com/mapi/";
+    /*public final static String BASEURL = "https://www.pcjr.com/mapi/";
     public final static String CLIENTID = "JkXitPIFMbhQwjyP6kx5pARvwVbTQD874kv2hbRn";
-    public final static String CLIENTSECRET = "41nkgMbf3yJ7UtzWLFxWOtvmDxREGJL4CwjkkAwY";
+    public final static String CLIENTSECRET = "41nkgMbf3yJ7UtzWLFxWOtvmDxREGJL4CwjkkAwY";*/
     public static String access_token = "";
     public static String refresh_token = "";
     public static boolean isLogin = false;              //用户登录

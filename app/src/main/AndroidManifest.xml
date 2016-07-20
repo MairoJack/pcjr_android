@@ -74,7 +74,6 @@
         <activity android:name="com.pcjinrong.pcjr.activity.GestureEditActivity" android:screenOrientation="portrait"/>
         <activity android:name="com.pcjinrong.pcjr.activity.GestureVerifyActivity" android:screenOrientation="portrait"/>
 
-        <service android:enabled="true" android:name="com.pcjinrong.pcjr.service.RefreshTokenService" />
         <!-- 【必须】 信鸽receiver广播接收 -->
         <receiver
             android:name="com.tencent.android.tpush.XGPushReceiver"

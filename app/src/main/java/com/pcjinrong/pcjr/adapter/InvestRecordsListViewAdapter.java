@@ -11,6 +11,7 @@ import com.pcjinrong.pcjr.model.InvestRecords;
 import com.pcjinrong.pcjr.utils.DateUtil;
 import com.pcjinrong.pcjr.R;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 /**
@@ -87,7 +88,9 @@ public class InvestRecordsListViewAdapter extends BaseAdapter {
 
         viewHolder.amount.setText(amount);
         viewHolder.year_income.setText(list.get(position).getYearIncome());
-        viewHolder.income.setText(String.valueOf(Double.parseDouble(amount)+Double.parseDouble(interestTotal)));
+        BigDecimal bd_amount = new BigDecimal(amount);
+        BigDecimal bd_interestTotal = new BigDecimal(interestTotal);
+        viewHolder.income.setText(String.valueOf(bd_amount.add(bd_interestTotal)));
         viewHolder.date.setText(joinDate+"起投-"+deadline+"到期");
 
         return convertView;
