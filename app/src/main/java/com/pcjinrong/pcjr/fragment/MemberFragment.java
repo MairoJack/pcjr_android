@@ -273,6 +273,7 @@ public class MemberFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
+        // TODO: 2016/7/21 重新显示时需要刷新 但是,与初始化冲突
         //initData();
     }
 

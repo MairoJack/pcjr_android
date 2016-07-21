@@ -85,6 +85,7 @@
             cube_ptr:ptr_resistance="1.7"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:layout_marginBottom="42dp"
             >
 
             <in.srain.cube.views.loadmore.LoadMoreListViewContainer
